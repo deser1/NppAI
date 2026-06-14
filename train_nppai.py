@@ -179,9 +179,9 @@ if __name__ == "__main__":
     
     # 3. Parametry treningu
     learning_rate = 1e-3
-    batch_size = 4 # Ilość fragmentów kodu analizowanych jednocześnie
-    block_size = 64 # Długość fragmentu kodu (kontekst)
-    max_iters = 1000 # Ilość kroków treningu
+    batch_size = 16 # Ilość fragmentów kodu analizowanych jednocześnie (zwiększamy, by uczył się spójniej)
+    block_size = 128 # Zwiększamy kontekst ze 64 na 128
+    max_iters = 3000 # Ilość kroków treningu (1000 to było zdecydowanie za mało dla formatu dialogu)
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     
