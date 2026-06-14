@@ -172,13 +172,13 @@ if __name__ == "__main__":
     print(f"Rozmiar słownika (znaki unikalne): {tokenizer.vocab_size}")
     
     # 2. Inicjalizacja modelu z dopasowanym vocab_size
-    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=64, hidden_dim=128, n_layers=4, max_seq_len=128)
+    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=64, hidden_dim=128, n_layers=4, max_seq_len=256)
     
     # 3. Parametry treningu
     learning_rate = 1e-3
-    batch_size = 16 # Ilość fragmentów kodu analizowanych jednocześnie (zwiększamy, by uczył się spójniej)
-    block_size = 128 # Zwiększamy kontekst ze 64 na 128
-    max_iters = 3000 # Ilość kroków treningu (1000 to było zdecydowanie za mało dla formatu dialogu)
+    batch_size = 16 # Zmniejszamy by szybciej trenować na CPU
+    block_size = 256 # Zwiększamy kontekst ze 128 na 256 dla dłuższych kodów
+    max_iters = 2500 # Wystarczająca ilość kroków dla tego rozmiaru datasetu
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     
