@@ -9,7 +9,7 @@ vs.proj/Release
 vs.proj/x64
 vs.proj/ARM64
 vs.proj/NppPlugi.*
-vs.proj/NppPluginTemplate.opensdf
+vs.proj/NppPluginTemplate.opensdf     
 vs.proj/NppPluginTemplate.exp
 vs.proj/NppPluginTemplate.lib
 vs.proj/NppPluginTemplate.vcxproj.user
@@ -17,3 +17,22 @@ vs.proj/.vs/
 *.aps
 *.zip
 *.bak
+
+# NppAI - Ignorowane pliki konfiguracyjne i budowania CMake
+build/
+out/
+.vs/
+.vscode/
+
+# NppAI - PyTorch i Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# NppAI - Datasets i Modele (NIE WYSTAWIAJ TEGO DO GIT!)
+models/
+*.nppai
+dataset_export.txt
+*.jsonl
+C:\\NppAI_Telemetry.jsonl
