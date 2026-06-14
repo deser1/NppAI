@@ -120,8 +120,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 			::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
 			if (which != -1) {
 				HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
-				int length = ::SendMessage(curScintilla, SCI_GETLENGTH, 0, 0);
-				std::string content(length + 1, '\0');
+				auto length = ::SendMessage(curScintilla, SCI_GETLENGTH, 0, 0);
+				std::string content((size_t)length + 1, '\0');
 				::SendMessage(curScintilla, SCI_GETTEXT, length + 1, (LPARAM)content.data());
 				AIManager::getInstance().checkModifications(content);
 			}

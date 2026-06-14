@@ -20,7 +20,7 @@
 #include "AIManager.h"
 #include "TelemetryManager.h"
 #include "Notepad_plus_msgs.h"
-#include "Docking.h"
+#include "DockingFeature/Docking.h"
 #include <string>
 #include <vector>
 
@@ -58,7 +58,7 @@ void ExecuteAIGeneration() {
 
     // Uruchomienie trackera
     auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
-    int currentLine = ::SendMessage(curScintilla, SCI_LINEFROMPOSITION, currentPos, 0);
+    int currentLine = (int)::SendMessage(curScintilla, SCI_LINEFROMPOSITION, (WPARAM)currentPos, 0);
     AIManager::getInstance().startTracking(prompt, generated, currentLine - 3, currentLine);
     
     // Ustaw focus z powrotem na edytor
