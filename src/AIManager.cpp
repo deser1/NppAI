@@ -36,6 +36,11 @@ std::string AIManager::generateCode(const std::string& prompt, const std::string
     // Zwiększamy limit tokenów do 256, by model mógł wypisać dłuższą odpowiedź HTML/C++
     std::string generatedCode = engine.generate(formattedPrompt, 256);
     
+    // Usunięcie wpisanego promptu (z tagami), aby do edytora trafiła sama wygenerowana odpowiedź AI
+    if (generatedCode.find(formattedPrompt) == 0) {
+        generatedCode = generatedCode.substr(formattedPrompt.length());
+    }
+    
     return generatedCode;
 }
 
