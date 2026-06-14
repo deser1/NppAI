@@ -72,5 +72,9 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
 //
 void generateAICode();
 void toggleTelemetry();
+void toggleAIPanel();
+
+// Globalne zmienne dla dokowalnego panelu
+extern HWND g_hAIPanel;
 
 #endif //PLUGINDEFINITION_H
