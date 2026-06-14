@@ -1,0 +1,72 @@
+[USER]: Prosta strona html single z napisem Hej Hello
+[AI]:
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Hej Hello</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <h1>Hej Hello</h1>
+</body>
+</html>
+
+[USER]: Napisz funkcję w Pythonie do liczenia silni
+[AI]:
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+[USER]: Pętla for w C++ od 1 do 10
+[AI]:
+for (int i = 1; i <= 10; i++) {
+    std::cout << i << std::endl;
+}
+
+[USER]: Zrób alert w JavaScript
+[AI]:
+alert("Hej Hello!");
+
+[USER]: Prosty formularz HTML z przyciskiem Wyślij
+[AI]:
+<form action="/submit" method="POST">
+    <label for="name">Imię:</label>
+    <input type="text" id="name" name="name">
+    <button type="submit">Wyślij</button>
+</form>
+
+[USER]: Połączenie z bazą MySQL w PHP (PDO)
+[AI]:
+<?php
+$host = '127.0.0.1';
+$db   = 'test_db';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Połączono pomyślnie";
+} catch(PDOException $e) {
+    echo "Błąd połączenia: " . $e->getMessage();
+}
+?>
+
+[USER]: Stwórz klasę w Javie z konstruktorem
+[AI]:
+public class Person {
+    private String name;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}

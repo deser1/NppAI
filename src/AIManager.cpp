@@ -29,8 +29,12 @@ void AIManager::loadModel(const std::string& modelPath) {
 }
 
 std::string AIManager::generateCode(const std::string& prompt, const std::string& currentContext) {
+    // Formatowanie promptu do formatu "Instruct", którego uczy się model
+    std::string formattedPrompt = "[USER]: " + prompt + "\n[AI]:\n";
+    
     // Generowanie kodu za pomocą naszego własnego silnika Transformera
-    std::string generatedCode = engine.generate(prompt, 64);
+    // Zwiększamy limit tokenów do 256, by model mógł wypisać dłuższą odpowiedź HTML/C++
+    std::string generatedCode = engine.generate(formattedPrompt, 256);
     
     return generatedCode;
 }

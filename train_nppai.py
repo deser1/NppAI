@@ -121,60 +121,32 @@ def export_to_bin(model, filepath):
         
     print("Zakończono pomyślnie!")
 
-# 3. Przygotowanie Datasetu (Kodu źródłowego z Twoich projektów)
-def load_dataset(folder_path="D:/Projekty/"):
+# 3. Przygotowanie Datasetu w formacie "Instruct"
+def load_dataset(folder_path="datasets/"):
     text = ""
-    # Rozszerzenia plików, na których model ma się uczyć programować
-    extensions = {".cpp", ".h", ".c", ".hpp", ".py", ".js", ".ts", ".cs", ".java", ".php", ".html", ".css"}
-    exclude_dirs = {'node_modules', 'build', '.git', 'venv', '__pycache__', '.idea', '.vs'}
+    print(f"Szukanie datasetów uczących w folderze: {folder_path}...")
     
-    files = []
-    print("Skanowanie struktury dysku w poszukiwaniu kodu (to potrwa chwilę)...")
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+        print(f"Folder {folder_path} nie istniał, został utworzony. Wrzuć tam pliki .txt")
+        return ""
+
+    files = glob.glob(os.path.join(folder_path, "*.txt"))
     
-    for root, dirs, filenames in os.walk(folder_path):
-        # Modyfikacja listy 'dirs' w miejscu sprawia, że os.walk nie wejdzie do tych folderów!
-        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+    if not files:
+        print(f"Brak plików .txt w folderze {folder_path}!")
+        return ""
         
-        for filename in filenames:
-            ext = os.path.splitext(filename)[1].lower()
-            if ext in extensions:
-                files.append(os.path.join(root, filename))
-                
-    print(f"Znaleziono {len(files)} potencjalnych plików z kodem. Rozpoczynam wczytywanie...")
+    print(f"Znaleziono {len(files)} plików instruktażowych. Wczytywanie...")
     
-    valid_files = 0
-    for i, f in enumerate(files):
+    for f in files:
         try:
-            # errors="ignore" zapobiega zawieszaniu się na plikach binarnych
             with open(f, "r", encoding="utf-8", errors="ignore") as file:
-                content = file.read()
-                # Pomijamy bardzo duże pliki (np. minified JS) i bardzo małe (puste)
-                if 10 < len(content) < 500000:
-                    text += content + "\n\n"
-                    valid_files += 1
-                    
-        except KeyboardInterrupt:
-            print("\n[!] Wczytywanie przerwane przez użytkownika. Używam tego co zdążyłem wczytać.")
-            break
-        except Exception:
-            pass # Ignorujemy inne błędy
+                text += file.read() + "\n\n"
+        except Exception as e:
+            print(f"Błąd czytania pliku {f}: {e}")
             
-        # Wyświetlanie postępu co 1000 plików
-        if (i + 1) % 1000 == 0:
-            print(f"Przetworzono {i + 1}/{len(files)} plików...")
-            
-    print(f"Wczytano pomyślnie {valid_files} plików z Twoich projektów. Długość tekstu: {len(text)} znaków.")
-    
-    # Krok eksportu datasetu dla chmury
-    export_path = "dataset_export.txt"
-    try:
-        with open(export_path, "w", encoding="utf-8") as f:
-            f.write(text)
-        print(f"Zapisano wyekstrahowany kod do pliku: {export_path}")
-        print("Ten plik mozesz wyslac na serwer w chmurze do trenowania wiekszego modelu.")
-    except Exception as e:
-        print(f"Blad zapisu pliku eksportu: {e}")
-        
+    print(f"Wczytano pomyślnie. Długość tekstu: {len(text)} znaków.")
     return text
 
 # Prosty Tokenizer bajtowy (Zgodny w 100% z C++)
