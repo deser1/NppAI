@@ -173,7 +173,8 @@ void commandMenuInit()
     //            bool check0nInit                // optional. Make this menu item be checked visually
     //            );
     setCommand(0, TEXT("Pokaż Panel AI"), toggleAIPanel, NULL, false);
-    setCommand(1, TEXT("Zmień status telemetrii"), toggleTelemetry, NULL, false);
+    setCommand(1, TEXT("Zapytaj AI o zaznaczony kod"), sendSelectionToChat, NULL, false);
+    setCommand(2, TEXT("Zmień status telemetrii"), toggleTelemetry, NULL, false);
 }
 
 //
@@ -220,6 +221,48 @@ void toggleAIPanel()
         // Jeśli już zarejestrowany, pokazujemy go
         ::SendMessage(nppData._nppHandle, NPPM_DMMSHOW, 0, (LPARAM)g_hAIPanel);
     }
+}
+
+void sendSelectionToChat()
+{
+    // Pobranie uchwytu Scintilli
+    int which = -1;
+    ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
+    if (which == -1) return;
+    HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
+
+    // Pobranie zaznaczonego tekstu
+    auto selLen = ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, 0);
+    if (selLen <= 1) {
+        return; // Nic nie zaznaczono
+    }
+
+    std::vector<char> selText(selLen);
+    ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, (LPARAM)selText.data());
+    std::string prompt(selText.begin(), selText.end() - 1); // remove null terminator
+
+    // Pokaż panel
+    if (!isPanelRegistered) {
+        InitAIPanel();
+    } else {
+        ::SendMessage(nppData._nppHandle, NPPM_DMMSHOW, 0, (LPARAM)g_hAIPanel);
+    }
+
+    // Dodaj zaznaczony kod do pola textarea
+    std::string currentText;
+    int textLen = GetWindowTextLengthA(g_hEdit);
+    if (textLen > 0) {
+        std::vector<char> buf(textLen + 1);
+        GetWindowTextA(g_hEdit, buf.data(), textLen + 1);
+        currentText = std::string(buf.data()) + "\r\n";
+    }
+    
+    std::string newText = currentText + "```\r\n" + prompt + "\r\n```\r\n";
+    SetWindowTextA(g_hEdit, newText.c_str());
+    
+    // Ustaw kursor na samym początku by użytkownik wpisał polecenie
+    SendMessage(g_hEdit, EM_SETSEL, 0, 0);
+    SetFocus(g_hEdit);
 }
 
 void toggleTelemetry()

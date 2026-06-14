@@ -17,6 +17,7 @@
 
 #include "PluginDefinition.h"
 #include "AIManager.h"
+#include "Scintilla.h"
 
 extern FuncItem funcItem[nbFunc];
 extern NppData nppData;
@@ -71,6 +72,41 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 {
 	switch (notifyCode->nmhdr.code) 
 	{
+		case NPPN_READY:
+		{
+			// Ustawienie czasu oczekiwania na 600ms, aby uaktywnić zdarzenie "najechaniu myszką"
+			::SendMessage(nppData._scintillaMainHandle, SCI_SETMOUSEDWELLTIME, 600, 0);
+			::SendMessage(nppData._scintillaSecondHandle, SCI_SETMOUSEDWELLTIME, 600, 0);
+			break;
+		}
+		case SCN_DWELLSTART:
+		{
+			int pos = (int)notifyCode->position;
+			if (pos != -1) {
+				HWND curScintilla = (HWND)notifyCode->nmhdr.hwndFrom;
+				int selStart = (int)::SendMessage(curScintilla, SCI_GETSELECTIONSTART, 0, 0);
+				int selEnd = (int)::SendMessage(curScintilla, SCI_GETSELECTIONEND, 0, 0);
+				// Jeśli myszka jest nad zaznaczonym tekstem
+				if (selStart != selEnd && pos >= selStart && pos <= selEnd) {
+					const char* plainMsg = "NppAI: Kliknij tutaj, aby wyslac zaznaczenie do Chatu";
+					::SendMessage(curScintilla, SCI_CALLTIPSHOW, pos, (LPARAM)plainMsg);
+				}
+			}
+			break;
+		}
+		case SCN_DWELLEND:
+		{
+			HWND curScintilla = (HWND)notifyCode->nmhdr.hwndFrom;
+			::SendMessage(curScintilla, SCI_CALLTIPCANCEL, 0, 0);
+			break;
+		}
+		case SCN_CALLTIPCLICK:
+		{
+			HWND curScintilla = (HWND)notifyCode->nmhdr.hwndFrom;
+			::SendMessage(curScintilla, SCI_CALLTIPCANCEL, 0, 0);
+			sendSelectionToChat();
+			break;
+		}
 		case NPPN_SHUTDOWN:
 		{
 			commandMenuCleanUp();

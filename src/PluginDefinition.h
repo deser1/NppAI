@@ -36,7 +36,7 @@ const TCHAR NPP_PLUGIN_NAME[] = TEXT("NppAI");
 //
 // Here define the number of your plugin commands
 //
-const int nbFunc = 2;
+const int nbFunc = 3;
 
 
 //
@@ -73,6 +73,7 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
 void generateAICode();
 void toggleTelemetry();
 void toggleAIPanel();
+void sendSelectionToChat();
 
 // Globalne zmienne dla dokowalnego panelu
 extern HWND g_hAIPanel;
