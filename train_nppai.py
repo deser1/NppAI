@@ -177,20 +177,16 @@ def load_dataset(folder_path="D:/Projekty/"):
         
     return text
 
-# Prosty Tokenizer znakowy
-class CharTokenizer:
-    def __init__(self, text):
-        chars = sorted(list(set(text)))
-        self.vocab_size = len(chars)
-        # Zapewniamy, że vocab_size to potęga 2 (np. 128) dla optymalizacji, ale to na razie zignorujmy
-        self.stoi = { ch:i for i,ch in enumerate(chars) }
-        self.itos = { i:ch for i,ch in enumerate(chars) }
+# Prosty Tokenizer bajtowy (Zgodny w 100% z C++)
+class ByteTokenizer:
+    def __init__(self):
+        self.vocab_size = 256
         
     def encode(self, s):
-        return [self.stoi[c] for c in s if c in self.stoi]
+        return list(s.encode('utf-8'))
         
     def decode(self, l):
-        return ''.join([self.itos[i] for i in l])
+        return bytes(l).decode('utf-8', errors='replace')
 
 if __name__ == "__main__":
     print("Inicjalizacja środowiska trenowania NppAI...")
@@ -201,7 +197,7 @@ if __name__ == "__main__":
         print("Błąd: Za mało kodu w folderze src/ do trenowania.")
         exit(1)
         
-    tokenizer = CharTokenizer(dataset_text)
+    tokenizer = ByteTokenizer()
     data = torch.tensor(tokenizer.encode(dataset_text), dtype=torch.long)
     
     print(f"Rozmiar słownika (znaki unikalne): {tokenizer.vocab_size}")

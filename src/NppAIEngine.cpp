@@ -104,15 +104,19 @@ bool NppAIEngine::loadModel(const std::string& modelPath) {
 }
 
 std::vector<int> NppAIEngine::tokenize(const std::string& text) {
-    // Prosta tokenizacja znakowa dla szkieletu
+    // Tokenizacja bajtowa zgodna z UTF-8
     std::vector<int> tokens;
-    for (char c : text) tokens.push_back((int)c);
+    for (char c : text) tokens.push_back((int)(unsigned char)c);
     return tokens;
 }
 
 std::string NppAIEngine::detokenize(const std::vector<int>& tokens) {
     std::string text;
-    for (int t : tokens) text += (char)t;
+    for (int t : tokens) {
+        if (t >= 0 && t < 256) {
+            text += (char)(unsigned char)t;
+        }
+    }
     return text;
 }
 
