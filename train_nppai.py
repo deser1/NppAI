@@ -88,8 +88,11 @@ def export_to_bin(model, filepath):
         f.write(struct.pack('i', model.max_seq_len))
         f.write(struct.pack('i', model.vocab_size))
 
-        def write_tensor(tensor):
-            data = tensor.detach().cpu().numpy().flatten()
+        def write_tensor(tensor, is_linear=False):
+            if is_linear:
+                data = tensor.transpose(0, 1).contiguous().detach().cpu().numpy().flatten()
+            else:
+                data = tensor.detach().cpu().numpy().flatten()
             f.write(data.tobytes())
 
         # Wagi Embeddingu
@@ -99,19 +102,19 @@ def export_to_bin(model, filepath):
         # Wagi Warstw
         for layer in model.layers:
             write_tensor(layer.rms_attn.weight)
-            write_tensor(layer.wq.weight)
-            write_tensor(layer.wk.weight)
-            write_tensor(layer.wv.weight)
-            write_tensor(layer.wo.weight)
+            write_tensor(layer.wq.weight, is_linear=True)
+            write_tensor(layer.wk.weight, is_linear=True)
+            write_tensor(layer.wv.weight, is_linear=True)
+            write_tensor(layer.wo.weight, is_linear=True)
             
             write_tensor(layer.rms_ffn.weight)
-            write_tensor(layer.w1.weight)
-            write_tensor(layer.w2.weight)
-            write_tensor(layer.w3.weight)
+            write_tensor(layer.w1.weight, is_linear=True)
+            write_tensor(layer.w2.weight, is_linear=True)
+            write_tensor(layer.w3.weight, is_linear=True)
 
         # Wagi Wyjściowe
         write_tensor(model.norm.weight)
-        write_tensor(model.output.weight)
+        write_tensor(model.output.weight, is_linear=True)
         
     print("Zakończono pomyślnie!")
 

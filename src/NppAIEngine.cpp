@@ -178,6 +178,10 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
             for(int c = 0; c <= r; c++) {
                 scores.at(r, c) /= sum;
             }
+            // Zmaskowane wartości muszą być jawnie równe 0.0f do matmul!
+            for(int c = r + 1; c < T; c++) {
+                scores.at(r, c) = 0.0f;
+            }
         }
 
         Tensor attn_out = Tensor::matmul(scores, v);
