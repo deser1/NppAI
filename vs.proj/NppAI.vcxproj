@@ -47,7 +47,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\DockingFeature\GoToLineDlg.cpp" />
     <ClCompile Include="..\src\DockingFeature\StaticDialog.cpp" />
-    <ClCompile Include="..\src\NppPluginDemo.cpp" />
+    <ClCompile Include="..\src\NppAI_Core.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />
     <ClCompile Include="..\src\AIManager.cpp" />
     <ClCompile Include="..\src\NppAIEngine.cpp" />
@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\DockingFeature\goLine.rc" />
-    <ResourceCompile Include="..\src\NppPluginDemo.rc" />
+    <ResourceCompile Include="..\src\NppAI_Core.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9D04DBD5-E12E-44E0-A683-6F43F21D533B}</ProjectGuid>

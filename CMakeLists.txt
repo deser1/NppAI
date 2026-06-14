@@ -9,7 +9,7 @@ set(CMAKE_GENERATOR_PLATFORM x64)
 
 # Zdefiniuj projekt jako bibliotekę współdzieloną (DLL)
 add_library(NppAI SHARED
-    src/NppPluginDemo.cpp
+    src/NppAI_Core.cpp
     src/PluginDefinition.cpp
     src/AIManager.cpp
     src/TelemetryManager.cpp
