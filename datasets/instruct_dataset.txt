@@ -1,3 +1,16 @@
+[USER]: Prosta strona html
+[AI]:
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Witaj!</title>
+</head>
+<body>
+    <h1>Witaj!</h1>
+</body>
+</html>
+
 [USER]: Prosta strona html single z napisem Hej Hello
 [AI]:
 <!DOCTYPE html>
