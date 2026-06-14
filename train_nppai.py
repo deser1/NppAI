@@ -157,7 +157,14 @@ class ByteTokenizer:
     def decode(self, l):
         return bytes(l).decode('utf-8', errors='replace')
 
-if __name__ == "__main__":
+def get_batch(split, data, block_size, batch_size):
+    # Generowanie losowych indeksów początkowych
+    ix = torch.randint(len(data) - block_size, (batch_size,))
+    x = torch.stack([data[i:i+block_size] for i in ix])
+    y = torch.stack([data[i+1:i+block_size+1] for i in ix])
+    return x, y
+
+def train_model():
     print("Inicjalizacja środowiska trenowania NppAI...")
     
     # 1. Wczytanie kodu C++ wtyczki jako datasetu
@@ -172,28 +179,36 @@ if __name__ == "__main__":
     print(f"Rozmiar słownika (znaki unikalne): {tokenizer.vocab_size}")
     
     # 2. Inicjalizacja modelu z dopasowanym vocab_size
-    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=64, hidden_dim=128, n_layers=4, max_seq_len=256)
+    # Znacząco zwiększamy pamięć modelu dla obsługi tak dużego tekstu (Vue SPA to po ok. 1500-2000 znaków)
+    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=128, hidden_dim=256, n_layers=6, max_seq_len=512)
+    
+    # Przenosimy model na GPU jeśli dostępne, w przeciwnym razie zostajemy na CPU
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Używam urządzenia: {device}")
+    model.to(device)
     
     # 3. Parametry treningu
     learning_rate = 1e-3
-    batch_size = 16 # Zmniejszamy by szybciej trenować na CPU
-    block_size = 256 # Zwiększamy kontekst ze 128 na 256 dla dłuższych kodów
-    max_iters = 2500 # Wystarczająca ilość kroków dla tego rozmiaru datasetu
+    batch_size = 4 # Mocno zmniejszamy dla CPU
+    block_size = 512 # Kompromis, który uczy się bardzo szybko na CPU, ale "pamięta" kod
+    max_iters = 500 # Szybki test
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     
     def get_batch():
-        # Wybieramy losowe miejsca w kodzie
+        # Pobieranie batcha danych
         ix = torch.randint(len(data) - block_size, (batch_size,))
-        x = torch.stack([data[i:i+block_size] for i in ix]) # Wejście (np. "int main() ")
-        y = torch.stack([data[i+1:i+block_size+1] for i in ix]) # Oczekiwane wyjście (np. "nt main() {")
+        x = torch.stack([data[i:i+block_size] for i in ix])
+        y = torch.stack([data[i+1:i+block_size+1] for i in ix])
         return x, y
 
     print("Trenowanie modelu NppAI na kodzie C++...")
     model.train()
     
     for iter in range(max_iters):
+        # Pobieranie batcha danych
         xb, yb = get_batch()
+        xb, yb = xb.to(device), yb.to(device) # Przeniesienie na GPU/CPU
         
         # Forward pass
         logits = model(xb)
@@ -218,3 +233,6 @@ if __name__ == "__main__":
     # Eksportujemy model do formatu czytelnego dla naszej wtyczki C++
     os.makedirs("models", exist_ok=True)
     export_to_bin(model, "models/NppAI-model-v1.nppai")
+
+if __name__ == "__main__":
+    train_model()

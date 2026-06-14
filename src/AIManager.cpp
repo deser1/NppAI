@@ -33,8 +33,8 @@ std::string AIManager::generateCode(const std::string& prompt, const std::string
     std::string formattedPrompt = "[USER]: " + prompt + "\n[AI]:\n";
     
     // Generowanie kodu za pomocą naszego własnego silnika Transformera
-    // Zwiększamy limit tokenów do 256, by model mógł wypisać dłuższą odpowiedź HTML/C++
-    std::string generatedCode = engine.generate(formattedPrompt, 256);
+    // Zwiększamy limit tokenów do 4096, by model mógł wypisać dłuższą odpowiedź HTML/Vue
+    std::string generatedCode = engine.generate(formattedPrompt, 4096);
     
     // Usunięcie wpisanego promptu (z tagami), aby do edytora trafiła sama wygenerowana odpowiedź AI
     if (generatedCode.find(formattedPrompt) == 0) {
