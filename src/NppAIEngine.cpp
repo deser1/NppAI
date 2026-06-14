@@ -237,6 +237,7 @@ std::string NppAIEngine::generate(const std::string& prompt, int maxTokens) {
     if (dim == 0) return "Model nie jest zaladowany!";
 
     std::vector<int> tokens = tokenize(prompt);
+    std::string current_output = prompt;
     
     // Główna pętla autoregresyjna AI
     for(int i = 0; i < maxTokens; i++) {
@@ -256,6 +257,19 @@ std::string NppAIEngine::generate(const std::string& prompt, int maxTokens) {
         
         // Warunek stopu (zakładamy 0 jako EOS)
         if (nextToken == 0) break;
+        
+        // Zatrzymujemy generowanie od razu, jeśli model próbuje rozpocząć nową "rozmowę"
+        if (nextToken >= 0 && nextToken < 256) {
+            current_output += (char)(unsigned char)nextToken;
+            // Sprawdzamy czy na końcu wygenerowanego tekstu nie pojawił się tag nowego promptu
+            if (current_output.length() >= 7 && 
+                current_output.substr(current_output.length() - 7) == "[USER]:") {
+                
+                // Obcinamy "[USER]:" z końcowej listy tokenów i wychodzimy
+                for(int j=0; j<7; j++) tokens.pop_back();
+                break;
+            }
+        }
     }
     
     return detokenize(tokens);
