@@ -40,12 +40,18 @@
     <ClInclude Include="..\src\PluginInterface.h" />
     <ClInclude Include="..\src\Scintilla.h" />
     <ClInclude Include="..\src\Sci_Position.h" />
+    <ClInclude Include="..\src\AIManager.h" />
+    <ClInclude Include="..\src\NppAIEngine.h" />
+    <ClInclude Include="..\src\TelemetryManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\DockingFeature\GoToLineDlg.cpp" />
     <ClCompile Include="..\src\DockingFeature\StaticDialog.cpp" />
     <ClCompile Include="..\src\NppPluginDemo.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />
+    <ClCompile Include="..\src\AIManager.cpp" />
+    <ClCompile Include="..\src\NppAIEngine.cpp" />
+    <ClCompile Include="..\src\TelemetryManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\src\DockingFeature\goLine.rc" />
