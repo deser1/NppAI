@@ -54,6 +54,9 @@ extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData)
 {
 	nppData = notpadPlusData;
 	commandMenuInit();
+	
+	// Automatyczne załadowanie modelu podczas startu wtyczki
+	AIManager::getInstance().loadModel("models\\NppAI-model-v1.nppai");
 }
 
 extern "C" __declspec(dllexport) const TCHAR * getName()

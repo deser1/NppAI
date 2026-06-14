@@ -1,10 +1,31 @@
 #include "AIManager.h"
 #include "TelemetryManager.h"
+#include "PluginDefinition.h"
 #include <chrono>
+#include <windows.h>
+#include <shlwapi.h>
+
+extern NppData nppData;
+
+std::string getPluginDllDirectory() {
+    char path[MAX_PATH];
+    HMODULE hm = NULL;
+    if (GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+          (LPCSTR)&getPluginDllDirectory, &hm)) {
+        GetModuleFileNameA(hm, path, sizeof(path));
+        PathRemoveFileSpecA(path);
+        return std::string(path);
+    }
+    return "";
+}
 
 void AIManager::loadModel(const std::string& modelPath) {
     // Inicjalizacja naszego autorskiego silnika AI
-    engine.loadModel(modelPath);
+    std::string fullPath = modelPath;
+    if (modelPath.find(":") == std::string::npos) { // Jeśli to ścieżka względna
+        fullPath = getPluginDllDirectory() + "\\" + modelPath;
+    }
+    engine.loadModel(fullPath);
 }
 
 std::string AIManager::generateCode(const std::string& prompt, const std::string& currentContext) {

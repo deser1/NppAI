@@ -20,7 +20,7 @@ add_library(NppAI SHARED
 target_include_directories(NppAI PRIVATE src src/DockingFeature)
 
 # Połącz z bibliotekami systemowymi
-target_link_libraries(NppAI user32 gdi32)
+target_link_libraries(NppAI user32 gdi32 shlwapi)
 
 # Konfiguracja kompilatora MSVC (ustawienia specyficzne dla DLL Notepad++)
 if (MSVC)
