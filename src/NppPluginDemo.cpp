@@ -16,6 +16,7 @@
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "PluginDefinition.h"
+#include "AIManager.h"
 
 extern FuncItem funcItem[nbFunc];
 extern NppData nppData;
@@ -73,6 +74,21 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 		case NPPN_SHUTDOWN:
 		{
 			commandMenuCleanUp();
+		}
+		break;
+
+		case NPPN_FILESAVED:
+		{
+			// Kiedy użytkownik zapisze plik, sprawdzamy czy zmodyfikował wygenerowany kod
+			int which = -1;
+			::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
+			if (which != -1) {
+				HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
+				int length = ::SendMessage(curScintilla, SCI_GETLENGTH, 0, 0);
+				std::string content(length + 1, '\0');
+				::SendMessage(curScintilla, SCI_GETTEXT, length + 1, (LPARAM)content.data());
+				AIManager::getInstance().checkModifications(content);
+			}
 		}
 		break;
 

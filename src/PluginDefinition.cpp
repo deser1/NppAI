@@ -17,6 +17,10 @@
 
 #include "PluginDefinition.h"
 #include "menuCmdID.h"
+#include "AIManager.h"
+#include "TelemetryManager.h"
+#include <string>
+#include <vector>
 
 //
 // The plugin data that Notepad++ needs
@@ -58,8 +62,8 @@ void commandMenuInit()
     //            ShortcutKey *shortcut,          // optional. Define a shortcut to trigger this command
     //            bool check0nInit                // optional. Make this menu item be checked visually
     //            );
-    setCommand(0, TEXT("Hello Notepad++"), hello, NULL, false);
-    setCommand(1, TEXT("Hello (with dialog)"), helloDlg, NULL, false);
+    setCommand(0, TEXT("Wygeneruj Kod AI"), generateAICode, NULL, false);
+    setCommand(1, TEXT("Zmień status telemetrii"), toggleTelemetry, NULL, false);
 }
 
 //
@@ -93,24 +97,40 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
 //----------------------------------------------//
 //-- STEP 4. DEFINE YOUR ASSOCIATED FUNCTIONS --//
 //----------------------------------------------//
-void hello()
+void generateAICode()
 {
-    // Open a new document
-    ::SendMessage(nppData._nppHandle, NPPM_MENUCOMMAND, 0, IDM_FILE_NEW);
-
-    // Get the current scintilla
+    // Pobranie uchwytu Scintilli
     int which = -1;
     ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
-    if (which == -1)
-        return;
-    HWND curScintilla = (which == 0)?nppData._scintillaMainHandle:nppData._scintillaSecondHandle;
+    if (which == -1) return;
+    HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
 
-    // Say hello now :
-    // Scintilla control has no Unicode mode, so we use (char *) here
-    ::SendMessage(curScintilla, SCI_SETTEXT, 0, (LPARAM)"Hello, Notepad++!");
+    // Pobranie zaznaczonego tekstu (promptu użytkownika)
+    auto selLen = ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, 0);
+    if (selLen <= 1) {
+        ::MessageBox(NULL, TEXT("Zaznacz tekst, który ma być promptem dla AI."), TEXT("NppAI"), MB_OK);
+        return;
+    }
+
+    std::vector<char> selText(selLen);
+    ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, (LPARAM)selText.data());
+    std::string prompt(selText.begin(), selText.end() - 1); // remove null terminator
+
+    // Wygenerowanie kodu z użyciem AIManager
+    std::string generated = AIManager::getInstance().generateCode(prompt, "");
+
+    // Podmiana zaznaczonego tekstu na wygenerowany kod
+    ::SendMessage(curScintilla, SCI_REPLACESEL, 0, (LPARAM)generated.c_str());
+
+    // Pobranie linii w których znajduje się wklejony kod (do trackowania)
+    auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
+    int currentLine = ::SendMessage(curScintilla, SCI_LINEFROMPOSITION, currentPos, 0);
+    
+    // Uruchomienie trackera Diff
+    AIManager::getInstance().startTracking(prompt, generated, currentLine - 3, currentLine);
 }
 
-void helloDlg()
+void toggleTelemetry()
 {
-    ::MessageBox(NULL, TEXT("Hello, Notepad++!"), TEXT("Notepad++ Plugin Template"), MB_OK);
+    ::MessageBox(NULL, TEXT("Telemetria i uczenie globalne: AKTYWNE\nTwój kod będzie anonimizowany przed wysłaniem."), TEXT("NppAI Ustawienia"), MB_OK);
 }
