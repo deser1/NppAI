@@ -42,16 +42,22 @@ void Tensor::applySiLU() {
 }
 
 void Tensor::applyRMSNorm(const Tensor& weight) {
-    // Obliczanie średniej kwadratowej
-    float ss = 0.0f;
-    for (float val : data) ss += val * val;
-    ss /= data.size();
-    ss += 1e-5f; // epsilon
-    ss = 1.0f / std::sqrt(ss);
-
-    // Normalizacja i skalowanie
-    for (size_t i = 0; i < data.size(); i++) {
-        data[i] = (data[i] * ss) * weight.data[i];
+    int rows = shape.size() > 1 ? shape[0] : 1;
+    int cols = shape.size() > 1 ? shape[1] : shape[0];
+    
+    for (int r = 0; r < rows; r++) {
+        float ss = 0.0f;
+        for (int c = 0; c < cols; c++) {
+            float val = data[r * cols + c];
+            ss += val * val;
+        }
+        ss /= cols;
+        ss += 1e-5f; // epsilon
+        ss = 1.0f / std::sqrt(ss);
+        
+        for (int c = 0; c < cols; c++) {
+            data[r * cols + c] = (data[r * cols + c] * ss) * weight.data[c];
+        }
     }
 }
 
