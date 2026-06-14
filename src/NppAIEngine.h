@@ -1,3 +1,4 @@
+// NppAIEngine.h
 #pragma once
 #include <vector>
 #include <string>
@@ -16,7 +17,7 @@ public:
     float& at(int r, int c);
     
     // Podstawowa operacja dla sieci neuronowych: y = x * W
-    static Tensor matmul(const Tensor& a, const Tensor& b);
+    static Tensor matmul(const Tensor& a, const Tensor& b, bool transposeB = false);
     
     // Funkcja aktywacji (np. SiLU lub GELU stosowane w nowoczesnych modelach)
     void applySiLU();
@@ -55,14 +56,12 @@ private:
     int dim = 0;
     int hidden_dim = 0;
     int n_layers = 0;
-    int n_heads = 0;
+    int max_seq_len = 0;
     int vocab_size = 0;
-
-    // Słownik (Tokenizer)
-    std::vector<std::string> vocabulary;
 
     // Wagi całego modelu
     Tensor tokenEmbeddingTable;
+    Tensor posEmbeddingTable;
     std::vector<TransformerLayer> layers;
     Tensor outputRMSNorm;
     Tensor outputClassifier;
