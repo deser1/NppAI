@@ -4,6 +4,206 @@
 #include <iostream>
 #include <algorithm>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+#include <d3d11.h>
+#include <d3dcompiler.h>
+
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+
+// Struktura przechowująca stan globalny GPU
+struct GPUContext {
+    ID3D11Device* device = nullptr;
+    ID3D11DeviceContext* context = nullptr;
+    ID3D11ComputeShader* matmulShader = nullptr;
+    bool initialized = false;
+    bool failed = false;
+
+    ~GPUContext() {
+        if (matmulShader) matmulShader->Release();
+        if (context) context->Release();
+        if (device) device->Release();
+    }
+};
+
+static GPUContext g_gpu;
+
+// Kod źródłowy HLSL (Compute Shader) do mnożenia macierzy
+const char* hlsl_matmul = R"(
+cbuffer Dimensions : register(b0) {
+    uint a_rows;
+    uint a_cols;
+    uint b_effective_cols;
+    uint transposeB;
+};
+
+StructuredBuffer<float> bufA : register(t0);
+StructuredBuffer<float> bufB : register(t1);
+RWStructuredBuffer<float> bufC : register(u0);
+
+[numthreads(16, 16, 1)]
+void main(uint3 DTid : SV_DispatchThreadID) {
+    uint row = DTid.y;
+    uint col = DTid.x;
+
+    if (row < a_rows && col < b_effective_cols) {
+        float sum = 0.0f;
+        for (uint k = 0; k < a_cols; k++) {
+            float b_val = transposeB ? bufB[col * a_cols + k] : bufB[k * b_effective_cols + col];
+            sum += bufA[row * a_cols + k] * b_val;
+        }
+        bufC[row * b_effective_cols + col] = sum;
+    }
+}
+)";
+
+bool initGPU() {
+    if (g_gpu.initialized) return true;
+    if (g_gpu.failed) return false;
+
+    D3D_FEATURE_LEVEL featureLevel;
+    HRESULT hr = D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &g_gpu.device, &featureLevel, &g_gpu.context);
+    if (FAILED(hr)) {
+        std::cerr << "GPU: Brak sprzetu D3D11. Przelaczam na CPU (OpenMP).\n";
+        g_gpu.failed = true; return false;
+    }
+
+    ID3DBlob* shaderBlob = nullptr;
+    ID3DBlob* errorBlob = nullptr;
+    hr = D3DCompile(hlsl_matmul, strlen(hlsl_matmul), nullptr, nullptr, nullptr, "main", "cs_5_0", 0, 0, &shaderBlob, &errorBlob);
+    if (FAILED(hr)) {
+        if (errorBlob) {
+            std::cerr << "GPU Shader Error: " << (char*)errorBlob->GetBufferPointer() << "\n";
+            errorBlob->Release();
+        }
+        g_gpu.failed = true; return false;
+    }
+
+    hr = g_gpu.device->CreateComputeShader(shaderBlob->GetBufferPointer(), shaderBlob->GetBufferSize(), nullptr, &g_gpu.matmulShader);
+    shaderBlob->Release();
+    if (FAILED(hr)) {
+        g_gpu.failed = true; return false;
+    }
+
+    g_gpu.initialized = true;
+    std::cout << "GPU: DirectCompute (DirectX 11) zainicjowane pomyslnie! Karta graficzna gotowa.\n";
+    return true;
+}
+
+bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transposeB) {
+    if (!initGPU()) return false;
+
+    int a_rows = a.shape[0];
+    int a_cols = a.shape[1];
+    int b_effective_cols = transposeB ? b.shape[0] : b.shape[1];
+
+    if (a_rows == 0 || a_cols == 0 || b_effective_cols == 0) return false;
+
+    // Tworzenie buforów wejściowych (A i B)
+    D3D11_BUFFER_DESC descA = {};
+    descA.Usage = D3D11_USAGE_DEFAULT;
+    descA.ByteWidth = a.data.size() * sizeof(float);
+    descA.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+    descA.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+    descA.StructureByteStride = sizeof(float);
+    D3D11_SUBRESOURCE_DATA initA = {}; initA.pSysMem = a.data.data();
+    ID3D11Buffer* pBufA = nullptr;
+    if (FAILED(g_gpu.device->CreateBuffer(&descA, &initA, &pBufA))) return false;
+
+    D3D11_BUFFER_DESC descB = descA;
+    descB.ByteWidth = b.data.size() * sizeof(float);
+    D3D11_SUBRESOURCE_DATA initB = {}; initB.pSysMem = b.data.data();
+    ID3D11Buffer* pBufB = nullptr;
+    if (FAILED(g_gpu.device->CreateBuffer(&descB, &initB, &pBufB))) { pBufA->Release(); return false; }
+
+    // Tworzenie bufora wyjściowego (C)
+    D3D11_BUFFER_DESC descC = descA;
+    descC.ByteWidth = result.data.size() * sizeof(float);
+    descC.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
+    ID3D11Buffer* pBufC = nullptr;
+    if (FAILED(g_gpu.device->CreateBuffer(&descC, nullptr, &pBufC))) { pBufA->Release(); pBufB->Release(); return false; }
+
+    // Tworzenie widoków (Views) do Shadera
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+    srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+    srvDesc.Buffer.FirstElement = 0;
+    srvDesc.Buffer.NumElements = a.data.size();
+    ID3D11ShaderResourceView* pSrvA = nullptr;
+    g_gpu.device->CreateShaderResourceView(pBufA, &srvDesc, &pSrvA);
+
+    srvDesc.Buffer.NumElements = b.data.size();
+    ID3D11ShaderResourceView* pSrvB = nullptr;
+    g_gpu.device->CreateShaderResourceView(pBufB, &srvDesc, &pSrvB);
+
+    D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc = {};
+    uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+    uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+    uavDesc.Buffer.FirstElement = 0;
+    uavDesc.Buffer.NumElements = result.data.size();
+    ID3D11UnorderedAccessView* pUavC = nullptr;
+    g_gpu.device->CreateUnorderedAccessView(pBufC, &uavDesc, &pUavC);
+
+    // Przekazanie wymiarów do Shadera (Constant Buffer)
+    struct Constants { uint32_t ar, ac, bc, tb; };
+    Constants consts = { (uint32_t)a_rows, (uint32_t)a_cols, (uint32_t)b_effective_cols, (uint32_t)(transposeB ? 1 : 0) };
+    D3D11_BUFFER_DESC cbDesc = {};
+    cbDesc.Usage = D3D11_USAGE_DEFAULT;
+    cbDesc.ByteWidth = sizeof(Constants);
+    cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    D3D11_SUBRESOURCE_DATA cbInit = {}; cbInit.pSysMem = &consts;
+    ID3D11Buffer* pCB = nullptr;
+    g_gpu.device->CreateBuffer(&cbDesc, &cbInit, &pCB);
+
+    // Wywołanie Shadera Obliczeniowego (Dispatch)
+    g_gpu.context->CSSetShader(g_gpu.matmulShader, nullptr, 0);
+    ID3D11ShaderResourceView* srvs[] = { pSrvA, pSrvB };
+    g_gpu.context->CSSetShaderResources(0, 2, srvs);
+    g_gpu.context->CSSetUnorderedAccessViews(0, 1, &pUavC, nullptr);
+    g_gpu.context->CSSetConstantBuffers(0, 1, &pCB);
+
+    uint32_t dispatchX = (b_effective_cols + 15) / 16;
+    uint32_t dispatchY = (a_rows + 15) / 16;
+    g_gpu.context->Dispatch(dispatchX, dispatchY, 1);
+
+    // Czyszczenie przypisań, by zwolnić zasoby
+    ID3D11ShaderResourceView* nullSRV[] = { nullptr, nullptr };
+    g_gpu.context->CSSetShaderResources(0, 2, nullSRV);
+    ID3D11UnorderedAccessView* nullUAV[] = { nullptr };
+    g_gpu.context->CSSetUnorderedAccessViews(0, 1, nullUAV, nullptr);
+
+    // Odczytanie wyników z VRAM z powrotem do RAM
+    D3D11_BUFFER_DESC readDesc = {};
+    readDesc.Usage = D3D11_USAGE_STAGING;
+    readDesc.ByteWidth = result.data.size() * sizeof(float);
+    readDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+    ID3D11Buffer* pReadBuf = nullptr;
+    g_gpu.device->CreateBuffer(&readDesc, nullptr, &pReadBuf);
+
+    g_gpu.context->CopyResource(pReadBuf, pBufC);
+
+    D3D11_MAPPED_SUBRESOURCE mapped;
+    if (SUCCEEDED(g_gpu.context->Map(pReadBuf, 0, D3D11_MAP_READ, 0, &mapped))) {
+        memcpy(result.data.data(), mapped.pData, result.data.size() * sizeof(float));
+        g_gpu.context->Unmap(pReadBuf, 0);
+    }
+
+    // Sprzątanie pamięci karty graficznej
+    pReadBuf->Release();
+    pCB->Release();
+    if(pUavC) pUavC->Release();
+    if(pSrvB) pSrvB->Release();
+    if(pSrvA) pSrvA->Release();
+    pBufC->Release();
+    pBufB->Release();
+    pBufA->Release();
+
+    return true;
+}
+
 // --- TENSOR IMPLEMENTATION ---
 Tensor::Tensor(std::vector<int> s) : shape(s) {
     int size = 1;
@@ -14,7 +214,7 @@ Tensor::Tensor(std::vector<int> s) : shape(s) {
 float& Tensor::at(int i) { return data[i]; }
 float& Tensor::at(int r, int c) { return data[r * shape[1] + c]; }
 
-// Podstawowe mnożenie macierzy O(N^3) (w przyszłości do optymalizacji np. przez OpenMP/SIMD)
+// Mnożenie macierzy zoptymalizowane za pomocą OpenMP i GPU (DirectX 11)
 Tensor Tensor::matmul(const Tensor& a, const Tensor& b, bool transposeB) {
     int a_rows = a.shape[0];
     int a_cols = a.shape[1];
@@ -22,6 +222,19 @@ Tensor Tensor::matmul(const Tensor& a, const Tensor& b, bool transposeB) {
     int b_cols = transposeB ? b.shape[0] : b.shape[1];
     
     Tensor result({a_rows, b_cols});
+    
+    // HYBRYDOWY SILNIK:
+    // Jeśli macierz jest duża (np. faza przetwarzania całego promptu), używamy GPU.
+    // Dla małych macierzy (np. generowanie pojedynczego tokena) używamy CPU OpenMP,
+    // ponieważ kopiowanie danych z RAM do VRAM dla małych ilości danych zajęłoby więcej czasu niż samo liczenie na CPU.
+    if (a_rows >= 16) {
+        if (matmul_gpu(a, b, result, transposeB)) {
+            return result; // GPU policzyło i zwróciło wynik
+        }
+    }
+    
+    // Fallback: CPU (OpenMP)
+    #pragma omp parallel for
     for (int i = 0; i < a_rows; i++) {
         for (int j = 0; j < b_cols; j++) {
             float sum = 0.0f;
@@ -29,7 +242,7 @@ Tensor Tensor::matmul(const Tensor& a, const Tensor& b, bool transposeB) {
                 float b_val = transposeB ? b.data[j * b.shape[1] + k] : b.data[k * b.shape[1] + j];
                 sum += a.data[i * a.shape[1] + k] * b_val;
             }
-            result.at(i, j) = sum;
+            result.data[i * b_cols + j] = sum;
         }
     }
     return result;
@@ -45,6 +258,7 @@ void Tensor::applyRMSNorm(const Tensor& weight) {
     int rows = shape.size() > 1 ? shape[0] : 1;
     int cols = shape.size() > 1 ? shape[1] : shape[0];
     
+    #pragma omp parallel for
     for (int r = 0; r < rows; r++) {
         float ss = 0.0f;
         for (int c = 0; c < cols; c++) {
@@ -67,6 +281,7 @@ void Tensor::readFromFile(std::ifstream& file) {
 
 // --- ENGINE IMPLEMENTATION ---
 NppAIEngine::NppAIEngine() {}
+
 NppAIEngine::~NppAIEngine() {}
 
 bool NppAIEngine::loadModel(const std::string& modelPath) {
@@ -139,7 +354,7 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
     if (seq_len == 0 || dim == 0) return Tensor({1, vocab_size});
     
     // Zabezpieczenie przed przekroczeniem kontekstu
-    int T = std::min(seq_len, max_seq_len);
+    int T = seq_len < max_seq_len ? seq_len : max_seq_len;
     
     // 1. Embedding dla całej sekwencji T
     Tensor x({T, dim});
@@ -165,6 +380,7 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
         Tensor scores = Tensor::matmul(q, k, true); // [T, T]
         
         float scale = 1.0f / std::sqrt((float)dim);
+        #pragma omp parallel for
         for(int r = 0; r < T; r++) {
             float max_val = -1e9f;
             for(int c = 0; c < T; c++) {
@@ -196,8 +412,9 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
         x = Tensor::matmul(attn_out, layers[l].wO);
 
         // Residual Connection
+        #pragma omp parallel for
         for(int r=0; r<T; r++) {
-            for(int i=0; i<dim; i++) x.at(r, i) += residual.at(r, i);
+            for(int i=0; i<dim; i++) x.data[r * dim + i] += residual.data[r * dim + i];
         }
 
         // -- Feed Forward --
@@ -209,15 +426,17 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
         Tensor up = Tensor::matmul(x, layers[l].wUp);
         
         Tensor ffn_mid({T, hidden_dim});
+        #pragma omp parallel for
         for(int r=0; r<T; r++) {
-            for(int i=0; i<hidden_dim; i++) ffn_mid.at(r, i) = gate.at(r, i) * up.at(r, i);
+            for(int i=0; i<hidden_dim; i++) ffn_mid.data[r * hidden_dim + i] = gate.data[r * hidden_dim + i] * up.data[r * hidden_dim + i];
         }
 
         x = Tensor::matmul(ffn_mid, layers[l].wDown);
 
         // Residual Connection
+        #pragma omp parallel for
         for(int r=0; r<T; r++) {
-            for(int i=0; i<dim; i++) x.at(r, i) += residual.at(r, i);
+            for(int i=0; i<dim; i++) x.data[r * dim + i] += residual.data[r * dim + i];
         }
     }
     
@@ -233,23 +452,92 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
     return logits;
 }
 
-std::string NppAIEngine::generate(const std::string& prompt, int maxTokens) {
+std::string NppAIEngine::generate(const std::string& prompt, int maxTokens, std::function<void(char, bool)> onToken, std::function<void(int)> onRemove) {
     if (dim == 0) return "Model nie jest zaladowany!";
 
+    cancelRequested = false;
     std::vector<int> tokens = tokenize(prompt);
     std::string current_output = prompt;
+    bool is_thinking = false;
     
     // Główna pętla autoregresyjna AI
     for(int i = 0; i < maxTokens; i++) {
+        if (cancelRequested) {
+            std::cout << "\n[Generowanie przerwane przez uzytkownika]" << std::endl;
+            break;
+        }
+
         Tensor logits = forward(tokens);
         
-        // Wybieramy token z najwyższym prawdopodobieństwem (Argmax)
+        // Zabezpieczenie przed NaN (wybuchami w matematyce Tensorowej)
+        bool has_nan = false;
+        for (int v = 0; v < vocab_size; v++) {
+            if (std::isnan(logits.at(0, v))) {
+                has_nan = true;
+                break;
+            }
+        }
+
         int nextToken = 0;
-        float maxVal = -1e9f;
-        for(int v=0; v<vocab_size; v++) {
-            if (logits.at(0, v) > maxVal) {
-                maxVal = logits.at(0, v);
-                nextToken = v;
+         if (has_nan) {
+             nextToken = 0; // Fallback na bezpieczny token
+         } else {
+              // Repetition Penalty - obniżamy szansę na znaki, które wystąpiły niedawno w kontekście
+              float repetition_penalty = 1.3f; // Zwiększone z 1.2 na 1.3
+              for (int t : tokens) {
+                  if (logits.at(0, t) > 0) {
+                      logits.data[t] /= repetition_penalty;
+                  } else {
+                      logits.data[t] *= repetition_penalty;
+                  }
+              }
+
+              // TOP-K Sampling (Rozwiązanie problemu "pustych spacji" i krzaczków)
+             // Zamiast brać absolutnie największą wartość (Greedy) lub losować ze wszystkich,
+             // ograniczamy wybór tylko do K najbardziej prawdopodobnych liter.
+             int K = 3; // Zmniejszamy K z 5 na 3, aby ograniczyć zniekształcenia (halucynacje)
+             std::vector<std::pair<float, int>> top_logits;
+             for (int v = 0; v < vocab_size; ++v) {
+                 top_logits.push_back({logits.at(0, v), v});
+             }
+            
+            // Sortowanie malejąco
+            std::sort(top_logits.begin(), top_logits.end(), 
+                [](const std::pair<float, int>& a, const std::pair<float, int>& b) {
+                    return a.first > b.first;
+                });
+
+            // Temperatura decyzyjna
+             float temperature = 0.35f; // Zmniejszamy z 0.5 na 0.35, aby model był "pewniejszy" i mniej zgadywał
+            std::vector<float> probs(K, 0.0f);
+            float sum_probs = 0.0f;
+            
+            // Wyciągnięcie prawdopodobieństw tylko dla Top-K znaków
+            for (int j = 0; j < K; ++j) {
+                probs[j] = std::exp(top_logits[j].first / temperature);
+                sum_probs += probs[j];
+            }
+            
+            // Rzutowanie losowe (Weighted Random) z Top-K
+            float r = (float)rand() / (float)RAND_MAX;
+            float cumulative = 0.0f;
+            bool selected = false;
+            for (int j = 0; j < K; ++j) {
+                cumulative += probs[j] / sum_probs;
+                if (r <= cumulative) {
+                    nextToken = top_logits[j].second;
+                    selected = true;
+                    break;
+                }
+            }
+            if (!selected) {
+                nextToken = top_logits[0].second; // Fallback na najlepszą literę
+            }
+
+            // Zabezpieczenie przed niekontrolowanymi znakami kontrolnymi ASCII 
+            // (czasami model próbuje wypluć null-bajty co w edytorze wygląda jak puste bloki)
+            if (nextToken < 32 && nextToken != '\n' && nextToken != '\r' && nextToken != '\t') {
+                nextToken = ' '; // Bezpieczny zamiennik
             }
         }
         
@@ -260,10 +548,45 @@ std::string NppAIEngine::generate(const std::string& prompt, int maxTokens) {
         
         // Zatrzymujemy generowanie od razu, jeśli model próbuje rozpocząć nową "rozmowę"
         if (nextToken >= 0 && nextToken < 256) {
-            current_output += (char)(unsigned char)nextToken;
+            char c = (char)(unsigned char)nextToken;
+            current_output += c;
+            
+            // Wypisujemy znak na ekran w czasie rzeczywistym
+            std::cout << c;
+            std::cout.flush();
+
+            // Sprawdzamy czy to nie początek myślenia
+            if (!is_thinking && current_output.length() >= 7 && 
+                current_output.substr(current_output.length() - 7) == "<THINK>") {
+                is_thinking = true;
+                // Usuwamy z edytora tag "<THINK>", który właśnie został do niego wypisany (7 znaków)
+                if (onRemove) onRemove(7);
+                continue; // Nie przekazujemy samego tagu do callbacka UI
+            }
+
+            // Sprawdzamy czy to nie koniec myślenia
+            if (is_thinking && current_output.length() >= 8 && 
+                current_output.substr(current_output.length() - 8) == "</THINK>") {
+                is_thinking = false;
+                continue; // Przeskakujemy tag zamykający
+            }
+            
+            // Callback dla interfejsu (wklejanie znaku na żywo do edytora lub pola myślenia)
+            // Jeśli wypisujemy tag zamykający, "is_thinking" wciąż jest true aż do pełnego wygenerowania,
+            // ale myślenie generalnie nie trafia do edytora. Jednakże, żeby uniknąć wypisywania 
+            // kawałków tagu "</THINK>" do pola myślenia, możemy to ulepszyć w przyszłości.
+            if (onToken) {
+                // Jeśli jesteśmy w fazie myślenia, przekazujemy znak do historii (isThought = true)
+                // W przeciwnym razie przekazujemy do Scintilli (isThought = false)
+                onToken(c, is_thinking);
+            }
+            
             // Sprawdzamy czy na końcu wygenerowanego tekstu nie pojawił się tag nowego promptu
             if (current_output.length() >= 7 && 
                 current_output.substr(current_output.length() - 7) == "[USER]:") {
+                
+                // Callback do usunięcia tagu "[USER]:" z edytora
+                if (onRemove) onRemove(7);
                 
                 // Obcinamy "[USER]:" z końcowej listy tokenów i wychodzimy
                 for(int j=0; j<7; j++) tokens.pop_back();
@@ -272,5 +595,6 @@ std::string NppAIEngine::generate(const std::string& prompt, int maxTokens) {
         }
     }
     
+    std::cout << std::endl;
     return detokenize(tokens);
 }

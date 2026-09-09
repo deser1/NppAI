@@ -123,10 +123,19 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 			::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
 			if (which != -1) {
 				HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
-				auto length = ::SendMessage(curScintilla, SCI_GETLENGTH, 0, 0);
-				std::string content((size_t)length + 1, '\0');
-				::SendMessage(curScintilla, SCI_GETTEXT, length + 1, (LPARAM)content.data());
-				AIManager::getInstance().checkModifications(content);
+				AIManager::getInstance().checkModifications("");
+			}
+		}
+		break;
+
+		case SCN_MODIFIED:
+		{
+			if (notifyCode->nmhdr.hwndFrom == nppData._scintillaMainHandle || notifyCode->nmhdr.hwndFrom == nppData._scintillaSecondHandle) {
+				if (notifyCode->modificationType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT)) {
+					int linesAdded = notifyCode->linesAdded;
+					int position = notifyCode->position;
+					AIManager::getInstance().onEditorModified((HWND)notifyCode->nmhdr.hwndFrom, position, linesAdded);
+				}
 			}
 		}
 		break;

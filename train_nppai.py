@@ -4,6 +4,25 @@ import torch.nn.functional as F
 import struct
 import os
 import glob
+import math
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+# --- KONFIGURACJA SPRZĘTU (DirectML / CUDA / CPU) ---
+try:
+    import torch_directml
+    dml_available = torch_directml.is_available()
+except ImportError:
+    dml_available = False
+
+# WYMUSZAMY CPU ze względu na błędy DML OOM na dużym block_size
+print("Wymuszanie użycia CPU ze względu na duży rozmiar okna kontekstowego (uniknięcie DML OOM)...")
+device = torch.device("cpu")
+dml_available = False
+
+print(f"Używam urządzenia do trenowania: {device}")
+# ----------------------------------------------------
 
 # 1. Definicja architektury w PyTorch (Dokładnie takiej samej jak w C++)
 class NppAILayer(nn.Module):
@@ -134,16 +153,16 @@ def load_dataset(folder_path="datasets/"):
         print(f"Brak plików .txt w folderze {folder_path}!")
         return ""
         
-    print(f"Znaleziono {len(files)} plików instruktażowych. Wczytywanie...")
+    print(f"Znaleziono {len(files)} plikow instruktazowych. Wczytywanie...")
     
     for f in files:
         try:
             with open(f, "r", encoding="utf-8", errors="ignore") as file:
                 text += file.read() + "\n\n"
         except Exception as e:
-            print(f"Błąd czytania pliku {f}: {e}")
+            print(f"Blad czytania pliku {f}: {e}")
             
-    print(f"Wczytano pomyślnie. Długość tekstu: {len(text)} znaków.")
+    print(f"Wczytano pomyslnie. Dlugosc tekstu: {len(text)} znakow.")
     return text
 
 # Prosty Tokenizer bajtowy (Zgodny w 100% z C++)
@@ -165,12 +184,14 @@ def get_batch(split, data, block_size, batch_size):
     return x, y
 
 def train_model():
+    global device
     print("Inicjalizacja środowiska trenowania NppAI...")
     
     # 1. Wczytanie kodu C++ wtyczki jako datasetu
     dataset_text = load_dataset()
+    
     if len(dataset_text) < 100:
-        print("Błąd: Za mało kodu w folderze src/ do trenowania.")
+        print("Błąd: Za mało kodu do trenowania.")
         exit(1)
         
     tokenizer = ByteTokenizer()
@@ -179,41 +200,56 @@ def train_model():
     print(f"Rozmiar słownika (znaki unikalne): {tokenizer.vocab_size}")
     
     # 2. Inicjalizacja modelu z dopasowanym vocab_size
-    # Znacząco zwiększamy pamięć modelu dla obsługi tak dużego tekstu (Vue SPA to po ok. 1500-2000 znaków)
-    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=128, hidden_dim=256, n_layers=6, max_seq_len=512)
+    # Powiększona, zoptymalizowana architektura do zapamiętania kodu programistycznego
+    model = NppAIModel(vocab_size=tokenizer.vocab_size, dim=256, hidden_dim=512, n_layers=4, max_seq_len=2048)
     
-    # Przenosimy model na GPU jeśli dostępne, w przeciwnym razie zostajemy na CPU
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Używam urządzenia: {device}")
-    model.to(device)
+    # SYSTEM CHECKPOINTÓW (PAMIĘCI MODELU)
+    os.makedirs("models", exist_ok=True)
+    checkpoint_path = "models/checkpoint.pth"
+    if os.path.exists(checkpoint_path):
+        print("\n[!] Znaleziono poprzednie wagi! Ładowanie nabytej wiedzy z checkpoint.pth...")
+        # Wczytujemy zapisaną wcześniej wiedzę (State Dictionary) do modelu
+        model.load_state_dict(torch.load(checkpoint_path, map_location='cpu', weights_only=True))
+    else:
+        print("\n[!] Brak poprzednich wag. Rozpoczynamy naukę od zera.")
+
+    # Przenosimy model na odpowiednie urządzenie w sposób bezpieczny dla VRAM
+    if dml_available:
+        import torch_directml
+        os.environ["DML_DISABLE_MEMORY_OPT"] = "1"
+    
+    try:
+        model.to(device)
+    except RuntimeError as e:
+        if "out of memory" in str(e).lower() or dml_available:
+            print(f"\n[!] Błąd pamięci GPU (DirectML): {e}")
+            print("[!] Karta graficzna odrzuciła alokację pamięci (częsty problem ze zintegrowanymi kartami lub brakiem VRAM).")
+            print("[!] Automatyczny powrót do trenowania na procesorze (CPU)...")
+            device = torch.device("cpu")
+            model.to(device)
+        else:
+            raise e
     
     # 3. Parametry treningu
-    learning_rate = 1e-3
-    batch_size = 4 # Mocno zmniejszamy dla CPU
-    block_size = 512 # Kompromis, który uczy się bardzo szybko na CPU, ale "pamięta" kod
-    max_iters = 500 # Szybki test
+    # Używamy wolniejszego uczenia, ale na większej ilości danych
+    learning_rate = 5e-4
+    max_iters = 3000 # Jeszcze więcej kroków
+    block_size = 2048 # Zwiększone z 512 na 2048 by nauczyć model całego max_seq_len
+    batch_size = 4 # Zmniejszone z 8 na 4 by zmieścić w RAM
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
     
-    def get_batch():
-        # Pobieranie batcha danych
-        ix = torch.randint(len(data) - block_size, (batch_size,))
-        x = torch.stack([data[i:i+block_size] for i in ix])
-        y = torch.stack([data[i+1:i+block_size+1] for i in ix])
-        return x, y
-
-    print("Trenowanie modelu NppAI na kodzie C++...")
+    print("Trenowanie modelu NppAI...")
     model.train()
     
     for iter in range(max_iters):
-        # Pobieranie batcha danych
-        xb, yb = get_batch()
-        xb, yb = xb.to(device), yb.to(device) # Przeniesienie na GPU/CPU
+        # Losujemy partię z całego zbioru, nie używamy x_full by model nie był zafiksowany na 1 przykładzie
+        xb, yb = get_batch('train', data, block_size, batch_size)
+        xb, yb = xb.to(device), yb.to(device)
         
         # Forward pass
         logits = model(xb)
         
-        # PyTorch spodziewa się kształtu (B*T, C) do obliczenia błędu (Cross Entropy)
         B, T, C = logits.shape
         logits_reshaped = logits.view(B*T, C)
         targets = yb.view(B*T)
@@ -225,13 +261,16 @@ def train_model():
         loss.backward()
         optimizer.step()
         
-        if iter % 100 == 0:
+        if iter % 10 == 0 or iter == max_iters - 1:
             print(f"Krok {iter}/{max_iters} | Błąd (Loss): {loss.item():.4f}")
 
-    print("Trening zakończony!")
+    print("\nTrening zakończony!")
+    
+    # Zapisujemy wiedzę (checkpoint) do dalszego trenowania w przyszłości
+    torch.save(model.state_dict(), checkpoint_path)
+    print(f"Zapisano nabytą wiedzę (stan matematyczny) do {checkpoint_path}")
     
     # Eksportujemy model do formatu czytelnego dla naszej wtyczki C++
-    os.makedirs("models", exist_ok=True)
     export_to_bin(model, "models/NppAI-model-v1.nppai")
 
 if __name__ == "__main__":

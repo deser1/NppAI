@@ -1,13 +1,21 @@
 [USER]: Prosta strona html
 [AI]:
+<THINK>
+Użytkownik potrzebuje prostej, czystej strony HTML.
+Wygeneruję podstawową strukturę dokumentu HTML5 z tagami html, head, title i body.
+Nie będę dodawał żadnych skomplikowanych elementów ani frameworków CSS, tylko czysty tekst powitalny.
+Wybieram język polski w atrybucie lang.
+Rozpoczynam pisanie.
+</THINK>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Witaj!</title>
+    <title>Moja prosta strona</title>
 </head>
 <body>
     <h1>Witaj!</h1>
+    <p>To jest prosta strona HTML.</p>
 </body>
 </html>
 
@@ -86,6 +94,17 @@ public class Person {
 
 [USER]: Lista todo w Vue
 [AI]:
+<THINK>
+Cel: Stworzenie aplikacji To-Do List wykorzystującej framework Vue.js (wersja 3).
+Wymagania techniczne:
+1. Plik HTML jako Single Page Application.
+2. Zaciągnięcie bibliotek: Vue 3 (przez unpkg) oraz TailwindCSS do stylizacji.
+3. Struktura danych: lista zadań (tasks) oraz pole na nowe zadanie (newTask).
+4. Funkcje: dodawanie zadania, usuwanie zadania, oznaczanie jako ukończone.
+Wybieram Composition API dla nowoczesności, ale Options API też jest w porządku. Użyję Options API dla prostoty.
+Zastosuję estetyczne style z Tailwind: szare tło, wyśrodkowana karta, cienie, ładne przyciski.
+Gotowe, generuję kod źródłowy.
+</THINK>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -97,43 +116,125 @@ public class Person {
 <body class="bg-gray-100 p-10 font-sans">
     <div id="app" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
         <h2 class="text-2xl font-bold mb-4 text-gray-800">Moje Zadania</h2>
+        
+        <!-- Formularz dodawania -->
         <div class="flex mb-4">
-            <input v-model="newTask" @keyup.enter="addTask" placeholder="Dodaj nowe zadanie..." class="flex-1 border rounded-l-lg p-2 outline-none focus:ring-2 focus:ring-blue-400">
+            <input v-model="newTask" @keyup.enter="addTask" placeholder="Dodaj nowe zadanie..." class="flex-1 border rounded-l-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
             <button @click="addTask" class="bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600 transition">Dodaj</button>
         </div>
+
+        <!-- Lista zadań -->
         <ul>
-            <li v-for="(task, index) in tasks" :key="index" class="flex items-center justify-between p-3 border-b last:border-0 hover:bg-gray-50 transition">
-                <span :class="{'line-through text-gray-400': task.done}" class="cursor-pointer flex-1" @click="task.done = !task.done">{{ task.text }}</span>
-                <button @click="removeTask(index)" class="text-red-500 hover:text-red-700 font-bold ml-4">X</button>
+            <li v-for="(task, index) in tasks" :key="index" class="flex items-center justify-between p-3 border-b hover:bg-gray-50 transition">
+                <div class="flex items-center">
+                    <input type="checkbox" v-model="task.done" class="mr-3 w-5 h-5 text-blue-500 rounded focus:ring-blue-400">
+                    <span :class="{'line-through text-gray-400': task.done, 'text-gray-700': !task.done}" class="text-lg">{{ task.text }}</span>
+                </div>
+                <button @click="removeTask(index)" class="text-red-500 hover:text-red-700 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </li>
         </ul>
-        <p v-if="tasks.length === 0" class="text-gray-500 text-center mt-4">Brak zadań. Dodaj coś!</p>
+        
+        <p v-if="tasks.length === 0" class="text-center text-gray-500 mt-4">Brak zadań. Dodaj coś do zrobienia!</p>
     </div>
 
     <script>
-        const { createApp, ref } = Vue;
+        const { createApp } = Vue;
+
         createApp({
-            setup() {
-                const newTask = ref('');
-                const tasks = ref([
-                    { text: 'Nauczyć się Vue 3', done: false },
-                    { text: 'Stworzyć model AI', done: true }
-                ]);
-                const addTask = () => {
-                    if (newTask.value.trim()) {
-                        tasks.value.push({ text: newTask.value, done: false });
-                        newTask.value = '';
+            data() {
+                return {
+                    newTask: '',
+                    tasks: [
+                        { text: 'Nauczyć się podstaw Vue 3', done: true },
+                        { text: 'Zrobić zakupy', done: false },
+                        { text: 'Napisz własny silnik w C++', done: false }
+                    ]
+                }
+            },
+            methods: {
+                addTask() {
+                    if (this.newTask.trim() !== '') {
+                        this.tasks.push({ text: this.newTask.trim(), done: false });
+                        this.newTask = '';
                     }
-                };
-                const removeTask = (index) => {
-                    tasks.value.splice(index, 1);
-                };
-                return { newTask, tasks, addTask, removeTask }
+                },
+                removeTask(index) {
+                    this.tasks.splice(index, 1);
+                }
             }
         }).mount('#app');
     </script>
 </body>
 </html>
+
+[USER]: Znajdź błąd w poniższym kodzie:
+```cpp
+int main() {
+    int a = 5
+    return 0;
+}
+```
+[AI]:
+<THINK>
+Analizuję podany kod w języku C++.
+Widzę deklarację zmiennej 'a', ale brakuje średnika na końcu linii.
+Wyjaśnię to użytkownikowi i podam poprawiony kod.
+</THINK>
+W Twoim kodzie brakuje średnika (`;`) na końcu linii z deklaracją zmiennej `a`. 
+
+Oto poprawiony kod:
+```cpp
+int main() {
+    int a = 5;
+    return 0;
+}
+```
+
+[USER]: Co robi ten kod?
+```python
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+```
+[AI]:
+<THINK>
+Użytkownik pyta o działanie funkcji w Pythonie.
+Kod definiuje rekurencyjną funkcję 'fib', która oblicza n-ty wyraz ciągu Fibonacciego.
+Napiszę krótkie i zwięzłe wyjaśnienie.
+</THINK>
+Ten kod to rekurencyjna implementacja funkcji obliczającej **n-ty wyraz ciągu Fibonacciego**.
+
+Jeśli `n` jest równe 0 lub 1, funkcja zwraca tę samą wartość. W przeciwnym razie wywołuje samą siebie dwukrotnie, sumując dwa poprzednie wyrazy ciągu. Uwaga: dla dużych wartości `n` taka implementacja jest bardzo wolna, ponieważ oblicza te same wartości wielokrotnie.
+
+[USER]: Przepisz to na nowoczesny JavaScript (ES6+):
+```javascript
+var nazwa = "NppAI";
+var wersja = 1;
+function pokaz() {
+  console.log(nazwa + " " + wersja);
+}
+```
+[AI]:
+<THINK>
+Użytkownik chce zaktualizować stary kod JavaScript do standardu ES6+.
+Zmienię 'var' na 'const' dla stałych wartości.
+Zamienię funkcję na funkcję strzałkową (arrow function).
+Zastosuję template literals (backticki) zamiast konkatenacji stringów plusem.
+</THINK>
+Oto zaktualizowany kod w nowoczesnym standardzie ES6+:
+
+```javascript
+const nazwa = "NppAI";
+const wersja = 1;
+
+const pokaz = () => {
+  console.log(`${nazwa} ${wersja}`);
+};
+```
 
 [USER]: Strona logowania Vue
 [AI]:

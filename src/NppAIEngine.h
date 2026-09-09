@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <functional>
+#include <atomic>
 
 // Reprezentacja Tensora (macierzy wielowymiarowej) w naszym własnym silniku
 class Tensor {
@@ -48,10 +50,15 @@ public:
     // Wczytuje nasz autorski, binarny plik z wagami modelu
     bool loadModel(const std::string& modelPath);
 
-    // Generuje kod na podstawie promptu
-    std::string generate(const std::string& prompt, int maxTokens = 128);
+    // Generuje kod na podstawie promptu (wspiera strumieniowanie znaków i procesu myślenia)
+    std::string generate(const std::string& prompt, int maxTokens = 128, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr);
+
+    // Zatrzymuje aktualne generowanie
+    void stopGeneration() { cancelRequested = true; }
 
 private:
+    std::atomic<bool> cancelRequested{false};
+
     // Parametry modelu (np. wielkość osadzeń, liczba głów)
     int dim = 0;
     int hidden_dim = 0;

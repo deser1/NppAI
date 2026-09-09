@@ -28,7 +28,12 @@ out/
 __pycache__/
 *.pyc
 venv/
+venv_gpu/
 env/
+training_log.txt
+output_test*.txt
+temp_url.txt
+*.exe
 
 # NppAI - Datasets i Modele (NIE WYSTAWIAJ TEGO DO GIT!)
 models/
