@@ -285,6 +285,7 @@ NppAIEngine::NppAIEngine() {}
 NppAIEngine::~NppAIEngine() {}
 
 bool NppAIEngine::loadModel(const std::string& modelPath) {
+    std::lock_guard<std::mutex> lock(engineMutex);
     std::ifstream file(modelPath, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Nie udalo sie otworzyc pliku modelu: " << modelPath << std::endl;
@@ -453,6 +454,7 @@ Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
 }
 
 std::string NppAIEngine::generate(const std::string& prompt, int maxTokens, std::function<void(char, bool)> onToken, std::function<void(int)> onRemove) {
+    std::lock_guard<std::mutex> lock(engineMutex);
     if (dim == 0) return "Model nie jest zaladowany!";
 
     cancelRequested = false;
@@ -547,37 +549,39 @@ std::string NppAIEngine::generate(const std::string& prompt, int maxTokens, std:
         if (nextToken == 0) break;
         
         // Zatrzymujemy generowanie od razu, jeśli model próbuje rozpocząć nową "rozmowę"
+        char c = (char)(unsigned char)nextToken;
+        
+        // Buforowanie, by wykryć "[USER]" (model halucynuje, że on sam jest użytkownikiem)
+        current_output += c;
+        if (current_output.find("[USER]") != std::string::npos || current_output.find("[SYSTEM]") != std::string::npos) {
+            // AI zwariowało i weszło w pętle. Usuwamy ostatnie 6 znaków ("[USER]") z edytora
+            if (onRemove) {
+                onRemove(6); // Backspace 6 razy
+            }
+            break;
+        }
         if (nextToken >= 0 && nextToken < 256) {
-            char c = (char)(unsigned char)nextToken;
-            current_output += c;
-            
-            // Wypisujemy znak na ekran w czasie rzeczywistym
-            std::cout << c;
-            std::cout.flush();
+            // char c = (char)(unsigned char)nextToken; // Zmienna "c" już jest zadeklarowana wyżej!
+            // current_output += c; // Buforowanie już jest robione wyżej!
 
             // Sprawdzamy czy to nie początek myślenia
             if (!is_thinking && current_output.length() >= 7 && 
                 current_output.substr(current_output.length() - 7) == "<THINK>") {
                 is_thinking = true;
-                // Usuwamy z edytora tag "<THINK>", który właśnie został do niego wypisany (7 znaków)
+                // Usuń "<THINK>" z edytora
                 if (onRemove) onRemove(7);
-                continue; // Nie przekazujemy samego tagu do callbacka UI
+                continue; // nie wywołujemy onToken dla tego znaku
             }
 
             // Sprawdzamy czy to nie koniec myślenia
-            if (is_thinking && current_output.length() >= 8 && 
+            else if (is_thinking && current_output.length() >= 8 && 
                 current_output.substr(current_output.length() - 8) == "</THINK>") {
                 is_thinking = false;
-                continue; // Przeskakujemy tag zamykający
+                continue;
             }
             
-            // Callback dla interfejsu (wklejanie znaku na żywo do edytora lub pola myślenia)
-            // Jeśli wypisujemy tag zamykający, "is_thinking" wciąż jest true aż do pełnego wygenerowania,
-            // ale myślenie generalnie nie trafia do edytora. Jednakże, żeby uniknąć wypisywania 
-            // kawałków tagu "</THINK>" do pola myślenia, możemy to ulepszyć w przyszłości.
+            // Wypisujemy znak na ekran w czasie rzeczywistym
             if (onToken) {
-                // Jeśli jesteśmy w fazie myślenia, przekazujemy znak do historii (isThought = true)
-                // W przeciwnym razie przekazujemy do Scintilli (isThought = false)
                 onToken(c, is_thinking);
             }
             

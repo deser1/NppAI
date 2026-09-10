@@ -23,9 +23,12 @@ public:
     void stopGeneration() { engine.stopGeneration(); }
 
     // Funkcje śledzące dla Diff Trackera (uczenie z zachowania usera)
-    void startTracking(const std::string& prompt, const std::string& generatedCode, int startLine, int endLine);
+    void startTracking(const std::string& prompt, const std::string& generatedCode, int startLine, int endLine, const std::string& filePath = "");
     void checkModifications(const std::string& currentTextInEditor);
     void onEditorModified(HWND hwnd, int position, int linesAdded);
+
+    // Sprawdza i pobiera nowe wagi modelu z chmury
+    void checkAndDownloadModelUpdate();
 
 private:
     AIManager() = default;
@@ -37,6 +40,7 @@ private:
     bool isTracking = false;
     std::string lastPrompt;
     std::string lastGeneratedCode;
+    std::string trackedFilePath;
     int trackedStartLine = 0;
     int trackedEndLine = 0;
     HWND trackedHwnd = nullptr;

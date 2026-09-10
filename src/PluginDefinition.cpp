@@ -84,14 +84,48 @@ void ExecuteAIGeneration() {
     isGenerating = true;
     SetWindowTextA(g_hBtn, "Zatrzymaj");
 
+    // Pobranie ścieżki pliku (dla pamięci RAG)
+    TCHAR currentPath[MAX_PATH] = { 0 };
+    ::SendMessage(nppData._nppHandle, NPPM_GETFULLCURRENTPATH, MAX_PATH, (LPARAM)currentPath);
+    std::string currentFilePath = "";
+#ifdef UNICODE
+    int len = WideCharToMultiByte(CP_UTF8, 0, currentPath, -1, NULL, 0, NULL, NULL);
+    if (len > 0) {
+        std::vector<char> buf(len);
+        WideCharToMultiByte(CP_UTF8, 0, currentPath, -1, buf.data(), len, NULL, NULL);
+        currentFilePath = buf.data();
+    }
+#else
+    currentFilePath = currentPath;
+#endif
+
+    // Odczytanie kontekstu pamięci z pliku .nppai_mem
+    std::string currentContext = "";
+    if (!currentFilePath.empty()) {
+        std::string memPath = currentFilePath + ".nppai_mem";
+        std::ifstream memFile(memPath);
+        if (memFile.is_open()) {
+            std::string line;
+            while (std::getline(memFile, line)) {
+                currentContext += line + "\n";
+            }
+            memFile.close();
+            
+            // Ograniczenie kontekstu, jeśli rozrósł się za bardzo (np. bierzemy ostatnie 1000 znaków)
+            if (currentContext.length() > 1000) {
+                currentContext = currentContext.substr(currentContext.length() - 1000);
+            }
+        }
+    }
+
     // Wygenerowanie kodu w osobnym wątku, by nie blokować interfejsu (Notepad++ brak odpowiedzi)
-    std::thread([prompt, curScintilla, startLine]() {
+    std::thread([prompt, currentContext, currentFilePath, curScintilla, startLine]() {
         // Zmienne do obsługi tagu <THINK>
         std::string think_buffer = "";
         bool is_thinking = false;
 
         // Wygenerowanie kodu strumieniowo
-        std::string generated = AIManager::getInstance().generateCode(prompt, "",
+        std::string generated = AIManager::getInstance().generateCode(prompt, currentContext,
             [&is_thinking, &think_buffer, curScintilla](char c, bool isThought) {
                 if (isThought) {
                     // Jesteśmy w trakcie myślenia
@@ -126,7 +160,7 @@ void ExecuteAIGeneration() {
         // Uruchomienie trackera na podstawie zaktualizowanych linii
         auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
         int endLine = (int)::SendMessage(curScintilla, SCI_LINEFROMPOSITION, (WPARAM)currentPos, 0);
-        AIManager::getInstance().startTracking(prompt, generated, startLine, endLine);
+        AIManager::getInstance().startTracking(prompt, generated, startLine, endLine, currentFilePath);
         
         // Przywrócenie przycisku do stanu pierwotnego
         isGenerating = false;
@@ -160,14 +194,21 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
             SendMessage(g_hBtn, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
             // Etykieta statusu trenowania
-            g_hStatusLabel = CreateWindowExW(0, L"STATIC", L"AI gotowe do pracy",
+            g_hStatusLabel = CreateWindowExW(0, L"STATIC", L"AI połączone z chmurą...",
                 WS_CHILD | WS_VISIBLE,
                 0, 0, 100, 30, hwnd, (HMENU)4, NULL, NULL);
             SendMessage(g_hStatusLabel, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
-            // Timer do odświeżania logów co 2 sekundy
-            SetTimer(hwnd, 1, 2000, NULL);
+            // Timer do sprawdzania aktualizacji chmurowych (co 60 sekund)
+            SetTimer(hwnd, 2, 60000, NULL);
             
+            return 0;
+        }
+        case WM_TIMER: {
+            if (wParam == 2) {
+                // Nowy timer: Sprawdza aktualizacje z chmury co 60 sekund
+                AIManager::getInstance().checkAndDownloadModelUpdate();
+            }
             return 0;
         }
         case WM_SIZE: {
@@ -184,39 +225,6 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) 
             MoveWindow(g_hStatusLabel, 5, height - btnHeight - 5, width - 140, btnHeight, TRUE);
             // Przycisk po prawej na dole
             MoveWindow(g_hBtn, width - 130, height - btnHeight - 5, 120, btnHeight, TRUE);
-            return 0;
-        }
-        case WM_TIMER: {
-            if (wParam == 1) {
-                std::ifstream file("D:\\Projekty\\AI_Coding_Notepad++\\training_log.txt");
-                if (file.is_open()) {
-                    std::string line, last_line;
-                    while (std::getline(file, line)) {
-                        if (!line.empty()) {
-                            last_line = line;
-                        }
-                    }
-                    if (!last_line.empty() && last_line.find("Krok") != std::string::npos) {
-                        // Wstawiamy poprawny polski tekst wymuszając kodowanie UTF-8 (przedrostek u8)
-                        size_t pipe_pos = last_line.find("|");
-                        size_t loss_pos = last_line.find("(Loss)");
-                        std::string clean_line = last_line;
-                        if (pipe_pos != std::string::npos && loss_pos != std::string::npos) {
-                            clean_line = last_line.substr(0, pipe_pos + 1) + u8" Błąd " + last_line.substr(loss_pos);
-                        }
-                        
-                        std::string status = u8"Trenowanie w tle: " + clean_line;
-                        int len = MultiByteToWideChar(CP_UTF8, 0, status.c_str(), -1, NULL, 0);
-                        if (len > 0) {
-                            std::vector<wchar_t> wbuf(len);
-                            MultiByteToWideChar(CP_UTF8, 0, status.c_str(), -1, wbuf.data(), len);
-                            SetWindowTextW(g_hStatusLabel, wbuf.data());
-                        }
-                    } else if (!last_line.empty() && last_line.find("Zako") != std::string::npos) {
-                        SetWindowTextW(g_hStatusLabel, L"AI gotowe do pracy (Trenowanie zakonczone)");
-                    }
-                }
-            }
             return 0;
         }
         case WM_COMMAND: {

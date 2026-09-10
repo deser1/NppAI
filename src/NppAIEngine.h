@@ -5,6 +5,7 @@
 #include <memory>
 #include <functional>
 #include <atomic>
+#include <mutex>
 
 // Reprezentacja Tensora (macierzy wielowymiarowej) w naszym własnym silniku
 class Tensor {
@@ -58,6 +59,7 @@ public:
 
 private:
     std::atomic<bool> cancelRequested{false};
+    std::mutex engineMutex;
 
     // Parametry modelu (np. wielkość osadzeń, liczba głów)
     int dim = 0;

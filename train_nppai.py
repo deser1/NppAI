@@ -262,8 +262,13 @@ def train_model():
         optimizer.step()
         
         if iter % 10 == 0 or iter == max_iters - 1:
-            print(f"Krok {iter}/{max_iters} | Błąd (Loss): {loss.item():.4f}")
-
+            # Wymuszamy opróżnienie bufora Pythona, aby plik na dysku zawsze miał najświeższą wartość!
+            print(f"Krok {iter}/{max_iters} | Błąd (Loss): {loss.item():.4f}", flush=True)
+            
+        # Zapisuj postęp do pliku checkpoint.pth co 50 kroków (zabezpieczenie przed uśpieniem)
+        if iter > 0 and iter % 50 == 0:
+            torch.save(model.state_dict(), checkpoint_path)
+            
     print("\nTrening zakończony!")
     
     # Zapisujemy wiedzę (checkpoint) do dalszego trenowania w przyszłości
