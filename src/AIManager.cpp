@@ -37,7 +37,7 @@ void sendToCloudBackend(const std::string& jsonPayload) {
             HINTERNET hRequest = HttpOpenRequestA(hConnect, "POST", "/api/submit_knowledge", NULL, NULL, NULL, 0, 1);
             if (hRequest) {
                 std::string headers = "Content-Type: application/json\r\n";
-                HttpSendRequestA(hRequest, headers.c_str(), headers.length(), (LPVOID)jsonPayload.c_str(), jsonPayload.length());
+                HttpSendRequestA(hRequest, headers.c_str(), (DWORD)headers.length(), (LPVOID)jsonPayload.c_str(), (DWORD)jsonPayload.length());
                 InternetCloseHandle(hRequest);
             }
             InternetCloseHandle(hConnect);

@@ -105,7 +105,7 @@ bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transpose
     // Tworzenie buforów wejściowych (A i B)
     D3D11_BUFFER_DESC descA = {};
     descA.Usage = D3D11_USAGE_DEFAULT;
-    descA.ByteWidth = a.data.size() * sizeof(float);
+    descA.ByteWidth = (UINT)(a.data.size() * sizeof(float));
     descA.BindFlags = D3D11_BIND_SHADER_RESOURCE;
     descA.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
     descA.StructureByteStride = sizeof(float);
@@ -114,14 +114,14 @@ bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transpose
     if (FAILED(g_gpu.device->CreateBuffer(&descA, &initA, &pBufA))) return false;
 
     D3D11_BUFFER_DESC descB = descA;
-    descB.ByteWidth = b.data.size() * sizeof(float);
+    descB.ByteWidth = (UINT)(b.data.size() * sizeof(float));
     D3D11_SUBRESOURCE_DATA initB = {}; initB.pSysMem = b.data.data();
     ID3D11Buffer* pBufB = nullptr;
     if (FAILED(g_gpu.device->CreateBuffer(&descB, &initB, &pBufB))) { pBufA->Release(); return false; }
 
     // Tworzenie bufora wyjściowego (C)
     D3D11_BUFFER_DESC descC = descA;
-    descC.ByteWidth = result.data.size() * sizeof(float);
+    descC.ByteWidth = (UINT)(result.data.size() * sizeof(float));
     descC.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
     ID3D11Buffer* pBufC = nullptr;
     if (FAILED(g_gpu.device->CreateBuffer(&descC, nullptr, &pBufC))) { pBufA->Release(); pBufB->Release(); return false; }
@@ -131,11 +131,11 @@ bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transpose
     srvDesc.Format = DXGI_FORMAT_UNKNOWN;
     srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
     srvDesc.Buffer.FirstElement = 0;
-    srvDesc.Buffer.NumElements = a.data.size();
+    srvDesc.Buffer.NumElements = (UINT)a.data.size();
     ID3D11ShaderResourceView* pSrvA = nullptr;
     g_gpu.device->CreateShaderResourceView(pBufA, &srvDesc, &pSrvA);
 
-    srvDesc.Buffer.NumElements = b.data.size();
+    srvDesc.Buffer.NumElements = (UINT)b.data.size();
     ID3D11ShaderResourceView* pSrvB = nullptr;
     g_gpu.device->CreateShaderResourceView(pBufB, &srvDesc, &pSrvB);
 
@@ -143,7 +143,7 @@ bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transpose
     uavDesc.Format = DXGI_FORMAT_UNKNOWN;
     uavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
     uavDesc.Buffer.FirstElement = 0;
-    uavDesc.Buffer.NumElements = result.data.size();
+    uavDesc.Buffer.NumElements = (UINT)result.data.size();
     ID3D11UnorderedAccessView* pUavC = nullptr;
     g_gpu.device->CreateUnorderedAccessView(pBufC, &uavDesc, &pUavC);
 
@@ -178,7 +178,7 @@ bool matmul_gpu(const Tensor& a, const Tensor& b, Tensor& result, bool transpose
     // Odczytanie wyników z VRAM z powrotem do RAM
     D3D11_BUFFER_DESC readDesc = {};
     readDesc.Usage = D3D11_USAGE_STAGING;
-    readDesc.ByteWidth = result.data.size() * sizeof(float);
+    readDesc.ByteWidth = (UINT)(result.data.size() * sizeof(float));
     readDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
     ID3D11Buffer* pReadBuf = nullptr;
     g_gpu.device->CreateBuffer(&readDesc, nullptr, &pReadBuf);
@@ -351,7 +351,7 @@ std::string NppAIEngine::detokenize(const std::vector<int>& tokens) {
 }
 
 Tensor NppAIEngine::forward(const std::vector<int>& inputTokens) {
-    int seq_len = inputTokens.size();
+    int seq_len = (int)inputTokens.size();
     if (seq_len == 0 || dim == 0) return Tensor({1, vocab_size});
     
     // Zabezpieczenie przed przekroczeniem kontekstu

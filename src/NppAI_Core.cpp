@@ -132,8 +132,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode)
 		{
 			if (notifyCode->nmhdr.hwndFrom == nppData._scintillaMainHandle || notifyCode->nmhdr.hwndFrom == nppData._scintillaSecondHandle) {
 				if (notifyCode->modificationType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT)) {
-					int linesAdded = notifyCode->linesAdded;
-					int position = notifyCode->position;
+					int linesAdded = (int)notifyCode->linesAdded;
+					int position = (int)notifyCode->position;
 					AIManager::getInstance().onEditorModified((HWND)notifyCode->nmhdr.hwndFrom, position, linesAdded);
 				}
 			}
