@@ -1,4 +1,4 @@
-#include "NppAIEngine.h"
+﻿#include "NppAIEngine.h"
 #include <cmath>
 #include <fstream>
 #include <iostream>

@@ -1,4 +1,4 @@
-#include "AIManager.h"
+﻿#include "AIManager.h"
 #include "PluginDefinition.h"
 #include "RAGManager.h"
 #include "Scintilla.h"

@@ -1,4 +1,4 @@
-#include "TelemetryManager.h"
+﻿#include "TelemetryManager.h"
 #include <thread>
 #include <iostream>
 #include <fstream>

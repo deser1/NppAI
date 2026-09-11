@@ -1,4 +1,4 @@
-#include "RAGManager.h"
+﻿#include "RAGManager.h"
 #include <cmath>
 #include <algorithm>
 #include <fstream>

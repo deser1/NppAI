@@ -1,4 +1,4 @@
-// NppAIEngine.h
+﻿// NppAIEngine.h
 #pragma once
 #include <vector>
 #include <string>
