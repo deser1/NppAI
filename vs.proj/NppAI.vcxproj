@@ -41,6 +41,7 @@
     <ClInclude Include="..\src\Scintilla.h" />
     <ClInclude Include="..\src\Sci_Position.h" />
     <ClInclude Include="..\src\AIManager.h" />
+    <ClInclude Include="..\src\RAGManager.h" />
     <ClInclude Include="..\src\NppAIEngine.h" />
     <ClInclude Include="..\src\TelemetryManager.h" />
   </ItemGroup>
@@ -50,6 +51,7 @@
     <ClCompile Include="..\src\NppAI_Core.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />
     <ClCompile Include="..\src\AIManager.cpp" />
+    <ClCompile Include="..\src\RAGManager.cpp" />
     <ClCompile Include="..\src\NppAIEngine.cpp" />
     <ClCompile Include="..\src\TelemetryManager.cpp" />
   </ItemGroup>
