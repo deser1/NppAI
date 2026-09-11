@@ -146,7 +146,7 @@ void AIManager::onEditorModified(HWND hwnd, int position, int linesAdded) {
                         Sci_TextRangeFull tr;
                         tr.chrg.cpMin = startPos;
                         tr.chrg.cpMax = endPos;
-                        tr.lpstrText = modifiedCode.data();
+                        tr.lpstrText = &modifiedCode[0];
                         
                         ::SendMessage(hwnd, SCI_GETTEXTRANGEFULL, 0, (LPARAM)&tr);
                         modifiedCode.resize(length); // Pozbycie się zbędnych znaków
