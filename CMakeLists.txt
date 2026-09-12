@@ -10,10 +10,19 @@ set(CMAKE_GENERATOR_PLATFORM x64)
 # Zdefiniuj projekt jako bibliotekę współdzieloną (DLL)
 add_library(NppAI SHARED
     src/NppAI_Core.cpp
+    src/NppAI_Core.rc
     src/PluginDefinition.cpp
     src/AIManager.cpp
+    src/RAGManager.cpp
     src/TelemetryManager.cpp
     src/NppAIEngine.cpp
+)
+
+# Automatyczne wersjonowanie (Auto-Increment Build Number) przed każdą kompilacją
+add_custom_command(
+    TARGET NppAI PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_SOURCE_DIR}/increment_version.cmake
+    COMMENT "Zwiększanie numeru wersji wtyczki..."
 )
 
 # Cel testowy terminala
@@ -37,11 +46,15 @@ endif()
 
 # Konfiguracja kompilatora MSVC (ustawienia specyficzne dla DLL Notepad++)
 if (MSVC)
+    # Zoptymalizowany rozmiar dzięki Trimmingowi/LTO i statycznemu linkowaniu C++ Runtime
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE) # Włącza LTO (Link Time Optimization)
+    
     set_target_properties(NppAI PROPERTIES
         PREFIX ""
         SUFFIX ".dll"
-        COMPILE_FLAGS "/EHsc /W3 /WX- /openmp /utf-8"
-        LINK_FLAGS "/MACHINE:X64"
+        COMPILE_FLAGS "/EHsc /W3 /WX- /openmp /utf-8 /O2 /GL"
+        LINK_FLAGS "/MACHINE:X64 /LTCG /OPT:REF /OPT:ICF"
     )
     # UNICODE macro jest wymagane przez Notepad++
     target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE)

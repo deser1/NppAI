@@ -6,6 +6,16 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
 from pydantic import BaseModel
 import torch
 
+# Modele Pydantic dla dokumentacji Swagger
+class SubmitKnowledgeResponse(BaseModel):
+    status: str
+    message: str
+
+class CheckModelUpdateResponse(BaseModel):
+    update_available: bool
+    version: str | None = None
+    download_url: str | None = None
+
 # Ustawienia serwera
 DATASET_PATH = "datasets/instruct_dataset.txt"
 MODEL_PATH = "models/NppAI-model-v1.nppai"
@@ -49,7 +59,32 @@ async def run_training_process():
     finally:
         training_task_running = False
 
-@app.post("/api/submit_knowledge")
+@app.post(
+    "/api/submit_knowledge",
+    response_model=SubmitKnowledgeResponse,
+    tags=["Knowledge"],
+    summary="Prześlij nową wiedzę",
+    description="Odbiera poprawiony kod od wtyczki. Omija standardowe parsowanie JSON, by tolerować błędy ucieczek z C++.",
+    openapi_extra={
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "prompt": {"type": "string", "description": "Zapytanie użytkownika"},
+                            "thought_process": {"type": "string", "description": "Proces myślowy AI"},
+                            "final_code": {"type": "string", "description": "Wygenerowany/poprawiony kod"},
+                            "user_id": {"type": "string", "description": "Identyfikator użytkownika (np. anonymous)"}
+                        },
+                        "required": ["prompt", "final_code"]
+                    }
+                }
+            },
+            "required": True
+        }
+    }
+)
 async def submit_knowledge(request: Request, background_tasks: BackgroundTasks):
     global new_samples_count
     """
@@ -98,7 +133,12 @@ async def submit_knowledge(request: Request, background_tasks: BackgroundTasks):
         print(f"Błąd serwera: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/check_model_update")
+@app.get(
+    "/api/check_model_update",
+    response_model=CheckModelUpdateResponse,
+    tags=["Model"],
+    summary="Sprawdź dostępność aktualizacji modelu"
+)
 async def check_model_update(client_version: str = "0"):
     """
     Wtyczka pyta, czy jest nowa wersja wag modelu do pobrania.
@@ -118,7 +158,17 @@ async def check_model_update(client_version: str = "0"):
     
     return {"update_available": False}
 
-@app.get("/api/download_model")
+@app.get(
+    "/api/download_model",
+    tags=["Model"],
+    summary="Pobierz zaktualizowany model",
+    responses={
+        200: {
+            "content": {"application/octet-stream": {}},
+            "description": "Plik modelu w formacie .nppai"
+        }
+    }
+)
 async def download_model():
     """
     Endpoint do pobrania zaktualizowanego, mądrzejszego pliku .nppai

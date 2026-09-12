@@ -23,12 +23,12 @@
 #include "TelemetryManager.h"
 #include "menuCmdID.h"
 #include <atomic>
+#include <cwctype>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
-
 
 extern NppData nppData;
 
@@ -53,6 +53,31 @@ std::wstring Utf8ToUtf16(const std::string &utf8) {
   return utf16;
 }
 
+bool IsPolishLanguage() {
+  TCHAR langFile[MAX_PATH] = {0};
+  ::SendMessage(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME, MAX_PATH,
+                (LPARAM)langFile);
+
+  std::basic_string<TCHAR> path(langFile);
+  for (auto &c : path) {
+#ifdef UNICODE
+    c = std::towlower(c);
+#else
+    c = std::tolower(c);
+#endif
+  }
+
+  return path.find(TEXT("polish.xml")) != std::basic_string<TCHAR>::npos;
+}
+
+std::wstring Loc(const std::wstring &pl, const std::wstring &en) {
+  return IsPolishLanguage() ? pl : en;
+}
+
+std::string Loc(const std::string &pl, const std::string &en) {
+  return IsPolishLanguage() ? pl : en;
+}
+
 // Funkcja odpowiedzialna za wykonanie akcji generowania po wpisaniu tekstu
 void ExecuteAIGeneration() {
   if (!g_hEdit)
@@ -61,7 +86,8 @@ void ExecuteAIGeneration() {
   if (isGenerating) {
     // Jeśli generujemy, przerwijmy to!
     AIManager::getInstance().stopGeneration();
-    SetWindowTextA(g_hBtn, "Wygeneruj Kod AI");
+    SetWindowTextW(g_hBtn,
+                   Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
     isGenerating = false;
     return;
   }
@@ -76,7 +102,9 @@ void ExecuteAIGeneration() {
   SetWindowTextW(g_hEdit, L"");
 
   // Wyczyść historię myślenia
-  SetWindowTextW(g_hHistory, L"Czekam na odpowiedź...\r\n");
+  SetWindowTextW(g_hHistory, Loc(L"Czekam na odpowiedź...\r\n",
+                                 L"Waiting for response...\r\n")
+                                 .c_str());
 
   // Pobranie uchwytu Scintilli
   int which = -1;
@@ -94,7 +122,7 @@ void ExecuteAIGeneration() {
 
   // Zmień przycisk na "Zatrzymaj"
   isGenerating = true;
-  SetWindowTextA(g_hBtn, "Zatrzymaj");
+  SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
 
   // Pobranie ścieżki pliku (dla pamięci RAG)
   TCHAR currentPath[MAX_PATH] = {0};
@@ -182,7 +210,8 @@ void ExecuteAIGeneration() {
 
     // Ustaw końcową historię myślenia
     if (!think_buffer.empty()) {
-      think_buffer += "\r\n[Koniec myślenia. Kod wygenerowany.]";
+      think_buffer += Loc("\r\n[Koniec myślenia. Kod wygenerowany.]",
+                          "\r\n[End of thinking. Code generated.]");
       std::wstring w_think = Utf8ToUtf16(think_buffer);
       ::SetWindowTextW(g_hHistory, w_think.c_str());
     }
@@ -196,7 +225,8 @@ void ExecuteAIGeneration() {
 
     // Przywrócenie przycisku do stanu pierwotnego
     isGenerating = false;
-    SetWindowTextA(g_hBtn, "Wygeneruj Kod AI");
+    SetWindowTextW(g_hBtn,
+                   Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
 
     // Ustaw focus z powrotem na edytor
     SetFocus(curScintilla);
@@ -209,7 +239,9 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
   case WM_CREATE: {
     // Pole historii myślenia na samej górze
     g_hHistory = CreateWindowExW(
-        WS_EX_CLIENTEDGE, L"EDIT", L"Panel Myślenia AI gotowy.\r\n",
+        WS_EX_CLIENTEDGE, L"EDIT",
+        Loc(L"Panel Myślenia AI gotowy.\r\n", L"AI Thinking Panel ready.\r\n")
+            .c_str(),
         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOVSCROLL | ES_MULTILINE |
             ES_READONLY,
         0, 0, 100, 50, hwnd, (HMENU)3, NULL, NULL);
@@ -224,15 +256,17 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     SendMessage(g_hHistory, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
     SendMessage(g_hEdit, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
-    g_hBtn = CreateWindowExA(0, "BUTTON", "Wygeneruj Kod AI",
-                             WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 0, 0,
-                             100, 30, hwnd, (HMENU)2, NULL, NULL);
+    g_hBtn = CreateWindowExW(
+        0, L"BUTTON", Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str(),
+        WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, 0, 0, 100, 30, hwnd, (HMENU)2,
+        NULL, NULL);
     SendMessage(g_hBtn, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
     // Etykieta statusu trenowania
-    g_hStatusLabel = CreateWindowExW(0, L"STATIC", L"AI połączone z chmurą...",
-                                     WS_CHILD | WS_VISIBLE, 0, 0, 100, 30, hwnd,
-                                     (HMENU)4, NULL, NULL);
+    g_hStatusLabel = CreateWindowExW(
+        0, L"STATIC",
+        Loc(L"AI połączone z chmurą...", L"AI connected to cloud...").c_str(),
+        WS_CHILD | WS_VISIBLE, 0, 0, 100, 30, hwnd, (HMENU)4, NULL, NULL);
     SendMessage(g_hStatusLabel, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
     // Timer do sprawdzania aktualizacji chmurowych (co 60 sekund)
@@ -299,10 +333,10 @@ void InitAIPanel() {
 
   DockedWidgetData tbData = {0};
   tbData.hClient = g_hAIPanel;
-  tbData.pszName = TEXT("NppAI - Prompt");
+  tbData.pszName = L"NppAI - Prompt";
   tbData.dlgID = 0;
   tbData.uMask = DWS_DF_CONT_BOTTOM | DWS_ICONTAB | DWS_ICONBAR;
-  tbData.pszModuleName = NPP_PLUGIN_NAME;
+  tbData.pszModuleName = L"NppAI";
 
   SendMessage(nppData._nppHandle, NPPM_DMMREGASDCKDLG, 0, (LPARAM)&tbData);
   isPanelRegistered = true;
@@ -340,7 +374,7 @@ void commandMenuInit() {
   // with function :
   // setCommand(int index,                      // zero based number to indicate
   // the order of command
-  //            TCHAR *commandName,             // the command name that you
+  //            const wchar_t *commandName,     // the command name that you
   //            want to see in plugin menu PFUNCPLUGINCMD functionPointer, //
   //            the symbol of function (function pointer) associated with this
   //            command. The body should be defined below. See Step 4.
@@ -348,10 +382,10 @@ void commandMenuInit() {
   //            to trigger this command bool check0nInit                //
   //            optional. Make this menu item be checked visually
   //            );
-  setCommand(0, TEXT("Pokaż Panel AI"), toggleAIPanel, NULL, false);
-  setCommand(1, TEXT("Zapytaj AI o zaznaczony kod"), sendSelectionToChat, NULL,
+  setCommand(0, L"Pokaż Panel AI", toggleAIPanel, NULL, false);
+  setCommand(1, L"Zapytaj AI o zaznaczony kod", sendSelectionToChat, NULL,
              false);
-  setCommand(2, TEXT("Zmień status telemetrii"), toggleTelemetry, NULL, false);
+  setCommand(2, L"Zmień status telemetrii", toggleTelemetry, NULL, false);
 }
 
 //
@@ -364,7 +398,7 @@ void commandMenuCleanUp() {
 //
 // This function help you to initialize your plugin commands
 //
-bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc,
+bool setCommand(size_t index, const wchar_t *cmdName, PFUNCPLUGINCMD pFunc,
                 ShortcutKey *sk, bool check0nInit) {
   if (index >= nbFunc)
     return false;
@@ -372,7 +406,7 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc,
   if (!pFunc)
     return false;
 
-  lstrcpy(funcItem[index]._itemName, cmdName);
+  lstrcpyW(funcItem[index]._itemName, cmdName);
   funcItem[index]._pFunc = pFunc;
   funcItem[index]._init2Check = check0nInit;
   funcItem[index]._pShKey = sk;
@@ -380,9 +414,49 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc,
   return true;
 }
 
-//----------------------------------------------//
-//-- STEP 4. DEFINE YOUR ASSOCIATED FUNCTIONS --//
-//----------------------------------------------//
+void UpdateLocalization() {
+  HMENU hPluginMenu = (HMENU)::SendMessage(
+      nppData._nppHandle, NPPM_GETMENUHANDLE, 0, 0); // 0 is NPPPLUGINMENU
+  if (hPluginMenu) {
+    std::wstring cmd0 = Loc(L"Pokaż Panel AI", L"Show AI Panel");
+    std::wstring cmd1 =
+        Loc(L"Zapytaj AI o zaznaczony kod", L"Ask AI about selected code");
+    std::wstring cmd2 =
+        Loc(L"Zmień status telemetrii", L"Toggle telemetry status");
+
+    lstrcpyW(funcItem[0]._itemName, cmd0.c_str());
+    lstrcpyW(funcItem[1]._itemName, cmd1.c_str());
+    lstrcpyW(funcItem[2]._itemName, cmd2.c_str());
+
+    MENUITEMINFOW mii = {sizeof(MENUITEMINFOW)};
+    mii.fMask = MIIM_STRING;
+
+    mii.dwTypeData = const_cast<LPWSTR>(cmd0.c_str());
+    SetMenuItemInfoW(hPluginMenu, funcItem[0]._cmdID, FALSE, &mii);
+
+    mii.dwTypeData = const_cast<LPWSTR>(cmd1.c_str());
+    SetMenuItemInfoW(hPluginMenu, funcItem[1]._cmdID, FALSE, &mii);
+
+    mii.dwTypeData = const_cast<LPWSTR>(cmd2.c_str());
+    SetMenuItemInfoW(hPluginMenu, funcItem[2]._cmdID, FALSE, &mii);
+  }
+
+  if (g_hAIPanel) {
+    if (g_hBtn) {
+      if (isGenerating) {
+        SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
+      } else {
+        SetWindowTextW(g_hBtn,
+                       Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
+      }
+    }
+    if (g_hStatusLabel) {
+      SetWindowTextW(g_hStatusLabel, Loc(L"AI połączone z chmurą...",
+                                         L"AI connected to cloud...")
+                                         .c_str());
+    }
+  }
+}
 void generateAICode() {
   // Nie jest już bezpośrednio wywoływana z menu. Zastąpiona przez
   // toggleAIPanel.
@@ -443,8 +517,11 @@ void sendSelectionToChat() {
 }
 
 void toggleTelemetry() {
-  ::MessageBox(NULL,
-               TEXT("Telemetria i uczenie globalne: AKTYWNE\nTwój kod będzie "
-                    "anonimizowany przed wysłaniem."),
-               TEXT("NppAI Ustawienia"), MB_OK);
+  ::MessageBoxW(NULL,
+                Loc(L"Telemetria i uczenie globalne: AKTYWNE\nTwój kod będzie "
+                    L"anonimizowany przed wysłaniem.",
+                    L"Telemetry and global learning: ACTIVE\nYour code will be "
+                    L"anonymized before sending.")
+                    .c_str(),
+                Loc(L"NppAI Ustawienia", L"NppAI Settings").c_str(), MB_OK);
 }
