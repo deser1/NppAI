@@ -165,16 +165,75 @@ def load_dataset(folder_path="datasets/"):
     print(f"Wczytano pomyslnie. Dlugosc tekstu: {len(text)} znakow.")
     return text
 
-# Prosty Tokenizer bajtowy (Zgodny w 100% z C++)
-class ByteTokenizer:
-    def __init__(self):
-        self.vocab_size = 256
+# Prosty Tokenizer BPE (Byte-Pair Encoding) zamiast znakowego
+class BPETokenizer:
+    def __init__(self, vocab_size=512):
+        self.vocab_size = vocab_size
+        self.num_merges = vocab_size - 256
+        self.merges = {}
+        self.vocab = {i: bytes([i]) for i in range(256)}
         
-    def encode(self, s):
-        return list(s.encode('utf-8'))
+    def get_stats(self, ids):
+        counts = {}
+        for pair in zip(ids, ids[1:]):
+            counts[pair] = counts.get(pair, 0) + 1
+        return counts
         
-    def decode(self, l):
-        return bytes(l).decode('utf-8', errors='replace')
+    def merge(self, ids, pair, idx):
+        newids = []
+        i = 0
+        while i < len(ids):
+            if i < len(ids) - 1 and ids[i] == pair[0] and ids[i+1] == pair[1]:
+                newids.append(idx)
+                i += 2
+            else:
+                newids.append(ids[i])
+                i += 1
+        return newids
+
+    def train(self, text):
+        print(f"Trenowanie BPE Tokenizera (docelowy vocab: {self.vocab_size})...")
+        ids = list(text.encode('utf-8'))
+        for i in range(self.num_merges):
+            stats = self.get_stats(ids)
+            if not stats: break
+            best = max(stats, key=stats.get)
+            idx = 256 + i
+            ids = self.merge(ids, best, idx)
+            self.merges[best] = idx
+            self.vocab[idx] = self.vocab[best[0]] + self.vocab[best[1]]
+            if i % 50 == 0:
+                print(f"BPE merge {i}/{self.num_merges}: {best} -> {idx}")
+            
+    def save(self, filepath):
+        with open(filepath, 'w', encoding='utf-8') as f:
+            for (p0, p1), idx in self.merges.items():
+                f.write(f"{p0} {p1} {idx}\n")
+                
+    def load(self, filepath):
+        self.merges = {}
+        self.vocab = {i: bytes([i]) for i in range(256)}
+        if not os.path.exists(filepath): return
+        with open(filepath, 'r', encoding='utf-8') as f:
+            for line in f:
+                p0, p1, idx = map(int, line.split())
+                self.merges[(p0, p1)] = idx
+                self.vocab[idx] = self.vocab[p0] + self.vocab[p1]
+                
+    def encode(self, text):
+        ids = list(text.encode('utf-8'))
+        while len(ids) >= 2:
+            stats = self.get_stats(ids)
+            pair = min(stats, key=lambda p: self.merges.get(p, float('inf')))
+            if pair not in self.merges:
+                break
+            idx = self.merges[pair]
+            ids = self.merge(ids, pair, idx)
+        return ids
+        
+    def decode(self, ids):
+        b = b"".join(self.vocab[i] for i in ids)
+        return b.decode('utf-8', errors='replace')
 
 def get_batch(split, data, block_size, batch_size):
     # Generowanie losowych indeksów początkowych
@@ -194,7 +253,16 @@ def train_model():
         print("Błąd: Za mało kodu do trenowania.")
         exit(1)
         
-    tokenizer = ByteTokenizer()
+    tokenizer = BPETokenizer(vocab_size=1024)
+    # Trenuj BPE albo załaduj
+    os.makedirs("models", exist_ok=True)
+    bpe_path = "models/bpe_merges.txt"
+    if os.path.exists(bpe_path):
+        tokenizer.load(bpe_path)
+    else:
+        tokenizer.train(dataset_text)
+        tokenizer.save(bpe_path)
+        
     data = torch.tensor(tokenizer.encode(dataset_text), dtype=torch.long)
     
     print(f"Rozmiar słownika (znaki unikalne): {tokenizer.vocab_size}")
@@ -207,9 +275,15 @@ def train_model():
     os.makedirs("models", exist_ok=True)
     checkpoint_path = "models/checkpoint.pth"
     if os.path.exists(checkpoint_path):
-        print("\n[!] Znaleziono poprzednie wagi! Ładowanie nabytej wiedzy z checkpoint.pth...")
-        # Wczytujemy zapisaną wcześniej wiedzę (State Dictionary) do modelu
-        model.load_state_dict(torch.load(checkpoint_path, map_location='cpu', weights_only=True))
+        try:
+            state_dict = torch.load(checkpoint_path, map_location='cpu', weights_only=True)
+            if state_dict['tok_embeddings.weight'].shape[0] != tokenizer.vocab_size:
+                print("\n[!] Wykryto zmianę rozmiaru słownika (np. przejście na BPE). Kasuję stare wagi.")
+                raise RuntimeError("Vocab size mismatch")
+            print("\n[!] Znaleziono poprzednie wagi! Ładowanie nabytej wiedzy z checkpoint.pth...")
+            model.load_state_dict(state_dict)
+        except Exception as e:
+            print(f"\n[!] Brak kompatybilnych poprzednich wag. Rozpoczynamy naukę od zera. ({e})")
     else:
         print("\n[!] Brak poprzednich wag. Rozpoczynamy naukę od zera.")
 

@@ -1,4 +1,4 @@
-﻿// NppAIEngine.h
+// NppAIEngine.h
 #pragma once
 #include <vector>
 #include <string>
@@ -6,11 +6,14 @@
 #include <functional>
 #include <atomic>
 #include <mutex>
+#include <map>
 
 // Reprezentacja Tensora (macierzy wielowymiarowej) w naszym własnym silniku
 class Tensor {
 public:
     std::vector<float> data;
+    std::vector<int8_t> data_q8; // INT8 quantized data
+    float scale_q8 = 0.0f;
     std::vector<int> shape;
 
     Tensor() = default;
@@ -18,6 +21,10 @@ public:
     
     float& at(int i);
     float& at(int r, int c);
+    
+    // Zwraca zdekodowaną wartość (odpowiednie dla FP32 lub INT8)
+    float get(int i) const;
+    float get(int r, int c) const;
     
     // Podstawowa operacja dla sieci neuronowych: y = x * W
     static Tensor matmul(const Tensor& a, const Tensor& b, bool transposeB = false);
@@ -29,7 +36,7 @@ public:
     void applyRMSNorm(const Tensor& weight);
 
     // Wczytanie surowych danych z pliku
-    void readFromFile(std::ifstream& file);
+    void readFromFile(std::ifstream& file, bool quantize = false);
 };
 
 // Klasa reprezentująca wagę pojedynczej warstwy Transformera
@@ -52,7 +59,7 @@ public:
     bool loadModel(const std::string& modelPath);
 
     // Generuje kod na podstawie promptu (wspiera strumieniowanie znaków i procesu myślenia)
-    std::string generate(const std::string& prompt, int maxTokens = 128, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr);
+    std::string generate(const std::string& prompt, int maxTokens = 512, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr);
 
     // Zatrzymuje aktualne generowanie
     void stopGeneration() { cancelRequested = true; }
@@ -74,6 +81,11 @@ private:
     std::vector<TransformerLayer> layers;
     Tensor outputRMSNorm;
     Tensor outputClassifier;
+
+    // Tokenizer BPE
+    std::map<std::pair<int, int>, int> bpe_merges;
+    std::map<int, std::string> bpe_vocab;
+    bool loadBPETokenizer(const std::string& path);
 
     // Wewnętrzne operacje Transformera
     std::vector<int> tokenize(const std::string& text);

@@ -1,4 +1,4 @@
-﻿// this file is part of notepad++
+// this file is part of notepad++
 // Copyright (C)2022 Don HO <don.h@free.fr>
 //
 // This program is free software; you can redistribute it and/or
@@ -142,39 +142,37 @@ void ExecuteAIGeneration() {
   currentFilePath = currentPath;
 #endif
 
-  // Odczytanie kontekstu pamięci z pliku .nppai_mem
-  std::string currentContext = "";
-  if (!currentFilePath.empty()) {
-    // Nowy mechanizm RAG (Retrieval-Augmented Generation) oparty na lokalnej
-    // wektorowej bazie
-    RAGManager::getInstance().loadDatabase(currentFilePath + ".rag_db");
-    currentContext = RAGManager::getInstance().retrieveContext(prompt, 3);
+  // Wygenerowanie kodu w osobnym wątku, by nie blokować interfejsu (Notepad++
+  // brak odpowiedzi)
+  std::thread([prompt, currentFilePath, curScintilla, startLine]() {
+    // Odczytanie kontekstu pamięci z pliku w tle (Asynchroniczny RAG)
+    std::string currentContext = "";
+    if (!currentFilePath.empty()) {
+      // Nowy mechanizm RAG (Retrieval-Augmented Generation) oparty na lokalnej
+      // wektorowej bazie
+      RAGManager::getInstance().loadDatabase(currentFilePath + ".rag_db");
+      currentContext = RAGManager::getInstance().retrieveContext(prompt, 3);
 
-    // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu
-    // tekstowego
-    if (currentContext.empty()) {
-      std::string memPath = currentFilePath + ".nppai_mem";
-      std::ifstream memFile(memPath);
-      if (memFile.is_open()) {
-        std::string line;
-        while (std::getline(memFile, line)) {
-          currentContext += line + "\n";
-        }
-        memFile.close();
+      // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu tekstowego
+      if (currentContext.empty()) {
+        std::string memPath = currentFilePath + ".nppai_mem";
+        std::ifstream memFile(memPath);
+        if (memFile.is_open()) {
+          std::string line;
+          while (std::getline(memFile, line)) {
+            currentContext += line + "\n";
+          }
+          memFile.close();
 
-        // Ograniczenie kontekstu, jeśli rozrósł się za bardzo
-        if (currentContext.length() > 1000) {
-          currentContext =
-              currentContext.substr(currentContext.length() - 1000);
+          // Ograniczenie kontekstu, jeśli rozrósł się za bardzo
+          if (currentContext.length() > 1000) {
+            currentContext =
+                currentContext.substr(currentContext.length() - 1000);
+          }
         }
       }
     }
-  }
 
-  // Wygenerowanie kodu w osobnym wątku, by nie blokować interfejsu (Notepad++
-  // brak odpowiedzi)
-  std::thread([prompt, currentContext, currentFilePath, curScintilla,
-               startLine]() {
     // Zmienne do obsługi tagu <THINK>
     std::string think_buffer = "";
     bool is_thinking = false;

@@ -177,8 +177,7 @@ bool matmul_gpu(const Tensor &a, const Tensor &b, Tensor &result,
   ID3D11ShaderResourceView *pSrvA = nullptr;
   g_gpu.device->CreateShaderResourceView(pBufA, &srvDesc, &pSrvA);
 
-  srvDesc.Buffer.NumElements =
-      (UINT)(b.data_q8.empty() ? b.data.size() : b.data_q8.size());
+  srvDesc.Buffer.NumElements = (UINT)(b.data_q8.empty() ? b.data.size() : b.data_q8.size());
   ID3D11ShaderResourceView *pSrvB = nullptr;
   g_gpu.device->CreateShaderResourceView(pBufB, &srvDesc, &pSrvB);
 
@@ -300,8 +299,7 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
           for (; k <= a_cols - 8; k += 8) {
             __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
-            __m128i vb_int8 =
-                _mm_loadl_epi64((__m128i *)&b.data_q8[j * b.shape[1] + k]);
+            __m128i vb_int8 = _mm_loadl_epi64((__m128i*)&b.data_q8[j * b.shape[1] + k]);
             __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
             __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
             vb_float = _mm256_mul_ps(vb_float, scale_vec);
@@ -309,16 +307,13 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           }
           float tmp[8];
           _mm256_storeu_ps(tmp, sum_vec);
-          for (int m = 0; m < 8; m++)
-            sum += tmp[m];
+          for (int m = 0; m < 8; m++) sum += tmp[m];
           for (; k < a_cols; k++) {
-            sum += a.data[i * a.shape[1] + k] *
-                   (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
           }
 #else
           for (int k = 0; k < a_cols; k++) {
-            sum += a.data[i * a.shape[1] + k] *
-                   (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
           }
 #endif
         } else {
@@ -332,8 +327,7 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           }
           float tmp[8];
           _mm256_storeu_ps(tmp, sum_vec);
-          for (int m = 0; m < 8; m++)
-            sum += tmp[m];
+          for (int m = 0; m < 8; m++) sum += tmp[m];
           for (; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
           }
@@ -346,8 +340,7 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
       } else {
         if (!b.data_q8.empty()) {
           for (int k = 0; k < a_cols; k++) {
-            sum += a.data[i * a.shape[1] + k] *
-                   (b.data_q8[k * b.shape[1] + j] * b.scale_q8);
+            sum += a.data[i * a.shape[1] + k] * (b.data_q8[k * b.shape[1] + j] * b.scale_q8);
           }
         } else {
           for (int k = 0; k < a_cols; k++) {
@@ -434,22 +427,20 @@ float Tensor::get(int r, int c) const {
 
 void Tensor::readFromFile(std::ifstream &file, bool quantize) {
   file.read(reinterpret_cast<char *>(data.data()), data.size() * sizeof(float));
-
+  
   if (quantize) {
     float max_abs = 0.0f;
     for (float val : data) {
-      if (std::abs(val) > max_abs)
-        max_abs = std::abs(val);
+      if (std::abs(val) > max_abs) max_abs = std::abs(val);
     }
     scale_q8 = max_abs / 127.0f;
-    if (scale_q8 == 0.0f)
-      scale_q8 = 1e-9f;
+    if (scale_q8 == 0.0f) scale_q8 = 1e-9f;
 
     data_q8.resize(data.size());
     for (size_t i = 0; i < data.size(); i++) {
       data_q8[i] = static_cast<int8_t>(std::round(data[i] / scale_q8));
     }
-
+    
     // Zwalniamy oryginalne dane zmiennoprzecinkowe dla oszczędności RAM
     data.clear();
     data.shrink_to_fit();
@@ -614,7 +605,7 @@ Tensor NppAIEngine::forward(const std::vector<int> &inputTokens) {
   for (int pos = 0; pos < T; pos++) {
     int token = inputTokens[seq_len - T + pos]; // Bierzemy T ostatnich tokenów
     if (token >= vocab_size || token < 0) {
-      token = 0; // clamp to 0 to prevent segfault if vocab_size mismatch
+        token = 0; // clamp to 0 to prevent segfault if vocab_size mismatch
     }
     for (int i = 0; i < dim; i++) {
       x.at(pos, i) =
