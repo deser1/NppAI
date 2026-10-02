@@ -222,17 +222,21 @@ Built as an independent C++ / AI systems project with a focus on understanding t
 
 ## Performance
 
-NppAI includes an optional tensor microbenchmark that compares the current FP32 and INT8 matrix-multiplication paths. Benchmarks are built separately from correctness tests and GitHub Actions publishes the raw output as the `tensor-benchmark-x64` artifact.
+NppAI includes an optional tensor microbenchmark for the FP32 and quantized INT8 matrix-multiplication paths. Benchmarks are built separately from correctness tests, and GitHub Actions publishes the raw measurements as the `tensor-benchmark-x64` artifact.
 
-Reference measurement from GitHub Actions run #152 (`windows-2022`, x64 Release, 256x256 matrix, 20 iterations):
+Current reference measurement from GitHub Actions run #169 (`windows-2022`, x64 Release, 256x256 matrix):
 
-| Path | Time |
+| Path | Median time |
 | --- | ---: |
-| FP32 | 0.01154 ms/op |
-| INT8 | 0.013015 ms/op |
-| FP32 / INT8 ratio | 0.886669x |
+| FP32 | 0.0091935 ms/op |
+| INT8 | **0.009024 ms/op** |
+| FP32 / INT8 ratio | **1.01878x** |
 
-This CI microbenchmark does **not** show an INT8 compute speedup yet. The current INT8 path primarily reduces stored weight memory; further SIMD/kernel optimization is needed before claiming a throughput advantage. Hosted-runner timings are environment-dependent and should be treated as a reproducible reference point, not a hardware-independent performance guarantee.
+The CI result is the median across **5 independent benchmark processes**. Each process performs a warm-up and reports the median of **7 series with 200 iterations per series**. In this measurement, the optimized INT8 path is about **1.9% faster than FP32** while retaining the lower-memory quantized weight representation.
+
+The INT8 kernel was progressively optimized by moving quantization scaling outside the SIMD accumulation loop, widening the AVX2 loop, using four independent accumulators, applying FMA, and reducing accumulators directly in SIMD registers.
+
+Hosted GitHub Actions runners have variable hardware load, so these numbers are a reproducible CI reference rather than a hardware-independent performance guarantee. Performance changes should be evaluated across repeated runs instead of from a single timing sample.
 
 Build and run locally:
 
