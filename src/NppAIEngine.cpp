@@ -601,9 +601,33 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
 
   int p0, p1, idx;
   while (file >> p0 >> p1 >> idx) {
+    // IDs below 256 are reserved for raw bytes. Every merge must reference
+    // already-known tokens and create a new token ID.
+    if (p0 < 0 || p1 < 0 || idx < 256 ||
+        !bpe_vocab.count(p0) || !bpe_vocab.count(p1)) {
+      bpe_merges.clear();
+      bpe_vocab.clear();
+      for (int i = 0; i < 256; i++) {
+        bpe_vocab[i] = std::string(1, (char)i);
+      }
+      std::cerr << "Nieprawidlowa definicja merge w BPE: " << path << "\n";
+      return false;
+    }
+
     bpe_merges[{p0, p1}] = idx;
     bpe_vocab[idx] = bpe_vocab[p0] + bpe_vocab[p1];
   }
+
+  if (!file.eof() && file.fail()) {
+    bpe_merges.clear();
+    bpe_vocab.clear();
+    for (int i = 0; i < 256; i++) {
+      bpe_vocab[i] = std::string(1, (char)i);
+    }
+    std::cerr << "Nieprawidlowy format pliku BPE: " << path << "\n";
+    return false;
+  }
+
   return true;
 }
 
