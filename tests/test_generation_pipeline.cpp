@@ -10,7 +10,8 @@ static bool writeTinyModel(const std::filesystem::path& path) {
     const int hidden = 1;
     const int layers = 1;
     const int context = 8;
-    const int vocab = 256;
+    // Include BPE merge token 300 in the model vocabulary.
+    const int vocab = 301;
     const int header[5] = {dim, hidden, layers, context, vocab};
 
     // Payload order mirrors NppAIEngine::loadModel.
@@ -60,8 +61,9 @@ int main() {
     }
 
     // Zero weights make logits equal, so generation remains safe and bounded.
-    // This exercises model loading, byte tokenization, forward propagation,
-    // sampling and detokenization as one pipeline.
+    // This exercises model loading, BPE tokenization with token 300 inside
+    // the model vocabulary, forward propagation, sampling and detokenization
+    // as one pipeline.
     const std::string prompt = "AB";
     const std::string result = engine.generate(prompt, 1, [](char, bool) {}, [](int) {});
     std::filesystem::remove_all(dir);
