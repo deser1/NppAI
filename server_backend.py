@@ -6,7 +6,7 @@ import secrets
 from datetime import datetime
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
+from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
@@ -133,9 +133,8 @@ async def run_training_process():
 async def submit_knowledge(
     payload: SubmitKnowledgeRequest,
     background_tasks: BackgroundTasks,
-    _: None = Header(default=None, alias="X-NppAI-Auth-Checked"),
+    _: None = Depends(require_api_key),
 ):
-    require_api_key()
     global new_samples_count
 
     DATASET_PATH.parent.mkdir(parents=True, exist_ok=True)
