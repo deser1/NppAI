@@ -106,6 +106,41 @@ public:
         return true;
     }
 
+    static bool tokenizerUsesMergeRankNotTokenId() {
+        NppAIEngine engine;
+        const auto path =
+            std::filesystem::temp_directory_path() / "nppai_test_bpe_rank.txt";
+
+        {
+            std::ofstream file(path);
+            if (!file.is_open()) {
+                std::cerr << "FAIL: could not create BPE rank fixture\n";
+                return false;
+            }
+
+            // File order defines rank. The first merge intentionally has a
+            // larger output token ID than the second merge.
+            file << "97 98 300\n";
+            file << "98 99 256\n";
+        }
+
+        const bool loaded = engine.loadBPETokenizer(path.string());
+        const auto tokens = engine.tokenize("abc");
+        std::filesystem::remove(path);
+
+        const std::vector<int> expected = {300, 'c'};
+        if (!loaded || tokens != expected) {
+            std::cerr << "FAIL: BPE merge priority followed token ID instead of rank\n";
+            return false;
+        }
+
+        if (engine.detokenize(tokens) != "abc") {
+            std::cerr << "FAIL: ranked BPE merge did not round-trip\n";
+            return false;
+        }
+        return true;
+    }
+
     static bool tokenizerBPE() {
         NppAIEngine engine;
         const auto path =
@@ -158,6 +193,8 @@ int main() {
     if (!NppAITest::tokenizerFallback())
         return 1;
     if (!NppAITest::tokenizerBPE())
+        return 1;
+    if (!NppAITest::tokenizerUsesMergeRankNotTokenId())
         return 1;
     if (!NppAITest::tokenizerRejectsInvalidMerge())
         return 1;
