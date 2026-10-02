@@ -6,13 +6,14 @@ from datetime import datetime
 from pathlib import Path
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 DATASET_PATH = Path("datasets/instruct_dataset.txt")
 MODEL_PATH = Path("models/NppAI-model-v1.nppai")
 TRAINING_SCRIPT = Path("train_nppai.py")
 MAX_REQUEST_BYTES = 2 * 1024 * 1024
+MAX_DATASET_ENTRY_BYTES = MAX_REQUEST_BYTES
 MAX_PROMPT_CHARS = 100_000
 MAX_THOUGHT_CHARS = 200_000
 MAX_CODE_CHARS = 500_000
@@ -54,12 +55,19 @@ async def request_size_limit(request: Request, call_next):
     if content_length:
         try:
             if int(content_length) > MAX_REQUEST_BYTES:
-                raise HTTPException(status_code=413, detail="Request body too large")
+                return JSONResponse(status_code=413, content={"detail": "Request body too large"})
         except ValueError:
-            raise HTTPException(status_code=400, detail="Invalid Content-Length")
+            return JSONResponse(status_code=400, content={"detail": "Invalid Content-Length"})
 
-    response = await call_next(request)
-    return response
+    body = await request.body()
+    if len(body) > MAX_REQUEST_BYTES:
+        return JSONResponse(status_code=413, content={"detail": "Request body too large"})
+
+    async def receive():
+        return {"type": "http.request", "body": body, "more_body": False}
+
+    request._receive = receive
+    return await call_next(request)
 
 
 def model_version() -> str:
@@ -124,6 +132,9 @@ async def submit_knowledge(
         "[AI]:\n"
         f"{payload.final_code}\n<|endoftext|>\n"
     )
+
+    if len(entry.encode("utf-8")) > MAX_DATASET_ENTRY_BYTES:
+        raise HTTPException(status_code=413, detail="Training sample too large")
 
     try:
         with DATASET_PATH.open("a", encoding="utf-8") as f:
