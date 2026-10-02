@@ -3,8 +3,21 @@
 #include <cmath>
 #include <fstream>
 #if defined(_M_X64) || defined(__x86_64__)
-#include <immintrin.h> // SIMD/AVX2 support
+#include <immintrin.h>
+#include <intrin.h>
+
+static bool cpuSupportsAVX2() {
+  int cpuInfo[4] = {};
+  __cpuid(cpuInfo, 0);
+  if (cpuInfo[0] < 7)
+    return false;
+  __cpuidex(cpuInfo, 7, 0);
+  return (cpuInfo[1] & (1 << 5)) != 0; // EBX bit 5 = AVX2
+}
+
 #define USE_AVX2
+#else
+static bool cpuSupportsAVX2() { return false; }
 #endif
 #include <iostream>
 
@@ -425,8 +438,15 @@ float Tensor::get(int r, int c) const {
   return data[r * shape[1] + c];
 }
 
-void Tensor::readFromFile(std::ifstream &file, bool quantize) {
-  file.read(reinterpret_cast<char *>(data.data()), data.size() * sizeof(float));
+bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
+  const std::streamsize bytes =
+      static_cast<std::streamsize>(data.size() * sizeof(float));
+  if (bytes < 0)
+    return false;
+
+  file.read(reinterpret_cast<char *>(data.data()), bytes);
+  if (file.gcount() != bytes || !file)
+    return false;
   
   if (quantize) {
     float max_abs = 0.0f;
@@ -461,51 +481,69 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
-  // Wczytywanie nagłówka (konfiguracji)
-  file.read(reinterpret_cast<char *>(&dim), sizeof(int));
-  file.read(reinterpret_cast<char *>(&hidden_dim), sizeof(int));
-  file.read(reinterpret_cast<char *>(&n_layers), sizeof(int));
-  file.read(reinterpret_cast<char *>(&max_seq_len), sizeof(int));
-  file.read(reinterpret_cast<char *>(&vocab_size), sizeof(int));
+  // Read and validate the fixed-size model header before allocating memory.
+  int header[5] = {};
+  file.read(reinterpret_cast<char *>(header), sizeof(header));
+  if (file.gcount() != static_cast<std::streamsize>(sizeof(header))) {
+    std::cerr << "Nieprawidlowy lub niepelny naglowek modelu.\n";
+    return false;
+  }
+
+  dim = header[0];
+  hidden_dim = header[1];
+  n_layers = header[2];
+  max_seq_len = header[3];
+  vocab_size = header[4];
+
+  constexpr int kMaxDimension = 1 << 15;
+  constexpr int kMaxLayers = 256;
+  if (dim <= 0 || hidden_dim <= 0 || vocab_size <= 0 ||
+      max_seq_len <= 0 || n_layers <= 0 ||
+      dim > kMaxDimension || hidden_dim > kMaxDimension ||
+      vocab_size > kMaxDimension * 16 || max_seq_len > kMaxDimension ||
+      n_layers > kMaxLayers) {
+    std::cerr << "Nieprawidlowe wymiary modelu.\n";
+    return false;
+  }
 
   // Inicjalizacja i wczytywanie wag
   tokenEmbeddingTable = Tensor({vocab_size, dim});
-  tokenEmbeddingTable.readFromFile(file, false); // Embeddings usually stay FP32
+tokenEmbeddingTable.readFromFile(file, false); // Embeddings usually stay FP32
 
   posEmbeddingTable = Tensor({max_seq_len, dim});
-  posEmbeddingTable.readFromFile(file, false);
+  if (!posEmbeddingTable.readFromFile(file, false)) return false;
 
   layers.clear();
   for (int i = 0; i < n_layers; i++) {
     TransformerLayer layer;
     layer.rmsAttn = Tensor({dim});
-    layer.rmsAttn.readFromFile(file, false); // RMSNorm is small, FP32
+    if (!layer.rmsAttn.readFromFile(file, false)) return false; // RMSNorm is small, FP32
     layer.wQ = Tensor({dim, dim});
-    layer.wQ.readFromFile(file, true); // Quantize
+    if (!layer.wQ.readFromFile(file, true)) return false; // Quantize
     layer.wK = Tensor({dim, dim});
-    layer.wK.readFromFile(file, true);
+    if (!layer.wK.readFromFile(file, true)) return false;
     layer.wV = Tensor({dim, dim});
-    layer.wV.readFromFile(file, true);
+    if (!layer.wV.readFromFile(file, true)) return false;
     layer.wO = Tensor({dim, dim});
-    layer.wO.readFromFile(file, true);
+    if (!layer.wO.readFromFile(file, true)) return false;
 
     layer.rmsFFN = Tensor({dim});
-    layer.rmsFFN.readFromFile(file, false);
+    if (!layer.rmsFFN.readFromFile(file, false)) return false;
     layer.wGate = Tensor({dim, hidden_dim});
-    layer.wGate.readFromFile(file, true);
+    if (!layer.wGate.readFromFile(file, true)) return false;
     layer.wUp = Tensor({dim, hidden_dim});
-    layer.wUp.readFromFile(file, true);
+    if (!layer.wUp.readFromFile(file, true)) return false;
     layer.wDown = Tensor({hidden_dim, dim});
-    layer.wDown.readFromFile(file, true);
+    if (!layer.wDown.readFromFile(file, true)) return false;
 
     layers.push_back(layer);
   }
 
   outputRMSNorm = Tensor({dim});
-  outputRMSNorm.readFromFile(file, false);
+  if (!outputRMSNorm.readFromFile(file, false)) return false;
 
   outputClassifier = Tensor({dim, vocab_size});
-  outputClassifier.readFromFile(file, true); // Quantize output classifier
+  if (!outputClassifier.readFromFile(file, true)) return false; // Quantize output classifier
 
   file.close();
 
