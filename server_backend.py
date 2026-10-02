@@ -1,201 +1,298 @@
-import os
-import json
 import asyncio
+import hashlib
+import json
+import logging
+import os
+import secrets
+import time
+from collections import defaultdict, deque
 from datetime import datetime
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Request
-from pydantic import BaseModel
-import torch
+from pathlib import Path
 
-# Modele Pydantic dla dokumentacji Swagger
+from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Request
+from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel, Field
+
+DATASET_PATH = Path("datasets/instruct_dataset.txt")
+MODEL_PATH = Path("models/NppAI-model-v1.nppai")
+TRAINING_SCRIPT = Path("train_nppai.py")
+MAX_REQUEST_BYTES = 2 * 1024 * 1024
+MAX_DATASET_ENTRY_BYTES = MAX_REQUEST_BYTES
+MAX_PROMPT_CHARS = 100_000
+MAX_THOUGHT_CHARS = 200_000
+MAX_CODE_CHARS = 500_000
+MAX_USER_ID_CHARS = 128
+TRAINING_THRESHOLD = 5
+MODEL_CHUNK_SIZE = 1024 * 1024
+API_KEY_ENV = "NPPAI_API_KEY"
+LOG_LEVEL_ENV = "NPPAI_LOG_LEVEL"
+RATE_LIMIT_REQUESTS_ENV = "NPPAI_RATE_LIMIT_REQUESTS"
+RATE_LIMIT_WINDOW_ENV = "NPPAI_RATE_LIMIT_WINDOW_SECONDS"
+DEFAULT_RATE_LIMIT_REQUESTS = 60
+DEFAULT_RATE_LIMIT_WINDOW_SECONDS = 60
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv(LOG_LEVEL_ENV, "INFO").upper(), logging.INFO),
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
+logger = logging.getLogger("nppai.backend")
+
+
+app = FastAPI(
+    title="NppAI Cloud Backend",
+    description="Backend for NppAI knowledge ingestion and model updates.",
+)
+
+training_task: asyncio.Task | None = None
+new_samples_count = 0
+training_lock = asyncio.Lock()
+dataset_lock = asyncio.Lock()
+rate_limit_lock = asyncio.Lock()
+rate_limit_hits: dict[str, deque[float]] = defaultdict(deque)
+model_version_cache_key: tuple[int, int] | None = None
+model_version_cache_value: str | None = None
+
+
+class SubmitKnowledgeRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=MAX_PROMPT_CHARS)
+    final_code: str = Field(min_length=1, max_length=MAX_CODE_CHARS)
+    thought_process: str = Field(default="", max_length=MAX_THOUGHT_CHARS)
+    user_id: str = Field(default="anonymous", max_length=MAX_USER_ID_CHARS)
+
+
 class SubmitKnowledgeResponse(BaseModel):
     status: str
     message: str
+
 
 class CheckModelUpdateResponse(BaseModel):
     update_available: bool
     version: str | None = None
     download_url: str | None = None
 
-# Ustawienia serwera
-DATASET_PATH = "datasets/instruct_dataset.txt"
-MODEL_PATH = "models/NppAI-model-v1.nppai"
-CHECKPOINT_PATH = "models/checkpoint.pth"
 
-app = FastAPI(title="NppAI Cloud Backend", description="Serwer Federated Learning dla wtyczki NppAI")
+def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
+    expected_key = os.getenv(API_KEY_ENV)
+    if not expected_key:
+        return
+    if x_api_key is None:
+        raise HTTPException(status_code=401, detail="API key required")
+    if not secrets.compare_digest(x_api_key, expected_key):
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
-# Globalna zmienna do zarządzania tłem
-training_task_running = False
-new_samples_count = 0
-TRAINING_THRESHOLD = 5  # Liczba próbek po jakiej uruchamiany jest trening
+
+def positive_int_env(name: str, default: int) -> int:
+    try:
+        value = int(os.getenv(name, str(default)))
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
+def monotonic_time() -> float:
+    return time.monotonic()
+
+
+async def enforce_rate_limit(request: Request) -> None:
+    limit = positive_int_env(RATE_LIMIT_REQUESTS_ENV, DEFAULT_RATE_LIMIT_REQUESTS)
+    window = positive_int_env(RATE_LIMIT_WINDOW_ENV, DEFAULT_RATE_LIMIT_WINDOW_SECONDS)
+    client_key = request.client.host if request.client else "unknown"
+    now = monotonic_time()
+
+    async with rate_limit_lock:
+        hits = rate_limit_hits[client_key]
+        cutoff = now - window
+        while hits and hits[0] <= cutoff:
+            hits.popleft()
+
+        if len(hits) >= limit:
+            retry_after = max(1, int(window - (now - hits[0])) + 1)
+            raise HTTPException(
+                status_code=429,
+                detail="Rate limit exceeded",
+                headers={"Retry-After": str(retry_after)},
+            )
+
+        hits.append(now)
+
+
+@app.middleware("http")
+async def request_size_limit(request: Request, call_next):
+    content_length = request.headers.get("content-length")
+    if content_length:
+        try:
+            if int(content_length) > MAX_REQUEST_BYTES:
+                return JSONResponse(status_code=413, content={"detail": "Request body too large"})
+        except ValueError:
+            return JSONResponse(status_code=400, content={"detail": "Invalid Content-Length"})
+
+    chunks: list[bytes] = []
+    total_bytes = 0
+    async for chunk in request.stream():
+        total_bytes += len(chunk)
+        if total_bytes > MAX_REQUEST_BYTES:
+            return JSONResponse(status_code=413, content={"detail": "Request body too large"})
+        chunks.append(chunk)
+
+    # Starlette's downstream request handling can reuse the cached body without
+    # reading the already-consumed ASGI receive channel again.
+    request._body = b"".join(chunks)
+    return await call_next(request)
+
+
+def model_version() -> str:
+    global model_version_cache_key, model_version_cache_value
+
+    if not MODEL_PATH.is_file():
+        model_version_cache_key = None
+        model_version_cache_value = None
+        return "0"
+
+    stat = MODEL_PATH.stat()
+    cache_key = (stat.st_mtime_ns, stat.st_size)
+    if cache_key == model_version_cache_key and model_version_cache_value is not None:
+        return model_version_cache_value
+
+    digest = hashlib.sha256()
+    with MODEL_PATH.open("rb") as f:
+        while chunk := f.read(MODEL_CHUNK_SIZE):
+            digest.update(chunk)
+
+    version = f"{stat.st_mtime_ns:x}-{stat.st_size:x}-{digest.hexdigest()[:16]}"
+    model_version_cache_key = cache_key
+    model_version_cache_value = version
+    return version
+
 
 async def run_training_process():
-    global training_task_running
-    if training_task_running:
-        print(f"[{datetime.now()}] Trening już trwa. Pomijam uruchamianie nowego procesu.")
-        return
-        
-    training_task_running = True
-    print(f"[{datetime.now()}] Rozpoczynam automatyczny trening (Federated Learning) na podstawie nowych danych...")
-    try:
-        # Uruchamiamy proces asynchronicznie, by nie blokować FastAPI
-        process = await asyncio.create_subprocess_exec(
-            "python", "train_nppai.py",
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        
-        stdout, stderr = await process.communicate()
-        
-        if process.returncode == 0:
-            print(f"[{datetime.now()}] Trening zakończony pomyślnie. Nowy model jest gotowy do pobrania.")
-        else:
-            print(f"[{datetime.now()}] Błąd podczas treningu (kod {process.returncode}):")
-            if stderr:
-                print(stderr.decode('utf-8', errors='replace'))
-            if stdout:
-                print(stdout.decode('utf-8', errors='replace'))
-    except Exception as e:
-        print(f"[{datetime.now()}] Wyjątek podczas uruchamiania treningu: {e}")
-    finally:
-        training_task_running = False
+    global training_task
+    async with training_lock:
+        if training_task is not None and not training_task.done():
+            return
+
+        if not TRAINING_SCRIPT.is_file():
+            logger.error("event=training_script_missing path=%s", TRAINING_SCRIPT)
+            return
+
+        async def run():
+            logger.info("event=training_started script=%s", TRAINING_SCRIPT)
+            process = await asyncio.create_subprocess_exec(
+                "python",
+                str(TRAINING_SCRIPT),
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+            stdout, stderr = await process.communicate()
+            if process.returncode == 0:
+                logger.info("event=training_completed return_code=%s", process.returncode)
+            else:
+                logger.error(
+                    "event=training_failed return_code=%s stderr=%r",
+                    process.returncode,
+                    stderr.decode("utf-8", errors="replace")[-2000:],
+                )
+
+        training_task = asyncio.create_task(run())
+
 
 @app.post(
     "/api/submit_knowledge",
     response_model=SubmitKnowledgeResponse,
     tags=["Knowledge"],
-    summary="Prześlij nową wiedzę",
-    description="Odbiera poprawiony kod od wtyczki. Omija standardowe parsowanie JSON, by tolerować błędy ucieczek z C++.",
-    openapi_extra={
-        "requestBody": {
-            "content": {
-                "application/json": {
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "prompt": {"type": "string", "description": "Zapytanie użytkownika"},
-                            "thought_process": {"type": "string", "description": "Proces myślowy AI"},
-                            "final_code": {"type": "string", "description": "Wygenerowany/poprawiony kod"},
-                            "user_id": {"type": "string", "description": "Identyfikator użytkownika (np. anonymous)"}
-                        },
-                        "required": ["prompt", "final_code"]
-                    }
-                }
-            },
-            "required": True
-        }
-    }
 )
-async def submit_knowledge(request: Request, background_tasks: BackgroundTasks):
+async def submit_knowledge(
+    payload: SubmitKnowledgeRequest,
+    background_tasks: BackgroundTasks,
+    _: None = Depends(require_api_key),
+    __: None = Depends(enforce_rate_limit),
+):
     global new_samples_count
-    """
-    Odbiera poprawiony kod od programisty (wtyczki) i zapisuje do centralnej bazy.
-    Używamy Request bezpośrednio by ominąć błędy parsowania 400 Bad Request przy surowym JSONie z C++.
-    """
-    try:
-        raw_body = await request.body()
-        
-        # Próbujemy naprawić JSON, jeśli C++ zgubił jakieś ucieczki (escape)
-        body_str = raw_body.decode('utf-8', errors='replace')
-        
-        # Usuwamy ewentualne śmieci z początku i końca (np. ukryte znaki z C++)
-        body_str = body_str.strip()
-        
-        try:
-            data = json.loads(body_str)
-        except json.JSONDecodeError:
-            # Fallback dla bardzo zepsutego formatowania z C++
-            print(f"[{datetime.now()}] Ostrzeżenie: Błąd parsowania JSON. Próba ratowania danych.")
-            return {"status": "error", "message": "Zepsuty JSON z wtyczki C++"}
-            
-        prompt = data.get("prompt", "")
-        thought_process = data.get("thought_process", "")
-        final_code = data.get("final_code", "")
-        user_id = data.get("user_id", "anonymous")
 
-        # Tworzymy paczkę w formacie RAG/Instruct
-        entry = f"\n[USER]:\n{prompt}\n\n[SYSTEM]:\n{thought_process}\n\n[AI]:\n{final_code}\n<|endoftext|>\n"
-        
-        # Bezpieczny zapis do pliku z datasetem (append)
-        with open(DATASET_PATH, "a", encoding="utf-8") as f:
-            f.write(entry)
-            
-        print(f"[{datetime.now()}] Odebrano nową wiedzę od użytkownika: {user_id}")
-        
-        new_samples_count += 1
-        if new_samples_count >= TRAINING_THRESHOLD:
-            print(f"[{datetime.now()}] Osiągnięto próg {TRAINING_THRESHOLD} nowych próbek. Zlecam trening w tle.")
-            background_tasks.add_task(run_training_process)
-            new_samples_count = 0
-        
-        return {"status": "success", "message": "Wiedza zapisana w chmurze."}
-    
-    except Exception as e:
-        print(f"Błąd serwera: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+    DATASET_PATH.parent.mkdir(parents=True, exist_ok=True)
+    entry = (
+        "\n[USER]:\n"
+        f"{payload.prompt}\n\n"
+        "[SYSTEM]:\n"
+        f"{payload.thought_process}\n\n"
+        "[AI]:\n"
+        f"{payload.final_code}\n<|endoftext|>\n"
+    )
+
+    if len(entry.encode("utf-8")) > MAX_DATASET_ENTRY_BYTES:
+        raise HTTPException(status_code=413, detail="Training sample too large")
+
+    should_schedule_training = False
+    try:
+        async with dataset_lock:
+            with DATASET_PATH.open("a", encoding="utf-8") as f:
+                f.write(entry)
+
+            new_samples_count += 1
+            if new_samples_count >= TRAINING_THRESHOLD:
+                new_samples_count = 0
+                should_schedule_training = True
+    except OSError as exc:
+        raise HTTPException(status_code=500, detail="Unable to persist training sample") from exc
+
+    logger.info(
+        "event=training_sample_accepted user_id=%r sample_bytes=%d",
+        payload.user_id,
+        len(entry.encode("utf-8")),
+    )
+
+    if should_schedule_training:
+        background_tasks.add_task(run_training_process)
+
+    return SubmitKnowledgeResponse(
+        status="success",
+        message="Knowledge saved.",
+    )
+
 
 @app.get(
     "/api/check_model_update",
     response_model=CheckModelUpdateResponse,
     tags=["Model"],
-    summary="Sprawdź dostępność aktualizacji modelu"
 )
 async def check_model_update(client_version: str = "0"):
-    """
-    Wtyczka pyta, czy jest nowa wersja wag modelu do pobrania.
-    W rzeczywistości można by tu trzymać hashe MD5 lub daty modyfikacji.
-    """
-    if not os.path.exists(MODEL_PATH):
-        raise HTTPException(status_code=404, detail="Model nie jest jeszcze gotowy po stronie serwera.")
-        
-    server_model_time = str(os.path.getmtime(MODEL_PATH))
-    
-    if client_version != server_model_time:
-        return {
-            "update_available": True,
-            "version": server_model_time,
-            "download_url": "/api/download_model"
-        }
-    
-    return {"update_available": False}
+    if not MODEL_PATH.is_file():
+        raise HTTPException(status_code=404, detail="Model is not available")
 
-@app.get(
-    "/api/download_model",
-    tags=["Model"],
-    summary="Pobierz zaktualizowany model",
-    responses={
-        200: {
-            "content": {"application/octet-stream": {}},
-            "description": "Plik modelu w formacie .nppai"
-        }
-    }
-)
+    server_version = await asyncio.to_thread(model_version)
+    if client_version != server_version:
+        return CheckModelUpdateResponse(
+            update_available=True,
+            version=server_version,
+            download_url="/api/download_model",
+        )
+
+    return CheckModelUpdateResponse(update_available=False)
+
+
+@app.get("/api/download_model", tags=["Model"])
 async def download_model():
-    """
-    Endpoint do pobrania zaktualizowanego, mądrzejszego pliku .nppai
-    Używamy generatora, aby serwować plik w małych, bezpiecznych fragmentach (chunking).
-    To całkowicie rozwiązuje problem gwałtownego zrywania połączeń przez Windowsa (WinError 10054).
-    """
-    from fastapi.responses import StreamingResponse
-    import io
-    
-    if not os.path.exists(MODEL_PATH):
-        raise HTTPException(status_code=404, detail="Model not found")
-        
+    if not MODEL_PATH.is_file():
+        raise HTTPException(status_code=404, detail="Model is not available")
+
     def iterfile():
-        with open(MODEL_PATH, mode="rb") as file_like:
-            # Wysyłamy po 1 MB (1024 * 1024 bajtów)
-            chunk = file_like.read(1024 * 1024)
-            while chunk:
+        with MODEL_PATH.open("rb") as file_like:
+            while chunk := file_like.read(MODEL_CHUNK_SIZE):
                 yield chunk
-                chunk = file_like.read(1024 * 1024)
 
     return StreamingResponse(
         iterfile(),
         media_type="application/octet-stream",
-        headers={"Content-Disposition": "attachment; filename=NppAI-model-v1.nppai"}
+        headers={
+            "Content-Disposition": (
+                "attachment; filename=NppAI-model-v1.nppai"
+            ),
+            "X-Content-Type-Options": "nosniff",
+        },
     )
+
 
 if __name__ == "__main__":
     import uvicorn
-    print("Uruchamianie serwera NppAI Cloud...")
+
+    logger.info("event=backend_starting host=0.0.0.0 port=8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)

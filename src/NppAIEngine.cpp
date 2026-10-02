@@ -3,10 +3,24 @@
 #include <cmath>
 #include <fstream>
 #if defined(_M_X64) || defined(__x86_64__)
-#include <immintrin.h> // SIMD/AVX2 support
+#include <immintrin.h>
+#include <intrin.h>
+
+static bool cpuSupportsAVX2() {
+  int cpuInfo[4] = {};
+  __cpuid(cpuInfo, 0);
+  if (cpuInfo[0] < 7)
+    return false;
+  __cpuidex(cpuInfo, 7, 0);
+  return (cpuInfo[1] & (1 << 5)) != 0; // EBX bit 5 = AVX2
+}
+
 #define USE_AVX2
+#else
+static bool cpuSupportsAVX2() { return false; }
 #endif
 #include <iostream>
+#include <limits>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -295,22 +309,67 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
         if (!b.data_q8.empty()) {
 #ifdef USE_AVX2
           int k = 0;
-          __m256 sum_vec = _mm256_setzero_ps();
-          __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
+          __m256 sum0 = _mm256_setzero_ps();
+          __m256 sum1 = _mm256_setzero_ps();
+          __m256 sum2 = _mm256_setzero_ps();
+          __m256 sum3 = _mm256_setzero_ps();
+          for (; k <= a_cols - 32; k += 32) {
+            const __m256 va0 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            const __m256 va1 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 8]);
+            const __m256 va2 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 16]);
+            const __m256 va3 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 24]);
+            const __m128i vbLo =
+                _mm_loadu_si128(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k]));
+            const __m128i vbHi =
+                _mm_loadu_si128(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k + 16]));
+            const __m256i vb0 = _mm256_cvtepi8_epi32(vbLo);
+            const __m256i vb1 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vbLo, 8));
+            const __m256i vb2 = _mm256_cvtepi8_epi32(vbHi);
+            const __m256i vb3 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vbHi, 8));
+            sum0 = _mm256_fmadd_ps(va0, _mm256_cvtepi32_ps(vb0), sum0);
+            sum1 = _mm256_fmadd_ps(va1, _mm256_cvtepi32_ps(vb1), sum1);
+            sum2 = _mm256_fmadd_ps(va2, _mm256_cvtepi32_ps(vb2), sum2);
+            sum3 = _mm256_fmadd_ps(va3, _mm256_cvtepi32_ps(vb3), sum3);
+          }
+          for (; k <= a_cols - 16; k += 16) {
+            const __m256 va0 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            const __m256 va1 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 8]);
+            const __m128i vb16 =
+                _mm_loadu_si128(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k]));
+            const __m256i vb0 = _mm256_cvtepi8_epi32(vb16);
+            const __m256i vb1 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vb16, 8));
+            sum0 = _mm256_fmadd_ps(va0, _mm256_cvtepi32_ps(vb0), sum0);
+            sum1 = _mm256_fmadd_ps(va1, _mm256_cvtepi32_ps(vb1), sum1);
+          }
           for (; k <= a_cols - 8; k += 8) {
-            __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
-            __m128i vb_int8 = _mm_loadl_epi64((__m128i*)&b.data_q8[j * b.shape[1] + k]);
-            __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
-            __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
-            vb_float = _mm256_mul_ps(vb_float, scale_vec);
-            sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb_float));
+            const __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            const __m128i vb8 =
+                _mm_loadl_epi64(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k]));
+            const __m256i vb = _mm256_cvtepi8_epi32(vb8);
+            sum0 = _mm256_fmadd_ps(va, _mm256_cvtepi32_ps(vb), sum0);
           }
-          float tmp[8];
-          _mm256_storeu_ps(tmp, sum_vec);
-          for (int m = 0; m < 8; m++) sum += tmp[m];
+          const __m256 sum01 = _mm256_add_ps(sum0, sum1);
+          const __m256 sum23 = _mm256_add_ps(sum2, sum3);
+          const __m256 sum_vec = _mm256_add_ps(sum01, sum23);
+          const __m128 low = _mm256_castps256_ps128(sum_vec);
+          const __m128 high = _mm256_extractf128_ps(sum_vec, 1);
+          __m128 reduced = _mm_add_ps(low, high);
+          reduced = _mm_hadd_ps(reduced, reduced);
+          reduced = _mm_hadd_ps(reduced, reduced);
+          float unscaled_sum = _mm_cvtss_f32(reduced);
           for (; k < a_cols; k++) {
-            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+            unscaled_sum +=
+                a.data[i * a.shape[1] + k] *
+                static_cast<float>(b.data_q8[j * b.shape[1] + k]);
           }
+          sum = unscaled_sum * b.scale_q8;
 #else
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
@@ -425,8 +484,15 @@ float Tensor::get(int r, int c) const {
   return data[r * shape[1] + c];
 }
 
-void Tensor::readFromFile(std::ifstream &file, bool quantize) {
-  file.read(reinterpret_cast<char *>(data.data()), data.size() * sizeof(float));
+bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
+  const std::streamsize bytes =
+      static_cast<std::streamsize>(data.size() * sizeof(float));
+  if (bytes < 0)
+    return false;
+
+  file.read(reinterpret_cast<char *>(data.data()), bytes);
+  if (file.gcount() != bytes || !file)
+    return false;
   
   if (quantize) {
     float max_abs = 0.0f;
@@ -445,6 +511,8 @@ void Tensor::readFromFile(std::ifstream &file, bool quantize) {
     data.clear();
     data.shrink_to_fit();
   }
+
+  return true;
 }
 
 // --- ENGINE IMPLEMENTATION ---
@@ -461,51 +529,96 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
-  // Wczytywanie nagłówka (konfiguracji)
-  file.read(reinterpret_cast<char *>(&dim), sizeof(int));
-  file.read(reinterpret_cast<char *>(&hidden_dim), sizeof(int));
-  file.read(reinterpret_cast<char *>(&n_layers), sizeof(int));
-  file.read(reinterpret_cast<char *>(&max_seq_len), sizeof(int));
-  file.read(reinterpret_cast<char *>(&vocab_size), sizeof(int));
+  // Read and validate the fixed-size model header before allocating memory.
+  int header[5] = {};
+  file.read(reinterpret_cast<char *>(header), sizeof(header));
+  if (file.gcount() != static_cast<std::streamsize>(sizeof(header))) {
+    std::cerr << "Nieprawidlowy lub niepelny naglowek modelu.\n";
+    return false;
+  }
+
+  dim = header[0];
+  hidden_dim = header[1];
+  n_layers = header[2];
+  max_seq_len = header[3];
+  vocab_size = header[4];
+
+  constexpr int kMaxDimension = 1 << 15;
+  constexpr int kMaxLayers = 256;
+  if (dim <= 0 || hidden_dim <= 0 || vocab_size <= 0 ||
+      max_seq_len <= 0 || n_layers <= 0 ||
+      dim > kMaxDimension || hidden_dim > kMaxDimension ||
+      vocab_size > kMaxDimension * 16 || max_seq_len > kMaxDimension ||
+      n_layers > kMaxLayers) {
+    std::cerr << "Nieprawidlowe wymiary modelu.\n";
+    return false;
+  }
+
+  // Validate the complete payload size before allocating large tensors.
+  file.seekg(0, std::ios::end);
+  const std::streamoff fileSize = file.tellg();
+  file.seekg(sizeof(header), std::ios::beg);
+  if (fileSize < static_cast<std::streamoff>(sizeof(header))) {
+    std::cerr << "Nieprawidlowy rozmiar pliku modelu.\n";
+    return false;
+  }
+
+  const uint64_t d = static_cast<uint64_t>(dim);
+  const uint64_t h = static_cast<uint64_t>(hidden_dim);
+  const uint64_t v = static_cast<uint64_t>(vocab_size);
+  const uint64_t t = static_cast<uint64_t>(max_seq_len);
+  const uint64_t l = static_cast<uint64_t>(n_layers);
+  const uint64_t floatCount =
+      v * d + t * d +
+      l * (2ULL * d + 4ULL * d * d + 3ULL * d * h) +
+      d + d * v;
+  constexpr uint64_t kMaxModelBytes = 4ULL * 1024ULL * 1024ULL * 1024ULL;
+  if (floatCount > (UINT64_MAX / sizeof(float)) ||
+      floatCount * sizeof(float) > kMaxModelBytes ||
+      static_cast<uint64_t>(fileSize - sizeof(header)) <
+          floatCount * sizeof(float)) {
+    std::cerr << "Model przekracza limit rozmiaru lub jest niekompletny.\n";
+    return false;
+  }
 
   // Inicjalizacja i wczytywanie wag
   tokenEmbeddingTable = Tensor({vocab_size, dim});
-  tokenEmbeddingTable.readFromFile(file, false); // Embeddings usually stay FP32
+  if (!tokenEmbeddingTable.readFromFile(file, false)) return false;
 
   posEmbeddingTable = Tensor({max_seq_len, dim});
-  posEmbeddingTable.readFromFile(file, false);
+  if (!posEmbeddingTable.readFromFile(file, false)) return false;
 
   layers.clear();
   for (int i = 0; i < n_layers; i++) {
     TransformerLayer layer;
     layer.rmsAttn = Tensor({dim});
-    layer.rmsAttn.readFromFile(file, false); // RMSNorm is small, FP32
+    if (!layer.rmsAttn.readFromFile(file, false)) return false; // RMSNorm is small, FP32
     layer.wQ = Tensor({dim, dim});
-    layer.wQ.readFromFile(file, true); // Quantize
+    if (!layer.wQ.readFromFile(file, true)) return false; // Quantize
     layer.wK = Tensor({dim, dim});
-    layer.wK.readFromFile(file, true);
+    if (!layer.wK.readFromFile(file, true)) return false;
     layer.wV = Tensor({dim, dim});
-    layer.wV.readFromFile(file, true);
+    if (!layer.wV.readFromFile(file, true)) return false;
     layer.wO = Tensor({dim, dim});
-    layer.wO.readFromFile(file, true);
+    if (!layer.wO.readFromFile(file, true)) return false;
 
     layer.rmsFFN = Tensor({dim});
-    layer.rmsFFN.readFromFile(file, false);
+    if (!layer.rmsFFN.readFromFile(file, false)) return false;
     layer.wGate = Tensor({dim, hidden_dim});
-    layer.wGate.readFromFile(file, true);
+    if (!layer.wGate.readFromFile(file, true)) return false;
     layer.wUp = Tensor({dim, hidden_dim});
-    layer.wUp.readFromFile(file, true);
+    if (!layer.wUp.readFromFile(file, true)) return false;
     layer.wDown = Tensor({hidden_dim, dim});
-    layer.wDown.readFromFile(file, true);
+    if (!layer.wDown.readFromFile(file, true)) return false;
 
     layers.push_back(layer);
   }
 
   outputRMSNorm = Tensor({dim});
-  outputRMSNorm.readFromFile(file, false);
+  if (!outputRMSNorm.readFromFile(file, false)) return false;
 
   outputClassifier = Tensor({dim, vocab_size});
-  outputClassifier.readFromFile(file, true); // Quantize output classifier
+  if (!outputClassifier.readFromFile(file, true)) return false; // Quantize output classifier
 
   file.close();
 
@@ -519,6 +632,7 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
 
 bool NppAIEngine::loadBPETokenizer(const std::string &path) {
   bpe_merges.clear();
+  bpe_merge_ranks.clear();
   bpe_vocab.clear();
   for (int i = 0; i < 256; i++) {
     bpe_vocab[i] = std::string(1, (char)i);
@@ -532,10 +646,39 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
   }
 
   int p0, p1, idx;
+  size_t mergeRank = 0;
   while (file >> p0 >> p1 >> idx) {
+    // IDs below 256 are reserved for raw bytes. Every merge must reference
+    // already-known tokens and create a new token ID.
+    if (p0 < 0 || p1 < 0 || idx < 256 ||
+        !bpe_vocab.count(p0) || !bpe_vocab.count(p1) ||
+        bpe_vocab.count(idx) || bpe_merges.count({p0, p1})) {
+      bpe_merges.clear();
+      bpe_merge_ranks.clear();
+      bpe_vocab.clear();
+      for (int i = 0; i < 256; i++) {
+        bpe_vocab[i] = std::string(1, (char)i);
+      }
+      std::cerr << "Nieprawidlowa definicja merge w BPE: " << path << "\n";
+      return false;
+    }
+
     bpe_merges[{p0, p1}] = idx;
+    bpe_merge_ranks[{p0, p1}] = mergeRank++;
     bpe_vocab[idx] = bpe_vocab[p0] + bpe_vocab[p1];
   }
+
+  if (!file.eof() && file.fail()) {
+    bpe_merges.clear();
+    bpe_merge_ranks.clear();
+    bpe_vocab.clear();
+    for (int i = 0; i < 256; i++) {
+      bpe_vocab[i] = std::string(1, (char)i);
+    }
+    std::cerr << "Nieprawidlowy format pliku BPE: " << path << "\n";
+    return false;
+  }
+
   return true;
 }
 
@@ -548,28 +691,26 @@ std::vector<int> NppAIEngine::tokenize(const std::string &text) {
     return ids; // Fallback do bajtów
 
   while (ids.size() >= 2) {
-    int best_idx = -1;
     std::pair<int, int> best_pair;
-    int min_rank = 1000000000;
+    size_t min_rank = (std::numeric_limits<size_t>::max)();
 
     for (size_t i = 0; i < ids.size() - 1; i++) {
       std::pair<int, int> pair = {ids[i], ids[i + 1]};
-      if (bpe_merges.count(pair)) {
-        if (bpe_merges[pair] < min_rank) {
-          min_rank = bpe_merges[pair];
-          best_pair = pair;
-        }
+      auto rankIt = bpe_merge_ranks.find(pair);
+      if (rankIt != bpe_merge_ranks.end() && rankIt->second < min_rank) {
+        min_rank = rankIt->second;
+        best_pair = pair;
       }
     }
 
-    if (min_rank == 1000000000)
+    if (min_rank == (std::numeric_limits<size_t>::max)())
       break;
 
     std::vector<int> new_ids;
     for (size_t i = 0; i < ids.size(); i++) {
       if (i < ids.size() - 1 && ids[i] == best_pair.first &&
           ids[i + 1] == best_pair.second) {
-        new_ids.push_back(min_rank);
+        new_ids.push_back(bpe_merges.at(best_pair));
         i++;
       } else {
         new_ids.push_back(ids[i]);
