@@ -137,10 +137,16 @@ async def submit_knowledge(
     if len(entry.encode("utf-8")) > MAX_DATASET_ENTRY_BYTES:
         raise HTTPException(status_code=413, detail="Training sample too large")
 
+    should_schedule_training = False
     try:
         async with dataset_lock:
             with DATASET_PATH.open("a", encoding="utf-8") as f:
                 f.write(entry)
+
+            new_samples_count += 1
+            if new_samples_count >= TRAINING_THRESHOLD:
+                new_samples_count = 0
+                should_schedule_training = True
     except OSError as exc:
         raise HTTPException(status_code=500, detail="Unable to persist training sample") from exc
 
@@ -149,9 +155,7 @@ async def submit_knowledge(
         f"user_id={payload.user_id!r}"
     )
 
-    new_samples_count += 1
-    if new_samples_count >= TRAINING_THRESHOLD:
-        new_samples_count = 0
+    if should_schedule_training:
         background_tasks.add_task(run_training_process)
 
     return SubmitKnowledgeResponse(
