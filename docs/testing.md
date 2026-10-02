@@ -2,19 +2,31 @@
 
 ## Current tests
 
-### Native smoke test
+### Native targets
 
-`test_engine.cpp` loads a supplied `.nppai` model and performs a short generation.
+The CMake build currently defines five native test executables:
 
-It is intentionally an integration/smoke test rather than a unit-test framework.
+- `TestEngine` — model-backed generation smoke test (requires a supplied `.nppai` model);
+- `TestTensor` — deterministic tensor math coverage;
+- `TestModelLoader` — malformed/truncated model rejection;
+- `TestTokenizer` — tokenizer fallback and BPE behavior;
+- `TestGenerationPipeline` — tiny-model loading, BPE, forward pass, sampling, and detokenization.
 
-Example:
+Four self-contained targets are registered with CTest: `TensorMath`, `ModelLoaderValidation`, `TokenizerFallback`, and `GenerationPipeline`. The model-backed `TestEngine` smoke test is intentionally not registered because it requires an external model artifact.
+
+Run the registered native suite after building:
 
 ```powershell
-TestEngine.exe path\\to\\NppAI-model-v1.nppai
+ctest --test-dir build -C Release --output-on-failure
 ```
 
-Exit codes:
+Run the model-backed smoke test separately:
+
+```powershell
+build\Release\TestEngine.exe path\to\NppAI-model-v1.nppai
+```
+
+Exit codes for `TestEngine`:
 
 - `0` — generation succeeded;
 - `1` — model could not be loaded;
@@ -27,15 +39,4 @@ Exit codes:
 
 ## Testing roadmap
 
-The next step is a deterministic test suite covering:
-
-1. tensor shape validation;
-2. matrix multiplication;
-3. RMSNorm;
-4. SiLU;
-5. INT8 quantization/dequantization;
-6. model serialization/deserialization;
-7. tokenizer round trips;
-8. inference determinism with a fixed seed.
-
-A future CTest integration should run these tests without requiring a production model download.
+CTest integration and deterministic native coverage are now part of the project. Remaining work includes expanding coverage for quantization/dequantization, serialization compatibility, additional tensor shapes, and deterministic inference behavior across supported build targets.
