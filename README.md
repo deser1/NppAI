@@ -1,63 +1,220 @@
-# NppAI - Autorski Model i Wtyczka AI dla Notepad++
+# NppAI — Native AI Coding Assistant for Notepad++
 
-NppAI to unikalny projekt łączący w sobie wtyczkę do popularnego edytora kodu Notepad++ oraz całkowicie autorski silnik sieci neuronowej typu Transformer, napisany od zera w C++. Głównym celem NppAI nie jest integrowanie zewnętrznych płatnych usług (jak OpenAI), ale stworzenie niezależnego, uczącego się na Twoim własnym kodzie, prywatnego asystenta programistycznego.
+NppAI is an experimental AI coding assistant for Notepad++ built around a custom C++ inference engine and a Python/PyTorch training pipeline.
 
-## 🚀 Główne Cechy Projektu
+The project focuses on **local inference, systems-level implementation, model formats, RAG, and developer tooling** rather than wrapping an external hosted AI API.
 
-- **Własny Silnik Inferencji C++ (Zero zależności):** Wtyczka nie używa gotowych rozwiązań jak `llama.cpp` czy `Ollama`. Cała matematyka Transformera (Self-Attention, RMSNorm, SwiGLU) została napisana w czystym C++ i zintegrowana wewnątrz wtyczki. Kod jest lekki, natywny i wykonuje się niezwykle szybko.
-- **Własny Format Wag (`.nppai`):** Model używa dedykowanego binarnego formatu plików, zoptymalizowanego do błyskawicznego wczytywania przez wtyczkę.
-- **Architektura RAG (Lokalna pamięć wektorowa):** Silnik potrafi indeksować otwarte pliki w wektorowej bazie lokalnej (tworząc pliki `.rag_db` i `.nppai_mem`), dzięki czemu podczas pisania kodu AI automatycznie czerpie kontekst z innych części Twojego projektu.
-- **Prywatność i Globalne Uczenie (Federated Learning):** Wtyczka posiada mechanizm `TelemetryManager`, który śledzi (Diff Tracker) jak użytkownik modyfikuje wygenerowany przez AI kod. Przed wysyłką do bazy, wtyczka używa wyrażeń regularnych (Regex) do wycinania wrażliwych danych. Serwer odbiera pakiety, dopisuje je do centralnego zbioru i uruchamia proces dotrenowania modelu w tle.
-- **Niestandardowy Trening (PyTorch):** Dołączony skrypt `train_nppai.py` ładuje bazę `instruct_dataset.txt`. Następnie możesz przetrenować własny model – lokalnie lub w chmurze – tworząc asystenta, który idealnie naśladuje Twój styl programowania.
-- **Lokalizacja (I18N):** Wtyczka automatycznie reaguje na zmianę języka systemowego w Notepad++ (komunikat `NPPN_NATIVELANGCHANGED`) i w locie dynamicznie tłumaczy cały interfejs z języka angielskiego na polski.
-- **Kwantyzacja i Optymalizacja (AVX2/INT8):** Wagi modelu mogą być kwantyzowane w locie do formatu INT8, drastycznie zmniejszając zużycie pamięci RAM. Wektorowe operacje matematyczne wykorzystują instrukcje SIMD (AVX2) dla procesorów x64, a całość może być poprawnie kompilowana dla urządzeń ARM64 (np. Snapdragon X Elite).
-- **Asynchroniczny RAG:** Silnik i baza wektorowa operują w niezależnych wątkach, nie powodując przycięć (zamrażania) interfejsu graficznego edytora.
+> **Project status:** experimental / active development. Model quality, performance and deployment characteristics are still being validated.
 
-## 🛠️ Architektura Projektu
+## Highlights
 
-Projekt składa się z dwóch głównych środowisk:
+- **Custom C++ inference engine** implementing Transformer-style building blocks.
+- **Custom `.nppai` binary model format** with model metadata and tensor weights.
+- **Local context / RAG components** for using project files as additional context.
+- **CPU optimization** using OpenMP and AVX2 where the selected build target supports it.
+- **INT8 weight quantization** for selected model tensors.
+- **DirectX 11 compute path** for selected matrix-multiplication workloads, with CPU fallback.
+- **Python/PyTorch training and validation tools.**
+- **Notepad++ plugin integration** with native Windows APIs.
+- **Telemetry / correction-data pipeline** intended for privacy-aware collection and later centralized retraining.
 
-1.  **Środowisko Klienckie (Wtyczka C++)**
-    - **NppAIEngine:** Własny silnik matematyczny AI z obsługą tagu `<think>`.
-    - **AIManager:** Most łączący silnik z API Scintilli.
-    - **RAGManager:** Zarządca bazy wektorowej pobierający lokalny kontekst plików.
-    - **TelemetryManager:** Moduł odpowiedzialny za anonimizację i zbieranie poprawek uczących (Continuous Learning / RLHF).
-    - **PluginDefinition:** Zintegrowany rdzeń wtyczki DLL ładujący się w Notepad++ i budujący dokowany panel UI.
+## Architecture
 
-2.  **Środowisko Serwerowe (Skrypty Python)**
-    - **server_backend.py:** Serwer oparty na FastAPI, zbierający poprawki (RLHF) od wtyczek z całego świata do pliku `instruct_dataset.txt` i serwujący nowe wagi w formacie strumieniowym, odpornym na rwanie (chunking). Automatycznie uruchamia trening w tle.
-    - **train_nppai.py:** Skrypt oparty na PyTorch. Potrafi zbudować, wytrenować i wyeksportować wagi modelu do binarnego pliku `.nppai`.
+```text
+                         Notepad++
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │    NppAI DLL    │
+                    └────────┬────────┘
+                             │
+          ┌──────────────────┼──────────────────┐
+          ▼                  ▼                  ▼
+     AIManager          RAGManager       TelemetryManager
+          │                  │                  │
+          ▼                  ▼                  ▼
+    NppAIEngine        Local context      Backend API
+          │
+     ┌────┴─────────────┐
+     ▼                  ▼
+   CPU path          DirectX 11
+ OpenMP/AVX2        compute path
+     │                  │
+     └────────┬─────────┘
+              ▼
+        Model inference
 
-## ⚙️ Kompilacja i Instalacja Wtyczki
+Training / validation:
 
-Projekt używa CMake do łatwej kompilacji pod system Windows. Wtyczka wymaga architektury x64. Kompilator automatycznie dba o inkrementację numeru kompilacji (Auto-Versioning) oraz o Trimming / Link-Time Optimization (LTO).
+Python → PyTorch → .nppai model → C++ inference
+```
 
-```bash
-cmake -B build -A x64
+## Repository structure
+
+```text
+NppAI/
+├── src/                    # Native plugin and inference engine
+├── datasets/               # Training data location
+├── models/                 # Local model files (ignored by Git)
+├── .github/workflows/      # GitHub Actions
+├── docs/                   # Architecture and development docs
+├── test_engine.cpp         # Native inference smoke test
+├── test_python.py          # Python/model-format validation
+├── train_nppai.py          # PyTorch training/export pipeline
+├── server_backend.py       # FastAPI backend
+└── CMakeLists.txt          # CMake build configuration
+```
+
+## Build
+
+### CMake
+
+The native project currently targets Windows and C++17.
+
+```powershell
+cmake -S . -B build -A x64
 cmake --build build --config Release
 ```
 
-Po skompilowaniu skopiuj wygenerowany plik `build/Release/NppAI.dll` do folderu wtyczek Notepad++ (zazwyczaj `C:\Program Files\Notepad++\plugins\NppAI\NppAI.dll`).
+The plugin also contains a Visual Studio project used by the existing GitHub Actions build.
 
-## 🧠 Jak Uruchomić Infrastrukturę AI?
+### Requirements
 
-1.  Upewnij się, że masz zainstalowane środowisko Python wraz z bibliotekami FastAPI, Uvicorn, Pydantic i PyTorch:
-    ```bash
-    pip install fastapi uvicorn pydantic torch
-    ```
-2.  Uruchom główny serwer backendu w chmurze (lub lokalnie):
-    ```bash
-    python server_backend.py
-    ```
-    _Serwer uruchomi się na porcie 8000 i zacznie nasłuchiwać zapytań (telemetrii) od Twojej wtyczki NppAI. Będzie też dystrybuował nowe wagi modelu._
-3.  Z poziomu Notepad++ możesz wysłać zapytanie (panel dokowany u dołu) lub sprawdzić aktualizacje w locie. Gdy serwer zgromadzi odpowiednią liczbę poprawek kodu od Ciebie, wywoła w tle skrypt `train_nppai.py`, który od nowa nauczy asystenta.
+- Windows
+- Visual Studio / MSVC
+- CMake 3.10+
+- C++17 compiler
+- DirectX 11 development libraries
+- OpenMP support for the optimized CPU path
 
-## 🔮 Plany na przyszłość
+For the Python tooling:
 
-- Obsługa modeli klasy Mixture of Experts (MoE) we własnym silniku C++.
-- Wdrożenie kwantyzacji K-Quants (np. Q4_K) dla jeszcze większej oszczędności VRAM/RAM.
-- Integracja własnego parsera języków AST do poprawy trafności wyników RAG (rozumienie struktury klas).
+```powershell
+python -m pip install -r requirements.txt
+```
+
+## Running the native smoke test
+
+The test executable expects a model file:
+
+```powershell
+build\\Release\\TestEngine.exe models\\NppAI-model-v1.nppai
+```
+
+You can also pass another model path:
+
+```powershell
+build\\Release\\TestEngine.exe path\\to\\model.nppai
+```
+
+A missing model is treated as a test failure instead of a successful run.
+
+## Python model validation
+
+```powershell
+python test_python.py
+```
+
+The script validates loading the custom `.nppai` representation into the matching PyTorch architecture and performs a generation smoke test.
+
+## Backend
+
+The optional FastAPI backend provides endpoints for:
+
+- submitting correction/training samples;
+- checking model availability;
+- downloading a model;
+- starting background retraining after a configurable sample threshold.
+
+Install dependencies:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Run locally:
+
+```powershell
+python server_backend.py
+```
+
+> **Security note:** do not expose the development backend directly to the public Internet without authentication, rate limiting, request-size limits, TLS and an explicit data-retention/privacy policy.
+
+## Training pipeline
+
+```text
+training dataset
+      │
+      ▼
+train_nppai.py
+      │
+      ▼
+PyTorch checkpoint
+      │
+      ▼
+.nppai model
+      │
+      ▼
+NppAI C++ inference
+```
+
+## Important technical notes
+
+### AVX2
+
+The optimized x64 build currently enables AVX2 instructions. **x64 alone does not guarantee AVX2 support on every CPU.** Runtime CPU-feature detection and a scalar/SSE fallback are planned improvements.
+
+### GPU execution
+
+The DirectX 11 path is a workload-specific optimization and has a CPU fallback. It should not be considered universally faster until reproducible benchmarks are available.
+
+### Quantization
+
+Selected weight matrices can be converted from FP32 to symmetric INT8 using a per-tensor scale. Accuracy and latency should be evaluated against FP32 before treating quantization as a production optimization.
+
+### Telemetry and learning
+
+The current backend implements **centralized collection and retraining of submitted correction data**. It should not be described as true federated learning unless decentralized training/aggregation is implemented.
+
+Similarly, the correction dataset is closer to supervised fine-tuning / human-correction data than a complete RLHF pipeline.
+
+## Testing
+
+Current validation consists primarily of native and Python smoke/integration tests.
+
+See:
+
+- [Testing](docs/testing.md)
+- [Architecture](docs/architecture.md)
+- [Model format](docs/model-format.md)
+
+The next testing milestone is a deterministic unit-test suite for tensor operations, quantization and model serialization.
+
+## Roadmap
+
+- [ ] Runtime CPU feature detection for AVX2
+- [ ] Deterministic tensor unit tests
+- [ ] Model serialization/version validation
+- [ ] Reproducible CPU/GPU benchmarks
+- [ ] Better tokenizer test coverage
+- [ ] API authentication and rate limiting
+- [ ] Model integrity checks / hashes
+- [ ] Formal release process
+- [ ] Improved RAG indexing and retrieval
+- [ ] Experimental MoE support
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Security
+
+See [SECURITY.md](SECURITY.md).
+
+## License
+
+See [license.txt](license.txt).
 
 ---
 
-_Stworzono z pasją do C++ i pełnej kontroli nad AI._
+Built as an independent C++ / AI systems project with a focus on understanding the underlying implementation.
