@@ -382,7 +382,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     float ss = 0.0f;
     int c = 0;
 
-#ifdef USE_AVX2
+if (cpuSupportsAVX2()) {
     // Faza 1: Suma kwadratów z AVX2
     __m256 sum_vec = _mm256_setzero_ps();
     for (; c <= cols - 8; c += 8) {
@@ -393,7 +393,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     _mm256_storeu_ps(tmp, sum_vec);
     for (int i = 0; i < 8; i++)
       ss += tmp[i];
-#endif
+    }
 
     // Reszta / Scalar
     for (; c < cols; c++) {
@@ -406,7 +406,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     ss = 1.0f / std::sqrt(ss);
 
     c = 0;
-#ifdef USE_AVX2
+if (cpuSupportsAVX2()) {
     // Faza 2: Normalizacja z AVX2
     __m256 ss_vec = _mm256_set1_ps(ss);
     for (; c <= cols - 8; c += 8) {
@@ -415,7 +415,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
       __m256 res = _mm256_mul_ps(_mm256_mul_ps(val, ss_vec), w);
       _mm256_storeu_ps(&data[r * cols + c], res);
     }
-#endif
+    }
 
     // Reszta / Scalar
     for (; c < cols; c++) {
