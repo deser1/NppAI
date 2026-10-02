@@ -1,6 +1,7 @@
 import asyncio
 import hashlib
 import json
+import logging
 import os
 import secrets
 import time
@@ -24,10 +25,18 @@ MAX_USER_ID_CHARS = 128
 TRAINING_THRESHOLD = 5
 MODEL_CHUNK_SIZE = 1024 * 1024
 API_KEY_ENV = "NPPAI_API_KEY"
+LOG_LEVEL_ENV = "NPPAI_LOG_LEVEL"
 RATE_LIMIT_REQUESTS_ENV = "NPPAI_RATE_LIMIT_REQUESTS"
 RATE_LIMIT_WINDOW_ENV = "NPPAI_RATE_LIMIT_WINDOW_SECONDS"
 DEFAULT_RATE_LIMIT_REQUESTS = 60
 DEFAULT_RATE_LIMIT_WINDOW_SECONDS = 60
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv(LOG_LEVEL_ENV, "INFO").upper(), logging.INFO),
+    format="%(asctime)s %(levelname)s %(name)s %(message)s",
+)
+logger = logging.getLogger("nppai.backend")
+
 
 app = FastAPI(
     title="NppAI Cloud Backend",
@@ -144,11 +153,11 @@ async def run_training_process():
             return
 
         if not TRAINING_SCRIPT.is_file():
-            print(f"[{datetime.now()}] Training script not found: {TRAINING_SCRIPT}")
+            logger.error("event=training_script_missing path=%s", TRAINING_SCRIPT)
             return
 
         async def run():
-            print(f"[{datetime.now()}] Starting background training...")
+            logger.info("event=training_started script=%s", TRAINING_SCRIPT)
             process = await asyncio.create_subprocess_exec(
                 "python",
                 str(TRAINING_SCRIPT),
@@ -157,12 +166,12 @@ async def run_training_process():
             )
             stdout, stderr = await process.communicate()
             if process.returncode == 0:
-                print(f"[{datetime.now()}] Training completed successfully.")
+                logger.info("event=training_completed return_code=%s", process.returncode)
             else:
-                print(
-                    f"[{datetime.now()}] Training failed with code "
-                    f"{process.returncode}: "
-                    f"{stderr.decode('utf-8', errors='replace')}"
+                logger.error(
+                    "event=training_failed return_code=%s stderr=%r",
+                    process.returncode,
+                    stderr.decode("utf-8", errors="replace")[-2000:],
                 )
 
         training_task = asyncio.create_task(run())
@@ -207,9 +216,10 @@ async def submit_knowledge(
     except OSError as exc:
         raise HTTPException(status_code=500, detail="Unable to persist training sample") from exc
 
-    print(
-        f"[{datetime.now()}] Accepted training sample from "
-        f"user_id={payload.user_id!r}"
+    logger.info(
+        "event=training_sample_accepted user_id=%r sample_bytes=%d",
+        payload.user_id,
+        len(entry.encode("utf-8")),
     )
 
     if should_schedule_training:
@@ -266,5 +276,5 @@ async def download_model():
 if __name__ == "__main__":
     import uvicorn
 
-    print("Starting NppAI Cloud Backend...")
+    logger.info("event=backend_starting host=0.0.0.0 port=8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)
