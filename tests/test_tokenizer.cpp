@@ -50,6 +50,34 @@ public:
         return true;
     }
 
+    static bool tokenizerRejectsDuplicateOutputId() {
+        NppAIEngine engine;
+        const auto path =
+            std::filesystem::temp_directory_path() / "nppai_test_duplicate_bpe_merges.txt";
+
+        {
+            std::ofstream file(path);
+            if (!file.is_open()) {
+                std::cerr << "FAIL: could not create duplicate BPE fixture\n";
+                return false;
+            }
+            file << "72 101 256\n";
+            file << "108 108 256\n";
+        }
+
+        const bool loaded = engine.loadBPETokenizer(path.string());
+        const auto tokens = engine.tokenize("Hello");
+        const bool validFallback =
+            !loaded && tokens.size() == 5 && tokens[0] == 'H' && tokens[4] == 'o';
+
+        std::filesystem::remove(path);
+        if (!validFallback) {
+            std::cerr << "FAIL: duplicate BPE output ID was not rejected safely\n";
+            return false;
+        }
+        return true;
+    }
+
     static bool tokenizerBPE() {
         NppAIEngine engine;
         const auto path =
