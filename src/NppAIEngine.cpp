@@ -647,7 +647,7 @@ std::vector<int> NppAIEngine::tokenize(const std::string &text) {
 
   while (ids.size() >= 2) {
     std::pair<int, int> best_pair;
-    size_t min_rank = std::numeric_limits<size_t>::max();
+    size_t min_rank = (std::numeric_limits<size_t>::max)();
 
     for (size_t i = 0; i < ids.size() - 1; i++) {
       std::pair<int, int> pair = {ids[i], ids[i + 1]};
@@ -658,7 +658,7 @@ std::vector<int> NppAIEngine::tokenize(const std::string &text) {
       }
     }
 
-    if (min_rank == std::numeric_limits<size_t>::max())
+    if (min_rank == (std::numeric_limits<size_t>::max)())
       break;
 
     std::vector<int> new_ids;
