@@ -22,6 +22,34 @@ public:
         return true;
     }
 
+    static bool tokenizerRejectsInvalidMerge() {
+        NppAIEngine engine;
+        const auto path =
+            std::filesystem::temp_directory_path() / "nppai_test_invalid_bpe_merges.txt";
+
+        {
+            std::ofstream file(path);
+            if (!file.is_open()) {
+                std::cerr << "FAIL: could not create invalid BPE fixture\n";
+                return false;
+            }
+            // Token 999 is not defined yet, so this merge must be rejected.
+            file << "72 999 256\n";
+        }
+
+        const bool loaded = engine.loadBPETokenizer(path.string());
+        const auto tokens = engine.tokenize("Hello");
+        const bool validFallback =
+            !loaded && tokens.size() == 5 && tokens[0] == 'H' && tokens[4] == 'o';
+
+        std::filesystem::remove(path);
+        if (!validFallback) {
+            std::cerr << "FAIL: invalid BPE merge was not rejected safely\n";
+            return false;
+        }
+        return true;
+    }
+
     static bool tokenizerBPE() {
         NppAIEngine engine;
         const auto path =
@@ -74,6 +102,8 @@ int main() {
     if (!NppAITest::tokenizerFallback())
         return 1;
     if (!NppAITest::tokenizerBPE())
+        return 1;
+    if (!NppAITest::tokenizerRejectsInvalidMerge())
         return 1;
 
     std::cout << "Tokenizer tests passed.\n";
