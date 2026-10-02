@@ -306,59 +306,59 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
       float sum = 0.0f;
       if (transposeB) {
         if (!b.data_q8.empty()) {
-#if defined(_M_X64) || defined(__x86_64__)
-          if (cpuSupportsAVX2()) {
-            int k = 0;
-            __m256 sum_vec = _mm256_setzero_ps();
-            __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
-            for (; k <= a_cols - 8; k += 8) {
-              __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
-              __m128i vb_int8 = _mm_loadl_epi64((__m128i*)&b.data_q8[j * b.shape[1] + k]);
-              __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
-              __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
-              vb_float = _mm256_mul_ps(vb_float, scale_vec);
-              sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb_float));
-            }
-            float tmp[8];
-            _mm256_storeu_ps(tmp, sum_vec);
-            for (int m = 0; m < 8; ++m) sum += tmp[m];
-            for (; k < a_cols; ++k)
-              sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
-          } else
-#endif
-          {
-            for (int k = 0; k < a_cols; ++k)
-              sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+#ifdef USE_AVX2
+          int k = 0;
+          __m256 sum_vec = _mm256_setzero_ps();
+          __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
+          for (; k <= a_cols - 8; k += 8) {
+            __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            __m128i vb_int8 = _mm_loadl_epi64((__m128i*)&b.data_q8[j * b.shape[1] + k]);
+            __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
+            __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
+            vb_float = _mm256_mul_ps(vb_float, scale_vec);
+            sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb_float));
           }
+          float tmp[8];
+          _mm256_storeu_ps(tmp, sum_vec);
+          for (int m = 0; m < 8; m++) sum += tmp[m];
+          for (; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+          }
+#else
+          for (int k = 0; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+          }
+#endif
         } else {
-#if defined(_M_X64) || defined(__x86_64__)
-          if (cpuSupportsAVX2()) {
-            int k = 0;
-            __m256 sum_vec = _mm256_setzero_ps();
-            for (; k <= a_cols - 8; k += 8) {
-              __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
-              __m256 vb = _mm256_loadu_ps(&b.data[j * b.shape[1] + k]);
-              sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb));
-            }
-            float tmp[8];
-            _mm256_storeu_ps(tmp, sum_vec);
-            for (int m = 0; m < 8; ++m) sum += tmp[m];
-            for (; k < a_cols; ++k)
-              sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
-          } else
-#endif
-          {
-            for (int k = 0; k < a_cols; ++k)
-              sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
+#ifdef USE_AVX2
+          int k = 0;
+          __m256 sum_vec = _mm256_setzero_ps();
+          for (; k <= a_cols - 8; k += 8) {
+            __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            __m256 vb = _mm256_loadu_ps(&b.data[j * b.shape[1] + k]);
+            sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb));
           }
+          float tmp[8];
+          _mm256_storeu_ps(tmp, sum_vec);
+          for (int m = 0; m < 8; m++) sum += tmp[m];
+          for (; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
+          }
+#else
+          for (int k = 0; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
+          }
+#endif
         }
       } else {
         if (!b.data_q8.empty()) {
-          for (int k = 0; k < a_cols; ++k)
+          for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[k * b.shape[1] + j] * b.scale_q8);
+          }
         } else {
-          for (int k = 0; k < a_cols; ++k)
+          for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[k * b.shape[1] + j];
+          }
         }
       }
       result.data[i * b_cols + j] = sum;
@@ -382,42 +382,534 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     float ss = 0.0f;
     int c = 0;
 
-#if defined(_M_X64) || defined(__x86_64__)
-    if (cpuSupportsAVX2()) {
-      __m256 sum_vec = _mm256_setzero_ps();
-      for (; c <= cols - 8; c += 8) {
-        __m256 val = _mm256_loadu_ps(&data[r * cols + c]);
-        sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(val, val));
-      }
-      float tmp[8];
-      _mm256_storeu_ps(tmp, sum_vec);
-      for (int i = 0; i < 8; i++) ss += tmp[i];
+#ifdef USE_AVX2
+    // Faza 1: Suma kwadratów z AVX2
+    __m256 sum_vec = _mm256_setzero_ps();
+    for (; c <= cols - 8; c += 8) {
+      __m256 val = _mm256_loadu_ps(&data[r * cols + c]);
+      sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(val, val));
     }
+    float tmp[8];
+    _mm256_storeu_ps(tmp, sum_vec);
+    for (int i = 0; i < 8; i++)
+      ss += tmp[i];
 #endif
 
+    // Reszta / Scalar
     for (; c < cols; c++) {
       float val = data[r * cols + c];
       ss += val * val;
     }
 
     ss /= cols;
-    ss += 1e-5f;
+    ss += 1e-5f; // epsilon
     ss = 1.0f / std::sqrt(ss);
 
     c = 0;
-#if defined(_M_X64) || defined(__x86_64__)
-    if (cpuSupportsAVX2()) {
-      __m256 ss_vec = _mm256_set1_ps(ss);
-      for (; c <= cols - 8; c += 8) {
-        __m256 val = _mm256_loadu_ps(&data[r * cols + c]);
-        __m256 w = _mm256_loadu_ps(&weight.data[c]);
-        __m256 res = _mm256_mul_ps(_mm256_mul_ps(val, ss_vec), w);
-        _mm256_storeu_ps(&data[r * cols + c], res);
-      }
+#ifdef USE_AVX2
+    // Faza 2: Normalizacja z AVX2
+    __m256 ss_vec = _mm256_set1_ps(ss);
+    for (; c <= cols - 8; c += 8) {
+      __m256 val = _mm256_loadu_ps(&data[r * cols + c]);
+      __m256 w = _mm256_loadu_ps(&weight.data[c]);
+      __m256 res = _mm256_mul_ps(_mm256_mul_ps(val, ss_vec), w);
+      _mm256_storeu_ps(&data[r * cols + c], res);
     }
 #endif
 
-    for (; c < cols; c++)
+    // Reszta / Scalar
+    for (; c < cols; c++) {
       data[r * cols + c] = (data[r * cols + c] * ss) * weight.data[c];
+    }
   }
+}
+
+float Tensor::get(int i) const {
+  if (!data_q8.empty()) {
+    return data_q8[i] * scale_q8;
+  }
+  return data[i];
+}
+
+float Tensor::get(int r, int c) const {
+  if (!data_q8.empty()) {
+    return data_q8[r * shape[1] + c] * scale_q8;
+  }
+  return data[r * shape[1] + c];
+}
+
+bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
+  const std::streamsize bytes =
+      static_cast<std::streamsize>(data.size() * sizeof(float));
+  if (bytes < 0)
+    return false;
+
+  file.read(reinterpret_cast<char *>(data.data()), bytes);
+  if (file.gcount() != bytes || !file)
+    return false;
+  
+  if (quantize) {
+    float max_abs = 0.0f;
+    for (float val : data) {
+      if (std::abs(val) > max_abs) max_abs = std::abs(val);
+    }
+    scale_q8 = max_abs / 127.0f;
+    if (scale_q8 == 0.0f) scale_q8 = 1e-9f;
+
+    data_q8.resize(data.size());
+    for (size_t i = 0; i < data.size(); i++) {
+      data_q8[i] = static_cast<int8_t>(std::round(data[i] / scale_q8));
+    }
+    
+    // Zwalniamy oryginalne dane zmiennoprzecinkowe dla oszczędności RAM
+    data.clear();
+    data.shrink_to_fit();
+  }
+}
+
+// --- ENGINE IMPLEMENTATION ---
+NppAIEngine::NppAIEngine() {}
+
+NppAIEngine::~NppAIEngine() {}
+
+bool NppAIEngine::loadModel(const std::string &modelPath) {
+  std::lock_guard<std::mutex> lock(engineMutex);
+  std::ifstream file(modelPath, std::ios::binary);
+  if (!file.is_open()) {
+    std::cerr << "Nie udalo sie otworzyc pliku modelu: " << modelPath
+              << std::endl;
+    return false;
+  }
+
+  // Read and validate the fixed-size model header before allocating memory.
+  int header[5] = {};
+  file.read(reinterpret_cast<char *>(header), sizeof(header));
+  if (file.gcount() != static_cast<std::streamsize>(sizeof(header))) {
+    std::cerr << "Nieprawidlowy lub niepelny naglowek modelu.\n";
+    return false;
+  }
+
+  dim = header[0];
+  hidden_dim = header[1];
+  n_layers = header[2];
+  max_seq_len = header[3];
+  vocab_size = header[4];
+
+  constexpr int kMaxDimension = 1 << 15;
+  constexpr int kMaxLayers = 256;
+  if (dim <= 0 || hidden_dim <= 0 || vocab_size <= 0 ||
+      max_seq_len <= 0 || n_layers <= 0 ||
+      dim > kMaxDimension || hidden_dim > kMaxDimension ||
+      vocab_size > kMaxDimension * 16 || max_seq_len > kMaxDimension ||
+      n_layers > kMaxLayers) {
+    std::cerr << "Nieprawidlowe wymiary modelu.\n";
+    return false;
+  }
+
+  // Inicjalizacja i wczytywanie wag
+  tokenEmbeddingTable = Tensor({vocab_size, dim});
+tokenEmbeddingTable.readFromFile(file, false); // Embeddings usually stay FP32
+
+  posEmbeddingTable = Tensor({max_seq_len, dim});
+  if (!posEmbeddingTable.readFromFile(file, false)) return false;
+
+  layers.clear();
+  for (int i = 0; i < n_layers; i++) {
+    TransformerLayer layer;
+    layer.rmsAttn = Tensor({dim});
+    if (!layer.rmsAttn.readFromFile(file, false)) return false; // RMSNorm is small, FP32
+    layer.wQ = Tensor({dim, dim});
+    if (!layer.wQ.readFromFile(file, true)) return false; // Quantize
+    layer.wK = Tensor({dim, dim});
+    if (!layer.wK.readFromFile(file, true)) return false;
+    layer.wV = Tensor({dim, dim});
+    if (!layer.wV.readFromFile(file, true)) return false;
+    layer.wO = Tensor({dim, dim});
+    if (!layer.wO.readFromFile(file, true)) return false;
+
+    layer.rmsFFN = Tensor({dim});
+    if (!layer.rmsFFN.readFromFile(file, false)) return false;
+    layer.wGate = Tensor({dim, hidden_dim});
+    if (!layer.wGate.readFromFile(file, true)) return false;
+    layer.wUp = Tensor({dim, hidden_dim});
+    if (!layer.wUp.readFromFile(file, true)) return false;
+    layer.wDown = Tensor({hidden_dim, dim});
+    if (!layer.wDown.readFromFile(file, true)) return false;
+
+    layers.push_back(layer);
+  }
+
+  outputRMSNorm = Tensor({dim});
+  if (!outputRMSNorm.readFromFile(file, false)) return false;
+
+  outputClassifier = Tensor({dim, vocab_size});
+  if (!outputClassifier.readFromFile(file, true)) return false; // Quantize output classifier
+
+  file.close();
+
+  // Wczytanie BPE tokenizera
+  std::string bpePath =
+      modelPath.substr(0, modelPath.find_last_of("/\\")) + "\\bpe_merges.txt";
+  loadBPETokenizer(bpePath);
+
+  return true;
+}
+
+bool NppAIEngine::loadBPETokenizer(const std::string &path) {
+  bpe_merges.clear();
+  bpe_vocab.clear();
+  for (int i = 0; i < 256; i++) {
+    bpe_vocab[i] = std::string(1, (char)i);
+  }
+
+  std::ifstream file(path);
+  if (!file.is_open()) {
+    std::cerr << "Nie udalo sie wczytac BPE Tokenizera: " << path
+              << ". Uzywany tryb bajtowy.\n";
+    return false;
+  }
+
+  int p0, p1, idx;
+  while (file >> p0 >> p1 >> idx) {
+    bpe_merges[{p0, p1}] = idx;
+    bpe_vocab[idx] = bpe_vocab[p0] + bpe_vocab[p1];
+  }
+  return true;
+}
+
+std::vector<int> NppAIEngine::tokenize(const std::string &text) {
+  std::vector<int> ids;
+  for (char c : text)
+    ids.push_back((unsigned char)c);
+
+  if (bpe_merges.empty())
+    return ids; // Fallback do bajtów
+
+  while (ids.size() >= 2) {
+    int best_idx = -1;
+    std::pair<int, int> best_pair;
+    int min_rank = 1000000000;
+
+    for (size_t i = 0; i < ids.size() - 1; i++) {
+      std::pair<int, int> pair = {ids[i], ids[i + 1]};
+      if (bpe_merges.count(pair)) {
+        if (bpe_merges[pair] < min_rank) {
+          min_rank = bpe_merges[pair];
+          best_pair = pair;
+        }
+      }
+    }
+
+    if (min_rank == 1000000000)
+      break;
+
+    std::vector<int> new_ids;
+    for (size_t i = 0; i < ids.size(); i++) {
+      if (i < ids.size() - 1 && ids[i] == best_pair.first &&
+          ids[i + 1] == best_pair.second) {
+        new_ids.push_back(min_rank);
+        i++;
+      } else {
+        new_ids.push_back(ids[i]);
+      }
+    }
+    ids = new_ids;
+  }
+  return ids;
+}
+
+std::string NppAIEngine::detokenize(const std::vector<int> &tokens) {
+  std::string text;
+  for (int t : tokens) {
+    if (bpe_vocab.count(t)) {
+      text += bpe_vocab[t];
+    } else if (t >= 0 && t < 256) {
+      text += (char)(unsigned char)t;
+    }
+  }
+  return text;
+}
+
+Tensor NppAIEngine::forward(const std::vector<int> &inputTokens) {
+  int seq_len = (int)inputTokens.size();
+  if (seq_len == 0 || dim == 0)
+    return Tensor({1, vocab_size});
+
+  // Zabezpieczenie przed przekroczeniem kontekstu
+  int T = seq_len < max_seq_len ? seq_len : max_seq_len;
+
+  // 1. Embedding dla całej sekwencji T
+  Tensor x({T, dim});
+  for (int pos = 0; pos < T; pos++) {
+    int token = inputTokens[seq_len - T + pos]; // Bierzemy T ostatnich tokenów
+    if (token >= vocab_size || token < 0) {
+        token = 0; // clamp to 0 to prevent segfault if vocab_size mismatch
+    }
+    for (int i = 0; i < dim; i++) {
+      x.at(pos, i) =
+          tokenEmbeddingTable.at(token, i) + posEmbeddingTable.at(pos, i);
+    }
+  }
+
+  // 2. Przejście przez warstwy Transformera
+  for (int l = 0; l < n_layers; l++) {
+    Tensor residual = x;
+
+    // -- Self Attention --
+    x.applyRMSNorm(layers[l].rmsAttn);
+
+    Tensor q = Tensor::matmul(x, layers[l].wQ);
+    Tensor k = Tensor::matmul(x, layers[l].wK);
+    Tensor v = Tensor::matmul(x, layers[l].wV);
+
+    // Obliczanie atencji (q * k^T)
+    Tensor scores = Tensor::matmul(q, k, true); // [T, T]
+
+    float scale = 1.0f / std::sqrt((float)dim);
+#pragma omp parallel for
+    for (int r = 0; r < T; r++) {
+      float max_val = -1e9f;
+      for (int c = 0; c < T; c++) {
+        if (c > r) {
+          scores.at(r, c) = -1e9f; // Causal mask
+        } else {
+          scores.at(r, c) *= scale;
+          if (scores.at(r, c) > max_val)
+            max_val = scores.at(r, c);
+        }
+      }
+      // Softmax per row
+      float sum = 0.0f;
+      for (int c = 0; c <= r; c++) {
+        scores.at(r, c) = std::exp(scores.at(r, c) - max_val);
+        sum += scores.at(r, c);
+      }
+      for (int c = 0; c <= r; c++) {
+        scores.at(r, c) /= sum;
+      }
+      // Zmaskowane wartości muszą być jawnie równe 0.0f do matmul!
+      for (int c = r + 1; c < T; c++) {
+        scores.at(r, c) = 0.0f;
+      }
+    }
+
+    Tensor attn_out = Tensor::matmul(scores, v);
+
+    // Projekcja wyjściowa
+    x = Tensor::matmul(attn_out, layers[l].wO);
+
+// Residual Connection
+#pragma omp parallel for
+    for (int r = 0; r < T; r++) {
+      for (int i = 0; i < dim; i++)
+        x.data[r * dim + i] += residual.data[r * dim + i];
+    }
+
+    // -- Feed Forward --
+    residual = x;
+    x.applyRMSNorm(layers[l].rmsFFN);
+
+    Tensor gate = Tensor::matmul(x, layers[l].wGate);
+    gate.applySiLU();
+    Tensor up = Tensor::matmul(x, layers[l].wUp);
+
+    Tensor ffn_mid({T, hidden_dim});
+#pragma omp parallel for
+    for (int r = 0; r < T; r++) {
+      for (int i = 0; i < hidden_dim; i++)
+        ffn_mid.data[r * hidden_dim + i] =
+            gate.data[r * hidden_dim + i] * up.data[r * hidden_dim + i];
+    }
+
+    x = Tensor::matmul(ffn_mid, layers[l].wDown);
+
+// Residual Connection
+#pragma omp parallel for
+    for (int r = 0; r < T; r++) {
+      for (int i = 0; i < dim; i++)
+        x.data[r * dim + i] += residual.data[r * dim + i];
+    }
+  }
+
+  // 3. Klasyfikator końcowy dla OSTATNIEGO tokena
+  Tensor last_token({1, dim});
+  for (int i = 0; i < dim; i++) {
+    last_token.at(0, i) = x.at(T - 1, i);
+  }
+
+  last_token.applyRMSNorm(outputRMSNorm);
+  Tensor logits = Tensor::matmul(last_token, outputClassifier);
+
+  return logits;
+}
+
+std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
+                                  std::function<void(char, bool)> onToken,
+                                  std::function<void(int)> onRemove) {
+  std::lock_guard<std::mutex> lock(engineMutex);
+  if (dim == 0)
+    return "Model nie jest zaladowany!";
+
+  cancelRequested = false;
+  std::vector<int> tokens = tokenize(prompt);
+  std::string current_output = prompt;
+  bool is_thinking = false;
+
+  // Główna pętla autoregresyjna AI
+  for (int i = 0; i < maxTokens; i++) {
+    if (cancelRequested) {
+      std::cout << "\n[Generowanie przerwane przez uzytkownika]" << std::endl;
+      break;
+    }
+
+    Tensor logits = forward(tokens);
+
+    // Zabezpieczenie przed NaN (wybuchami w matematyce Tensorowej)
+    bool has_nan = false;
+    for (int v = 0; v < vocab_size; v++) {
+      if (std::isnan(logits.at(0, v))) {
+        has_nan = true;
+        break;
+      }
+    }
+
+    int nextToken = 0;
+    if (has_nan) {
+      nextToken = 0; // Fallback na bezpieczny token
+    } else {
+      // Repetition Penalty - obniżamy szansę na znaki, które wystąpiły niedawno
+      // w kontekście
+      float repetition_penalty = 1.3f; // Zwiększone z 1.2 na 1.3
+      for (int t : tokens) {
+        if (logits.at(0, t) > 0) {
+          logits.data[t] /= repetition_penalty;
+        } else {
+          logits.data[t] *= repetition_penalty;
+        }
+      }
+
+      // TOP-K Sampling (Rozwiązanie problemu "pustych spacji" i krzaczków)
+      // Zamiast brać absolutnie największą wartość (Greedy) lub losować ze
+      // wszystkich, ograniczamy wybór tylko do K najbardziej prawdopodobnych
+      // liter.
+      int K = 3; // Zmniejszamy K z 5 na 3, aby ograniczyć zniekształcenia
+                 // (halucynacje)
+      std::vector<std::pair<float, int>> top_logits;
+      for (int v = 0; v < vocab_size; ++v) {
+        top_logits.push_back({logits.at(0, v), v});
+      }
+
+      // Sortowanie malejąco
+      std::sort(
+          top_logits.begin(), top_logits.end(),
+          [](const std::pair<float, int> &a, const std::pair<float, int> &b) {
+            return a.first > b.first;
+          });
+
+      // Temperatura decyzyjna
+      float temperature = 0.35f; // Zmniejszamy z 0.5 na 0.35, aby model był
+                                 // "pewniejszy" i mniej zgadywał
+      std::vector<float> probs(K, 0.0f);
+      float sum_probs = 0.0f;
+
+      // Wyciągnięcie prawdopodobieństw tylko dla Top-K znaków
+      for (int j = 0; j < K; ++j) {
+        probs[j] = std::exp(top_logits[j].first / temperature);
+        sum_probs += probs[j];
+      }
+
+      // Rzutowanie losowe (Weighted Random) z Top-K
+      float r = (float)rand() / (float)RAND_MAX;
+      float cumulative = 0.0f;
+      bool selected = false;
+      for (int j = 0; j < K; ++j) {
+        cumulative += probs[j] / sum_probs;
+        if (r <= cumulative) {
+          nextToken = top_logits[j].second;
+          selected = true;
+          break;
+        }
+      }
+      if (!selected) {
+        nextToken = top_logits[0].second; // Fallback na najlepszą literę
+      }
+
+      // Zabezpieczenie przed niekontrolowanymi znakami kontrolnymi ASCII
+      // (czasami model próbuje wypluć null-bajty co w edytorze wygląda jak
+      // puste bloki)
+      if (nextToken < 32 && nextToken != '\n' && nextToken != '\r' &&
+          nextToken != '\t') {
+        nextToken = ' '; // Bezpieczny zamiennik
+      }
+    }
+
+    tokens.push_back(nextToken);
+
+    // Warunek stopu (zakładamy 0 jako EOS)
+    if (nextToken == 0)
+      break;
+
+    // Zatrzymujemy generowanie od razu, jeśli model próbuje rozpocząć nową
+    // "rozmowę"
+    char c = (char)(unsigned char)nextToken;
+
+    // Buforowanie, by wykryć "[USER]" (model halucynuje, że on sam jest
+    // użytkownikiem)
+    current_output += c;
+    if (current_output.find("[USER]") != std::string::npos ||
+        current_output.find("[SYSTEM]") != std::string::npos) {
+      // AI zwariowało i weszło w pętle. Usuwamy ostatnie 6 znaków ("[USER]") z
+      // edytora
+      if (onRemove) {
+        onRemove(6); // Backspace 6 razy
+      }
+      break;
+    }
+    if (nextToken >= 0 && nextToken < 256) {
+      // char c = (char)(unsigned char)nextToken; // Zmienna "c" już jest
+      // zadeklarowana wyżej! current_output += c; // Buforowanie już jest
+      // robione wyżej!
+
+      // Sprawdzamy czy to nie początek myślenia
+      if (!is_thinking && current_output.length() >= 7 &&
+          current_output.substr(current_output.length() - 7) == "<THINK>") {
+        is_thinking = true;
+        // Usuń "<THINK>" z edytora
+        if (onRemove)
+          onRemove(7);
+        continue; // nie wywołujemy onToken dla tego znaku
+      }
+
+      // Sprawdzamy czy to nie koniec myślenia
+      else if (is_thinking && current_output.length() >= 8 &&
+               current_output.substr(current_output.length() - 8) ==
+                   "</THINK>") {
+        is_thinking = false;
+        continue;
+      }
+
+      // Wypisujemy znak na ekran w czasie rzeczywistym
+      if (onToken) {
+        onToken(c, is_thinking);
+      }
+
+      // Sprawdzamy czy na końcu wygenerowanego tekstu nie pojawił się tag
+      // nowego promptu
+      if (current_output.length() >= 7 &&
+          current_output.substr(current_output.length() - 7) == "[USER]:") {
+
+        // Callback do usunięcia tagu "[USER]:" z edytora
+        if (onRemove)
+          onRemove(7);
+
+        // Obcinamy "[USER]:" z końcowej listy tokenów i wychodzimy
+        for (int j = 0; j < 7; j++)
+          tokens.pop_back();
+        break;
+      }
+    }
+  }
+
+  std::cout << std::endl;
+  return detokenize(tokens);
 }
