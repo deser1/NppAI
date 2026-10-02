@@ -466,6 +466,8 @@ bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
     data.clear();
     data.shrink_to_fit();
   }
+
+  return true;
 }
 
 // --- ENGINE IMPLEMENTATION ---
