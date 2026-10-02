@@ -94,16 +94,27 @@ jobs:
       shell: pwsh
       run: |
         New-Item -ItemType Directory -Force benchmark-results | Out-Null
-        $fp32 = @()
-        $int8 = @()
+        $sizes = @(128, 256, 512, 1024)
+        $samples = @{}
+        foreach ($size in $sizes) {
+          $samples[$size] = @{ fp32 = @(); int8 = @() }
+        }
+
         1..5 | ForEach-Object {
           $output = & .\build-bench\Release\BenchmarkTensor.exe
           $output | Set-Content "benchmark-results\tensor-benchmark-$_.txt"
-          $fp32Line = ($output | Select-String '^FP32:').Line
-          $int8Line = ($output | Select-String '^INT8:').Line
-          $fp32 += [double](($fp32Line -split '\s+')[1])
-          $int8 += [double](($int8Line -split '\s+')[1])
+
+          for ($line = 0; $line -lt $output.Count; $line++) {
+            if ($output[$line] -match '^SIZE ([0-9]+)x') {
+              $size = [int]$Matches[1]
+              $fp32Line = $output[$line + 1]
+              $int8Line = $output[$line + 2]
+              $samples[$size].fp32 += [double](($fp32Line -split '\s+')[1])
+              $samples[$size].int8 += [double](($int8Line -split '\s+')[1])
+            }
+          }
         }
+
         function Get-Median([double[]]$values) {
           $sorted = @($values | Sort-Object)
           $middle = [int][math]::Floor($sorted.Count / 2)
@@ -112,15 +123,18 @@ jobs:
           }
           return $sorted[$middle]
         }
-        $fp32Median = Get-Median $fp32
-        $int8Median = Get-Median $int8
-        $ratio = $fp32Median / $int8Median
-        @(
-          "NppAI Tensor benchmark process median (5 runs)"
-          "FP32: $fp32Median ms/op"
-          "INT8: $int8Median ms/op"
-          "FP32/INT8 ratio: $ratio" + "x"
-        ) | Tee-Object -FilePath benchmark-results\tensor-benchmark-summary.txt
+
+        $summary = @("NppAI Tensor benchmark process median (5 runs)")
+        foreach ($size in $sizes) {
+          $fp32Median = Get-Median $samples[$size].fp32
+          $int8Median = Get-Median $samples[$size].int8
+          $ratio = $fp32Median / $int8Median
+          $summary += "SIZE $size" + "x" + "$size"
+          $summary += "FP32: $fp32Median ms/op"
+          $summary += "INT8: $int8Median ms/op"
+          $summary += "FP32/INT8 ratio: $ratio" + "x"
+        }
+        $summary | Tee-Object -FilePath benchmark-results\tensor-benchmark-summary.txt
 
     - name: Upload benchmark results
       uses: actions/upload-artifact@v4
