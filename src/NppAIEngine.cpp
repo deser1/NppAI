@@ -20,6 +20,7 @@ static bool cpuSupportsAVX2() {
 static bool cpuSupportsAVX2() { return false; }
 #endif
 #include <iostream>
+#include <limits>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -506,9 +507,36 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
+  // Validate the complete payload size before allocating large tensors.
+  file.seekg(0, std::ios::end);
+  const std::streamoff fileSize = file.tellg();
+  file.seekg(sizeof(header), std::ios::beg);
+  if (fileSize < static_cast<std::streamoff>(sizeof(header))) {
+    std::cerr << "Nieprawidlowy rozmiar pliku modelu.\\n";
+    return false;
+  }
+
+  const uint64_t d = static_cast<uint64_t>(dim);
+  const uint64_t h = static_cast<uint64_t>(hidden_dim);
+  const uint64_t v = static_cast<uint64_t>(vocab_size);
+  const uint64_t t = static_cast<uint64_t>(max_seq_len);
+  const uint64_t l = static_cast<uint64_t>(n_layers);
+  const uint64_t floatCount =
+      v * d + t * d +
+      l * (2ULL * d + 4ULL * d * d + 3ULL * d * h) +
+      d + d * v;
+  constexpr uint64_t kMaxModelBytes = 4ULL * 1024ULL * 1024ULL * 1024ULL;
+  if (floatCount > (std::numeric_limits<uint64_t>::max() / sizeof(float)) ||
+      floatCount * sizeof(float) > kMaxModelBytes ||
+      static_cast<uint64_t>(fileSize - sizeof(header)) <
+          floatCount * sizeof(float)) {
+    std::cerr << "Model przekracza limit rozmiaru lub jest niekompletny.\\n";
+    return false;
+  }
+
   // Inicjalizacja i wczytywanie wag
   tokenEmbeddingTable = Tensor({vocab_size, dim});
-tokenEmbeddingTable.readFromFile(file, false); // Embeddings usually stay FP32
+  if (!tokenEmbeddingTable.readFromFile(file, false)) return false;
 
   posEmbeddingTable = Tensor({max_seq_len, dim});
   if (!posEmbeddingTable.readFromFile(file, false)) return false;
