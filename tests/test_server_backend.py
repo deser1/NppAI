@@ -213,13 +213,9 @@ class RateLimitTests(unittest.IsolatedAsyncioTestCase):
              patch.dict("os.environ", env, clear=False), \
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
              patch.object(server_backend, "TRAINING_THRESHOLD", 100), \
-             patch.object(server_backend.time, "monotonic", wraps=server_backend.time.monotonic) as monotonic:
+             patch.object(server_backend, "monotonic_time", side_effect=[100.0, 111.0]):
             server_backend.new_samples_count = 0
-            real_monotonic = server_backend.time.monotonic
-            monotonic.side_effect = lambda: real_monotonic()
             first, _, _ = await call_app(self.valid_body(), None)
-            first_hit = server_backend.rate_limit_hits["127.0.0.1"][0]
-            monotonic.side_effect = lambda: first_hit + 11.0
             second, _, _ = await call_app(self.valid_body(), None)
 
         self.assertEqual(first, 200)
