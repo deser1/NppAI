@@ -218,3 +218,26 @@ See [license.txt](license.txt).
 ---
 
 Built as an independent C++ / AI systems project with a focus on understanding the underlying implementation.
+
+
+## Performance
+
+NppAI includes an optional tensor microbenchmark that compares the current FP32 and INT8 matrix-multiplication paths. Benchmarks are built separately from correctness tests and GitHub Actions publishes the raw output as the `tensor-benchmark-x64` artifact.
+
+Reference measurement from GitHub Actions run #152 (`windows-2022`, x64 Release, 256x256 matrix, 20 iterations):
+
+| Path | Time |
+| --- | ---: |
+| FP32 | 0.01154 ms/op |
+| INT8 | 0.013015 ms/op |
+| FP32 / INT8 ratio | 0.886669x |
+
+This CI microbenchmark does **not** show an INT8 compute speedup yet. The current INT8 path primarily reduces stored weight memory; further SIMD/kernel optimization is needed before claiming a throughput advantage. Hosted-runner timings are environment-dependent and should be treated as a reproducible reference point, not a hardware-independent performance guarantee.
+
+Build and run locally:
+
+```powershell
+cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
+cmake --build build-bench --config Release --target BenchmarkTensor
+.\build-bench\Release\BenchmarkTensor.exe
+```
