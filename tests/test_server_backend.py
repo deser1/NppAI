@@ -1,8 +1,12 @@
 import asyncio
 import json
+import tempfile
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
-from server_backend import MAX_REQUEST_BYTES, app
+import server_backend
+from server_backend import MAX_REQUEST_BYTES, SubmitKnowledgeRequest, submit_knowledge, app
 
 
 async def call_app(body: bytes, content_length: str | None):
@@ -43,6 +47,43 @@ async def call_app(body: bytes, content_length: str | None):
         if message["type"] == "http.response.body"
     )
     return start["status"], response_body
+
+
+class DatasetConcurrencyTests(unittest.IsolatedAsyncioTestCase):
+    async def test_concurrent_samples_are_written_once_each(self):
+        samples = 8
+        with tempfile.TemporaryDirectory() as tmpdir:
+            dataset_path = Path(tmpdir) / "dataset.txt"
+            payloads = [
+                SubmitKnowledgeRequest(
+                    prompt=f"prompt-{i}",
+                    final_code=f"code-{i}",
+                    thought_process=f"thought-{i}",
+                    user_id=f"user-{i}",
+                )
+                for i in range(samples)
+            ]
+
+            class BackgroundTasksStub:
+                def add_task(self, *args, **kwargs):
+                    pass
+
+            with patch.object(server_backend, "DATASET_PATH", dataset_path), \
+                 patch.object(server_backend, "TRAINING_THRESHOLD", samples + 1):
+                server_backend.new_samples_count = 0
+                await asyncio.gather(
+                    *[
+                        submit_knowledge(payload, BackgroundTasksStub())
+                        for payload in payloads
+                    ]
+                )
+
+            content = dataset_path.read_text(encoding="utf-8")
+            self.assertEqual(content.count("<|endoftext|>"), samples)
+            for i in range(samples):
+                self.assertEqual(content.count(f"prompt-{i}"), 1)
+                self.assertEqual(content.count(f"code-{i}"), 1)
+                self.assertEqual(content.count(f"thought-{i}"), 1)
 
 
 class RequestSizeLimitTests(unittest.IsolatedAsyncioTestCase):
