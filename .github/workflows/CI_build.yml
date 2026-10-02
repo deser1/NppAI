@@ -75,3 +75,29 @@ jobs:
 
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
+
+
+  benchmark:
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Configure tensor benchmark
+      run: cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
+
+    - name: Build tensor benchmark
+      run: cmake --build build-bench --config Release --target BenchmarkTensor
+
+    - name: Run tensor benchmark
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force benchmark-results | Out-Null
+        & .\build-bench\Release\BenchmarkTensor.exe | Tee-Object -FilePath benchmark-results\tensor-benchmark.txt
+
+    - name: Upload benchmark results
+      uses: actions/upload-artifact@v4
+      with:
+        name: tensor-benchmark-x64
+        path: benchmark-results\tensor-benchmark.txt
