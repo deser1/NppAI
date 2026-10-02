@@ -76,4 +76,6 @@ private:
     std::vector<int> tokenize(const std::string& text);
     std::string detokenize(const std::vector<int>& tokens);
     Tensor forward(const std::vector<int>& inputTokens);
+
+    friend class NppAITest;
 };
