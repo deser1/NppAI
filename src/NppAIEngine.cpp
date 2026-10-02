@@ -330,14 +330,10 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
             const __m256i vb2 = _mm256_cvtepi8_epi32(vbHi);
             const __m256i vb3 =
                 _mm256_cvtepi8_epi32(_mm_srli_si128(vbHi, 8));
-            sum0 = _mm256_add_ps(
-                sum0, _mm256_mul_ps(va0, _mm256_cvtepi32_ps(vb0)));
-            sum1 = _mm256_add_ps(
-                sum1, _mm256_mul_ps(va1, _mm256_cvtepi32_ps(vb1)));
-            sum2 = _mm256_add_ps(
-                sum2, _mm256_mul_ps(va2, _mm256_cvtepi32_ps(vb2)));
-            sum3 = _mm256_add_ps(
-                sum3, _mm256_mul_ps(va3, _mm256_cvtepi32_ps(vb3)));
+            sum0 = _mm256_fmadd_ps(va0, _mm256_cvtepi32_ps(vb0), sum0);
+            sum1 = _mm256_fmadd_ps(va1, _mm256_cvtepi32_ps(vb1), sum1);
+            sum2 = _mm256_fmadd_ps(va2, _mm256_cvtepi32_ps(vb2), sum2);
+            sum3 = _mm256_fmadd_ps(va3, _mm256_cvtepi32_ps(vb3), sum3);
           }
           for (; k <= a_cols - 16; k += 16) {
             const __m256 va0 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
@@ -348,10 +344,8 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
             const __m256i vb0 = _mm256_cvtepi8_epi32(vb16);
             const __m256i vb1 =
                 _mm256_cvtepi8_epi32(_mm_srli_si128(vb16, 8));
-            sum0 = _mm256_add_ps(
-                sum0, _mm256_mul_ps(va0, _mm256_cvtepi32_ps(vb0)));
-            sum1 = _mm256_add_ps(
-                sum1, _mm256_mul_ps(va1, _mm256_cvtepi32_ps(vb1)));
+            sum0 = _mm256_fmadd_ps(va0, _mm256_cvtepi32_ps(vb0), sum0);
+            sum1 = _mm256_fmadd_ps(va1, _mm256_cvtepi32_ps(vb1), sum1);
           }
           for (; k <= a_cols - 8; k += 8) {
             const __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
@@ -359,8 +353,7 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
                 _mm_loadl_epi64(reinterpret_cast<const __m128i*>(
                     &b.data_q8[j * b.shape[1] + k]));
             const __m256i vb = _mm256_cvtepi8_epi32(vb8);
-            sum0 = _mm256_add_ps(
-                sum0, _mm256_mul_ps(va, _mm256_cvtepi32_ps(vb)));
+            sum0 = _mm256_fmadd_ps(va, _mm256_cvtepi32_ps(vb), sum0);
           }
           const __m256 sum01 = _mm256_add_ps(sum0, sum1);
           const __m256 sum23 = _mm256_add_ps(sum2, sum3);
