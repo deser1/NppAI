@@ -310,21 +310,26 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
 #ifdef USE_AVX2
           int k = 0;
           __m256 sum_vec = _mm256_setzero_ps();
-          __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
           for (; k <= a_cols - 8; k += 8) {
-            __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
-            __m128i vb_int8 = _mm_loadl_epi64((__m128i*)&b.data_q8[j * b.shape[1] + k]);
-            __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
-            __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
-            vb_float = _mm256_mul_ps(vb_float, scale_vec);
+            const __m256 va = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            const __m128i vb_int8 =
+                _mm_loadl_epi64(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k]));
+            const __m256i vb_int32 = _mm256_cvtepi8_epi32(vb_int8);
+            const __m256 vb_float = _mm256_cvtepi32_ps(vb_int32);
             sum_vec = _mm256_add_ps(sum_vec, _mm256_mul_ps(va, vb_float));
           }
           float tmp[8];
           _mm256_storeu_ps(tmp, sum_vec);
-          for (int m = 0; m < 8; m++) sum += tmp[m];
+          float unscaled_sum = 0.0f;
+          for (int m = 0; m < 8; m++)
+            unscaled_sum += tmp[m];
           for (; k < a_cols; k++) {
-            sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+            unscaled_sum +=
+                a.data[i * a.shape[1] + k] *
+                static_cast<float>(b.data_q8[j * b.shape[1] + k]);
           }
+          sum = unscaled_sum * b.scale_q8;
 #else
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
