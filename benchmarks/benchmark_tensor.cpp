@@ -27,12 +27,7 @@ static double median(std::vector<double> samples) {
     return samples[middle];
 }
 
-int main() {
-    constexpr int size = 256;
-    constexpr int warmupIterations = 50;
-    constexpr int iterations = 200;
-    constexpr int series = 7;
-
+static void runBenchmark(int size, int warmupIterations, int iterations, int series) {
     Tensor a({1, size});
     Tensor fp32({size, size});
     Tensor int8({size, size});
@@ -53,7 +48,6 @@ int main() {
         }
     }
 
-    // Warm up caches and runtime dispatch before collecting timed samples.
     benchmark(a, fp32, warmupIterations);
     benchmark(a, int8, warmupIterations);
 
@@ -62,7 +56,6 @@ int main() {
     fp32Samples.reserve(series);
     int8Samples.reserve(series);
 
-    // Alternate measurement order to reduce systematic first-run bias.
     for (int i = 0; i < series; ++i) {
         if (i % 2 == 0) {
             fp32Samples.push_back(benchmark(a, fp32, iterations));
@@ -76,13 +69,23 @@ int main() {
     const double fp32Ms = median(fp32Samples);
     const double int8Ms = median(int8Samples);
 
-    std::cout << "NppAI Tensor matmul benchmark (" << size << "x" << size
-              << ", median of " << series << " series, " << iterations
+    std::cout << "SIZE " << size << "x" << size
+              << " (median of " << series << " series, " << iterations
               << " iterations/series)\n";
     std::cout << "FP32: " << fp32Ms << " ms/op\n";
     std::cout << "INT8: " << int8Ms << " ms/op\n";
     if (int8Ms > 0.0)
         std::cout << "FP32/INT8 ratio: " << (fp32Ms / int8Ms) << "x\n";
+}
+
+int main() {
+    constexpr int series = 7;
+
+    std::cout << "NppAI Tensor matmul multi-size benchmark\n";
+    runBenchmark(128, 50, 400, series);
+    runBenchmark(256, 50, 200, series);
+    runBenchmark(512, 25, 100, series);
+    runBenchmark(1024, 10, 50, series);
 
     return 0;
 }
