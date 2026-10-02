@@ -358,11 +358,12 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           const __m256 sum01 = _mm256_add_ps(sum0, sum1);
           const __m256 sum23 = _mm256_add_ps(sum2, sum3);
           const __m256 sum_vec = _mm256_add_ps(sum01, sum23);
-          float tmp[8];
-          _mm256_storeu_ps(tmp, sum_vec);
-          float unscaled_sum = 0.0f;
-          for (int m = 0; m < 8; m++)
-            unscaled_sum += tmp[m];
+          const __m128 low = _mm256_castps256_ps128(sum_vec);
+          const __m128 high = _mm256_extractf128_ps(sum_vec, 1);
+          __m128 reduced = _mm_add_ps(low, high);
+          reduced = _mm_hadd_ps(reduced, reduced);
+          reduced = _mm_hadd_ps(reduced, reduced);
+          float unscaled_sum = _mm_cvtss_f32(reduced);
           for (; k < a_cols; k++) {
             unscaled_sum +=
                 a.data[i * a.shape[1] + k] *
