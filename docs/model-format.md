@@ -24,6 +24,6 @@ A future version should add:
 - tensor metadata;
 - checksum/hash;
 - explicit quantization metadata;
-- validation of file size and tensor dimensions.
+- an exact payload-length check that rejects trailing tensor data, in addition to the header-dimension and minimum expected-payload validation already performed by the loader.
 
 Until then, model files should be treated as version-specific artifacts and not as a stable public interchange format.
