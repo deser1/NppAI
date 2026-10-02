@@ -311,6 +311,34 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           int k = 0;
           __m256 sum0 = _mm256_setzero_ps();
           __m256 sum1 = _mm256_setzero_ps();
+          __m256 sum2 = _mm256_setzero_ps();
+          __m256 sum3 = _mm256_setzero_ps();
+          for (; k <= a_cols - 32; k += 32) {
+            const __m256 va0 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
+            const __m256 va1 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 8]);
+            const __m256 va2 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 16]);
+            const __m256 va3 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 24]);
+            const __m128i vbLo =
+                _mm_loadu_si128(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k]));
+            const __m128i vbHi =
+                _mm_loadu_si128(reinterpret_cast<const __m128i*>(
+                    &b.data_q8[j * b.shape[1] + k + 16]));
+            const __m256i vb0 = _mm256_cvtepi8_epi32(vbLo);
+            const __m256i vb1 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vbLo, 8));
+            const __m256i vb2 = _mm256_cvtepi8_epi32(vbHi);
+            const __m256i vb3 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vbHi, 8));
+            sum0 = _mm256_add_ps(
+                sum0, _mm256_mul_ps(va0, _mm256_cvtepi32_ps(vb0)));
+            sum1 = _mm256_add_ps(
+                sum1, _mm256_mul_ps(va1, _mm256_cvtepi32_ps(vb1)));
+            sum2 = _mm256_add_ps(
+                sum2, _mm256_mul_ps(va2, _mm256_cvtepi32_ps(vb2)));
+            sum3 = _mm256_add_ps(
+                sum3, _mm256_mul_ps(va3, _mm256_cvtepi32_ps(vb3)));
+          }
           for (; k <= a_cols - 16; k += 16) {
             const __m256 va0 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k]);
             const __m256 va1 = _mm256_loadu_ps(&a.data[i * a.shape[1] + k + 8]);
@@ -318,8 +346,8 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
                 _mm_loadu_si128(reinterpret_cast<const __m128i*>(
                     &b.data_q8[j * b.shape[1] + k]));
             const __m256i vb0 = _mm256_cvtepi8_epi32(vb16);
-            const __m128i vbHigh = _mm_srli_si128(vb16, 8);
-            const __m256i vb1 = _mm256_cvtepi8_epi32(vbHigh);
+            const __m256i vb1 =
+                _mm256_cvtepi8_epi32(_mm_srli_si128(vb16, 8));
             sum0 = _mm256_add_ps(
                 sum0, _mm256_mul_ps(va0, _mm256_cvtepi32_ps(vb0)));
             sum1 = _mm256_add_ps(
@@ -334,7 +362,9 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
             sum0 = _mm256_add_ps(
                 sum0, _mm256_mul_ps(va, _mm256_cvtepi32_ps(vb)));
           }
-          const __m256 sum_vec = _mm256_add_ps(sum0, sum1);
+          const __m256 sum01 = _mm256_add_ps(sum0, sum1);
+          const __m256 sum23 = _mm256_add_ps(sum2, sum3);
+          const __m256 sum_vec = _mm256_add_ps(sum01, sum23);
           float tmp[8];
           _mm256_storeu_ps(tmp, sum_vec);
           float unscaled_sum = 0.0f;
