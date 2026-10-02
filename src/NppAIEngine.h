@@ -70,6 +70,7 @@ private:
     Tensor outputClassifier;
 
     std::map<std::pair<int, int>, int> bpe_merges;
+    std::map<std::pair<int, int>, size_t> bpe_merge_ranks;
     std::map<int, std::string> bpe_vocab;
     bool loadBPETokenizer(const std::string& path);
 
