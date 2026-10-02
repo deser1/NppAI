@@ -74,8 +74,23 @@ if(OpenMP_CXX_FOUND)
     target_link_libraries(TestTensor PRIVATE OpenMP::OpenMP_CXX)
 endif()
 
+add_executable(TestModelLoader tests/test_model_loader.cpp src/NppAIEngine.cpp)
+target_include_directories(TestModelLoader PRIVATE src)
+target_link_libraries(TestModelLoader PRIVATE d3d11 d3dcompiler)
+
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(TestModelLoader PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
 add_test(NAME TensorMath COMMAND TestTensor)
+add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)
+
 set_tests_properties(TensorMath PROPERTIES
     LABELS "unit"
+    TIMEOUT 30
+)
+
+set_tests_properties(ModelLoaderValidation PROPERTIES
+    LABELS "unit;security"
     TIMEOUT 30
 )
