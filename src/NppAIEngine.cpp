@@ -526,7 +526,7 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
       l * (2ULL * d + 4ULL * d * d + 3ULL * d * h) +
       d + d * v;
   constexpr uint64_t kMaxModelBytes = 4ULL * 1024ULL * 1024ULL * 1024ULL;
-  if (floatCount > (std::numeric_limits<uint64_t>::max() / sizeof(float)) ||
+  if (floatCount > (UINT64_MAX / sizeof(float)) ||
       floatCount * sizeof(float) > kMaxModelBytes ||
       static_cast<uint64_t>(fileSize - sizeof(header)) <
           floatCount * sizeof(float)) {
