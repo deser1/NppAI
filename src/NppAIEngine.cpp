@@ -559,7 +559,7 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
   const std::streamoff fileSize = file.tellg();
   file.seekg(sizeof(header), std::ios::beg);
   if (fileSize < static_cast<std::streamoff>(sizeof(header))) {
-    std::cerr << "Nieprawidlowy rozmiar pliku modelu.\\n";
+    std::cerr << "Nieprawidlowy rozmiar pliku modelu.\n";
     return false;
   }
 
@@ -577,7 +577,7 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
       floatCount * sizeof(float) > kMaxModelBytes ||
       static_cast<uint64_t>(fileSize - sizeof(header)) <
           floatCount * sizeof(float)) {
-    std::cerr << "Model przekracza limit rozmiaru lub jest niekompletny.\\n";
+    std::cerr << "Model przekracza limit rozmiaru lub jest niekompletny.\n";
     return false;
   }
 
