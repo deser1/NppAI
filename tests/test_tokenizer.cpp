@@ -78,6 +78,34 @@ public:
         return true;
     }
 
+    static bool tokenizerRejectsDuplicatePair() {
+        NppAIEngine engine;
+        const auto path =
+            std::filesystem::temp_directory_path() / "nppai_test_duplicate_bpe_pair.txt";
+
+        {
+            std::ofstream file(path);
+            if (!file.is_open()) {
+                std::cerr << "FAIL: could not create duplicate BPE pair fixture\n";
+                return false;
+            }
+            file << "72 101 256\n";
+            file << "72 101 257\n";
+        }
+
+        const bool loaded = engine.loadBPETokenizer(path.string());
+        const auto tokens = engine.tokenize("Hello");
+        const bool validFallback =
+            !loaded && tokens.size() == 5 && tokens[0] == 'H' && tokens[4] == 'o';
+
+        std::filesystem::remove(path);
+        if (!validFallback) {
+            std::cerr << "FAIL: duplicate BPE pair was not rejected safely\n";
+            return false;
+        }
+        return true;
+    }
+
     static bool tokenizerBPE() {
         NppAIEngine engine;
         const auto path =
@@ -132,6 +160,10 @@ int main() {
     if (!NppAITest::tokenizerBPE())
         return 1;
     if (!NppAITest::tokenizerRejectsInvalidMerge())
+        return 1;
+    if (!NppAITest::tokenizerRejectsDuplicateOutputId())
+        return 1;
+    if (!NppAITest::tokenizerRejectsDuplicatePair())
         return 1;
 
     std::cout << "Tokenizer tests passed.\n";
