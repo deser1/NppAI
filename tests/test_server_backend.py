@@ -9,7 +9,7 @@ import server_backend
 from server_backend import MAX_REQUEST_BYTES, SubmitKnowledgeRequest, submit_knowledge, app
 
 
-async def call_app(body: bytes, content_length: str | None, extra_headers=None):
+async def call_app(body: bytes, content_length: str | None, extra_headers=None, client_host="127.0.0.1"):
     messages = [{"type": "http.request", "body": body, "more_body": False}]
     sent = []
 
@@ -40,7 +40,7 @@ async def call_app(body: bytes, content_length: str | None, extra_headers=None):
         "raw_path": b"/api/submit_knowledge",
         "query_string": b"",
         "headers": headers,
-        "client": ("127.0.0.1", 12345),
+        "client": (client_host, 12345),
         "server": ("testserver", 80),
         "root_path": "",
     }
@@ -51,7 +51,8 @@ async def call_app(body: bytes, content_length: str | None, extra_headers=None):
         for message in sent
         if message["type"] == "http.response.body"
     )
-    return start["status"], response_body
+    response_headers = {name.decode("latin1"): value.decode("latin1") for name, value in start.get("headers", [])}
+    return start["status"], response_body, response_headers
 
 
 class DatasetConcurrencyTests(unittest.IsolatedAsyncioTestCase):
@@ -143,7 +144,7 @@ class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"):
-            status, body = await call_app(self.valid_body(), None)
+            status, body, _ = await call_app(self.valid_body(), None)
         self.assertEqual(status, 401)
         self.assertEqual(json.loads(body), {"detail": "API key required"})
 
@@ -151,7 +152,7 @@ class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"):
-            status, body = await call_app(
+            status, body, _ = await call_app(
                 self.valid_body(),
                 None,
                 {"X-API-Key": "wrong"},
@@ -165,7 +166,7 @@ class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
              patch.object(server_backend, "TRAINING_THRESHOLD", 100):
             server_backend.new_samples_count = 0
-            status, body = await call_app(
+            status, body, _ = await call_app(
                 self.valid_body(),
                 None,
                 {"X-API-Key": "secret"},
@@ -174,20 +175,83 @@ class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(json.loads(body)["status"], "success")
 
 
+class RateLimitTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        server_backend.rate_limit_hits.clear()
+
+    def valid_body(self):
+        return json.dumps({
+            "prompt": "rate-test",
+            "final_code": "print('ok')",
+        }).encode("utf-8")
+
+    async def test_returns_429_and_retry_after_when_limit_exceeded(self):
+        env = {
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
+            server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100):
+            server_backend.new_samples_count = 0
+            first, _, _ = await call_app(self.valid_body(), None)
+            second, body, headers = await call_app(self.valid_body(), None)
+
+        self.assertEqual(first, 200)
+        self.assertEqual(second, 429)
+        self.assertEqual(json.loads(body), {"detail": "Rate limit exceeded"})
+        self.assertIn("retry-after", headers)
+        self.assertGreaterEqual(int(headers["retry-after"]), 1)
+
+    async def test_allows_request_after_window_expires(self):
+        env = {
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
+            server_backend.RATE_LIMIT_WINDOW_ENV: "10",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100), \
+             patch.object(server_backend.time, "monotonic", side_effect=[100.0, 111.0]):
+            server_backend.new_samples_count = 0
+            first, _, _ = await call_app(self.valid_body(), None)
+            second, _, _ = await call_app(self.valid_body(), None)
+
+        self.assertEqual(first, 200)
+        self.assertEqual(second, 200)
+
+    async def test_tracks_clients_independently(self):
+        env = {
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
+            server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100):
+            server_backend.new_samples_count = 0
+            first, _, _ = await call_app(self.valid_body(), None, client_host="10.0.0.1")
+            second, _, _ = await call_app(self.valid_body(), None, client_host="10.0.0.2")
+
+        self.assertEqual(first, 200)
+        self.assertEqual(second, 200)
+
+
 class RequestSizeLimitTests(unittest.IsolatedAsyncioTestCase):
     async def test_rejects_advertised_oversized_body(self):
-        status, body = await call_app(b"{}", str(MAX_REQUEST_BYTES + 1))
+        status, body, _ = await call_app(b"{}", str(MAX_REQUEST_BYTES + 1))
         self.assertEqual(status, 413)
         self.assertEqual(json.loads(body), {"detail": "Request body too large"})
 
     async def test_rejects_invalid_content_length(self):
-        status, body = await call_app(b"{}", "not-a-number")
+        status, body, _ = await call_app(b"{}", "not-a-number")
         self.assertEqual(status, 400)
         self.assertEqual(json.loads(body), {"detail": "Invalid Content-Length"})
 
     async def test_rejects_actual_oversized_body_without_content_length(self):
         oversized = b"x" * (MAX_REQUEST_BYTES + 1)
-        status, body = await call_app(oversized, None)
+        status, body, _ = await call_app(oversized, None)
         self.assertEqual(status, 413)
         self.assertEqual(json.loads(body), {"detail": "Request body too large"})
 
