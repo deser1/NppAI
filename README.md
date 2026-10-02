@@ -224,15 +224,18 @@ Built as an independent C++ / AI systems project with a focus on understanding t
 
 NppAI includes an optional tensor microbenchmark for the FP32 and quantized INT8 matrix-multiplication paths. Benchmarks are built separately from correctness tests, and GitHub Actions publishes the raw measurements as the `tensor-benchmark-x64` artifact.
 
-Current reference measurement from GitHub Actions run #169 (`windows-2022`, x64 Release, 256x256 matrix):
+Current multi-size reference measurement from GitHub Actions run #177 (`windows-2022`, x64 Release):
 
-| Path | Median time |
-| --- | ---: |
-| FP32 | 0.0091935 ms/op |
-| INT8 | **0.009024 ms/op** |
-| FP32 / INT8 ratio | **1.01878x** |
+| Matrix size | FP32 median | INT8 median | FP32 / INT8 | Measured INT8 difference |
+| --- | ---: | ---: | ---: | ---: |
+| 128x128 | 0.00326375 ms/op | 0.00336575 ms/op | 0.9697x | 3.0% slower |
+| 256x256 | 0.009333 ms/op | 0.009182 ms/op | 1.0164x | 1.6% faster |
+| 512x512 | 0.034189 ms/op | 0.029556 ms/op | 1.1568x | **15.7% faster** |
+| 1024x1024 | 0.130766 ms/op | 0.110612 ms/op | 1.1822x | **18.2% faster** |
 
-The CI result is the median across **5 independent benchmark processes**. Each process performs a warm-up and reports the median of **7 series with 200 iterations per series**. In this measurement, the optimized INT8 path is about **1.9% faster than FP32** while retaining the lower-memory quantized weight representation.
+The CI result is the median across **5 independent benchmark processes** for each matrix size. Inside each process, every size performs a warm-up and reports the median of **7 timed series**. Iteration counts are scaled by matrix size (400, 200, 100, and 50 iterations per series for 128, 256, 512, and 1024 respectively) to keep CI runtime practical.
+
+In this CI measurement, INT8 is slightly slower at 128x128, approximately even at 256x256, and increasingly faster at 512x512 and 1024x1024. This indicates that the current SIMD INT8 kernel benefits more as the matrix workload grows; it should not be interpreted as a universal speedup for every shape or CPU.
 
 The INT8 kernel was progressively optimized by moving quantization scaling outside the SIMD accumulation loop, widening the AVX2 loop, using four independent accumulators, applying FMA, and reducing accumulators directly in SIMD registers.
 
