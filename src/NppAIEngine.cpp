@@ -306,7 +306,7 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
       float sum = 0.0f;
       if (transposeB) {
         if (!b.data_q8.empty()) {
-#ifdef USE_AVX2
+if (cpuSupportsAVX2()) {
           int k = 0;
           __m256 sum_vec = _mm256_setzero_ps();
           __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
@@ -324,13 +324,13 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           for (; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
           }
-#else
+  } else {
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
           }
-#endif
+  }
         } else {
-#ifdef USE_AVX2
+if (cpuSupportsAVX2()) {
           int k = 0;
           __m256 sum_vec = _mm256_setzero_ps();
           for (; k <= a_cols - 8; k += 8) {
@@ -344,11 +344,11 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           for (; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
           }
-#else
+  } else {
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
           }
-#endif
+  }
         }
       } else {
         if (!b.data_q8.empty()) {
