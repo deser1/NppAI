@@ -9,7 +9,7 @@ import server_backend
 from server_backend import MAX_REQUEST_BYTES, SubmitKnowledgeRequest, submit_knowledge, app
 
 
-async def call_app(body: bytes, content_length: str | None):
+async def call_app(body: bytes, content_length: str | None, extra_headers=None):
     messages = [{"type": "http.request", "body": body, "more_body": False}]
     sent = []
 
@@ -24,6 +24,11 @@ async def call_app(body: bytes, content_length: str | None):
     headers = [(b"content-type", b"application/json")]
     if content_length is not None:
         headers.append((b"content-length", content_length.encode("ascii")))
+    if extra_headers:
+        headers.extend(
+            (name.lower().encode("ascii"), value.encode("ascii"))
+            for name, value in extra_headers.items()
+        )
 
     scope = {
         "type": "http",
@@ -124,6 +129,49 @@ class DatasetConcurrencyTests(unittest.IsolatedAsyncioTestCase):
                 self.assertIs(func, server_backend.run_training_process)
                 self.assertEqual(args, ())
                 self.assertEqual(kwargs, {})
+
+
+class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
+    def valid_body(self):
+        return json.dumps({
+            "prompt": "auth-test",
+            "final_code": "print('ok')",
+            "user_id": "test",
+        }).encode("utf-8")
+
+    async def test_requires_api_key_when_configured(self):
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"):
+            status, body = await call_app(self.valid_body(), None)
+        self.assertEqual(status, 401)
+        self.assertEqual(json.loads(body), {"detail": "API key required"})
+
+    async def test_rejects_invalid_api_key(self):
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"):
+            status, body = await call_app(
+                self.valid_body(),
+                None,
+                {"X-API-Key": "wrong"},
+            )
+        self.assertEqual(status, 403)
+        self.assertEqual(json.loads(body), {"detail": "Invalid API key"})
+
+    async def test_accepts_valid_api_key(self):
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100):
+            server_backend.new_samples_count = 0
+            status, body = await call_app(
+                self.valid_body(),
+                None,
+                {"X-API-Key": "secret"},
+            )
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)["status"], "success")
 
 
 class RequestSizeLimitTests(unittest.IsolatedAsyncioTestCase):
