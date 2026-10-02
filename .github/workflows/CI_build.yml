@@ -98,11 +98,11 @@ jobs:
         $int8 = @()
         1..5 | ForEach-Object {
           $output = & .\build-bench\Release\BenchmarkTensor.exe
-          $output | Set-Content "benchmark-results\\tensor-benchmark-$_.txt"
-          $fp32 += [double](($output | Select-String '^FP32:').Line -replace '^FP32:\\s*([0-9.]+).*
-, '$1')
-          $int8 += [double](($output | Select-String '^INT8:').Line -replace '^INT8:\\s*([0-9.]+).*
-, '$1')
+          $output | Set-Content "benchmark-results\tensor-benchmark-$_.txt"
+          $fp32Line = ($output | Select-String '^FP32:').Line
+          $int8Line = ($output | Select-String '^INT8:').Line
+          $fp32 += [double](($fp32Line -split '\s+')[1])
+          $int8 += [double](($int8Line -split '\s+')[1])
         }
         function Get-Median([double[]]$values) {
           $sorted = @($values | Sort-Object)
