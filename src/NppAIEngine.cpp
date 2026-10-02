@@ -306,7 +306,8 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
       float sum = 0.0f;
       if (transposeB) {
         if (!b.data_q8.empty()) {
-if (cpuSupportsAVX2()) {
+#if defined(_M_X64) || defined(__x86_64__)
+          if (cpuSupportsAVX2()) {
           int k = 0;
           __m256 sum_vec = _mm256_setzero_ps();
           __m256 scale_vec = _mm256_set1_ps(b.scale_q8);
