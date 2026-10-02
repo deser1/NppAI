@@ -604,7 +604,8 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
     // IDs below 256 are reserved for raw bytes. Every merge must reference
     // already-known tokens and create a new token ID.
     if (p0 < 0 || p1 < 0 || idx < 256 ||
-        !bpe_vocab.count(p0) || !bpe_vocab.count(p1)) {
+        !bpe_vocab.count(p0) || !bpe_vocab.count(p1) ||
+        bpe_vocab.count(idx)) {
       bpe_merges.clear();
       bpe_vocab.clear();
       for (int i = 0; i < 256; i++) {
