@@ -1,5 +1,7 @@
 // NppAIEngine.h
 #pragma once
+#include <cstdint>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <memory>
@@ -8,86 +10,69 @@
 #include <mutex>
 #include <map>
 
-// Reprezentacja Tensora (macierzy wielowymiarowej) w naszym własnym silniku
 class Tensor {
 public:
     std::vector<float> data;
-    std::vector<int8_t> data_q8; // INT8 quantized data
+    std::vector<int8_t> data_q8;
     float scale_q8 = 0.0f;
     std::vector<int> shape;
 
     Tensor() = default;
     Tensor(std::vector<int> s);
-    
+
     float& at(int i);
     float& at(int r, int c);
-    
-    // Zwraca zdekodowaną wartość (odpowiednie dla FP32 lub INT8)
+
     float get(int i) const;
     float get(int r, int c) const;
-    
-    // Podstawowa operacja dla sieci neuronowych: y = x * W
-    static Tensor matmul(const Tensor& a, const Tensor& b, bool transposeB = false);
-    
-    // Funkcja aktywacji (np. SiLU lub GELU stosowane w nowoczesnych modelach)
-    void applySiLU();
 
-    // Normalizacja RMSNorm
+    static Tensor matmul(const Tensor& a, const Tensor& b, bool transposeB = false);
+    void applySiLU();
     void applyRMSNorm(const Tensor& weight);
 
-    // Wczytanie surowych danych z pliku
-    void readFromFile(std::ifstream& file, bool quantize = false);
+    bool readFromFile(std::ifstream& file, bool quantize = false);
 };
 
-// Klasa reprezentująca wagę pojedynczej warstwy Transformera
 struct TransformerLayer {
-    // Wagi dla Self-Attention
     Tensor wQ, wK, wV, wO;
-    // Wagi dla Feed-Forward Network
     Tensor wGate, wDown, wUp;
-    // Layer Normalization
     Tensor rmsAttn, rmsFFN;
 };
 
-// Główny silnik inferencji modelu NppAI
 class NppAIEngine {
 public:
     NppAIEngine();
     ~NppAIEngine();
 
-    // Wczytuje nasz autorski, binarny plik z wagami modelu
     bool loadModel(const std::string& modelPath);
+    std::string generate(
+        const std::string& prompt,
+        int maxTokens = 512,
+        std::function<void(char, bool)> onToken = nullptr,
+        std::function<void(int)> onRemove = nullptr);
 
-    // Generuje kod na podstawie promptu (wspiera strumieniowanie znaków i procesu myślenia)
-    std::string generate(const std::string& prompt, int maxTokens = 512, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr);
-
-    // Zatrzymuje aktualne generowanie
     void stopGeneration() { cancelRequested = true; }
 
 private:
     std::atomic<bool> cancelRequested{false};
     std::mutex engineMutex;
 
-    // Parametry modelu (np. wielkość osadzeń, liczba głów)
     int dim = 0;
     int hidden_dim = 0;
     int n_layers = 0;
     int max_seq_len = 0;
     int vocab_size = 0;
 
-    // Wagi całego modelu
     Tensor tokenEmbeddingTable;
     Tensor posEmbeddingTable;
     std::vector<TransformerLayer> layers;
     Tensor outputRMSNorm;
     Tensor outputClassifier;
 
-    // Tokenizer BPE
     std::map<std::pair<int, int>, int> bpe_merges;
     std::map<int, std::string> bpe_vocab;
     bool loadBPETokenizer(const std::string& path);
 
-    // Wewnętrzne operacje Transformera
     std::vector<int> tokenize(const std::string& text);
     std::string detokenize(const std::vector<int>& tokens);
     Tensor forward(const std::vector<int>& inputTokens);
