@@ -23,6 +23,18 @@ jobs:
       working-directory: vs.proj\
       run: msbuild NppAI.vcxproj /m /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
 
+    - name: Configure CMake tests
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      run: cmake -S . -B build-tests -A x64
+
+    - name: Build CMake tests
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      run: cmake --build build-tests --config Release
+
+    - name: Run CTest
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      run: ctest --test-dir build-tests -C Release --output-on-failure
+
     - name: Archive artifacts for x64
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v4
