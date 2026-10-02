@@ -421,4 +421,3 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
       data[r * cols + c] = (data[r * cols + c] * ss) * weight.data[c];
   }
 }
-}
