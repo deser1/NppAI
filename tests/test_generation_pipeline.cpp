@@ -40,6 +40,18 @@ int main() {
         return 1;
     }
 
+    // loadModel() discovers the tokenizer next to the model file.
+    // Use a merge whose output ID is intentionally unrelated to its rank.
+    {
+        std::ofstream bpe(dir / "bpe_merges.txt");
+        if (!bpe) {
+            std::cerr << "FAIL: could not create BPE fixture\n";
+            std::filesystem::remove_all(dir);
+            return 1;
+        }
+        bpe << "65 66 300\n";
+    }
+
     NppAIEngine engine;
     if (!engine.loadModel(modelPath.string())) {
         std::cerr << "FAIL: tiny model could not be loaded\n";
@@ -50,12 +62,12 @@ int main() {
     // Zero weights make logits equal, so generation remains safe and bounded.
     // This exercises model loading, byte tokenization, forward propagation,
     // sampling and detokenization as one pipeline.
-    const std::string prompt = "A";
+    const std::string prompt = "AB";
     const std::string result = engine.generate(prompt, 1, [](char, bool) {}, [](int) {});
     std::filesystem::remove_all(dir);
 
     if (result.empty() || result.rfind(prompt, 0) != 0) {
-        std::cerr << "FAIL: generation pipeline did not preserve the prompt\n";
+        std::cerr << "FAIL: BPE generation pipeline did not preserve the prompt\n";
         return 1;
     }
     if (result.size() > prompt.size() + 1) {
