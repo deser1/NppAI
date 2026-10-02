@@ -78,11 +78,15 @@ def positive_int_env(name: str, default: int) -> int:
     return value if value > 0 else default
 
 
+def monotonic_time() -> float:
+    return time.monotonic()
+
+
 async def enforce_rate_limit(request: Request) -> None:
     limit = positive_int_env(RATE_LIMIT_REQUESTS_ENV, DEFAULT_RATE_LIMIT_REQUESTS)
     window = positive_int_env(RATE_LIMIT_WINDOW_ENV, DEFAULT_RATE_LIMIT_WINDOW_SECONDS)
     client_key = request.client.host if request.client else "unknown"
-    now = time.monotonic()
+    now = monotonic_time()
 
     async with rate_limit_lock:
         hits = rate_limit_hits[client_key]
