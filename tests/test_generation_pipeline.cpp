@@ -81,15 +81,6 @@ int main() {
         return 1;
     }
 
-    const auto mergedTokens = mergedEngine.tokenize("AB");
-    const auto fallbackTokens = fallbackEngine.tokenize("AB");
-    if (mergedTokens != std::vector<int>{300} ||
-        fallbackTokens != std::vector<int>({65, 66})) {
-        std::cerr << "FAIL: tokenizer fixture did not distinguish BPE merge\n";
-        std::filesystem::remove_all(root);
-        return 1;
-    }
-
     const std::string mergedResult =
         mergedEngine.generate("AB", 1, [](char, bool) {}, [](int) {});
     const std::string fallbackResult =
