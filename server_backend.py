@@ -49,6 +49,8 @@ training_lock = asyncio.Lock()
 dataset_lock = asyncio.Lock()
 rate_limit_lock = asyncio.Lock()
 rate_limit_hits: dict[str, deque[float]] = defaultdict(deque)
+model_version_cache_key: tuple[int, int] | None = None
+model_version_cache_value: str | None = None
 
 
 class SubmitKnowledgeRequest(BaseModel):
@@ -124,26 +126,42 @@ async def request_size_limit(request: Request, call_next):
         except ValueError:
             return JSONResponse(status_code=400, content={"detail": "Invalid Content-Length"})
 
-    body = await request.body()
-    if len(body) > MAX_REQUEST_BYTES:
-        return JSONResponse(status_code=413, content={"detail": "Request body too large"})
+    chunks: list[bytes] = []
+    total_bytes = 0
+    async for chunk in request.stream():
+        total_bytes += len(chunk)
+        if total_bytes > MAX_REQUEST_BYTES:
+            return JSONResponse(status_code=413, content={"detail": "Request body too large"})
+        chunks.append(chunk)
 
-    async def receive():
-        return {"type": "http.request", "body": body, "more_body": False}
-
-    request._receive = receive
+    # Starlette's downstream request handling can reuse the cached body without
+    # reading the already-consumed ASGI receive channel again.
+    request._body = b"".join(chunks)
     return await call_next(request)
 
 
 def model_version() -> str:
+    global model_version_cache_key, model_version_cache_value
+
     if not MODEL_PATH.is_file():
+        model_version_cache_key = None
+        model_version_cache_value = None
         return "0"
+
     stat = MODEL_PATH.stat()
+    cache_key = (stat.st_mtime_ns, stat.st_size)
+    if cache_key == model_version_cache_key and model_version_cache_value is not None:
+        return model_version_cache_value
+
     digest = hashlib.sha256()
     with MODEL_PATH.open("rb") as f:
         while chunk := f.read(MODEL_CHUNK_SIZE):
             digest.update(chunk)
-    return f"{stat.st_mtime_ns:x}-{stat.st_size:x}-{digest.hexdigest()[:16]}"
+
+    version = f"{stat.st_mtime_ns:x}-{stat.st_size:x}-{digest.hexdigest()[:16]}"
+    model_version_cache_key = cache_key
+    model_version_cache_value = version
+    return version
 
 
 async def run_training_process():
@@ -240,7 +258,7 @@ async def check_model_update(client_version: str = "0"):
     if not MODEL_PATH.is_file():
         raise HTTPException(status_code=404, detail="Model is not available")
 
-    server_version = model_version()
+    server_version = await asyncio.to_thread(model_version)
     if client_version != server_version:
         return CheckModelUpdateResponse(
             update_available=True,
