@@ -3,6 +3,8 @@ import hashlib
 import json
 import os
 import secrets
+import time
+from collections import defaultdict, deque
 from datetime import datetime
 from pathlib import Path
 
@@ -22,6 +24,10 @@ MAX_USER_ID_CHARS = 128
 TRAINING_THRESHOLD = 5
 MODEL_CHUNK_SIZE = 1024 * 1024
 API_KEY_ENV = "NPPAI_API_KEY"
+RATE_LIMIT_REQUESTS_ENV = "NPPAI_RATE_LIMIT_REQUESTS"
+RATE_LIMIT_WINDOW_ENV = "NPPAI_RATE_LIMIT_WINDOW_SECONDS"
+DEFAULT_RATE_LIMIT_REQUESTS = 60
+DEFAULT_RATE_LIMIT_WINDOW_SECONDS = 60
 
 app = FastAPI(
     title="NppAI Cloud Backend",
@@ -32,6 +38,8 @@ training_task: asyncio.Task | None = None
 new_samples_count = 0
 training_lock = asyncio.Lock()
 dataset_lock = asyncio.Lock()
+rate_limit_lock = asyncio.Lock()
+rate_limit_hits: dict[str, deque[float]] = defaultdict(deque)
 
 
 class SubmitKnowledgeRequest(BaseModel):
@@ -60,6 +68,37 @@ def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
         raise HTTPException(status_code=401, detail="API key required")
     if not secrets.compare_digest(x_api_key, expected_key):
         raise HTTPException(status_code=403, detail="Invalid API key")
+
+
+def positive_int_env(name: str, default: int) -> int:
+    try:
+        value = int(os.getenv(name, str(default)))
+    except ValueError:
+        return default
+    return value if value > 0 else default
+
+
+async def enforce_rate_limit(request: Request) -> None:
+    limit = positive_int_env(RATE_LIMIT_REQUESTS_ENV, DEFAULT_RATE_LIMIT_REQUESTS)
+    window = positive_int_env(RATE_LIMIT_WINDOW_ENV, DEFAULT_RATE_LIMIT_WINDOW_SECONDS)
+    client_key = request.client.host if request.client else "unknown"
+    now = time.monotonic()
+
+    async with rate_limit_lock:
+        hits = rate_limit_hits[client_key]
+        cutoff = now - window
+        while hits and hits[0] <= cutoff:
+            hits.popleft()
+
+        if len(hits) >= limit:
+            retry_after = max(1, int(window - (now - hits[0])) + 1)
+            raise HTTPException(
+                status_code=429,
+                detail="Rate limit exceeded",
+                headers={"Retry-After": str(retry_after)},
+            )
+
+        hits.append(now)
 
 
 @app.middleware("http")
@@ -134,6 +173,7 @@ async def submit_knowledge(
     payload: SubmitKnowledgeRequest,
     background_tasks: BackgroundTasks,
     _: None = Depends(require_api_key),
+    __: None = Depends(enforce_rate_limit),
 ):
     global new_samples_count
 
