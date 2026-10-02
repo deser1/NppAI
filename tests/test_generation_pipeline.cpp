@@ -10,16 +10,32 @@ static bool writeTinyModel(const std::filesystem::path& path) {
     const int hidden = 1;
     const int layers = 1;
     const int context = 8;
-    // Include BPE merge token 300 in the model vocabulary.
     const int vocab = 301;
     const int header[5] = {dim, hidden, layers, context, vocab};
 
-    // Payload order mirrors NppAIEngine::loadModel.
     const std::size_t floatCount =
         vocab * dim + context * dim +
         layers * (2 * dim + 4 * dim * dim + 3 * dim * hidden) +
         dim + dim * vocab;
     std::vector<float> weights(floatCount, 0.0f);
+
+    std::size_t offset = 0;
+    // Token embeddings: merged token 300 and byte fallback token 66 carry
+    // opposite signs so the generation path can distinguish them.
+    weights[offset + 66] = -1.0f;
+    weights[offset + 300] = 1.0f;
+    offset += vocab;
+
+    offset += context;       // positional embeddings
+    weights[offset++] = 1.0f; // attention RMS weight
+    offset += 4;             // q, k, v, o
+    weights[offset++] = 1.0f; // FFN RMS weight
+    offset += 3;             // gate, up, down
+    weights[offset++] = 1.0f; // output RMS weight
+
+    // Positive hidden state strongly selects X; negative strongly selects Y.
+    weights[offset + static_cast<unsigned char>('X')] = 10.0f;
+    weights[offset + static_cast<unsigned char>('Y')] = -10.0f;
 
     std::ofstream out(path, std::ios::binary | std::ios::trunc);
     if (!out)
@@ -31,49 +47,61 @@ static bool writeTinyModel(const std::filesystem::path& path) {
 }
 
 int main() {
-    const auto dir = std::filesystem::temp_directory_path() / "nppai_pipeline_test";
-    const auto modelPath = dir / "tiny.nppai";
-    std::filesystem::create_directories(dir);
+    const auto root = std::filesystem::temp_directory_path() / "nppai_pipeline_test";
+    const auto mergedDir = root / "merged";
+    const auto fallbackDir = root / "fallback";
+    const auto mergedModel = mergedDir / "tiny.nppai";
+    const auto fallbackModel = fallbackDir / "tiny.nppai";
+    std::filesystem::remove_all(root);
+    std::filesystem::create_directories(mergedDir);
+    std::filesystem::create_directories(fallbackDir);
 
-    if (!writeTinyModel(modelPath)) {
-        std::cerr << "FAIL: could not create tiny model fixture\n";
-        std::filesystem::remove_all(dir);
+    if (!writeTinyModel(mergedModel) || !writeTinyModel(fallbackModel)) {
+        std::cerr << "FAIL: could not create tiny model fixtures\n";
+        std::filesystem::remove_all(root);
         return 1;
     }
 
-    // loadModel() discovers the tokenizer next to the model file.
-    // Use a merge whose output ID is intentionally unrelated to its rank.
     {
-        std::ofstream bpe(dir / "bpe_merges.txt");
+        std::ofstream bpe(mergedDir / "bpe_merges.txt");
         if (!bpe) {
             std::cerr << "FAIL: could not create BPE fixture\n";
-            std::filesystem::remove_all(dir);
+            std::filesystem::remove_all(root);
             return 1;
         }
         bpe << "65 66 300\n";
     }
 
-    NppAIEngine engine;
-    if (!engine.loadModel(modelPath.string())) {
+    NppAIEngine mergedEngine;
+    NppAIEngine fallbackEngine;
+    if (!mergedEngine.loadModel(mergedModel.string()) ||
+        !fallbackEngine.loadModel(fallbackModel.string())) {
         std::cerr << "FAIL: tiny model could not be loaded\n";
-        std::filesystem::remove_all(dir);
+        std::filesystem::remove_all(root);
         return 1;
     }
 
-    // Zero weights make logits equal, so generation remains safe and bounded.
-    // This exercises model loading, BPE tokenization with token 300 inside
-    // the model vocabulary, forward propagation, sampling and detokenization
-    // as one pipeline.
-    const std::string prompt = "AB";
-    const std::string result = engine.generate(prompt, 1, [](char, bool) {}, [](int) {});
-    std::filesystem::remove_all(dir);
-
-    if (result.empty() || result.rfind(prompt, 0) != 0) {
-        std::cerr << "FAIL: BPE generation pipeline did not preserve the prompt\n";
+    const auto mergedTokens = mergedEngine.tokenize("AB");
+    const auto fallbackTokens = fallbackEngine.tokenize("AB");
+    if (mergedTokens != std::vector<int>{300} ||
+        fallbackTokens != std::vector<int>({65, 66})) {
+        std::cerr << "FAIL: tokenizer fixture did not distinguish BPE merge\n";
+        std::filesystem::remove_all(root);
         return 1;
     }
-    if (result.size() > prompt.size() + 1) {
-        std::cerr << "FAIL: generation exceeded requested token bound\n";
+
+    const std::string mergedResult =
+        mergedEngine.generate("AB", 1, [](char, bool) {}, [](int) {});
+    const std::string fallbackResult =
+        fallbackEngine.generate("AB", 1, [](char, bool) {}, [](int) {});
+    std::filesystem::remove_all(root);
+
+    if (mergedResult != "ABX") {
+        std::cerr << "FAIL: merged-token generation did not select X\n";
+        return 1;
+    }
+    if (fallbackResult != "ABY") {
+        std::cerr << "FAIL: byte-fallback generation did not select Y\n";
         return 1;
     }
 
