@@ -85,6 +85,46 @@ class DatasetConcurrencyTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(content.count(f"code-{i}"), 1)
                 self.assertEqual(content.count(f"thought-{i}"), 1)
 
+    async def test_concurrent_samples_schedule_training_at_threshold(self):
+        samples = 10
+        threshold = 5
+
+        class BackgroundTasksSpy:
+            def __init__(self):
+                self.tasks = []
+
+            def add_task(self, func, *args, **kwargs):
+                self.tasks.append((func, args, kwargs))
+
+        background_tasks = BackgroundTasksSpy()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            dataset_path = Path(tmpdir) / "dataset.txt"
+            payloads = [
+                SubmitKnowledgeRequest(
+                    prompt=f"threshold-prompt-{i}",
+                    final_code=f"threshold-code-{i}",
+                    user_id=f"threshold-user-{i}",
+                )
+                for i in range(samples)
+            ]
+
+            with patch.object(server_backend, "DATASET_PATH", dataset_path), \
+                 patch.object(server_backend, "TRAINING_THRESHOLD", threshold):
+                server_backend.new_samples_count = 0
+                await asyncio.gather(
+                    *[
+                        submit_knowledge(payload, background_tasks)
+                        for payload in payloads
+                    ]
+                )
+
+            self.assertEqual(len(background_tasks.tasks), samples // threshold)
+            self.assertEqual(server_backend.new_samples_count, samples % threshold)
+            for func, args, kwargs in background_tasks.tasks:
+                self.assertIs(func, server_backend.run_training_process)
+                self.assertEqual(args, ())
+                self.assertEqual(kwargs, {})
+
 
 class RequestSizeLimitTests(unittest.IsolatedAsyncioTestCase):
     async def test_rejects_advertised_oversized_body(self):
