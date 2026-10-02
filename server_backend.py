@@ -2,10 +2,11 @@ import asyncio
 import hashlib
 import json
 import os
+import secrets
 from datetime import datetime
 from pathlib import Path
 
-from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
+from fastapi import BackgroundTasks, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
@@ -20,6 +21,7 @@ MAX_CODE_CHARS = 500_000
 MAX_USER_ID_CHARS = 128
 TRAINING_THRESHOLD = 5
 MODEL_CHUNK_SIZE = 1024 * 1024
+API_KEY_ENV = "NPPAI_API_KEY"
 
 app = FastAPI(
     title="NppAI Cloud Backend",
@@ -48,6 +50,16 @@ class CheckModelUpdateResponse(BaseModel):
     update_available: bool
     version: str | None = None
     download_url: str | None = None
+
+
+def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
+    expected_key = os.getenv(API_KEY_ENV)
+    if not expected_key:
+        return
+    if x_api_key is None:
+        raise HTTPException(status_code=401, detail="API key required")
+    if not secrets.compare_digest(x_api_key, expected_key):
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
 
 @app.middleware("http")
@@ -121,7 +133,9 @@ async def run_training_process():
 async def submit_knowledge(
     payload: SubmitKnowledgeRequest,
     background_tasks: BackgroundTasks,
+    _: None = Header(default=None, alias="X-NppAI-Auth-Checked"),
 ):
+    require_api_key()
     global new_samples_count
 
     DATASET_PATH.parent.mkdir(parents=True, exist_ok=True)
