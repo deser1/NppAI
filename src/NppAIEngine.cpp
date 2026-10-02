@@ -587,6 +587,7 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
 
 bool NppAIEngine::loadBPETokenizer(const std::string &path) {
   bpe_merges.clear();
+  bpe_merge_ranks.clear();
   bpe_vocab.clear();
   for (int i = 0; i < 256; i++) {
     bpe_vocab[i] = std::string(1, (char)i);
@@ -600,6 +601,7 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
   }
 
   int p0, p1, idx;
+  size_t mergeRank = 0;
   while (file >> p0 >> p1 >> idx) {
     // IDs below 256 are reserved for raw bytes. Every merge must reference
     // already-known tokens and create a new token ID.
@@ -607,6 +609,7 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
         !bpe_vocab.count(p0) || !bpe_vocab.count(p1) ||
         bpe_vocab.count(idx) || bpe_merges.count({p0, p1})) {
       bpe_merges.clear();
+      bpe_merge_ranks.clear();
       bpe_vocab.clear();
       for (int i = 0; i < 256; i++) {
         bpe_vocab[i] = std::string(1, (char)i);
@@ -616,11 +619,13 @@ bool NppAIEngine::loadBPETokenizer(const std::string &path) {
     }
 
     bpe_merges[{p0, p1}] = idx;
+    bpe_merge_ranks[{p0, p1}] = mergeRank++;
     bpe_vocab[idx] = bpe_vocab[p0] + bpe_vocab[p1];
   }
 
   if (!file.eof() && file.fail()) {
     bpe_merges.clear();
+    bpe_merge_ranks.clear();
     bpe_vocab.clear();
     for (int i = 0; i < 256; i++) {
       bpe_vocab[i] = std::string(1, (char)i);
@@ -641,28 +646,26 @@ std::vector<int> NppAIEngine::tokenize(const std::string &text) {
     return ids; // Fallback do bajtów
 
   while (ids.size() >= 2) {
-    int best_idx = -1;
     std::pair<int, int> best_pair;
-    int min_rank = 1000000000;
+    size_t min_rank = std::numeric_limits<size_t>::max();
 
     for (size_t i = 0; i < ids.size() - 1; i++) {
       std::pair<int, int> pair = {ids[i], ids[i + 1]};
-      if (bpe_merges.count(pair)) {
-        if (bpe_merges[pair] < min_rank) {
-          min_rank = bpe_merges[pair];
-          best_pair = pair;
-        }
+      auto rankIt = bpe_merge_ranks.find(pair);
+      if (rankIt != bpe_merge_ranks.end() && rankIt->second < min_rank) {
+        min_rank = rankIt->second;
+        best_pair = pair;
       }
     }
 
-    if (min_rank == 1000000000)
+    if (min_rank == std::numeric_limits<size_t>::max())
       break;
 
     std::vector<int> new_ids;
     for (size_t i = 0; i < ids.size(); i++) {
       if (i < ids.size() - 1 && ids[i] == best_pair.first &&
           ids[i + 1] == best_pair.second) {
-        new_ids.push_back(min_rank);
+        new_ids.push_back(bpe_merges.at(best_pair));
         i++;
       } else {
         new_ids.push_back(ids[i]);
