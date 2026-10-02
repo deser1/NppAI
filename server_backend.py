@@ -29,6 +29,7 @@ app = FastAPI(
 training_task: asyncio.Task | None = None
 new_samples_count = 0
 training_lock = asyncio.Lock()
+dataset_lock = asyncio.Lock()
 
 
 class SubmitKnowledgeRequest(BaseModel):
@@ -137,8 +138,9 @@ async def submit_knowledge(
         raise HTTPException(status_code=413, detail="Training sample too large")
 
     try:
-        with DATASET_PATH.open("a", encoding="utf-8") as f:
-            f.write(entry)
+        async with dataset_lock:
+            with DATASET_PATH.open("a", encoding="utf-8") as f:
+                f.write(entry)
     except OSError as exc:
         raise HTTPException(status_code=500, detail="Unable to persist training sample") from exc
 
