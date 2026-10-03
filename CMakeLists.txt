@@ -84,6 +84,9 @@ add_executable(TestPluginGenerationFlow
     src/AIPromptPipeline.cpp
 )
 target_include_directories(TestPluginGenerationFlow PRIVATE src)
+add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp)
+target_include_directories(TestRAGRetrieval PRIVATE src)
+target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
 
 add_test(NAME TensorMath COMMAND TestTensor)
 add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)
@@ -93,6 +96,7 @@ add_test(NAME AIPromptPipeline COMMAND TestAIPromptPipeline)
 add_test(NAME PluginPromptActions COMMAND TestPluginPromptActions)
 add_test(NAME GenerationContext COMMAND TestGenerationContext)
 add_test(NAME PluginGenerationFlow COMMAND TestPluginGenerationFlow)
+add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(ModelLoaderValidation PROPERTIES LABELS "unit;security" TIMEOUT 30)
@@ -102,6 +106,7 @@ set_tests_properties(AIPromptPipeline PROPERTIES LABELS "unit;integration" TIMEO
 set_tests_properties(PluginPromptActions PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(GenerationContext PROPERTIES LABELS "unit;integration;rag" TIMEOUT 30)
 set_tests_properties(PluginGenerationFlow PROPERTIES LABELS "integration;plugin;rag" TIMEOUT 30)
+set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
