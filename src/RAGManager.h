@@ -21,6 +21,10 @@ public:
     void saveDatabase(const std::string& dbPath);
     void loadDatabase(const std::string& dbPath);
 
+#ifdef NPPAI_TESTING
+    void clearForTesting();
+#endif
+
 private:
     RAGManager() = default;
     ~RAGManager() = default;
