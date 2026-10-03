@@ -97,6 +97,30 @@ int main() {
     }
     Tensor::setSimdOverrideForTesting(-1);
 
+    // Invalid shapes and backing storage must fail deterministically instead
+    // of indexing outside tensor buffers.
+    auto expectInvalidMatmul = [&](const Tensor& left, const Tensor& right,
+                                   bool transpose, const char* message) {
+        try {
+            (void)Tensor::matmul(left, right, transpose);
+            return check(false, message);
+        } catch (const std::invalid_argument&) {
+            return true;
+        }
+    };
+    Tensor rankOne({3});
+    ok &= expectInvalidMatmul(rankOne, b, false, "rank-1 left tensor rejected");
+    Tensor incompatible({4, 2});
+    ok &= expectInvalidMatmul(a, incompatible, false, "incompatible dimensions rejected");
+    Tensor badStorage({3, 2});
+    badStorage.data.pop_back();
+    ok &= expectInvalidMatmul(a, badStorage, false, "short FP32 storage rejected");
+    Tensor badQ8({2, 3});
+    badQ8.data.clear();
+    badQ8.data_q8.resize(5);
+    badQ8.scale_q8 = 0.1f;
+    ok &= expectInvalidMatmul(a, badQ8, true, "short INT8 storage rejected");
+
     Tensor activation({1, 2});
     activation.data = {0.0f, 1.0f};
     activation.applySiLU();
