@@ -1,6 +1,7 @@
 #include "RAGManager.h"
 #include <iostream>
 #include <string>
+#include <cstdio>
 
 namespace {
 bool check(bool condition, const char* message) {
@@ -61,6 +62,18 @@ int main() {
     const std::string wrongLanguage = rag.retrieveContext("validate request token", 3, "", "rust");
     ok &= check(wrongLanguage.empty(),
                 "language filter excludes non-matching documents");
+
+    rag.clearForTesting();
+    const std::string dbPath = "rag_metadata_v2_test.bin";
+    rag.addDocument("persistent metadata token", "src/persist.cpp", "cpp");
+    rag.saveDatabase(dbPath);
+    rag.clearForTesting();
+    rag.loadDatabase(dbPath);
+    const std::string persisted = rag.retrieveContext(
+        "persistent metadata token", 1, "src/persist.cpp", "cpp");
+    ok &= check(persisted.find("persistent metadata token") != std::string::npos,
+                "v2 database persists source and language metadata");
+    std::remove(dbPath.c_str());
 
     rag.clearForTesting();
     const std::string filler(1100, 'x');
