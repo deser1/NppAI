@@ -20,6 +20,7 @@ add_library(NppAI SHARED
     src/PluginDefinition.cpp
     src/GenerationContext.cpp
     src/GenerationStreamRouter.cpp
+    src/GenerationTracking.cpp
     src/PluginPromptActions.cpp
     src/AIManager.cpp
     src/AIPromptPipeline.cpp
@@ -88,6 +89,8 @@ add_executable(TestPluginGenerationFlow
 target_include_directories(TestPluginGenerationFlow PRIVATE src)
 add_executable(TestGenerationStreamRouter tests/test_generation_stream_router.cpp src/GenerationStreamRouter.cpp)
 target_include_directories(TestGenerationStreamRouter PRIVATE src)
+add_executable(TestGenerationTracking tests/test_generation_tracking.cpp src/GenerationTracking.cpp)
+target_include_directories(TestGenerationTracking PRIVATE src)
 add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp)
 target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
@@ -101,6 +104,7 @@ add_test(NAME PluginPromptActions COMMAND TestPluginPromptActions)
 add_test(NAME GenerationContext COMMAND TestGenerationContext)
 add_test(NAME PluginGenerationFlow COMMAND TestPluginGenerationFlow)
 add_test(NAME GenerationStreamRouter COMMAND TestGenerationStreamRouter)
+add_test(NAME GenerationTracking COMMAND TestGenerationTracking)
 add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
@@ -112,6 +116,7 @@ set_tests_properties(PluginPromptActions PROPERTIES LABELS "unit;integration;plu
 set_tests_properties(GenerationContext PROPERTIES LABELS "unit;integration;rag" TIMEOUT 30)
 set_tests_properties(PluginGenerationFlow PROPERTIES LABELS "integration;plugin;rag" TIMEOUT 30)
 set_tests_properties(GenerationStreamRouter PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
+set_tests_properties(GenerationTracking PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)

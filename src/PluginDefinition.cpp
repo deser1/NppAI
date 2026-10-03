@@ -19,6 +19,7 @@
 #include "AIManager.h"
 #include "GenerationContext.h"
 #include "GenerationStreamRouter.h"
+#include "GenerationTracking.h"
 #include "PluginPromptActions.h"
 #include "DockingFeature/Docking.h"
 #include "Notepad_plus_msgs.h"
@@ -207,8 +208,11 @@ void ExecuteAIGeneration() {
     auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
     int endLine = (int)::SendMessage(curScintilla, SCI_LINEFROMPOSITION,
                                      (WPARAM)currentPos, 0);
-    AIManager::getInstance().startTracking(prompt, generated, startLine,
-                                           endLine, currentFilePath);
+    const auto tracking = GenerationTracking::build(
+        prompt, generated, startLine, endLine, currentFilePath);
+    AIManager::getInstance().startTracking(
+        tracking.prompt, tracking.generated, tracking.startLine,
+        tracking.endLine, tracking.filePath);
 
     // Przywrócenie przycisku do stanu pierwotnego
     isGenerating = false;
