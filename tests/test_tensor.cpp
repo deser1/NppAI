@@ -184,6 +184,47 @@ int main() {
     }
     std::remove(zeroPath.c_str());
 
+    // Quantization edge cases: asymmetric ranges, exact INT8 extrema and
+    // non-multiple-of-8 widths exercise rounding plus the scalar SIMD tail.
+    const std::string edgePath = tempPath("nppai_test_quantization_edges.bin");
+    const std::vector<float> edgeValues = {
+        -127.0f, -63.5f, -1.0f, 0.0f, 1.0f, 31.75f, 63.5f, 95.25f, 127.0f
+    };
+    {
+        std::ofstream out(edgePath, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(edgeValues.data()),
+                  static_cast<std::streamsize>(edgeValues.size() * sizeof(float)));
+    }
+    Tensor edgeQ8({1, 9});
+    {
+        std::ifstream in(edgePath, std::ios::binary);
+        ok &= check(edgeQ8.readFromFile(in, true), "edge quantized read");
+    }
+    ok &= check(edgeQ8.data_q8.front() == -127, "negative INT8 extreme preserved");
+    ok &= check(edgeQ8.data_q8.back() == 127, "positive INT8 extreme preserved");
+    for (size_t i = 0; i < edgeValues.size(); ++i) {
+        const float error = std::fabs(edgeQ8.get(static_cast<int>(i)) - edgeValues[i]);
+        ok &= check(error <= edgeQ8.scale_q8 * 0.51f + 1e-6f,
+                    "edge dequantization stays within half a quantization step");
+    }
+
+    Tensor edgeInput({1, 9});
+    edgeInput.data = {1.0f, -0.5f, 0.25f, -0.125f, 0.0625f,
+                      -0.03125f, 0.015625f, -0.0078125f, 0.00390625f};
+    Tensor edgeFp32({1, 9});
+    edgeFp32.data = edgeValues;
+    Tensor::setSimdOverrideForTesting(0);
+    const Tensor edgeFp32Out = Tensor::matmul(edgeInput, edgeFp32, true);
+    const Tensor edgeInt8Out = Tensor::matmul(edgeInput, edgeQ8, true);
+    float edgeInputL1 = 0.0f;
+    for (float value : edgeInput.data)
+        edgeInputL1 += std::fabs(value);
+    ok &= check(std::fabs(edgeFp32Out.data[0] - edgeInt8Out.data[0]) <=
+                    edgeInputL1 * edgeQ8.scale_q8 * 0.51f + 1e-5f,
+                "odd-width INT8 matmul error respects rounding bound");
+    Tensor::setSimdOverrideForTesting(-1);
+    std::remove(edgePath.c_str());
+
     const std::string truncatedPath = tempPath("nppai_test_tensor_truncated.bin");
     {
         std::ofstream out(truncatedPath, std::ios::binary | std::ios::trunc);
