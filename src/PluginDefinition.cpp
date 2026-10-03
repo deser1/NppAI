@@ -17,6 +17,7 @@
 
 #include "PluginDefinition.h"
 #include "AIManager.h"
+#include "PluginPromptActions.h"
 #include "DockingFeature/Docking.h"
 #include "Notepad_plus_msgs.h"
 #include "RAGManager.h"
@@ -506,7 +507,7 @@ void sendSelectionToChat() {
     currentText = std::string(buf.data()) + "\r\n";
   }
 
-  std::string newText = currentText + "```\r\n" + prompt + "\r\n```\r\n";
+  std::string newText = PluginPromptActions::appendSelection(currentText, prompt);
   SetWindowTextA(g_hEdit, newText.c_str());
 
   // Ustaw kursor na samym początku by użytkownik wpisał polecenie
