@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <set>
+#include <cstdint>
 
 // Prosty hashowany wektor (Hashing Trick) dla lekkiego RAG-a bez bibliotek zewnętrznych
 const int VECTOR_DIM = 256;
@@ -191,43 +192,79 @@ void RAGManager::saveDatabase(const std::string& dbPath) {
     std::lock_guard<std::mutex> lock(dbMutex);
     std::ofstream outFile(dbPath, std::ios::binary);
     if (!outFile.is_open()) return;
-    
-    size_t size = knowledgeBase.size();
+
+    const char magic[8] = {'N','P','P','R','A','G','2','\0'};
+    const uint32_t version = 2;
+    const uint64_t size = static_cast<uint64_t>(knowledgeBase.size());
+    outFile.write(magic, sizeof(magic));
+    outFile.write(reinterpret_cast<const char*>(&version), sizeof(version));
     outFile.write(reinterpret_cast<const char*>(&size), sizeof(size));
-    
+
     for (const auto& doc : knowledgeBase) {
-        size_t textLen = doc.text.size();
+        const uint64_t textLen = static_cast<uint64_t>(doc.text.size());
+        const uint64_t sourceLen = static_cast<uint64_t>(doc.source.size());
+        const uint64_t languageLen = static_cast<uint64_t>(doc.language.size());
         outFile.write(reinterpret_cast<const char*>(&textLen), sizeof(textLen));
-        outFile.write(doc.text.data(), textLen);
-        
+        outFile.write(doc.text.data(), static_cast<std::streamsize>(textLen));
+        outFile.write(reinterpret_cast<const char*>(&sourceLen), sizeof(sourceLen));
+        outFile.write(doc.source.data(), static_cast<std::streamsize>(sourceLen));
+        outFile.write(reinterpret_cast<const char*>(&languageLen), sizeof(languageLen));
+        outFile.write(doc.language.data(), static_cast<std::streamsize>(languageLen));
         outFile.write(reinterpret_cast<const char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float));
     }
-    outFile.close();
 }
 
 void RAGManager::loadDatabase(const std::string& dbPath) {
     std::lock_guard<std::mutex> lock(dbMutex);
     std::ifstream inFile(dbPath, std::ios::binary);
     if (!inFile.is_open()) return;
-    
+
+    char magic[8] = {};
+    inFile.read(magic, sizeof(magic));
+    const bool isV2 = inFile && std::string(magic, 7) == "NPPRAG2";
+    inFile.clear();
+    inFile.seekg(0);
+
+    knowledgeBase.clear();
+    if (isV2) {
+        uint32_t version = 0;
+        uint64_t size = 0;
+        inFile.read(magic, sizeof(magic));
+        if (!inFile.read(reinterpret_cast<char*>(&version), sizeof(version)) || version != 2 ||
+            !inFile.read(reinterpret_cast<char*>(&size), sizeof(size)))
+            return;
+
+        for (uint64_t i = 0; i < size; ++i) {
+            Document doc;
+            uint64_t textLen = 0, sourceLen = 0, languageLen = 0;
+            if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
+            doc.text.resize(static_cast<size_t>(textLen));
+            if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
+            if (!inFile.read(reinterpret_cast<char*>(&sourceLen), sizeof(sourceLen))) return;
+            doc.source.resize(static_cast<size_t>(sourceLen));
+            if (sourceLen && !inFile.read(&doc.source[0], static_cast<std::streamsize>(sourceLen))) return;
+            if (!inFile.read(reinterpret_cast<char*>(&languageLen), sizeof(languageLen))) return;
+            doc.language.resize(static_cast<size_t>(languageLen));
+            if (languageLen && !inFile.read(&doc.language[0], static_cast<std::streamsize>(languageLen))) return;
+            doc.embedding.resize(VECTOR_DIM);
+            if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
+            knowledgeBase.push_back(std::move(doc));
+        }
+        return;
+    }
+
     size_t size = 0;
     if (!inFile.read(reinterpret_cast<char*>(&size), sizeof(size))) return;
-    
-    knowledgeBase.clear();
     for (size_t i = 0; i < size; ++i) {
         Document doc;
         size_t textLen = 0;
-        inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen));
-        
+        if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
         doc.text.resize(textLen);
-        inFile.read(&doc.text[0], textLen);
-        
+        if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
         doc.embedding.resize(VECTOR_DIM);
-        inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float));
-        
-        knowledgeBase.push_back(doc);
+        if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
+        knowledgeBase.push_back(std::move(doc));
     }
-    inFile.close();
 }
 #ifdef NPPAI_TESTING
 void RAGManager::clearForTesting() {
