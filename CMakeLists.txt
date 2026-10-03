@@ -77,6 +77,13 @@ add_executable(TestPluginPromptActions tests/test_plugin_prompt_actions.cpp src/
 target_include_directories(TestPluginPromptActions PRIVATE src)
 add_executable(TestGenerationContext tests/test_generation_context.cpp src/GenerationContext.cpp)
 target_include_directories(TestGenerationContext PRIVATE src)
+add_executable(TestPluginGenerationFlow
+    tests/test_plugin_generation_flow.cpp
+    src/PluginPromptActions.cpp
+    src/GenerationContext.cpp
+    src/AIPromptPipeline.cpp
+)
+target_include_directories(TestPluginGenerationFlow PRIVATE src)
 
 add_test(NAME TensorMath COMMAND TestTensor)
 add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)
@@ -85,6 +92,7 @@ add_test(NAME GenerationPipeline COMMAND TestGenerationPipeline)
 add_test(NAME AIPromptPipeline COMMAND TestAIPromptPipeline)
 add_test(NAME PluginPromptActions COMMAND TestPluginPromptActions)
 add_test(NAME GenerationContext COMMAND TestGenerationContext)
+add_test(NAME PluginGenerationFlow COMMAND TestPluginGenerationFlow)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(ModelLoaderValidation PROPERTIES LABELS "unit;security" TIMEOUT 30)
@@ -93,6 +101,7 @@ set_tests_properties(GenerationPipeline PROPERTIES LABELS "integration" TIMEOUT 
 set_tests_properties(AIPromptPipeline PROPERTIES LABELS "unit;integration" TIMEOUT 30)
 set_tests_properties(PluginPromptActions PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(GenerationContext PROPERTIES LABELS "unit;integration;rag" TIMEOUT 30)
+set_tests_properties(PluginGenerationFlow PROPERTIES LABELS "integration;plugin;rag" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
