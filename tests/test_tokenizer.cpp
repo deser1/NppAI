@@ -22,6 +22,74 @@ public:
         return true;
     }
 
+    static bool tokenizerUtf8RoundTrip() {
+        NppAIEngine engine;
+        const std::string text = u8"Zażółć gęślą jaźń — C++ λ";
+        const auto tokens = engine.tokenize(text);
+        if (tokens.size() != text.size()) {
+            std::cerr << "FAIL: UTF-8 fallback must tokenize bytes without loss\n";
+            return false;
+        }
+        for (std::size_t i = 0; i < text.size(); ++i) {
+            if (tokens[i] != static_cast<unsigned char>(text[i])) {
+                std::cerr << "FAIL: UTF-8 fallback changed byte values\n";
+                return false;
+            }
+        }
+        if (engine.detokenize(tokens) != text) {
+            std::cerr << "FAIL: UTF-8 fallback round-trip\n";
+            return false;
+        }
+        return true;
+    }
+
+    static bool tokenizerPreservesWhitespaceAndCode() {
+        NppAIEngine engine;
+        const std::string code = "if (x > 0) {\n\treturn x + 1;  // keep spaces\r\n}\n";
+        const auto tokens = engine.tokenize(code);
+        if (engine.detokenize(tokens) != code) {
+            std::cerr << "FAIL: whitespace/code round-trip\n";
+            return false;
+        }
+        return true;
+    }
+
+    static bool tokenizerHandlesLongInput() {
+        NppAIEngine engine;
+        std::string text;
+        text.reserve(64 * 1024);
+        for (int i = 0; i < 4096; ++i)
+            text += "std::vector<int> value_";
+        const auto tokens = engine.tokenize(text);
+        if (tokens.size() != text.size() || engine.detokenize(tokens) != text) {
+            std::cerr << "FAIL: long byte-tokenizer input\n";
+            return false;
+        }
+        return true;
+    }
+
+    static bool tokenizerAppliesChainedMerges() {
+        NppAIEngine engine;
+        const auto path =
+            std::filesystem::temp_directory_path() / "nppai_test_chained_bpe.txt";
+        {
+            std::ofstream file(path);
+            if (!file) return false;
+            file << "97 98 256\n";   // ab
+            file << "256 99 257\n"; // abc
+            file << "257 100 258\n"; // abcd
+        }
+        const bool loaded = engine.loadBPETokenizer(path.string());
+        const auto tokens = engine.tokenize("abcdabcd");
+        const auto decoded = engine.detokenize(tokens);
+        std::filesystem::remove(path);
+        if (!loaded || tokens != std::vector<int>({258, 258}) || decoded != "abcdabcd") {
+            std::cerr << "FAIL: chained/repeated BPE merges\n";
+            return false;
+        }
+        return true;
+    }
+
     static bool tokenizerRejectsInvalidMerge() {
         NppAIEngine engine;
         const auto path =
@@ -193,6 +261,14 @@ int main() {
     if (!NppAITest::tokenizerFallback())
         return 1;
     if (!NppAITest::tokenizerBPE())
+        return 1;
+    if (!NppAITest::tokenizerUtf8RoundTrip())
+        return 1;
+    if (!NppAITest::tokenizerPreservesWhitespaceAndCode())
+        return 1;
+    if (!NppAITest::tokenizerHandlesLongInput())
+        return 1;
+    if (!NppAITest::tokenizerAppliesChainedMerges())
         return 1;
     if (!NppAITest::tokenizerUsesMergeRankNotTokenId())
         return 1;
