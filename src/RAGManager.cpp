@@ -13,17 +13,50 @@ const int VECTOR_DIM = 256;
 namespace {
 std::set<std::string> tokenizeUnique(const std::string& text) {
     std::set<std::string> tokens;
-    std::string current;
-    for (char c : text) {
-        if (std::isalnum(static_cast<unsigned char>(c))) {
-            current += static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-        } else if (!current.empty()) {
-            tokens.insert(current);
-            current.clear();
+    std::string identifier;
+
+    auto addIdentifier = [&]() {
+        if (identifier.empty())
+            return;
+
+        std::string normalized;
+        std::string part;
+        for (size_t i = 0; i < identifier.size(); ++i) {
+            const unsigned char uc = static_cast<unsigned char>(identifier[i]);
+            const bool upperBoundary = i > 0 && std::isupper(uc) &&
+                (std::islower(static_cast<unsigned char>(identifier[i - 1])) ||
+                 std::isdigit(static_cast<unsigned char>(identifier[i - 1])));
+
+            if (identifier[i] == '_' || upperBoundary) {
+                if (!part.empty()) {
+                    tokens.insert(part);
+                    part.clear();
+                }
+                if (identifier[i] == '_') {
+                    normalized += '_';
+                    continue;
+                }
+            }
+
+            const char lower = static_cast<char>(std::tolower(uc));
+            normalized += lower;
+            part += lower;
         }
+        if (!part.empty())
+            tokens.insert(part);
+        if (!normalized.empty())
+            tokens.insert(normalized);
+        identifier.clear();
+    };
+
+    for (char c : text) {
+        const unsigned char uc = static_cast<unsigned char>(c);
+        if (std::isalnum(uc) || c == '_')
+            identifier += c;
+        else
+            addIdentifier();
     }
-    if (!current.empty())
-        tokens.insert(current);
+    addIdentifier();
     return tokens;
 }
 
