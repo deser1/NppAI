@@ -4,9 +4,40 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <set>
 
 // Prosty hashowany wektor (Hashing Trick) dla lekkiego RAG-a bez bibliotek zewnętrznych
 const int VECTOR_DIM = 256;
+
+namespace {
+std::set<std::string> tokenizeUnique(const std::string& text) {
+    std::set<std::string> tokens;
+    std::string current;
+    for (char c : text) {
+        if (std::isalnum(static_cast<unsigned char>(c))) {
+            current += static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+        } else if (!current.empty()) {
+            tokens.insert(current);
+            current.clear();
+        }
+    }
+    if (!current.empty())
+        tokens.insert(current);
+    return tokens;
+}
+
+float lexicalOverlap(const std::set<std::string>& queryTokens, const std::string& text) {
+    if (queryTokens.empty())
+        return 0.0f;
+    const auto documentTokens = tokenizeUnique(text);
+    size_t matches = 0;
+    for (const auto& token : queryTokens) {
+        if (documentTokens.count(token) != 0)
+            ++matches;
+    }
+    return static_cast<float>(matches) / static_cast<float>(queryTokens.size());
+}
+}
 
 std::vector<float> RAGManager::computeEmbedding(const std::string& text) {
     std::vector<float> vec(VECTOR_DIM, 0.0f);
@@ -106,15 +137,18 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK) {
     if (query.empty()) return "";
     
     std::vector<float> queryVec = computeEmbedding(query);
+    const auto queryTokens = tokenizeUnique(query);
     
     std::lock_guard<std::mutex> lock(dbMutex);
     if (knowledgeBase.empty()) return "";
 
     std::vector<std::pair<float, std::string>> scores;
     for (const auto& doc : knowledgeBase) {
-        float sim = cosineSimilarity(queryVec, doc.embedding);
-        if (sim > 0.1f) { // próg odcięcia
-            scores.push_back({sim, doc.text});
+        const float cosine = cosineSimilarity(queryVec, doc.embedding);
+        const float lexical = lexicalOverlap(queryTokens, doc.text);
+        const float score = cosine * 0.75f + lexical * 0.25f;
+        if (score > 0.1f) { // próg odcięcia
+            scores.push_back({score, doc.text});
         }
     }
 
