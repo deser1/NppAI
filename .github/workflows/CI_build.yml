@@ -152,10 +152,10 @@ jobs:
           $fp32Median = Get-Median $samples[$size].fp32
           $int8Median = Get-Median $samples[$size].int8
           if ($fp32Median -gt $limits[$size].fp32) {
-            $failures += "FP32 $size" + "x" + "$size: $fp32Median ms/op > $($limits[$size].fp32)"
+            $failures += "FP32 $size" + "x" + "${size}: $fp32Median ms/op > $($limits[$size].fp32)"
           }
           if ($int8Median -gt $limits[$size].int8) {
-            $failures += "INT8 $size" + "x" + "$size: $int8Median ms/op > $($limits[$size].int8)"
+            $failures += "INT8 $size" + "x" + "${size}: $int8Median ms/op > $($limits[$size].int8)"
           }
         }
 
