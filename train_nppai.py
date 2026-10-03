@@ -6,6 +6,8 @@ import os
 import glob
 import math
 import sys
+import io
+import hashlib
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -99,43 +101,44 @@ class NppAIModel(nn.Module):
 # 2. Funkcja do eksportowania wag modelu do formatu binarnego (.nppai)
 def export_to_bin(model, filepath):
     print(f"Eksportowanie wag do {filepath}...")
+    payload = io.BytesIO()
+
+    def write_tensor(tensor, is_linear=False):
+        if is_linear:
+            data = tensor.transpose(0, 1).contiguous().detach().cpu().numpy().flatten()
+        else:
+            data = tensor.detach().cpu().numpy().flatten()
+        payload.write(data.tobytes())
+
+    write_tensor(model.tok_embeddings.weight)
+    write_tensor(model.pos_embeddings.weight)
+    for layer in model.layers:
+        write_tensor(layer.rms_attn.weight)
+        write_tensor(layer.wq.weight, is_linear=True)
+        write_tensor(layer.wk.weight, is_linear=True)
+        write_tensor(layer.wv.weight, is_linear=True)
+        write_tensor(layer.wo.weight, is_linear=True)
+        write_tensor(layer.rms_ffn.weight)
+        write_tensor(layer.w1.weight, is_linear=True)
+        write_tensor(layer.w2.weight, is_linear=True)
+        write_tensor(layer.w3.weight, is_linear=True)
+    write_tensor(model.norm.weight)
+    write_tensor(model.output.weight, is_linear=True)
+
+    payload_bytes = payload.getvalue()
+    payload_sha256 = hashlib.sha256(payload_bytes).digest()
+
     with open(filepath, 'wb') as f:
-        # Nagłówek
-        f.write(struct.pack('i', model.dim))
-        f.write(struct.pack('i', model.hidden_dim))
-        f.write(struct.pack('i', model.n_layers))
-        f.write(struct.pack('i', model.max_seq_len))
-        f.write(struct.pack('i', model.vocab_size))
+        # v2 header: magic, version, dimensions, payload size, SHA-256.
+        f.write(b"NPPAI\\0\\0\\0")
+        f.write(struct.pack("<I", 2))
+        f.write(struct.pack("<5i", model.dim, model.hidden_dim, model.n_layers,
+                            model.max_seq_len, model.vocab_size))
+        f.write(struct.pack("<Q", len(payload_bytes)))
+        f.write(payload_sha256)
+        f.write(payload_bytes)
 
-        def write_tensor(tensor, is_linear=False):
-            if is_linear:
-                data = tensor.transpose(0, 1).contiguous().detach().cpu().numpy().flatten()
-            else:
-                data = tensor.detach().cpu().numpy().flatten()
-            f.write(data.tobytes())
-
-        # Wagi Embeddingu
-        write_tensor(model.tok_embeddings.weight)
-        write_tensor(model.pos_embeddings.weight)
-
-        # Wagi Warstw
-        for layer in model.layers:
-            write_tensor(layer.rms_attn.weight)
-            write_tensor(layer.wq.weight, is_linear=True)
-            write_tensor(layer.wk.weight, is_linear=True)
-            write_tensor(layer.wv.weight, is_linear=True)
-            write_tensor(layer.wo.weight, is_linear=True)
-            
-            write_tensor(layer.rms_ffn.weight)
-            write_tensor(layer.w1.weight, is_linear=True)
-            write_tensor(layer.w2.weight, is_linear=True)
-            write_tensor(layer.w3.weight, is_linear=True)
-
-        # Wagi Wyjściowe
-        write_tensor(model.norm.weight)
-        write_tensor(model.output.weight, is_linear=True)
-        
-    print("Zakończono pomyślnie!")
+    print(f"Zakończono pomyślnie! SHA-256 payloadu: {payload_sha256.hex()}")
 
 # 3. Przygotowanie Datasetu w formacie "Instruct"
 def load_dataset(folder_path="datasets/"):
