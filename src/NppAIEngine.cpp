@@ -4,20 +4,44 @@
 #include <fstream>
 #if defined(_M_X64) || defined(__x86_64__)
 #include <immintrin.h>
+#define NPPAI_X86_SIMD 1
+#ifdef _MSC_VER
 #include <intrin.h>
+#endif
 
-static bool cpuSupportsAVX2() {
+static bool cpuSupportsAVX2FMA() {
+#ifdef _MSC_VER
   int cpuInfo[4] = {};
   __cpuid(cpuInfo, 0);
   if (cpuInfo[0] < 7)
     return false;
+
+  __cpuid(cpuInfo, 1);
+  const bool osxsave = (cpuInfo[2] & (1 << 27)) != 0;
+  const bool avx = (cpuInfo[2] & (1 << 28)) != 0;
+  const bool fma = (cpuInfo[2] & (1 << 12)) != 0;
+  if (!osxsave || !avx || !fma)
+    return false;
+
+  // XMM (bit 1) and YMM (bit 2) state must both be managed by the OS.
+  if ((_xgetbv(0) & 0x6) != 0x6)
+    return false;
+
   __cpuidex(cpuInfo, 7, 0);
   return (cpuInfo[1] & (1 << 5)) != 0; // EBX bit 5 = AVX2
+#else
+  // The current native Windows build uses MSVC. Keep non-MSVC x86 builds on
+  // the scalar path until equivalent CPUID/XGETBV handling is implemented.
+  return false;
+#endif
 }
 
-#define USE_AVX2
+static bool useAVX2FMA() {
+  static const bool supported = cpuSupportsAVX2FMA();
+  return supported;
+}
 #else
-static bool cpuSupportsAVX2() { return false; }
+static bool useAVX2FMA() { return false; }
 #endif
 #include <iostream>
 #include <limits>
@@ -307,7 +331,8 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
       float sum = 0.0f;
       if (transposeB) {
         if (!b.data_q8.empty()) {
-#ifdef USE_AVX2
+#ifdef NPPAI_X86_SIMD
+        if (useAVX2FMA()) {
           int k = 0;
           __m256 sum0 = _mm256_setzero_ps();
           __m256 sum1 = _mm256_setzero_ps();
@@ -370,13 +395,20 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
                 static_cast<float>(b.data_q8[j * b.shape[1] + k]);
           }
           sum = unscaled_sum * b.scale_q8;
+        } else {
+          for (int k = 0; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] *
+                   (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
+          }
+        }
 #else
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * (b.data_q8[j * b.shape[1] + k] * b.scale_q8);
           }
 #endif
         } else {
-#ifdef USE_AVX2
+#ifdef NPPAI_X86_SIMD
+        if (useAVX2FMA()) {
           int k = 0;
           __m256 sum_vec = _mm256_setzero_ps();
           for (; k <= a_cols - 8; k += 8) {
@@ -390,6 +422,11 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
           for (; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
           }
+        } else {
+          for (int k = 0; k < a_cols; k++) {
+            sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
+          }
+        }
 #else
           for (int k = 0; k < a_cols; k++) {
             sum += a.data[i * a.shape[1] + k] * b.data[j * b.shape[1] + k];
@@ -428,7 +465,8 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     float ss = 0.0f;
     int c = 0;
 
-#ifdef USE_AVX2
+#ifdef NPPAI_X86_SIMD
+    if (useAVX2FMA()) {
     // Faza 1: Suma kwadratów z AVX2
     __m256 sum_vec = _mm256_setzero_ps();
     for (; c <= cols - 8; c += 8) {
@@ -439,6 +477,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     _mm256_storeu_ps(tmp, sum_vec);
     for (int i = 0; i < 8; i++)
       ss += tmp[i];
+    }
 #endif
 
     // Reszta / Scalar
@@ -452,7 +491,8 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
     ss = 1.0f / std::sqrt(ss);
 
     c = 0;
-#ifdef USE_AVX2
+#ifdef NPPAI_X86_SIMD
+    if (useAVX2FMA()) {
     // Faza 2: Normalizacja z AVX2
     __m256 ss_vec = _mm256_set1_ps(ss);
     for (; c <= cols - 8; c += 8) {
@@ -460,6 +500,7 @@ void Tensor::applyRMSNorm(const Tensor &weight) {
       __m256 w = _mm256_loadu_ps(&weight.data[c]);
       __m256 res = _mm256_mul_ps(_mm256_mul_ps(val, ss_vec), w);
       _mm256_storeu_ps(&data[r * cols + c], res);
+    }
     }
 #endif
 

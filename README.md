@@ -162,7 +162,7 @@ NppAI C++ inference
 
 ### AVX2
 
-The optimized x64 build currently enables AVX2 and uses FMA instructions in the INT8 kernel. **x64 alone does not guarantee AVX2/FMA support on every CPU.** Until runtime dispatch is implemented, the optimized x64 binary requires hardware AVX2 and FMA support plus operating-system support for saving/restoring YMM state (OSXSAVE/XCR0). Runtime feature detection and a scalar/SSE fallback remain planned improvements.
+The x64 build keeps the baseline x64 ISA and selects AVX2/FMA tensor kernels at runtime. The optimized path is enabled only when CPUID reports AVX2, AVX and FMA support and the operating system reports XMM/YMM state support through OSXSAVE/XCR0. Otherwise NppAI uses the scalar CPU path.
 
 ### GPU execution
 
@@ -192,7 +192,7 @@ The next testing milestone is a deterministic unit-test suite for tensor operati
 
 ## Roadmap
 
-- [ ] Runtime CPU feature detection for AVX2
+- [x] Runtime CPU feature detection for AVX2/FMA with scalar fallback
 - [ ] Deterministic tensor unit tests
 - [ ] Model serialization/version validation
 - [ ] Reproducible CPU/GPU benchmarks
