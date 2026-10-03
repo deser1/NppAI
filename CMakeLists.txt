@@ -82,6 +82,7 @@ add_executable(TestPluginGenerationFlow
     tests/test_plugin_generation_flow.cpp
     src/PluginPromptActions.cpp
     src/GenerationContext.cpp
+    src/GenerationStreamRouter.cpp
     src/AIPromptPipeline.cpp
 )
 target_include_directories(TestPluginGenerationFlow PRIVATE src)
