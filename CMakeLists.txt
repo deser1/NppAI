@@ -19,6 +19,7 @@ add_library(NppAI SHARED
     src/NppAI_Core.rc
     src/PluginDefinition.cpp
     src/AIManager.cpp
+    src/AIPromptPipeline.cpp
     src/RAGManager.cpp
     src/TelemetryManager.cpp
     src/NppAIEngine.cpp
@@ -68,16 +69,20 @@ add_nppai_test(TestTensor tests/test_tensor.cpp)
 add_nppai_test(TestModelLoader tests/test_model_loader.cpp)
 add_nppai_test(TestTokenizer tests/test_tokenizer.cpp)
 add_nppai_test(TestGenerationPipeline tests/test_generation_pipeline.cpp)
+add_executable(TestAIPromptPipeline tests/test_ai_prompt_pipeline.cpp src/AIPromptPipeline.cpp)
+target_include_directories(TestAIPromptPipeline PRIVATE src)
 
 add_test(NAME TensorMath COMMAND TestTensor)
 add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)
 add_test(NAME TokenizerFallback COMMAND TestTokenizer)
 add_test(NAME GenerationPipeline COMMAND TestGenerationPipeline)
+add_test(NAME AIPromptPipeline COMMAND TestAIPromptPipeline)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(ModelLoaderValidation PROPERTIES LABELS "unit;security" TIMEOUT 30)
 set_tests_properties(TokenizerFallback PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(GenerationPipeline PROPERTIES LABELS "integration" TIMEOUT 30)
+set_tests_properties(AIPromptPipeline PROPERTIES LABELS "unit;integration" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
