@@ -64,6 +64,20 @@ int main() {
                 "language filter excludes non-matching documents");
 
     rag.clearForTesting();
+    rag.addDocument("void parse_http_response();");
+    rag.addDocument("void parseCacheEntry();");
+    const std::string snakeCase = rag.retrieveContext("http response", 1);
+    ok &= check(snakeCase.find("parse_http_response") != std::string::npos,
+                "snake_case identifier parts contribute to lexical ranking");
+
+    rag.clearForTesting();
+    rag.addDocument("void validateBearerToken();");
+    rag.addDocument("void validateCacheEntry();");
+    const std::string camelCase = rag.retrieveContext("bearer token", 1);
+    ok &= check(camelCase.find("validateBearerToken") != std::string::npos,
+                "camelCase identifier parts contribute to lexical ranking");
+
+    rag.clearForTesting();
     const std::string dbPath = "rag_metadata_v2_test.bin";
     rag.addDocument("persistent metadata token", "src/persist.cpp", "cpp");
     rag.saveDatabase(dbPath);
