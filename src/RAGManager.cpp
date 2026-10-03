@@ -239,13 +239,13 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
             uint64_t textLen = 0, sourceLen = 0, languageLen = 0;
             if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
             doc.text.resize(static_cast<size_t>(textLen));
-            if (textLen && !inFile.read(doc.text.data(), static_cast<std::streamsize>(textLen))) return;
+            if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
             if (!inFile.read(reinterpret_cast<char*>(&sourceLen), sizeof(sourceLen))) return;
             doc.source.resize(static_cast<size_t>(sourceLen));
-            if (sourceLen && !inFile.read(doc.source.data(), static_cast<std::streamsize>(sourceLen))) return;
+            if (sourceLen && !inFile.read(&doc.source[0], static_cast<std::streamsize>(sourceLen))) return;
             if (!inFile.read(reinterpret_cast<char*>(&languageLen), sizeof(languageLen))) return;
             doc.language.resize(static_cast<size_t>(languageLen));
-            if (languageLen && !inFile.read(doc.language.data(), static_cast<std::streamsize>(languageLen))) return;
+            if (languageLen && !inFile.read(&doc.language[0], static_cast<std::streamsize>(languageLen))) return;
             doc.embedding.resize(VECTOR_DIM);
             if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
             knowledgeBase.push_back(std::move(doc));
@@ -260,7 +260,7 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
         size_t textLen = 0;
         if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
         doc.text.resize(textLen);
-        if (textLen && !inFile.read(doc.text.data(), static_cast<std::streamsize>(textLen))) return;
+        if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
         doc.embedding.resize(VECTOR_DIM);
         if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
         knowledgeBase.push_back(std::move(doc));
