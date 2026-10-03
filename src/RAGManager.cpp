@@ -90,6 +90,10 @@ float RAGManager::cosineSimilarity(const std::vector<float>& vecA, const std::ve
 }
 
 void RAGManager::addDocument(const std::string& text) {
+    addDocument(text, "", "");
+}
+
+void RAGManager::addDocument(const std::string& text, const std::string& source, const std::string& language) {
     if (text.empty()) return;
 
     constexpr size_t CHUNK_SIZE = 1200;
@@ -129,11 +133,19 @@ void RAGManager::addDocument(const std::string& text) {
         Document doc;
         doc.text = chunk;
         doc.embedding = computeEmbedding(chunk);
+        doc.source = source;
+        doc.language = language;
         knowledgeBase.push_back(std::move(doc));
     }
 }
 
 std::string RAGManager::retrieveContext(const std::string& query, int topK) {
+    return retrieveContext(query, topK, "", "");
+}
+
+std::string RAGManager::retrieveContext(const std::string& query, int topK,
+                                        const std::string& sourceFilter,
+                                        const std::string& languageFilter) {
     if (query.empty()) return "";
     
     std::vector<float> queryVec = computeEmbedding(query);
@@ -144,6 +156,10 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK) {
 
     std::vector<std::pair<float, std::string>> scores;
     for (const auto& doc : knowledgeBase) {
+        if (!sourceFilter.empty() && doc.source != sourceFilter)
+            continue;
+        if (!languageFilter.empty() && doc.language != languageFilter)
+            continue;
         const float cosine = cosineSimilarity(queryVec, doc.embedding);
         const float lexical = lexicalOverlap(queryTokens, doc.text);
         const float score = cosine * 0.75f + lexical * 0.25f;
