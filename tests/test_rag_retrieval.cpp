@@ -53,6 +53,16 @@ int main() {
                 "exact query-token coverage improves ranking beyond term frequency");
 
     rag.clearForTesting();
+    rag.addDocument("validate request token", "src/api.cpp", "cpp");
+    rag.addDocument("validate request token", "scripts/api.py", "python");
+    const std::string cppOnly = rag.retrieveContext("validate request token", 3, "src/api.cpp", "cpp");
+    ok &= check(cppOnly.find("validate request token") != std::string::npos,
+                "source and language filters retain matching documents");
+    const std::string wrongLanguage = rag.retrieveContext("validate request token", 3, "", "rust");
+    ok &= check(wrongLanguage.empty(),
+                "language filter excludes non-matching documents");
+
+    rag.clearForTesting();
     const std::string filler(1100, 'x');
     const std::string longDocument =
         filler + "\n"
