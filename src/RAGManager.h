@@ -13,9 +13,13 @@ public:
 
     // Dodaje nową wiedzę do bazy wektorowej (samoistne rekurencyjne uczenie się)
     void addDocument(const std::string& text);
+    void addDocument(const std::string& text, const std::string& source, const std::string& language);
 
     // Wyszukuje najbardziej podobne fragmenty z bazy wiedzy
     std::string retrieveContext(const std::string& query, int topK = 3);
+    std::string retrieveContext(const std::string& query, int topK,
+                                const std::string& sourceFilter,
+                                const std::string& languageFilter);
 
     // Zapis/Odczyt na dysk (trwała pamięć)
     void saveDatabase(const std::string& dbPath);
@@ -34,6 +38,8 @@ private:
     struct Document {
         std::string text;
         std::vector<float> embedding;
+        std::string source;
+        std::string language;
     };
 
     std::vector<Document> knowledgeBase;
