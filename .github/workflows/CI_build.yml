@@ -136,7 +136,38 @@ jobs:
         }
         $summary | Tee-Object -FilePath benchmark-results\tensor-benchmark-summary.txt
 
+        # Regression gate. These deliberately conservative ceilings are based
+        # on the established windows-2022 x64 medians, with enough headroom
+        # for normal shared-runner variance. They catch large regressions
+        # without treating the benchmark as a precision performance test.
+        $limits = @{
+          128  = @{ fp32 = 0.0070; int8 = 0.0070 }
+          256  = @{ fp32 = 0.0200; int8 = 0.0200 }
+          512  = @{ fp32 = 0.0700; int8 = 0.0600 }
+          1024 = @{ fp32 = 0.2700; int8 = 0.2200 }
+        }
+
+        $failures = @()
+        foreach ($size in $sizes) {
+          $fp32Median = Get-Median $samples[$size].fp32
+          $int8Median = Get-Median $samples[$size].int8
+          if ($fp32Median -gt $limits[$size].fp32) {
+            $failures += "FP32 $size" + "x" + "${size}: $fp32Median ms/op > $($limits[$size].fp32)"
+          }
+          if ($int8Median -gt $limits[$size].int8) {
+            $failures += "INT8 $size" + "x" + "${size}: $int8Median ms/op > $($limits[$size].int8)"
+          }
+        }
+
+        if ($failures.Count -gt 0) {
+          "Benchmark regression gate FAILED:" | Tee-Object -FilePath benchmark-results\regression-gate.txt
+          $failures | Tee-Object -FilePath benchmark-results\regression-gate.txt -Append
+          throw "Tensor benchmark exceeded regression ceiling."
+        }
+        "Benchmark regression gate PASSED." | Tee-Object -FilePath benchmark-results\regression-gate.txt
+
     - name: Upload benchmark results
+      if: always()
       uses: actions/upload-artifact@v7
       with:
         name: tensor-benchmark-x64
