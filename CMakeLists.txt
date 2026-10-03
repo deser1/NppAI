@@ -45,7 +45,9 @@ if(MSVC)
         target_compile_options(NppAI PRIVATE /O2)
         target_link_options(NppAI PRIVATE /MACHINE:X86)
     else()
-        target_compile_options(NppAI PRIVATE /O2 /arch:AVX2)
+        # Keep the binary on the x64 baseline ISA. AVX2/FMA intrinsics are
+        # selected at runtime only after CPUID + OSXSAVE/XCR0 checks.
+        target_compile_options(NppAI PRIVATE /O2)
         target_link_options(NppAI PRIVATE /MACHINE:X64)
     endif()
     target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE)
