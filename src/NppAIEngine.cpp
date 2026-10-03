@@ -2,6 +2,10 @@
 #include <algorithm>
 #include <cmath>
 #include <fstream>
+#include <array>
+#include <cstring>
+#include <bcrypt.h>
+#pragma comment(lib, "bcrypt.lib")
 #if defined(_M_X64) || defined(__x86_64__)
 #include <immintrin.h>
 #define NPPAI_X86_SIMD 1
@@ -589,17 +593,46 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
   std::lock_guard<std::mutex> lock(engineMutex);
   std::ifstream file(modelPath, std::ios::binary);
   if (!file.is_open()) {
-    std::cerr << "Nie udalo sie otworzyc pliku modelu: " << modelPath
-              << std::endl;
+    std::cerr << "Nie udalo sie otworzyc pliku modelu: " << modelPath << std::endl;
     return false;
   }
 
-  // Read and validate the fixed-size model header before allocating memory.
-  int header[5] = {};
-  file.read(reinterpret_cast<char *>(header), sizeof(header));
-  if (file.gcount() != static_cast<std::streamsize>(sizeof(header))) {
-    std::cerr << "Nieprawidlowy lub niepelny naglowek modelu.\n";
-    return false;
+  constexpr char kMagic[8] = {'N','P','P','A','I','\0','\0','\0'};
+  constexpr uint32_t kFormatVersion = 2;
+  constexpr std::streamoff kV2HeaderBytes = 8 + 4 + 5 * 4 + 8 + 32;
+
+  char magic[8] = {};
+  file.read(magic, sizeof(magic));
+  const bool isV2 = file.gcount() == static_cast<std::streamsize>(sizeof(magic)) &&
+                    std::memcmp(magic, kMagic, sizeof(magic)) == 0;
+  file.clear();
+  file.seekg(0, std::ios::beg);
+
+  int32_t header[5] = {};
+  uint64_t declaredPayloadBytes = 0;
+  std::array<unsigned char, 32> declaredSha256{};
+  std::streamoff payloadOffset = 0;
+
+  if (isV2) {
+    file.read(magic, sizeof(magic));
+    uint32_t version = 0;
+    file.read(reinterpret_cast<char *>(&version), sizeof(version));
+    file.read(reinterpret_cast<char *>(header), sizeof(header));
+    file.read(reinterpret_cast<char *>(&declaredPayloadBytes), sizeof(declaredPayloadBytes));
+    file.read(reinterpret_cast<char *>(declaredSha256.data()), declaredSha256.size());
+    if (!file || version != kFormatVersion) {
+      std::cerr << "Nieobslugiwana wersja lub niepelny naglowek modelu NppAI.\n";
+      return false;
+    }
+    payloadOffset = kV2HeaderBytes;
+  } else {
+    // Legacy v1: five int32 dimensions followed directly by FP32 tensors.
+    file.read(reinterpret_cast<char *>(header), sizeof(header));
+    if (file.gcount() != static_cast<std::streamsize>(sizeof(header))) {
+      std::cerr << "Nieprawidlowy lub niepelny naglowek modelu.\n";
+      return false;
+    }
+    payloadOffset = sizeof(header);
   }
 
   const int modelDim = header[0];
@@ -619,11 +652,9 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
-  // Validate the complete payload size before allocating large tensors.
   file.seekg(0, std::ios::end);
   const std::streamoff fileSize = file.tellg();
-  file.seekg(sizeof(header), std::ios::beg);
-  if (fileSize < static_cast<std::streamoff>(sizeof(header))) {
+  if (fileSize < payloadOffset) {
     std::cerr << "Nieprawidlowy rozmiar pliku modelu.\n";
     return false;
   }
@@ -638,25 +669,71 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
       l * (2ULL * d + 4ULL * d * d + 3ULL * d * h) +
       d + d * v;
   constexpr uint64_t kMaxModelBytes = 4ULL * 1024ULL * 1024ULL * 1024ULL;
+  const uint64_t expectedPayloadBytes = floatCount * sizeof(float);
   if (floatCount > (UINT64_MAX / sizeof(float)) ||
-      floatCount * sizeof(float) > kMaxModelBytes ||
-      static_cast<uint64_t>(fileSize - sizeof(header)) !=
-          floatCount * sizeof(float)) {
+      expectedPayloadBytes > kMaxModelBytes ||
+      static_cast<uint64_t>(fileSize - payloadOffset) != expectedPayloadBytes ||
+      (isV2 && declaredPayloadBytes != expectedPayloadBytes)) {
     std::cerr << "Model przekracza limit rozmiaru lub ma nieprawidlowy payload.\n";
     return false;
   }
 
-  // Commit validated dimensions only after the complete file shape is known.
+  if (isV2) {
+    BCRYPT_ALG_HANDLE algorithm = nullptr;
+    BCRYPT_HASH_HANDLE hash = nullptr;
+    DWORD objectBytes = 0, resultBytes = 0;
+    std::vector<unsigned char> hashObject;
+    std::array<unsigned char, 32> actualSha256{};
+    bool hashOk = false;
+
+    if (BCryptOpenAlgorithmProvider(&algorithm, BCRYPT_SHA256_ALGORITHM, nullptr, 0) == 0 &&
+        BCryptGetProperty(algorithm, BCRYPT_OBJECT_LENGTH,
+                          reinterpret_cast<PUCHAR>(&objectBytes), sizeof(objectBytes),
+                          &resultBytes, 0) == 0) {
+      hashObject.resize(objectBytes);
+      if (BCryptCreateHash(algorithm, &hash, hashObject.data(), objectBytes,
+                           nullptr, 0, 0) == 0) {
+        file.clear();
+        file.seekg(payloadOffset, std::ios::beg);
+        std::array<unsigned char, 64 * 1024> buffer{};
+        uint64_t remaining = expectedPayloadBytes;
+        hashOk = true;
+        while (remaining > 0) {
+          const std::streamsize chunk = static_cast<std::streamsize>(
+              (std::min)(remaining, static_cast<uint64_t>(buffer.size())));
+          file.read(reinterpret_cast<char *>(buffer.data()), chunk);
+          if (file.gcount() != chunk ||
+              BCryptHashData(hash, buffer.data(), static_cast<ULONG>(chunk), 0) != 0) {
+            hashOk = false;
+            break;
+          }
+          remaining -= static_cast<uint64_t>(chunk);
+        }
+        if (hashOk && BCryptFinishHash(hash, actualSha256.data(),
+                                       static_cast<ULONG>(actualSha256.size()), 0) != 0)
+          hashOk = false;
+      }
+    }
+    if (hash) BCryptDestroyHash(hash);
+    if (algorithm) BCryptCloseAlgorithmProvider(algorithm, 0);
+
+    if (!hashOk || actualSha256 != declaredSha256) {
+      std::cerr << "SHA-256 payloadu modelu nie zgadza sie z naglowkiem.\n";
+      return false;
+    }
+  }
+
+  file.clear();
+  file.seekg(payloadOffset, std::ios::beg);
+
   dim = modelDim;
   hidden_dim = modelHiddenDim;
   n_layers = modelLayers;
   max_seq_len = modelMaxSeqLen;
   vocab_size = modelVocabSize;
 
-  // Inicjalizacja i wczytywanie wag
   tokenEmbeddingTable = Tensor({vocab_size, dim});
   if (!tokenEmbeddingTable.readFromFile(file, false)) return false;
-
   posEmbeddingTable = Tensor({max_seq_len, dim});
   if (!posEmbeddingTable.readFromFile(file, false)) return false;
 
@@ -664,16 +741,15 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
   for (int i = 0; i < n_layers; i++) {
     TransformerLayer layer;
     layer.rmsAttn = Tensor({dim});
-    if (!layer.rmsAttn.readFromFile(file, false)) return false; // RMSNorm is small, FP32
+    if (!layer.rmsAttn.readFromFile(file, false)) return false;
     layer.wQ = Tensor({dim, dim});
-    if (!layer.wQ.readFromFile(file, true)) return false; // Quantize
+    if (!layer.wQ.readFromFile(file, true)) return false;
     layer.wK = Tensor({dim, dim});
     if (!layer.wK.readFromFile(file, true)) return false;
     layer.wV = Tensor({dim, dim});
     if (!layer.wV.readFromFile(file, true)) return false;
     layer.wO = Tensor({dim, dim});
     if (!layer.wO.readFromFile(file, true)) return false;
-
     layer.rmsFFN = Tensor({dim});
     if (!layer.rmsFFN.readFromFile(file, false)) return false;
     layer.wGate = Tensor({dim, hidden_dim});
@@ -682,23 +758,18 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     if (!layer.wUp.readFromFile(file, true)) return false;
     layer.wDown = Tensor({hidden_dim, dim});
     if (!layer.wDown.readFromFile(file, true)) return false;
-
     layers.push_back(layer);
   }
 
   outputRMSNorm = Tensor({dim});
   if (!outputRMSNorm.readFromFile(file, false)) return false;
-
   outputClassifier = Tensor({dim, vocab_size});
-  if (!outputClassifier.readFromFile(file, true)) return false; // Quantize output classifier
+  if (!outputClassifier.readFromFile(file, true)) return false;
 
   file.close();
-
-  // Wczytanie BPE tokenizera
   std::string bpePath =
       modelPath.substr(0, modelPath.find_last_of("/\\")) + "\\bpe_merges.txt";
   loadBPETokenizer(bpePath);
-
   return true;
 }
 
