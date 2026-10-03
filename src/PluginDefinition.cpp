@@ -17,6 +17,7 @@
 
 #include "PluginDefinition.h"
 #include "AIManager.h"
+#include "GenerationContext.h"
 #include "PluginPromptActions.h"
 #include "DockingFeature/Docking.h"
 #include "Notepad_plus_msgs.h"
@@ -152,26 +153,23 @@ void ExecuteAIGeneration() {
       // Nowy mechanizm RAG (Retrieval-Augmented Generation) oparty na lokalnej
       // wektorowej bazie
       RAGManager::getInstance().loadDatabase(currentFilePath + ".rag_db");
-      currentContext = RAGManager::getInstance().retrieveContext(prompt, 3);
+      const std::string retrievedContext =
+          RAGManager::getInstance().retrieveContext(prompt, 3);
 
-      // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu tekstowego
-      if (currentContext.empty()) {
+      // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu tekstowego.
+      std::string legacyContext;
+      if (retrievedContext.empty()) {
         std::string memPath = currentFilePath + ".nppai_mem";
         std::ifstream memFile(memPath);
         if (memFile.is_open()) {
           std::string line;
           while (std::getline(memFile, line)) {
-            currentContext += line + "\n";
-          }
-          memFile.close();
-
-          // Ograniczenie kontekstu, jeśli rozrósł się za bardzo
-          if (currentContext.length() > 1000) {
-            currentContext =
-                currentContext.substr(currentContext.length() - 1000);
+            legacyContext += line + "\n";
           }
         }
       }
+      currentContext =
+          GenerationContext::select(retrievedContext, legacyContext);
     }
 
     // Zmienne do obsługi tagu <THINK>
