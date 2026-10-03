@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
+#include <cstdint>
 
 static bool expectRejected(NppAIEngine& engine, const std::string& path,
                            const char* label) {
@@ -14,6 +16,22 @@ static bool expectRejected(NppAIEngine& engine, const std::string& path,
     }
     std::remove(path.c_str());
     return true;
+}
+
+
+static void writeV2Model(const std::string& path, uint32_t version,
+                         const std::vector<char>& payload,
+                         const std::array<unsigned char, 32>& sha256) {
+    const char magic[8] = {'N','P','P','A','I','\0','\0','\0'};
+    const int32_t dimensions[5] = {1, 1, 1, 1, 1};
+    const uint64_t payloadBytes = static_cast<uint64_t>(payload.size());
+    std::ofstream out(path, std::ios::binary | std::ios::trunc);
+    out.write(magic, sizeof(magic));
+    out.write(reinterpret_cast<const char*>(&version), sizeof(version));
+    out.write(reinterpret_cast<const char*>(dimensions), sizeof(dimensions));
+    out.write(reinterpret_cast<const char*>(&payloadBytes), sizeof(payloadBytes));
+    out.write(reinterpret_cast<const char*>(sha256.data()), sha256.size());
+    out.write(payload.data(), static_cast<std::streamsize>(payload.size()));
 }
 
 int main() {
@@ -72,6 +90,51 @@ int main() {
 
         NppAIEngine engine;
         if (!expectRejected(engine, path, "model payload with trailing data"))
+            return 1;
+    }
+
+    {
+        const std::string path = "nppai_test_v2_valid.nppai";
+        std::vector<char> payload(13 * sizeof(float), 0);
+        const std::array<unsigned char, 32> zeroPayloadSha256 = {
+            0x79,0x55,0xcb,0x2d,0xe9,0x0d,0xd9,0xef,
+            0xc6,0xdf,0x9f,0xdb,0xf5,0xf5,0xd1,0x0c,
+            0x11,0x4f,0x41,0x35,0xa9,0xa6,0xb5,0x2d,
+            0xb1,0x00,0x3b,0xe7,0x49,0xe3,0x2f,0x7a
+        };
+        writeV2Model(path, 2, payload, zeroPayloadSha256);
+        NppAIEngine engine;
+        if (!engine.loadModel(path)) {
+            std::cerr << "FAIL: valid v2 model was rejected\n";
+            std::remove(path.c_str());
+            return 1;
+        }
+        std::remove(path.c_str());
+    }
+
+    {
+        const std::string path = "nppai_test_v2_corrupted.nppai";
+        std::vector<char> payload(13 * sizeof(float), 0);
+        const std::array<unsigned char, 32> originalSha256 = {
+            0x79,0x55,0xcb,0x2d,0xe9,0x0d,0xd9,0xef,
+            0xc6,0xdf,0x9f,0xdb,0xf5,0xf5,0xd1,0x0c,
+            0x11,0x4f,0x41,0x35,0xa9,0xa6,0xb5,0x2d,
+            0xb1,0x00,0x3b,0xe7,0x49,0xe3,0x2f,0x7a
+        };
+        payload[0] = 1; // Hash still describes the original all-zero payload.
+        writeV2Model(path, 2, payload, originalSha256);
+        NppAIEngine engine;
+        if (!expectRejected(engine, path, "v2 model with corrupted payload"))
+            return 1;
+    }
+
+    {
+        const std::string path = "nppai_test_v2_unsupported.nppai";
+        std::vector<char> payload(13 * sizeof(float), 0);
+        std::array<unsigned char, 32> sha256{};
+        writeV2Model(path, 999, payload, sha256);
+        NppAIEngine engine;
+        if (!expectRejected(engine, path, "unsupported model format version"))
             return 1;
     }
 
