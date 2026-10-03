@@ -89,9 +89,11 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK) {
         }
     }
 
-    // Sortowanie malejąco
+    // Sortowanie malejąco; tekst rozstrzyga remisy deterministycznie.
     std::sort(scores.begin(), scores.end(), [](const auto& a, const auto& b) {
-        return a.first > b.first;
+        if (std::fabs(a.first - b.first) > 1e-6f)
+            return a.first > b.first;
+        return a.second < b.second;
     });
 
     std::string resultContext = "";
@@ -148,3 +150,9 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
     }
     inFile.close();
 }
+#ifdef NPPAI_TESTING
+void RAGManager::clearForTesting() {
+    std::lock_guard<std::mutex> lock(dbMutex);
+    knowledgeBase.clear();
+}
+#endif
