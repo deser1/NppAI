@@ -64,6 +64,7 @@ static bool useAVX2FMA() { return false; }
 #endif
 #include <iostream>
 #include <limits>
+#include <stdexcept>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -335,10 +336,25 @@ float &Tensor::at(int r, int c) { return data[r * shape[1] + c]; }
 
 // Mnożenie macierzy zoptymalizowane za pomocą OpenMP i GPU (DirectX 11)
 Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
+  if (a.shape.size() != 2 || b.shape.size() != 2)
+    throw std::invalid_argument("Tensor::matmul requires rank-2 tensors");
+  if (a.shape[0] < 0 || a.shape[1] < 0 || b.shape[0] < 0 || b.shape[1] < 0)
+    throw std::invalid_argument("Tensor::matmul requires non-negative dimensions");
+
   int a_rows = a.shape[0];
   int a_cols = a.shape[1];
   int b_rows = transposeB ? b.shape[1] : b.shape[0];
   int b_cols = transposeB ? b.shape[0] : b.shape[1];
+  if (a_cols != b_rows)
+    throw std::invalid_argument("Tensor::matmul dimension mismatch");
+
+  const size_t aExpected = static_cast<size_t>(a_rows) * static_cast<size_t>(a_cols);
+  const size_t bExpected = static_cast<size_t>(b.shape[0]) * static_cast<size_t>(b.shape[1]);
+  if (a.data.size() != aExpected)
+    throw std::invalid_argument("Tensor::matmul invalid left tensor storage");
+  if ((!b.data_q8.empty() && b.data_q8.size() != bExpected) ||
+      (b.data_q8.empty() && b.data.size() != bExpected))
+    throw std::invalid_argument("Tensor::matmul invalid right tensor storage");
 
   Tensor result({a_rows, b_cols});
 
