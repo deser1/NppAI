@@ -54,6 +54,27 @@ int main() {
             return 1;
     }
 
+    {
+        const std::string path = "nppai_test_trailing_payload_model.nppai";
+
+        // Exact payload validation must reject appended/trailing bytes instead
+        // of silently accepting data outside the documented model format.
+        const int header[5] = {1, 1, 1, 1, 1};
+        const std::size_t expectedPayloadBytes = 13 * sizeof(float);
+        std::vector<char> payload(expectedPayloadBytes + 1, 0);
+
+        {
+            std::ofstream out(path, std::ios::binary | std::ios::trunc);
+            out.write(reinterpret_cast<const char*>(header), sizeof(header));
+            out.write(payload.data(),
+                      static_cast<std::streamsize>(payload.size()));
+        }
+
+        NppAIEngine engine;
+        if (!expectRejected(engine, path, "model payload with trailing data"))
+            return 1;
+    }
+
     std::cout << "Model loader validation passed.\n";
     return 0;
 }
