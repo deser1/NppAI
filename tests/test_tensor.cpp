@@ -128,6 +128,62 @@ int main() {
     }
     std::remove(qPath.c_str());
 
+    // Quantization accuracy: the real read/quantize/dequantize path should
+    // preserve values within one quantization step and remain numerically
+    // close to FP32 when used by transpose matmul.
+    const std::string accuracyPath = tempPath("nppai_test_quantization_accuracy.bin");
+    const std::vector<float> accuracyValues = {
+        -3.25f, -1.75f, -0.5f, -0.01f, 0.0f, 0.02f, 0.75f, 2.9f
+    };
+    {
+        std::ofstream out(accuracyPath, std::ios::binary | std::ios::trunc);
+        out.write(reinterpret_cast<const char*>(accuracyValues.data()),
+                  static_cast<std::streamsize>(accuracyValues.size() * sizeof(float)));
+    }
+    Tensor accuracyQ8({2, 4});
+    {
+        std::ifstream in(accuracyPath, std::ios::binary);
+        ok &= check(accuracyQ8.readFromFile(in, true), "accuracy quantized read");
+    }
+    ok &= check(accuracyQ8.scale_q8 > 0.0f, "quantization scale is positive");
+    for (size_t i = 0; i < accuracyValues.size(); ++i) {
+        const float error = std::fabs(accuracyQ8.get(static_cast<int>(i)) - accuracyValues[i]);
+        ok &= check(error <= accuracyQ8.scale_q8 + 1e-6f,
+                    "dequantization error bounded by one quantization step");
+    }
+
+    Tensor accuracyFp32({2, 4});
+    accuracyFp32.data = accuracyValues;
+    Tensor accuracyInput({1, 4});
+    accuracyInput.data = {0.5f, -0.25f, 0.75f, -1.0f};
+
+    Tensor::setSimdOverrideForTesting(0);
+    Tensor fp32Output = Tensor::matmul(accuracyInput, accuracyFp32, true);
+    Tensor int8Output = Tensor::matmul(accuracyInput, accuracyQ8, true);
+    for (int i = 0; i < 2; ++i) {
+        const float outputError = std::fabs(fp32Output.data[i] - int8Output.data[i]);
+        const float inputL1 = 0.5f + 0.25f + 0.75f + 1.0f;
+        ok &= check(outputError <= inputL1 * accuracyQ8.scale_q8 + 1e-5f,
+                    "INT8 matmul error bounded by quantization step");
+    }
+    Tensor::setSimdOverrideForTesting(-1);
+    std::remove(accuracyPath.c_str());
+
+    const std::string zeroPath = tempPath("nppai_test_quantization_zero.bin");
+    {
+        std::ofstream out(zeroPath, std::ios::binary | std::ios::trunc);
+        const float zeros[] = {0.0f, 0.0f, 0.0f, 0.0f};
+        out.write(reinterpret_cast<const char*>(zeros), sizeof(zeros));
+    }
+    {
+        Tensor zeroQ8({4});
+        std::ifstream in(zeroPath, std::ios::binary);
+        ok &= check(zeroQ8.readFromFile(in, true), "zero tensor quantized read");
+        for (int i = 0; i < 4; ++i)
+            ok &= check(nearlyEqual(zeroQ8.get(i), 0.0f), "zero tensor remains zero");
+    }
+    std::remove(zeroPath.c_str());
+
     const std::string truncatedPath = tempPath("nppai_test_tensor_truncated.bin");
     {
         std::ofstream out(truncatedPath, std::ios::binary | std::ios::trunc);
