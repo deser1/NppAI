@@ -46,6 +46,13 @@ int main() {
                 "identical documents are indexed only once");
 
     rag.clearForTesting();
+    rag.addDocument("parser parser parser unrelated");
+    rag.addDocument("parser authentication bearer token");
+    const std::string lexical = rag.retrieveContext("parser authentication bearer token", 1);
+    ok &= check(lexical.find("parser authentication bearer token") != std::string::npos,
+                "exact query-token coverage improves ranking beyond term frequency");
+
+    rag.clearForTesting();
     const std::string filler(1100, 'x');
     const std::string longDocument =
         filler + "\n"
