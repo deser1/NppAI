@@ -537,19 +537,19 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
-  dim = header[0];
-  hidden_dim = header[1];
-  n_layers = header[2];
-  max_seq_len = header[3];
-  vocab_size = header[4];
+  const int modelDim = header[0];
+  const int modelHiddenDim = header[1];
+  const int modelLayers = header[2];
+  const int modelMaxSeqLen = header[3];
+  const int modelVocabSize = header[4];
 
   constexpr int kMaxDimension = 1 << 15;
   constexpr int kMaxLayers = 256;
-  if (dim <= 0 || hidden_dim <= 0 || vocab_size <= 0 ||
-      max_seq_len <= 0 || n_layers <= 0 ||
-      dim > kMaxDimension || hidden_dim > kMaxDimension ||
-      vocab_size > kMaxDimension * 16 || max_seq_len > kMaxDimension ||
-      n_layers > kMaxLayers) {
+  if (modelDim <= 0 || modelHiddenDim <= 0 || modelVocabSize <= 0 ||
+      modelMaxSeqLen <= 0 || modelLayers <= 0 ||
+      modelDim > kMaxDimension || modelHiddenDim > kMaxDimension ||
+      modelVocabSize > kMaxDimension * 16 ||
+      modelMaxSeqLen > kMaxDimension || modelLayers > kMaxLayers) {
     std::cerr << "Nieprawidlowe wymiary modelu.\n";
     return false;
   }
@@ -563,11 +563,11 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
     return false;
   }
 
-  const uint64_t d = static_cast<uint64_t>(dim);
-  const uint64_t h = static_cast<uint64_t>(hidden_dim);
-  const uint64_t v = static_cast<uint64_t>(vocab_size);
-  const uint64_t t = static_cast<uint64_t>(max_seq_len);
-  const uint64_t l = static_cast<uint64_t>(n_layers);
+  const uint64_t d = static_cast<uint64_t>(modelDim);
+  const uint64_t h = static_cast<uint64_t>(modelHiddenDim);
+  const uint64_t v = static_cast<uint64_t>(modelVocabSize);
+  const uint64_t t = static_cast<uint64_t>(modelMaxSeqLen);
+  const uint64_t l = static_cast<uint64_t>(modelLayers);
   const uint64_t floatCount =
       v * d + t * d +
       l * (2ULL * d + 4ULL * d * d + 3ULL * d * h) +
@@ -575,11 +575,18 @@ bool NppAIEngine::loadModel(const std::string &modelPath) {
   constexpr uint64_t kMaxModelBytes = 4ULL * 1024ULL * 1024ULL * 1024ULL;
   if (floatCount > (UINT64_MAX / sizeof(float)) ||
       floatCount * sizeof(float) > kMaxModelBytes ||
-      static_cast<uint64_t>(fileSize - sizeof(header)) <
+      static_cast<uint64_t>(fileSize - sizeof(header)) !=
           floatCount * sizeof(float)) {
-    std::cerr << "Model przekracza limit rozmiaru lub jest niekompletny.\n";
+    std::cerr << "Model przekracza limit rozmiaru lub ma nieprawidlowy payload.\n";
     return false;
   }
+
+  // Commit validated dimensions only after the complete file shape is known.
+  dim = modelDim;
+  hidden_dim = modelHiddenDim;
+  n_layers = modelLayers;
+  max_seq_len = modelMaxSeqLen;
+  vocab_size = modelVocabSize;
 
   // Inicjalizacja i wczytywanie wag
   tokenEmbeddingTable = Tensor({vocab_size, dim});
