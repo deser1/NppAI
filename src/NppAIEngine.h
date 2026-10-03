@@ -35,6 +35,8 @@ public:
 #ifdef NPPAI_TESTING
     static void setSimdOverrideForTesting(int mode);
     static bool simdAvailableForTesting();
+    static void setGpuOverrideForTesting(int mode);
+    static bool gpuAvailableForTesting();
 #endif
 };
 
