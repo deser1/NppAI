@@ -262,6 +262,22 @@ int main() {
     }
     std::remove(truncatedPath.c_str());
 
+    const std::string invalidFloatPath = tempPath("nppai_test_tensor_nonfinite.bin");
+    {
+        std::ofstream out(invalidFloatPath, std::ios::binary | std::ios::trunc);
+        const float values[] = {1.0f, std::numeric_limits<float>::infinity()};
+        out.write(reinterpret_cast<const char*>(values), sizeof(values));
+    }
+    {
+        Tensor invalid({2});
+        invalid.data = {7.0f, 8.0f};
+        std::ifstream in(invalidFloatPath, std::ios::binary);
+        ok &= check(!invalid.readFromFile(in, true), "non-finite tensor rejected");
+        ok &= check(invalid.data == std::vector<float>({7.0f, 8.0f}), "failed read preserves FP32 state");
+        ok &= check(invalid.data_q8.empty(), "failed read preserves INT8 state");
+    }
+    std::remove(invalidFloatPath.c_str());
+
     if (!ok)
         return 1;
 

@@ -571,34 +571,23 @@ float Tensor::get(int r, int c) const {
 }
 
 bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
-  const std::streamsize bytes =
-      static_cast<std::streamsize>(data.size() * sizeof(float));
-  if (bytes < 0)
-    return false;
-
-  file.read(reinterpret_cast<char *>(data.data()), bytes);
-  if (file.gcount() != bytes || !file)
-    return false;
-  
-  if (quantize) {
-    float max_abs = 0.0f;
-    for (float val : data) {
-      if (std::abs(val) > max_abs) max_abs = std::abs(val);
-    }
-    scale_q8 = max_abs / 127.0f;
-    if (scale_q8 == 0.0f) scale_q8 = 1e-9f;
-
-    data_q8.resize(data.size());
-    for (size_t i = 0; i < data.size(); i++) {
-      data_q8[i] = static_cast<int8_t>(std::round(data[i] / scale_q8));
-    }
-    
-    // Zwalniamy oryginalne dane zmiennoprzecinkowe dla oszczędności RAM
-    data.clear();
-    data.shrink_to_fit();
+  if (!file.is_open() || !file.good()) return false;
+  const std::streamsize bytes = static_cast<std::streamsize>(data.size() * sizeof(float));
+  std::vector<float> loaded(data.size());
+  file.read(reinterpret_cast<char *>(loaded.data()), bytes);
+  if (file.gcount() != bytes || !file) return false;
+  for (float value : loaded) if (!std::isfinite(value)) return false;
+  if (!quantize) { data = std::move(loaded); data_q8.clear(); scale_q8 = 0.0f; return true; }
+  float max_abs = 0.0f;
+  for (float value : loaded) max_abs = (std::max)(max_abs, std::abs(value));
+  const float newScale = max_abs == 0.0f ? 1e-9f : max_abs / 127.0f;
+  std::vector<int8_t> quantized(loaded.size());
+  for (size_t i = 0; i < loaded.size(); ++i) {
+    const float scaled = std::round(loaded[i] / newScale);
+    quantized[i] = static_cast<int8_t>((std::max)(-127.0f, (std::min)(127.0f, scaled)));
   }
-
-  return true;
+  data_q8 = std::move(quantized); scale_q8 = newScale;
+  data.clear(); data.shrink_to_fit(); return true;
 }
 
 // --- ENGINE IMPLEMENTATION ---
