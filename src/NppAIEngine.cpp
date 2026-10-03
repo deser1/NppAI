@@ -4,6 +4,7 @@
 #include <fstream>
 #include <array>
 #include <cstring>
+#include <windows.h>
 #include <bcrypt.h>
 #pragma comment(lib, "bcrypt.lib")
 #if defined(_M_X64) || defined(__x86_64__)
