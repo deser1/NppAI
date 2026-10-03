@@ -47,6 +47,56 @@ int main() {
     ok &= check(nearlyEqual(bt.at(0, 1), 32.0f), "transpose c[0,1]");
     ok &= check(nearlyEqual(bt.at(1, 1), 77.0f), "transpose c[1,1]");
 
+    // Runtime dispatch parity: scalar is always exercised; SIMD is compared
+    // when the current runner supports AVX2/FMA and OS YMM state.
+    Tensor parityA({1, 16});
+    Tensor parityB({2, 16});
+    for (int i = 0; i < 16; ++i) {
+        parityA.data[i] = std::sin(static_cast<float>(i) * 0.17f);
+        parityB.data[i] = std::cos(static_cast<float>(i) * 0.11f);
+        parityB.data[16 + i] = std::sin(static_cast<float>(i) * 0.07f);
+    }
+
+    Tensor::setSimdOverrideForTesting(0);
+    Tensor scalarFp32 = Tensor::matmul(parityA, parityB, true);
+
+    Tensor parityQ8({2, 16});
+    parityQ8.scale_q8 = 0.01f;
+    parityQ8.data.clear();
+    parityQ8.data_q8.resize(32);
+    for (int i = 0; i < 32; ++i)
+        parityQ8.data_q8[i] = static_cast<int8_t>(std::round(parityB.data[i] / parityQ8.scale_q8));
+    Tensor scalarInt8 = Tensor::matmul(parityA, parityQ8, true);
+
+    Tensor scalarNorm({1, 16});
+    Tensor parityWeight({16});
+    for (int i = 0; i < 16; ++i) {
+        scalarNorm.data[i] = parityA.data[i] + 0.25f;
+        parityWeight.data[i] = 0.5f + static_cast<float>(i) * 0.03f;
+    }
+    scalarNorm.applyRMSNorm(parityWeight);
+
+    if (Tensor::simdAvailableForTesting()) {
+        Tensor::setSimdOverrideForTesting(1);
+        Tensor simdFp32 = Tensor::matmul(parityA, parityB, true);
+        Tensor simdInt8 = Tensor::matmul(parityA, parityQ8, true);
+        Tensor simdNorm({1, 16});
+        for (int i = 0; i < 16; ++i)
+            simdNorm.data[i] = parityA.data[i] + 0.25f;
+        simdNorm.applyRMSNorm(parityWeight);
+
+        for (int i = 0; i < 2; ++i) {
+            ok &= check(nearlyEqual(scalarFp32.data[i], simdFp32.data[i], 1e-4f),
+                        "scalar/SIMD FP32 parity");
+            ok &= check(nearlyEqual(scalarInt8.data[i], simdInt8.data[i], 1e-4f),
+                        "scalar/SIMD INT8 parity");
+        }
+        for (int i = 0; i < 16; ++i)
+            ok &= check(nearlyEqual(scalarNorm.data[i], simdNorm.data[i], 1e-4f),
+                        "scalar/SIMD RMSNorm parity");
+    }
+    Tensor::setSimdOverrideForTesting(-1);
+
     Tensor activation({1, 2});
     activation.data = {0.0f, 1.0f};
     activation.applySiLU();

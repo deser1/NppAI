@@ -31,6 +31,11 @@ public:
     void applyRMSNorm(const Tensor& weight);
 
     bool readFromFile(std::ifstream& file, bool quantize = false);
+
+#ifdef NPPAI_TESTING
+    static void setSimdOverrideForTesting(int mode);
+    static bool simdAvailableForTesting();
+#endif
 };
 
 struct TransformerLayer {

@@ -36,9 +36,23 @@ static bool cpuSupportsAVX2FMA() {
 #endif
 }
 
-static bool useAVX2FMA() {
+static bool detectedAVX2FMA() {
   static const bool supported = cpuSupportsAVX2FMA();
   return supported;
+}
+
+#ifdef NPPAI_TESTING
+static int g_simdOverride = -1; // -1 = auto, 0 = scalar, 1 = SIMD when supported
+#endif
+
+static bool useAVX2FMA() {
+#ifdef NPPAI_TESTING
+  if (g_simdOverride == 0)
+    return false;
+  if (g_simdOverride == 1)
+    return detectedAVX2FMA();
+#endif
+  return detectedAVX2FMA();
 }
 #else
 static bool useAVX2FMA() { return false; }
@@ -294,6 +308,16 @@ bool matmul_gpu(const Tensor &a, const Tensor &b, Tensor &result,
 }
 
 // --- TENSOR IMPLEMENTATION ---
+#ifdef NPPAI_TESTING
+void Tensor::setSimdOverrideForTesting(int mode) {
+  g_simdOverride = mode;
+}
+
+bool Tensor::simdAvailableForTesting() {
+  return detectedAVX2FMA();
+}
+#endif
+
 Tensor::Tensor(std::vector<int> s) : shape(s) {
   int size = 1;
   for (int d : shape)
