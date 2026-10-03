@@ -180,7 +180,7 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Testing
 
-Current validation consists primarily of native and Python smoke/integration tests.
+Current validation includes deterministic native unit tests, model-loader and tokenizer tests, end-to-end generation coverage, Python validation, and CI performance regression checks.
 
 See:
 
@@ -188,20 +188,22 @@ See:
 - [Architecture](docs/architecture.md)
 - [Model format](docs/model-format.md)
 
-The next testing milestone is a deterministic unit-test suite for tensor operations, quantization and model serialization.
+The next testing milestones are broader quantization coverage, reproducible CPU/GPU comparison benchmarks, and additional end-to-end plugin integration tests.
 
 ## Roadmap
 
 - [x] Runtime CPU feature detection for AVX2/FMA with scalar fallback
-- [ ] Deterministic tensor unit tests
-- [ ] Model serialization/version validation
+- [x] Deterministic tensor unit tests
+- [x] Model serialization/version validation
 - [ ] Reproducible CPU/GPU benchmarks
-- [ ] Better tokenizer test coverage
+- [x] Better tokenizer test coverage
 - [ ] Complete public-deployment API hardening (authentication policy, rate limiting policy, request-size enforcement, TLS termination, and data-retention/privacy policy)
-- [ ] Model integrity checks / hashes
-- [ ] Formal release process
+- [x] Model integrity checks / hashes
+- [x] Formal release process
 - [ ] Improved RAG indexing and retrieval
 - [ ] Experimental MoE support
+- [ ] Broader quantization correctness and accuracy coverage
+- [ ] End-to-end Notepad++ plugin integration tests
 
 ## Contributing
 
