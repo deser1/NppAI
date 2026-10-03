@@ -23,7 +23,10 @@ A future version should add:
 - endianness marker;
 - tensor metadata;
 - checksum/hash;
-- explicit quantization metadata;
-- an exact payload-length check that rejects trailing tensor data, in addition to the header-dimension and minimum expected-payload validation already performed by the loader.
+- explicit quantization metadata.
+
+The loader currently validates header dimensions and requires the payload length
+to exactly match the tensor layout implied by the header. Truncated payloads and
+files with trailing data are rejected before tensor allocation begins.
 
 Until then, model files should be treated as version-specific artifacts and not as a stable public interchange format.
