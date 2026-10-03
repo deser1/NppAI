@@ -26,6 +26,7 @@ add_library(NppAI SHARED
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
     src/TelemetryManager.cpp
+    src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
 )
 
@@ -91,6 +92,8 @@ add_executable(TestGenerationStreamRouter tests/test_generation_stream_router.cp
 target_include_directories(TestGenerationStreamRouter PRIVATE src)
 add_executable(TestGenerationTracking tests/test_generation_tracking.cpp src/GenerationTracking.cpp)
 target_include_directories(TestGenerationTracking PRIVATE src)
+add_executable(TestTelemetryRedaction tests/test_telemetry_redaction.cpp src/TelemetryRedaction.cpp)
+target_include_directories(TestTelemetryRedaction PRIVATE src)
 add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp)
 target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
@@ -105,6 +108,7 @@ add_test(NAME GenerationContext COMMAND TestGenerationContext)
 add_test(NAME PluginGenerationFlow COMMAND TestPluginGenerationFlow)
 add_test(NAME GenerationStreamRouter COMMAND TestGenerationStreamRouter)
 add_test(NAME GenerationTracking COMMAND TestGenerationTracking)
+add_test(NAME TelemetryRedaction COMMAND TestTelemetryRedaction)
 add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
@@ -117,6 +121,7 @@ set_tests_properties(GenerationContext PROPERTIES LABELS "unit;integration;rag" 
 set_tests_properties(PluginGenerationFlow PROPERTIES LABELS "integration;plugin;rag" TIMEOUT 30)
 set_tests_properties(GenerationStreamRouter PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(GenerationTracking PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
+set_tests_properties(TelemetryRedaction PROPERTIES LABELS "unit;security;telemetry" TIMEOUT 30)
 set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
