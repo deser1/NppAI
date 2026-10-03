@@ -18,6 +18,7 @@
 #include "PluginDefinition.h"
 #include "AIManager.h"
 #include "GenerationContext.h"
+#include "GenerationStreamRouter.h"
 #include "PluginPromptActions.h"
 #include "DockingFeature/Docking.h"
 #include "Notepad_plus_msgs.h"
@@ -172,41 +173,30 @@ void ExecuteAIGeneration() {
           GenerationContext::select(retrievedContext, legacyContext);
     }
 
-    // Zmienne do obsługi tagu <THINK>
-    std::string think_buffer = "";
-    bool is_thinking = false;
-
-    // Wygenerowanie kodu strumieniowo
-    std::string generated = AIManager::getInstance().generateCode(
-        prompt, currentContext,
-        [&is_thinking, &think_buffer, curScintilla](char c, bool isThought) {
-          if (isThought) {
-            // Jesteśmy w trakcie myślenia
-            think_buffer += c;
-            // Możemy aktualizować pole historii na żywo (wymaga konwersji
-            // std::string -> LPCSTR) Ze względów wydajnościowych robimy to co
-            // kilka znaków lub na nowej linii
-            if (c == '\n' || think_buffer.length() % 20 == 0) {
-              std::wstring w_think = Utf8ToUtf16(think_buffer);
-              ::SetWindowTextW(g_hHistory, w_think.c_str());
-            }
-          } else {
-            // Jesteśmy w trakcie generowania faktycznego kodu, wypisujemy go do
-            // edytora
-            std::string s(1, c);
-            ::SendMessage(curScintilla, SCI_REPLACESEL, 0, (LPARAM)s.c_str());
-          }
+    GenerationStreamRouter streamRouter(
+        [](const std::string& thought) {
+          std::wstring w_think = Utf8ToUtf16(thought);
+          ::SetWindowTextW(g_hHistory, w_think.c_str());
+        },
+        [curScintilla](char c) {
+          std::string s(1, c);
+          ::SendMessage(curScintilla, SCI_REPLACESEL, 0, (LPARAM)s.c_str());
         },
         [curScintilla](int count) {
-          // Ta funkcja jest wywoływana, gdy silnik AI "cofnie" się o kilka
-          // znaków
-          for (int i = 0; i < count; i++) {
+          for (int i = 0; i < count; i++)
             ::SendMessage(curScintilla, SCI_DELETEBACK, 0, 0);
-          }
         });
 
+    std::string generated = AIManager::getInstance().generateCode(
+        prompt, currentContext,
+        [&streamRouter](char c, bool isThought) {
+          streamRouter.onToken(c, isThought);
+        },
+        [&streamRouter](int count) { streamRouter.onRemove(count); });
+
     // Ustaw końcową historię myślenia
-    if (!think_buffer.empty()) {
+    if (!streamRouter.thoughtBuffer().empty()) {
+      std::string think_buffer = streamRouter.thoughtBuffer();
       think_buffer += Loc("\r\n[Koniec myślenia. Kod wygenerowany.]",
                           "\r\n[End of thinking. Code generated.]");
       std::wstring w_think = Utf8ToUtf16(think_buffer);
