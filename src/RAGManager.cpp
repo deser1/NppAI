@@ -60,17 +60,46 @@ float RAGManager::cosineSimilarity(const std::vector<float>& vecA, const std::ve
 
 void RAGManager::addDocument(const std::string& text) {
     if (text.empty()) return;
-    
-    Document doc;
-    doc.text = text;
-    doc.embedding = computeEmbedding(text);
-    
-    std::lock_guard<std::mutex> lock(dbMutex);
-    // Unikajmy identycznych duplikatów
-    for (const auto& existing : knowledgeBase) {
-        if (existing.text == text) return;
+
+    constexpr size_t CHUNK_SIZE = 1200;
+    constexpr size_t CHUNK_OVERLAP = 200;
+
+    std::vector<std::string> chunks;
+    if (text.size() <= CHUNK_SIZE) {
+        chunks.push_back(text);
+    } else {
+        size_t start = 0;
+        while (start < text.size()) {
+            size_t end = std::min(start + CHUNK_SIZE, text.size());
+            if (end < text.size()) {
+                const size_t newline = text.rfind('\n', end);
+                if (newline != std::string::npos && newline > start + CHUNK_SIZE / 2)
+                    end = newline + 1;
+            }
+            chunks.push_back(text.substr(start, end - start));
+            if (end == text.size())
+                break;
+            start = end > CHUNK_OVERLAP ? end - CHUNK_OVERLAP : end;
+        }
     }
-    knowledgeBase.push_back(doc);
+
+    std::lock_guard<std::mutex> lock(dbMutex);
+    for (const auto& chunk : chunks) {
+        bool duplicate = false;
+        for (const auto& existing : knowledgeBase) {
+            if (existing.text == chunk) {
+                duplicate = true;
+                break;
+            }
+        }
+        if (duplicate)
+            continue;
+
+        Document doc;
+        doc.text = chunk;
+        doc.embedding = computeEmbedding(chunk);
+        knowledgeBase.push_back(std::move(doc));
+    }
 }
 
 std::string RAGManager::retrieveContext(const std::string& query, int topK) {
