@@ -26,6 +26,7 @@ add_library(NppAI SHARED
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
     src/TelemetryManager.cpp
+    src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
 )
 
