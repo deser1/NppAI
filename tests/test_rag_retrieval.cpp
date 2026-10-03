@@ -46,6 +46,19 @@ int main() {
                 "identical documents are indexed only once");
 
     rag.clearForTesting();
+    const std::string filler(1100, 'x');
+    const std::string longDocument =
+        filler + "\n"
+        "authentication middleware validates bearer token before request handling\n" +
+        filler;
+    rag.addDocument(longDocument);
+    const std::string chunked = rag.retrieveContext("authentication bearer token", 1);
+    ok &= check(chunked.find("authentication middleware validates bearer token") != std::string::npos,
+                "long documents expose the relevant chunk to retrieval");
+    ok &= check(chunked.find(longDocument) == std::string::npos,
+                "long documents are indexed as bounded chunks instead of one monolith");
+
+    rag.clearForTesting();
     if (!ok) return 1;
     std::cout << "RAG retrieval tests passed.\n";
     return 0;
