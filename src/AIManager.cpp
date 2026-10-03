@@ -1,4 +1,5 @@
 ﻿#include "AIManager.h"
+#include "AIPromptPipeline.h"
 #include "PluginDefinition.h"
 #include "RAGManager.h"
 #include "Scintilla.h"
@@ -87,14 +88,10 @@ std::string AIManager::generateCode(const std::string &prompt,
                                     const std::string &currentContext,
                                     std::function<void(char, bool)> onToken,
                                     std::function<void(int)> onRemove) {
-  // Formatowanie promptu do formatu "Instruct", którego uczy się model
-  std::string formattedPrompt = "";
-  if (!currentContext.empty()) {
-    formattedPrompt +=
-        "[SYSTEM]: Kontekst poprzednich modyfikacji dla tego pliku:\n" +
-        currentContext + "\n\n";
-  }
-  formattedPrompt += "[USER]: " + prompt + "\n[AI]:\n";
+  // Build the model-facing prompt through a pure helper so this plugin
+  // boundary can be covered deterministically without a Notepad++ process.
+  const std::string formattedPrompt =
+      AIPromptPipeline::buildPrompt(prompt, currentContext);
 
   // Generowanie kodu za pomocą naszego własnego silnika Transformera
   // Zwiększamy limit tokenów do 4096, by model mógł wypisać dłuższą odpowiedź
@@ -104,11 +101,7 @@ std::string AIManager::generateCode(const std::string &prompt,
 
   // Usunięcie wpisanego promptu (z tagami), aby do edytora trafiła sama
   // wygenerowana odpowiedź AI
-  if (generatedCode.find(formattedPrompt) == 0) {
-    generatedCode = generatedCode.substr(formattedPrompt.length());
-  }
-
-  return generatedCode;
+  return AIPromptPipeline::extractResponse(generatedCode, formattedPrompt);
 }
 
 void AIManager::startTracking(const std::string &prompt,
