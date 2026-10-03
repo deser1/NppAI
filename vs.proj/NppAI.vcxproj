@@ -38,6 +38,7 @@
     <ClInclude Include="..\src\Notepad_plus_msgs.h" />
     <ClInclude Include="..\src\PluginDefinition.h" />
     <ClInclude Include="..\src\GenerationContext.h" />
+    <ClInclude Include="..\src\GenerationStreamRouter.h" />
     <ClInclude Include="..\src\PluginPromptActions.h" />
     <ClInclude Include="..\src\PluginInterface.h" />
     <ClInclude Include="..\src\Scintilla.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\src\NppAI_Core.cpp" />
     <ClCompile Include="..\src\PluginDefinition.cpp" />
     <ClCompile Include="..\src\GenerationContext.cpp" />
+    <ClCompile Include="..\src\GenerationStreamRouter.cpp" />
     <ClCompile Include="..\src\PluginPromptActions.cpp" />
     <ClCompile Include="..\src\AIManager.cpp" />
     <ClCompile Include="..\src\AIPromptPipeline.cpp" />
