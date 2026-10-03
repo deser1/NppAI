@@ -188,7 +188,7 @@ See:
 - [Architecture](docs/architecture.md)
 - [Model format](docs/model-format.md)
 
-The next testing milestones are broader quantization coverage, reproducible CPU/GPU comparison benchmarks, and additional end-to-end plugin integration tests.
+The next testing milestones are reproducible CPU/GPU comparison benchmarks and additional end-to-end plugin integration tests.
 
 ## Roadmap
 
@@ -202,7 +202,7 @@ The next testing milestones are broader quantization coverage, reproducible CPU/
 - [x] Formal release process
 - [ ] Improved RAG indexing and retrieval
 - [ ] Experimental MoE support
-- [ ] Broader quantization correctness and accuracy coverage
+- [x] Broader quantization correctness and accuracy coverage
 - [ ] End-to-end Notepad++ plugin integration tests
 
 ## Contributing
