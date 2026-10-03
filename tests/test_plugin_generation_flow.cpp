@@ -1,5 +1,6 @@
 #include "AIPromptPipeline.h"
 #include "GenerationContext.h"
+#include "GenerationStreamRouter.h"
 #include "PluginPromptActions.h"
 
 #include <iostream>
@@ -52,6 +53,38 @@ int main() {
     ok &= check(fallbackPrompt.find("[SYSTEM]:") == 0 &&
                     fallbackPrompt.find("```\r\nx++;\r\n```") != std::string::npos,
                 "legacy fallback also reaches the model prompt");
+
+    std::string editorOutput;
+    std::string thoughtOutput;
+    int removedCharacters = 0;
+    GenerationStreamRouter streamRouter(
+        [&](const std::string& thought) { thoughtOutput = thought; },
+        [&](char c) { editorOutput += c; },
+        [&](int count) {
+            removedCharacters += count;
+            while (count-- > 0 && !editorOutput.empty())
+                editorOutput.pop_back();
+        });
+
+    const std::string streamedCode = "int sum = a + c;";
+    for (char c : streamedCode)
+        streamRouter.onToken(c, false);
+
+    const std::string streamedThought = "checking arguments\n";
+    for (char c : streamedThought)
+        streamRouter.onToken(c, true);
+
+    streamRouter.onRemove(2);
+    streamRouter.onToken('b', false);
+    streamRouter.onToken(';', false);
+
+    ok &= check(editorOutput == "int sum = a + b;",
+                "streamed model code and backtracking reach the editor output");
+    ok &= check(streamRouter.thoughtBuffer() == streamedThought &&
+                    thoughtOutput == streamedThought,
+                "reasoning stream stays separate from editor output");
+    ok &= check(removedCharacters == 2,
+                "model backtracking reaches the editor removal callback");
 
     if (!ok)
         return 1;
