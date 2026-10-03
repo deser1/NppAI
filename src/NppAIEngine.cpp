@@ -579,12 +579,12 @@ bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
   for (float value : loaded) if (!std::isfinite(value)) return false;
   if (!quantize) { data = std::move(loaded); data_q8.clear(); scale_q8 = 0.0f; return true; }
   float max_abs = 0.0f;
-  for (float value : loaded) max_abs = std::max(max_abs, std::abs(value));
+  for (float value : loaded) max_abs = (std::max)(max_abs, std::abs(value));
   const float newScale = max_abs == 0.0f ? 1e-9f : max_abs / 127.0f;
   std::vector<int8_t> quantized(loaded.size());
   for (size_t i = 0; i < loaded.size(); ++i) {
     const float scaled = std::round(loaded[i] / newScale);
-    quantized[i] = static_cast<int8_t>(std::max(-127.0f, std::min(127.0f, scaled)));
+    quantized[i] = static_cast<int8_t>((std::max)(-127.0f, (std::min)(127.0f, scaled)));
   }
   data_q8 = std::move(quantized); scale_q8 = newScale;
   data.clear(); data.shrink_to_fit(); return true;
