@@ -298,7 +298,7 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     return 0;
   }
   case WM_DESTROY: {
-    KillTimer(hwnd, 1);
+    KillTimer(hwnd, 2);
     g_hAIPanel = NULL;
     return 0;
   }
