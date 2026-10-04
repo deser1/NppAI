@@ -56,7 +56,7 @@ if(MSVC)
         target_compile_options(NppAI PRIVATE /O2)
         target_link_options(NppAI PRIVATE /MACHINE:X64)
     endif()
-    target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE)
+    target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE NPPAI_TESTING)
 endif()
 
 function(add_nppai_test target source)
