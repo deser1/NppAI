@@ -25,7 +25,7 @@ jobs:
 
     - name: Configure CMake tests
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
-      run: cmake -S . -B build-tests -A x64
+      run: cmake -S . -B build-tests -A x64 -DNPPAI_TEST_HOST_SEAM=ON
 
     - name: Build CMake tests
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
