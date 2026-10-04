@@ -188,7 +188,7 @@ See:
 - [Architecture](docs/architecture.md)
 - [Model format](docs/model-format.md)
 
-The GUI-free DLL contract is covered in CI. The next testing milestone is a true host-level Notepad++ integration scenario that exercises runtime initialization, notifications, command callbacks, and editor interaction.
+The GUI-free DLL contract and host-level Notepad++ integration harness are covered in CI. The host harness exercises runtime initialization, required plugin exports, notifications, command callbacks, active-editor selection, and Scintilla calltip interaction without requiring the Notepad++ GUI.
 
 ## Roadmap
 
@@ -204,7 +204,7 @@ The GUI-free DLL contract is covered in CI. The next testing milestone is a true
 - [ ] Experimental MoE support
 - [x] Broader quantization correctness and accuracy coverage
 - [x] GUI-free Notepad++ plugin DLL contract test
-- [ ] Host-level Notepad++ integration test
+- [x] Host-level Notepad++ integration test
 
 ## Contributing
 
