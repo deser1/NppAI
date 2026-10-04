@@ -462,6 +462,17 @@ void toggleAIPanel() {
   }
 }
 
+std::string buildSelectionPrompt(HWND curScintilla) {
+  auto selLen = ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, 0);
+  if (selLen <= 1)
+    return {};
+
+  std::vector<char> selText(selLen);
+  ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, (LPARAM)selText.data());
+  std::string selection(selText.begin(), selText.end() - 1);
+  return PluginPromptActions::appendSelection("", selection);
+}
+
 void sendSelectionToChat() {
   // Pobranie uchwytu Scintilli
   int which = -1;
@@ -472,16 +483,10 @@ void sendSelectionToChat() {
   HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle
                                    : nppData._scintillaSecondHandle;
 
-  // Pobranie zaznaczonego tekstu
-  auto selLen = ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, 0);
-  if (selLen <= 1) {
-    return; // Nic nie zaznaczono
-  }
-
-  std::vector<char> selText(selLen);
-  ::SendMessage(curScintilla, SCI_GETSELTEXT, 0, (LPARAM)selText.data());
-  std::string prompt(selText.begin(),
-                     selText.end() - 1); // remove null terminator
+  // Pobranie zaznaczonego tekstu i przygotowanie go do pola promptu.
+  std::string prompt = buildSelectionPrompt(curScintilla);
+  if (prompt.empty())
+    return;
 
   // Pokaż panel
   if (!isPanelRegistered) {
@@ -499,7 +504,7 @@ void sendSelectionToChat() {
     currentText = std::string(buf.data()) + "\r\n";
   }
 
-  std::string newText = PluginPromptActions::appendSelection(currentText, prompt);
+  std::string newText = currentText + prompt;
   SetWindowTextA(g_hEdit, newText.c_str());
 
   // Ustaw kursor na samym początku by użytkownik wpisał polecenie
