@@ -175,6 +175,15 @@ int wmain(int argc, wchar_t** argv) {
                     "selection command reads from active second Scintilla");
         ok &= check(mainProbe.getSelectedTextCalls == mainCallsAfterMain,
                     "selection command does not read inactive main Scintilla");
+
+        hostProbe.currentScintilla = -1;
+        const int mainCallsBeforeNoView = mainProbe.getSelectedTextCalls;
+        const int secondCallsBeforeNoView = secondProbe.getSelectedTextCalls;
+        selectionCommand();
+        ok &= check(mainProbe.getSelectedTextCalls == mainCallsBeforeNoView,
+                    "selection command does not read main Scintilla without an active view");
+        ok &= check(secondProbe.getSelectedTextCalls == secondCallsBeforeNoView,
+                    "selection command does not read second Scintilla without an active view");
     }
 
     if (buildSelectionPromptForTesting && scintillaMain) {
