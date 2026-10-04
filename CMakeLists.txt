@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(NppAIPlugin VERSION 0.3.0 LANGUAGES CXX)
 
+option(NPPAI_TEST_HOST_SEAM "Expose model-free plugin host initialization for integration tests" OFF)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -57,6 +59,9 @@ if(MSVC)
         target_link_options(NppAI PRIVATE /MACHINE:X64)
     endif()
     target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE)
+    if(NPPAI_TEST_HOST_SEAM)
+        target_compile_definitions(NppAI PRIVATE NPPAI_TESTING)
+    endif()
 endif()
 
 function(add_nppai_test target source)
@@ -99,6 +104,12 @@ target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
 add_dependencies(TestPluginDllContract NppAI)
+if(MSVC)
+    # The DLL contract compares localized command names containing Polish
+    # characters. Compile the test source as UTF-8 so its expected wide
+    # string literals match the UTF-8-compiled plugin.
+    target_compile_options(TestPluginDllContract PRIVATE /utf-8)
+endif()
 
 add_test(NAME TensorMath COMMAND TestTensor)
 add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)

@@ -48,13 +48,25 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD reasonForCall,
   return TRUE;
 }
 
-extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData) {
+namespace {
+void initializePluginHost(NppData notpadPlusData, bool loadDefaultModel) {
   nppData = notpadPlusData;
   commandMenuInit();
 
-  // Automatyczne załadowanie modelu podczas startu wtyczki
-  AIManager::getInstance().loadModel("models\\NppAI-model-v1.nppai");
+  if (loadDefaultModel)
+    AIManager::getInstance().loadModel("models\\NppAI-model-v1.nppai");
 }
+}
+
+extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData) {
+  initializePluginHost(notpadPlusData, true);
+}
+
+#ifdef NPPAI_TESTING
+extern "C" __declspec(dllexport) void setInfoForTesting(NppData notpadPlusData) {
+  initializePluginHost(notpadPlusData, false);
+}
+#endif
 
 extern "C" __declspec(dllexport) const wchar_t *getName() {
   return NPP_PLUGIN_NAME;

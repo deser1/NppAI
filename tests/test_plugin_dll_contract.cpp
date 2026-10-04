@@ -38,6 +38,7 @@ int wmain(int argc, wchar_t** argv) {
     if (!plugin) { std::cerr << "FAIL: unable to load plugin DLL, error=" << GetLastError() << "\n"; return 1; }
 
     using SetInfo = void (__cdecl*)(NppData);
+    using SetInfoForTesting = void (__cdecl*)(NppData);
     using GetName = const wchar_t* (__cdecl*)();
     using GetFuncsArray = FuncItem* (__cdecl*)(int*);
     using BeNotified = void (__cdecl*)(void*);
@@ -45,6 +46,7 @@ int wmain(int argc, wchar_t** argv) {
     using MessageProc = LRESULT (__cdecl*)(UINT, WPARAM, LPARAM);
 
     const auto setInfo = reinterpret_cast<SetInfo>(GetProcAddress(plugin, "setInfo"));
+    const auto setInfoForTesting = reinterpret_cast<SetInfoForTesting>(GetProcAddress(plugin, "setInfoForTesting"));
     const auto getName = reinterpret_cast<GetName>(GetProcAddress(plugin, "getName"));
     const auto getFuncsArray = reinterpret_cast<GetFuncsArray>(GetProcAddress(plugin, "getFuncsArray"));
     const auto beNotified = reinterpret_cast<BeNotified>(GetProcAddress(plugin, "beNotified"));
@@ -53,6 +55,7 @@ int wmain(int argc, wchar_t** argv) {
 
     bool ok = true;
     ok &= check(setInfo != nullptr, "setInfo export exists");
+    ok &= check(setInfoForTesting != nullptr, "test host initialization seam exists");
     ok &= check(getName != nullptr, "getName export exists");
     ok &= check(getFuncsArray != nullptr, "getFuncsArray export exists");
     ok &= check(beNotified != nullptr, "beNotified export exists");
@@ -61,14 +64,23 @@ int wmain(int argc, wchar_t** argv) {
 
     if (getName) ok &= check(getName() && std::wstring(getName()) == L"NppAI", "plugin reports expected name");
 
-    // Keep this test focused on the DLL ABI. Calling setInfo() is intentionally
-    // avoided here because NppAI's implementation also loads the AI model and
-    // therefore crosses from a contract test into runtime initialization.
+    // Exercise the same host initialization path as setInfo without requiring a
+    // model artifact. This lets CI validate command registration independently
+    // from model deployment.
+    if (setInfoForTesting)
+        setInfoForTesting(NppData{});
+
     if (getFuncsArray) {
         int count = 0;
         FuncItem* functions = getFuncsArray(&count);
         ok &= check(functions != nullptr, "plugin exposes command array");
         ok &= check(count == 3, "plugin exposes all expected command slots");
+        if (functions && count == 3) {
+            ok &= check(std::wstring(functions[0].itemName) == L"Pokaż Panel AI", "AI panel command is registered");
+            ok &= check(std::wstring(functions[1].itemName) == L"Zapytaj AI o zaznaczony kod", "selection command is registered");
+            ok &= check(std::wstring(functions[2].itemName) == L"Zmień status telemetrii", "telemetry command is registered");
+            ok &= check(functions[0].function && functions[1].function && functions[2].function, "command callbacks are registered");
+        }
     }
 
     if (isUnicode) ok &= check(isUnicode() == TRUE, "plugin declares Unicode support");
