@@ -7,6 +7,11 @@
 #include "Scintilla.h"
 
 namespace {
+struct ScintillaProbe {
+    int dwellTime = -1;
+    int setDwellCalls = 0;
+};
+
 bool check(bool condition, const char* message) {
     if (!condition) {
         std::cerr << "FAIL: " << message << "\n";
@@ -16,6 +21,14 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    if (message == SCI_SETMOUSEDWELLTIME) {
+        auto* probe = reinterpret_cast<ScintillaProbe*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+        if (probe) {
+            probe->dwellTime = static_cast<int>(wParam);
+            ++probe->setDwellCalls;
+        }
+        return 0;
+    }
     return DefWindowProcW(hwnd, message, wParam, lParam);
 }
 
@@ -62,6 +75,10 @@ int wmain(int argc, wchar_t** argv) {
     HWND nppHost = createHostWindow(instance, L"NppAI_Test_NppHost");
     HWND scintillaMain = createHostWindow(instance, L"NppAI_Test_ScintillaMain");
     HWND scintillaSecond = createHostWindow(instance, L"NppAI_Test_ScintillaSecond");
+    ScintillaProbe mainProbe{};
+    ScintillaProbe secondProbe{};
+    if (scintillaMain) SetWindowLongPtrW(scintillaMain, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&mainProbe));
+    if (scintillaSecond) SetWindowLongPtrW(scintillaSecond, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&secondProbe));
     ok &= check(nppHost && scintillaMain && scintillaSecond, "host windows created");
 
     if (setInfoForTesting && nppHost && scintillaMain && scintillaSecond) {
@@ -88,6 +105,10 @@ int wmain(int argc, wchar_t** argv) {
         SCNotification ready{};
         ready.nmhdr.code = NPPN_READY;
         beNotified(&ready);
+        ok &= check(mainProbe.setDwellCalls == 1 && mainProbe.dwellTime == 600,
+                    "NPPN_READY configures 600ms dwell time on main Scintilla");
+        ok &= check(secondProbe.setDwellCalls == 1 && secondProbe.dwellTime == 600,
+                    "NPPN_READY configures 600ms dwell time on second Scintilla");
 
         SCNotification shutdown{};
         shutdown.nmhdr.code = NPPN_SHUTDOWN;
