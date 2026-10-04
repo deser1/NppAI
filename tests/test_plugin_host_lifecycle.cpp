@@ -8,6 +8,10 @@
 #include "Scintilla.h"
 
 namespace {
+struct HostProbe {
+    int currentScintilla = 0;
+};
+
 struct ScintillaProbe {
     int dwellTime = -1;
     int setDwellCalls = 0;
@@ -18,6 +22,7 @@ struct ScintillaProbe {
     int callTipPosition = -1;
     std::string callTipText;
     std::string selectedText = "int answer = 42;";
+    int getSelectedTextCalls = 0;
 };
 
 bool check(bool condition, const char* message) {
@@ -29,6 +34,14 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    if (message == NPPM_GETCURRENTSCINTILLA) {
+        auto* hostProbe = reinterpret_cast<HostProbe*>(
+            GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+        if (hostProbe && lParam)
+            *reinterpret_cast<int*>(lParam) = hostProbe->currentScintilla;
+        return TRUE;
+    }
+
     auto* probe = reinterpret_cast<ScintillaProbe*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
     if (message == SCI_SETMOUSEDWELLTIME) {
         if (probe) {
@@ -41,6 +54,7 @@ LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
     if (message == SCI_GETSELECTIONEND) return probe ? probe->selectionEnd : 0;
     if (message == SCI_GETSELTEXT) {
         if (!probe) return 0;
+        ++probe->getSelectedTextCalls;
         if (!lParam) return static_cast<LRESULT>(probe->selectedText.size() + 1);
         memcpy(reinterpret_cast<void*>(lParam), probe->selectedText.c_str(),
                probe->selectedText.size() + 1);
@@ -110,8 +124,10 @@ int wmain(int argc, wchar_t** argv) {
     HWND nppHost = createHostWindow(instance, L"NppAI_Test_NppHost");
     HWND scintillaMain = createHostWindow(instance, L"NppAI_Test_ScintillaMain");
     HWND scintillaSecond = createHostWindow(instance, L"NppAI_Test_ScintillaSecond");
+    HostProbe hostProbe{};
     ScintillaProbe mainProbe{};
     ScintillaProbe secondProbe{};
+    if (nppHost) SetWindowLongPtrW(nppHost, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&hostProbe));
     if (scintillaMain) SetWindowLongPtrW(scintillaMain, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&mainProbe));
     if (scintillaSecond) SetWindowLongPtrW(scintillaSecond, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(&secondProbe));
     ok &= check(nppHost && scintillaMain && scintillaSecond, "host windows created");
@@ -124,6 +140,7 @@ int wmain(int argc, wchar_t** argv) {
         setInfoForTesting(data);
     }
 
+    PFUNCPLUGINCMD selectionCommand = nullptr;
     if (getFuncsArray) {
         int count = 0;
         FuncItem* functions = getFuncsArray(&count);
@@ -132,8 +149,32 @@ int wmain(int argc, wchar_t** argv) {
         if (functions && count == 3) {
             ok &= check(functions[0]._pFunc != nullptr, "AI panel callback registered");
             ok &= check(functions[1]._pFunc != nullptr, "selection callback registered");
+            selectionCommand = functions[1]._pFunc;
             ok &= check(functions[2]._pFunc != nullptr, "telemetry callback registered");
         }
+    }
+
+    if (selectionCommand && nppHost && scintillaMain && scintillaSecond) {
+        mainProbe.selectedText.clear();
+        secondProbe.selectedText.clear();
+
+        hostProbe.currentScintilla = 0;
+        const int mainCallsBefore = mainProbe.getSelectedTextCalls;
+        const int secondCallsBefore = secondProbe.getSelectedTextCalls;
+        selectionCommand();
+        ok &= check(mainProbe.getSelectedTextCalls > mainCallsBefore,
+                    "selection command reads from active main Scintilla");
+        ok &= check(secondProbe.getSelectedTextCalls == secondCallsBefore,
+                    "selection command does not read inactive second Scintilla");
+
+        hostProbe.currentScintilla = 1;
+        const int mainCallsAfterMain = mainProbe.getSelectedTextCalls;
+        const int secondCallsAfterMain = secondProbe.getSelectedTextCalls;
+        selectionCommand();
+        ok &= check(secondProbe.getSelectedTextCalls > secondCallsAfterMain,
+                    "selection command reads from active second Scintilla");
+        ok &= check(mainProbe.getSelectedTextCalls == mainCallsAfterMain,
+                    "selection command does not read inactive main Scintilla");
     }
 
     if (buildSelectionPromptForTesting && scintillaMain) {
