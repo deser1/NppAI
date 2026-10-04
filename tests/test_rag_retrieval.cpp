@@ -30,6 +30,11 @@ int main() {
     ok &= check(ranked.find("renderer draws triangle") == std::string::npos,
                 "topK excludes unrelated lower-ranked documents");
 
+    const std::string zeroTopK = rag.retrieveContext("json parser request", 0);
+    const std::string negativeTopK = rag.retrieveContext("json parser request", -1);
+    ok &= check(zeroTopK.empty() && negativeTopK.empty(),
+                "non-positive topK returns no retrieval results");
+
     rag.clearForTesting();
     rag.addDocument("beta shared token");
     rag.addDocument("alpha shared token");
