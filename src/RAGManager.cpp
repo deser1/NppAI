@@ -156,7 +156,8 @@ void RAGManager::addDocument(const std::string& text, const std::string& source,
     for (const auto& chunk : chunks) {
         bool duplicate = false;
         for (const auto& existing : knowledgeBase) {
-            if (existing.text == chunk) {
+            if (existing.text == chunk && existing.source == source &&
+                existing.language == language) {
                 duplicate = true;
                 break;
             }
