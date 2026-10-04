@@ -473,6 +473,15 @@ std::string buildSelectionPrompt(HWND curScintilla) {
   return PluginPromptActions::appendSelection("", selection);
 }
 
+#ifdef NPPAI_TESTING
+extern "C" __declspec(dllexport) const char *buildSelectionPromptForTesting(
+    HWND curScintilla) {
+  static std::string prompt;
+  prompt = buildSelectionPrompt(curScintilla);
+  return prompt.c_str();
+}
+#endif
+
 void sendSelectionToChat() {
   // Pobranie uchwytu Scintilli
   int which = -1;
