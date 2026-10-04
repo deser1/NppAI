@@ -22,7 +22,7 @@ The following 13 tests are registered with CTest:
 - `RAGRetrieval` — local RAG retrieval behavior;
 - `PluginDllContract` — loads the built plugin DLL and validates the Notepad++ plugin boundary.
 
-`PluginDllContract` verifies the required exports, plugin name, Unicode support, initialization through `setInfo`, and the three command-table entries including their names and callback pointers. It runs without an interactive Notepad++ GUI, so it is suitable for the hosted Windows CI runner.
+`PluginDllContract` verifies the required exports, plugin name, Unicode support, command-array availability/count, and a side-effect-free `messageProc` smoke check. It deliberately does not call `setInfo`: the current implementation performs runtime initialization and model loading there, which belongs in a real host-level integration test rather than an ABI contract test. The contract test runs without an interactive Notepad++ GUI, so it is suitable for the hosted Windows CI runner.
 
 The separate `TestEngine` executable is a model-backed generation smoke test. It is intentionally not registered with CTest because it requires an external `.nppai` model artifact.
 
@@ -57,4 +57,4 @@ Exit codes for `TestEngine`:
 
 ## Testing roadmap
 
-CTest integration, deterministic native coverage, and a GUI-free Notepad++ DLL boundary test are part of the project. Remaining integration work is a true host-level Notepad++ scenario that exercises notifications and editor interaction inside a real Notepad++ process. Additional engine coverage can continue to expand serialization compatibility, tensor shapes, quantization accuracy, and deterministic inference across supported build targets.
+CTest integration, deterministic native coverage, and a GUI-free Notepad++ DLL boundary test are complete. The remaining plugin-integration milestone is a true host-level Notepad++ scenario that can safely exercise `setInfo`, notifications, command callbacks, and editor interaction inside a real Notepad++ process. Additional engine coverage can continue to expand serialization compatibility, tensor shapes, quantization accuracy, and deterministic inference across supported build targets.
