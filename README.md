@@ -188,7 +188,7 @@ See:
 - [Architecture](docs/architecture.md)
 - [Model format](docs/model-format.md)
 
-The next testing milestone is additional end-to-end Notepad++ plugin integration coverage.
+The GUI-free DLL contract is covered in CI. The next testing milestone is a true host-level Notepad++ integration scenario that exercises runtime initialization, notifications, command callbacks, and editor interaction.
 
 ## Roadmap
 
@@ -203,7 +203,8 @@ The next testing milestone is additional end-to-end Notepad++ plugin integration
 - [ ] Improved RAG indexing and retrieval
 - [ ] Experimental MoE support
 - [x] Broader quantization correctness and accuracy coverage
-- [ ] End-to-end Notepad++ plugin integration tests
+- [x] GUI-free Notepad++ plugin DLL contract test
+- [ ] Host-level Notepad++ integration test
 
 ## Contributing
 
