@@ -240,7 +240,7 @@ void AIManager::onEditorModified(HWND hwnd, int position, int linesAdded) {
   }
 }
 
-void AIManager::checkModifications(const std::string &currentTextInEditor) {
+void AIManager::checkModifications() {
   // Zachowujemy tę metodę na wypadek zapisu pliku (fallback)
   if (!isTracking)
     return;

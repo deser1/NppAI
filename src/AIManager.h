@@ -24,7 +24,7 @@ public:
 
     // Funkcje śledzące dla Diff Trackera (uczenie z zachowania usera)
     void startTracking(const std::string& prompt, const std::string& generatedCode, int startLine, int endLine, const std::string& filePath = "");
-    void checkModifications(const std::string& currentTextInEditor);
+    void checkModifications();
     void onEditorModified(HWND hwnd, int position, int linesAdded);
 
     // Sprawdza i pobiera nowe wagi modelu z chmury
