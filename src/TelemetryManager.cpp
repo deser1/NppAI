@@ -70,7 +70,7 @@ void TelemetryManager::queueLearningData(const std::string &prompt,
         const DWORD headersLength = static_cast<DWORD>(-1L);
         const size_t jsonBodySize = jsonBody.size();
 
-        if (jsonBodySize <= std::numeric_limits<DWORD>::max()) {
+        if (jsonBodySize <= (std::numeric_limits<DWORD>::max)()) {
           const DWORD bodyLength = static_cast<DWORD>(jsonBodySize);
           BOOL bResults = WinHttpSendRequest(
               hRequest, additionalHeaders, headersLength,
