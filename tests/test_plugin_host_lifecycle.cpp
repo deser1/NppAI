@@ -142,6 +142,19 @@ int wmain(int argc, wchar_t** argv) {
         ok &= check(mainProbe.callTipText.find("NppAI:") == 0,
                     "SCN_DWELLSTART provides the NppAI calltip text");
 
+        const int shownAfterSelectedHover = mainProbe.callTipShowCalls;
+        dwellStart.position = 25;
+        beNotified(&dwellStart);
+        ok &= check(mainProbe.callTipShowCalls == shownAfterSelectedHover,
+                    "SCN_DWELLSTART does not show a calltip outside selected text");
+
+        mainProbe.selectionStart = 10;
+        mainProbe.selectionEnd = 10;
+        dwellStart.position = 10;
+        beNotified(&dwellStart);
+        ok &= check(mainProbe.callTipShowCalls == shownAfterSelectedHover,
+                    "SCN_DWELLSTART does not show a calltip for an empty selection");
+
         SCNotification dwellEnd{};
         dwellEnd.nmhdr.code = SCN_DWELLEND;
         dwellEnd.nmhdr.hwndFrom = scintillaMain;
