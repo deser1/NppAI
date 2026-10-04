@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(NppAIPlugin VERSION 0.3.0 LANGUAGES CXX)
 
+option(NPPAI_TEST_HOST_SEAM "Expose model-free plugin host initialization for integration tests" OFF)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -56,7 +58,10 @@ if(MSVC)
         target_compile_options(NppAI PRIVATE /O2)
         target_link_options(NppAI PRIVATE /MACHINE:X64)
     endif()
-    target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE NPPAI_TESTING)
+    target_compile_definitions(NppAI PRIVATE UNICODE _UNICODE)
+    if(NPPAI_TEST_HOST_SEAM)
+        target_compile_definitions(NppAI PRIVATE NPPAI_TESTING)
+    endif()
 endif()
 
 function(add_nppai_test target source)
