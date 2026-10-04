@@ -96,6 +96,10 @@ struct GPUContext {
 
 static GPUContext g_gpu;
 
+#ifdef NPPAI_TESTING
+static int g_gpuOverride = -1; // -1 = auto, 0 = CPU only, 1 = GPU when available
+#endif
+
 // Kod źródłowy HLSL (Compute Shader) do mnożenia macierzy
 const char *hlsl_matmul = R"(
 cbuffer Dimensions : register(b0) {
@@ -322,6 +326,14 @@ void Tensor::setSimdOverrideForTesting(int mode) {
 bool Tensor::simdAvailableForTesting() {
   return detectedAVX2FMA();
 }
+
+void Tensor::setGpuOverrideForTesting(int mode) {
+  g_gpuOverride = mode;
+}
+
+bool Tensor::gpuAvailableForTesting() {
+  return initGPU();
+}
 #endif
 
 Tensor::Tensor(std::vector<int> s) : shape(s) {
@@ -363,7 +375,14 @@ Tensor Tensor::matmul(const Tensor &a, const Tensor &b, bool transposeB) {
   // GPU. Dla małych macierzy (np. generowanie pojedynczego tokena) używamy CPU
   // OpenMP, ponieważ kopiowanie danych z RAM do VRAM dla małych ilości danych
   // zajęłoby więcej czasu niż samo liczenie na CPU.
-  if (a_rows >= 16) {
+  bool tryGpu = a_rows >= 16;
+#ifdef NPPAI_TESTING
+  if (g_gpuOverride == 0)
+    tryGpu = false;
+  else if (g_gpuOverride == 1)
+    tryGpu = true;
+#endif
+  if (tryGpu) {
     if (matmul_gpu(a, b, result, transposeB)) {
       return result; // GPU policzyło i zwróciło wynik
     }

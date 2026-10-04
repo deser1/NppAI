@@ -103,6 +103,8 @@ jobs:
         1..5 | ForEach-Object {
           $output = & .\build-bench\Release\BenchmarkTensor.exe
           $output | Set-Content "benchmark-results\tensor-benchmark-$_.txt"
+          $output | Where-Object { $_ -match '^(CPU_GPU|CPU:|GPU:|CPU/GPU ratio:|MAX_ABS_ERROR:)' } |
+            Set-Content "benchmark-results\cpu-gpu-benchmark-$_.txt"
 
           for ($line = 0; $line -lt $output.Count; $line++) {
             if ($output[$line] -match '^SIZE ([0-9]+)x') {

@@ -78,6 +78,52 @@ static void runBenchmark(int size, int warmupIterations, int iterations, int ser
         std::cout << "FP32/INT8 ratio: " << (fp32Ms / int8Ms) << "x\n";
 }
 
+static void runCpuGpuBenchmark(int size, int iterations, int series) {
+    Tensor a({size, size});
+    Tensor b({size, size});
+    for (int r = 0; r < size; ++r) {
+        for (int col = 0; col < size; ++col) {
+            a.data[r * size + col] = std::sin(static_cast<float>(r + col) * 0.01f);
+            b.data[r * size + col] = std::cos(static_cast<float>(r - col) * 0.01f);
+        }
+    }
+
+    Tensor::setGpuOverrideForTesting(0);
+    benchmark(a, b, 1);
+    std::vector<double> cpuSamples;
+    for (int i = 0; i < series; ++i)
+        cpuSamples.push_back(benchmark(a, b, iterations));
+
+    if (!Tensor::gpuAvailableForTesting()) {
+        std::cout << "CPU_GPU SIZE " << size << "x" << size << "\nGPU: unavailable\n";
+        Tensor::setGpuOverrideForTesting(-1);
+        return;
+    }
+
+    Tensor::setGpuOverrideForTesting(1);
+    benchmark(a, b, 1);
+    std::vector<double> gpuSamples;
+    for (int i = 0; i < series; ++i)
+        gpuSamples.push_back(benchmark(a, b, iterations));
+
+    Tensor::setGpuOverrideForTesting(0);
+    const Tensor cpuResult = Tensor::matmul(a, b, true);
+    Tensor::setGpuOverrideForTesting(1);
+    const Tensor gpuResult = Tensor::matmul(a, b, true);
+    float maxError = 0.0f;
+    for (size_t i = 0; i < cpuResult.data.size(); ++i)
+        maxError = (std::max)(maxError, std::fabs(cpuResult.data[i] - gpuResult.data[i]));
+
+    const double cpuMs = median(cpuSamples);
+    const double gpuMs = median(gpuSamples);
+    std::cout << "CPU_GPU SIZE " << size << "x" << size << "\n";
+    std::cout << "CPU: " << cpuMs << " ms/op\n";
+    std::cout << "GPU: " << gpuMs << " ms/op\n";
+    std::cout << "CPU/GPU ratio: " << (cpuMs / gpuMs) << "x\n";
+    std::cout << "MAX_ABS_ERROR: " << maxError << "\n";
+    Tensor::setGpuOverrideForTesting(-1);
+}
+
 int main() {
     constexpr int series = 7;
 
@@ -86,6 +132,10 @@ int main() {
     runBenchmark(256, 50, 200, series);
     runBenchmark(512, 25, 100, series);
     runBenchmark(1024, 10, 50, series);
+
+    std::cout << "NppAI CPU/GPU FP32 comparison benchmark\n";
+    runCpuGpuBenchmark(128, 3, 5);
+    runCpuGpuBenchmark(256, 2, 5);
 
     return 0;
 }
