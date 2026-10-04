@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <iostream>
 #include <string>
+#include <cstring>
 
 #include "Notepad_plus_msgs.h"
 #include "PluginInterface.h"
@@ -16,6 +17,7 @@ struct ScintillaProbe {
     int callTipCancelCalls = 0;
     int callTipPosition = -1;
     std::string callTipText;
+    std::string selectedText = "int answer = 42;";
 };
 
 bool check(bool condition, const char* message) {
@@ -37,6 +39,13 @@ LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
     }
     if (message == SCI_GETSELECTIONSTART) return probe ? probe->selectionStart : 0;
     if (message == SCI_GETSELECTIONEND) return probe ? probe->selectionEnd : 0;
+    if (message == SCI_GETSELTEXT) {
+        if (!probe) return 0;
+        if (!lParam) return static_cast<LRESULT>(probe->selectedText.size() + 1);
+        memcpy(reinterpret_cast<void*>(lParam), probe->selectedText.c_str(),
+               probe->selectedText.size() + 1);
+        return static_cast<LRESULT>(probe->selectedText.size() + 1);
+    }
     if (message == SCI_CALLTIPSHOW) {
         if (probe) {
             ++probe->callTipShowCalls;
@@ -78,6 +87,7 @@ int wmain(int argc, wchar_t** argv) {
     using SetInfoForTesting = void (__cdecl*)(NppData);
     using GetFuncsArray = FuncItem* (__cdecl*)(int*);
     using BeNotified = void (__cdecl*)(SCNotification*);
+    using BuildSelectionPromptForTesting = const char* (__cdecl*)(HWND);
 
     const auto setInfoForTesting =
         reinterpret_cast<SetInfoForTesting>(GetProcAddress(plugin, "setInfoForTesting"));
@@ -85,11 +95,16 @@ int wmain(int argc, wchar_t** argv) {
         reinterpret_cast<GetFuncsArray>(GetProcAddress(plugin, "getFuncsArray"));
     const auto beNotified =
         reinterpret_cast<BeNotified>(GetProcAddress(plugin, "beNotified"));
+    const auto buildSelectionPromptForTesting =
+        reinterpret_cast<BuildSelectionPromptForTesting>(
+            GetProcAddress(plugin, "buildSelectionPromptForTesting"));
 
     bool ok = true;
     ok &= check(setInfoForTesting != nullptr, "test host initialization seam exists");
     ok &= check(getFuncsArray != nullptr, "getFuncsArray export exists");
     ok &= check(beNotified != nullptr, "beNotified export exists");
+    ok &= check(buildSelectionPromptForTesting != nullptr,
+                "selection prompt test seam exists");
 
     HINSTANCE instance = GetModuleHandleW(nullptr);
     HWND nppHost = createHostWindow(instance, L"NppAI_Test_NppHost");
@@ -119,6 +134,20 @@ int wmain(int argc, wchar_t** argv) {
             ok &= check(functions[1]._pFunc != nullptr, "selection callback registered");
             ok &= check(functions[2]._pFunc != nullptr, "telemetry callback registered");
         }
+    }
+
+    if (buildSelectionPromptForTesting && scintillaMain) {
+        mainProbe.selectedText = "int answer = 42;";
+        const char* prompt = buildSelectionPromptForTesting(scintillaMain);
+        ok &= check(prompt &&
+                        std::string(prompt) ==
+                            "```\r\nint answer = 42;\r\n```\r\n",
+                    "selected editor text is converted into a fenced prompt");
+
+        mainProbe.selectedText.clear();
+        prompt = buildSelectionPromptForTesting(scintillaMain);
+        ok &= check(prompt && std::string(prompt).empty(),
+                    "empty editor selection produces no prompt");
     }
 
     if (beNotified && scintillaMain && scintillaSecond) {
