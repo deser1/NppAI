@@ -129,11 +129,8 @@ extern "C" __declspec(dllexport) void beNotified(SCNotification *notifyCode) {
     int which = -1;
     ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0,
                   (LPARAM)&which);
-    if (which != -1) {
-      HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle
-                                       : nppData._scintillaSecondHandle;
-      AIManager::getInstance().checkModifications("");
-    }
+    if (which != -1)
+      AIManager::getInstance().checkModifications();
   } break;
 
   case SCN_MODIFIED: {
