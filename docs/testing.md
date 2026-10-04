@@ -4,20 +4,38 @@
 
 ### Native targets
 
-The CMake build currently defines five native test executables:
+The CMake build provides a model-backed smoke test plus a self-contained CTest suite covering the native inference engine, plugin integration, RAG, generation flow, and telemetry behavior.
 
-- `TestEngine` — model-backed generation smoke test (requires a supplied `.nppai` model);
-- `TestTensor` — deterministic tensor math coverage;
-- `TestModelLoader` — malformed/truncated model rejection;
-- `TestTokenizer` — tokenizer fallback and BPE behavior;
-- `TestGenerationPipeline` — tiny-model loading, BPE, forward pass, sampling, and detokenization.
+The following 13 tests are registered with CTest:
 
-Four self-contained targets are registered with CTest: `TensorMath`, `ModelLoaderValidation`, `TokenizerFallback`, and `GenerationPipeline`. The model-backed `TestEngine` smoke test is intentionally not registered because it requires an external model artifact.
+- `TensorMath` — deterministic tensor math coverage;
+- `ModelLoaderValidation` — malformed/truncated model rejection;
+- `TokenizerFallback` — tokenizer fallback and BPE behavior;
+- `GenerationPipeline` — tiny-model loading, forward pass, sampling, and detokenization;
+- `AIPromptPipeline` — prompt construction and pipeline behavior;
+- `PluginPromptActions` — plugin prompt action behavior;
+- `GenerationContext` — generation-context selection;
+- `PluginGenerationFlow` — integrated plugin generation flow;
+- `GenerationStreamRouter` — streamed generation routing;
+- `GenerationTracking` — generated-code tracking metadata;
+- `TelemetryRedaction` — privacy-oriented telemetry redaction;
+- `RAGRetrieval` — local RAG retrieval behavior;
+- `PluginDllContract` — loads the built plugin DLL and validates the Notepad++ plugin boundary.
+
+`PluginDllContract` verifies the required exports, plugin name, Unicode support, initialization through `setInfo`, and the three command-table entries including their names and callback pointers. It runs without an interactive Notepad++ GUI, so it is suitable for the hosted Windows CI runner.
+
+The separate `TestEngine` executable is a model-backed generation smoke test. It is intentionally not registered with CTest because it requires an external `.nppai` model artifact.
 
 Run the registered native suite after building:
 
 ```powershell
 ctest --test-dir build -C Release --output-on-failure
+```
+
+Run only plugin-related tests:
+
+```powershell
+ctest --test-dir build -C Release -L plugin --output-on-failure
 ```
 
 Run the model-backed smoke test separately:
@@ -39,4 +57,4 @@ Exit codes for `TestEngine`:
 
 ## Testing roadmap
 
-CTest integration and deterministic native coverage are now part of the project. Remaining work includes expanding coverage for quantization/dequantization, serialization compatibility, additional tensor shapes, and deterministic inference behavior across supported build targets.
+CTest integration, deterministic native coverage, and a GUI-free Notepad++ DLL boundary test are part of the project. Remaining integration work is a true host-level Notepad++ scenario that exercises notifications and editor interaction inside a real Notepad++ process. Additional engine coverage can continue to expand serialization compatibility, tensor shapes, quantization accuracy, and deterministic inference across supported build targets.
