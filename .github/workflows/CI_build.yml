@@ -35,6 +35,16 @@ jobs:
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
       run: ctest --test-dir build-tests -C Release --output-on-failure
 
+    - name: Build plugin DLL contract test
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      shell: pwsh
+      run: cl /nologo /EHsc /std:c++17 tests\\test_plugin_dll_contract.cpp /Fe:TestPluginDllContract.exe
+
+    - name: Run plugin DLL contract test
+      if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
+      shell: pwsh
+      run: .\\TestPluginDllContract.exe .\\bin64\\NppAI.dll
+
     - name: Archive artifacts for x64
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v7
