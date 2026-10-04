@@ -180,7 +180,7 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK) {
 std::string RAGManager::retrieveContext(const std::string& query, int topK,
                                         const std::string& sourceFilter,
                                         const std::string& languageFilter) {
-    if (query.empty()) return "";
+    if (query.empty() || topK <= 0) return "";
     
     std::vector<float> queryVec = computeEmbedding(query);
     const auto queryTokens = tokenizeUnique(query);
