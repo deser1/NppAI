@@ -102,6 +102,9 @@ int wmain(int argc, wchar_t** argv) {
     using GetFuncsArray = FuncItem* (__cdecl*)(int*);
     using BeNotified = void (__cdecl*)(SCNotification*);
     using BuildSelectionPromptForTesting = const char* (__cdecl*)(HWND);
+    using GetName = const wchar_t* (__cdecl*)();
+    using MessageProc = LRESULT (__cdecl*)(UINT, WPARAM, LPARAM);
+    using IsUnicode = BOOL (__cdecl*)();
 
     const auto setInfoForTesting =
         reinterpret_cast<SetInfoForTesting>(GetProcAddress(plugin, "setInfoForTesting"));
@@ -112,6 +115,11 @@ int wmain(int argc, wchar_t** argv) {
     const auto buildSelectionPromptForTesting =
         reinterpret_cast<BuildSelectionPromptForTesting>(
             GetProcAddress(plugin, "buildSelectionPromptForTesting"));
+    const auto getName = reinterpret_cast<GetName>(GetProcAddress(plugin, "getName"));
+    const auto messageProc =
+        reinterpret_cast<MessageProc>(GetProcAddress(plugin, "messageProc"));
+    const auto isUnicode =
+        reinterpret_cast<IsUnicode>(GetProcAddress(plugin, "isUnicode"));
 
     bool ok = true;
     ok &= check(setInfoForTesting != nullptr, "test host initialization seam exists");
@@ -119,6 +127,23 @@ int wmain(int argc, wchar_t** argv) {
     ok &= check(beNotified != nullptr, "beNotified export exists");
     ok &= check(buildSelectionPromptForTesting != nullptr,
                 "selection prompt test seam exists");
+    ok &= check(getName != nullptr, "getName export exists");
+    ok &= check(messageProc != nullptr, "messageProc export exists");
+    ok &= check(isUnicode != nullptr, "isUnicode export exists");
+
+    if (getName) {
+        const wchar_t* pluginName = getName();
+        ok &= check(pluginName && std::wstring(pluginName) == L"NppAI",
+                    "getName exposes the expected plugin name");
+    }
+    if (messageProc) {
+        ok &= check(messageProc(WM_NULL, 0, 0) == TRUE,
+                    "messageProc accepts a host message");
+    }
+    if (isUnicode) {
+        ok &= check(isUnicode() == TRUE,
+                    "plugin reports the Unicode Notepad++ contract");
+    }
 
     HINSTANCE instance = GetModuleHandleW(nullptr);
     HWND nppHost = createHostWindow(instance, L"NppAI_Test_NppHost");
