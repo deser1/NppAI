@@ -10,6 +10,12 @@ namespace {
 struct ScintillaProbe {
     int dwellTime = -1;
     int setDwellCalls = 0;
+    int selectionStart = 10;
+    int selectionEnd = 20;
+    int callTipShowCalls = 0;
+    int callTipCancelCalls = 0;
+    int callTipPosition = -1;
+    std::string callTipText;
 };
 
 bool check(bool condition, const char* message) {
@@ -21,12 +27,26 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    auto* probe = reinterpret_cast<ScintillaProbe*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
     if (message == SCI_SETMOUSEDWELLTIME) {
-        auto* probe = reinterpret_cast<ScintillaProbe*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
         if (probe) {
             probe->dwellTime = static_cast<int>(wParam);
             ++probe->setDwellCalls;
         }
+        return 0;
+    }
+    if (message == SCI_GETSELECTIONSTART) return probe ? probe->selectionStart : 0;
+    if (message == SCI_GETSELECTIONEND) return probe ? probe->selectionEnd : 0;
+    if (message == SCI_CALLTIPSHOW) {
+        if (probe) {
+            ++probe->callTipShowCalls;
+            probe->callTipPosition = static_cast<int>(wParam);
+            probe->callTipText = lParam ? reinterpret_cast<const char*>(lParam) : "";
+        }
+        return 0;
+    }
+    if (message == SCI_CALLTIPCANCEL) {
+        if (probe) ++probe->callTipCancelCalls;
         return 0;
     }
     return DefWindowProcW(hwnd, message, wParam, lParam);
@@ -109,6 +129,25 @@ int wmain(int argc, wchar_t** argv) {
                     "NPPN_READY configures 600ms dwell time on main Scintilla");
         ok &= check(secondProbe.setDwellCalls == 1 && secondProbe.dwellTime == 600,
                     "NPPN_READY configures 600ms dwell time on second Scintilla");
+
+        SCNotification dwellStart{};
+        dwellStart.nmhdr.code = SCN_DWELLSTART;
+        dwellStart.nmhdr.hwndFrom = scintillaMain;
+        dwellStart.position = 15;
+        beNotified(&dwellStart);
+        ok &= check(mainProbe.callTipShowCalls == 1,
+                    "SCN_DWELLSTART shows a calltip over selected text");
+        ok &= check(mainProbe.callTipPosition == 15,
+                    "SCN_DWELLSTART shows the calltip at the hovered position");
+        ok &= check(mainProbe.callTipText.find("NppAI:") == 0,
+                    "SCN_DWELLSTART provides the NppAI calltip text");
+
+        SCNotification dwellEnd{};
+        dwellEnd.nmhdr.code = SCN_DWELLEND;
+        dwellEnd.nmhdr.hwndFrom = scintillaMain;
+        beNotified(&dwellEnd);
+        ok &= check(mainProbe.callTipCancelCalls == 1,
+                    "SCN_DWELLEND cancels the active calltip");
 
         SCNotification shutdown{};
         shutdown.nmhdr.code = NPPN_SHUTDOWN;
