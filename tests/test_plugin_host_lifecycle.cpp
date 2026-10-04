@@ -162,6 +162,17 @@ int wmain(int argc, wchar_t** argv) {
         ok &= check(mainProbe.callTipCancelCalls == 1,
                     "SCN_DWELLEND cancels the active calltip");
 
+        // Keep the selection empty so sendSelectionToChat returns before
+        // creating the docked panel; this isolates the click lifecycle contract.
+        mainProbe.selectionStart = 10;
+        mainProbe.selectionEnd = 10;
+        SCNotification callTipClick{};
+        callTipClick.nmhdr.code = SCN_CALLTIPCLICK;
+        callTipClick.nmhdr.hwndFrom = scintillaMain;
+        beNotified(&callTipClick);
+        ok &= check(mainProbe.callTipCancelCalls == 2,
+                    "SCN_CALLTIPCLICK cancels the active calltip");
+
         SCNotification shutdown{};
         shutdown.nmhdr.code = NPPN_SHUTDOWN;
         beNotified(&shutdown);
