@@ -166,7 +166,7 @@ The x64 build keeps the baseline x64 ISA and selects AVX2/FMA tensor kernels at 
 
 ### GPU execution
 
-The DirectX 11 path is a workload-specific optimization and has a CPU fallback. It should not be considered universally faster until reproducible benchmarks are available.
+The DirectX 11 path is a workload-specific optimization and has a CPU fallback. The benchmark suite can force identical FP32 workloads through CPU and DirectX 11 paths to compare median latency and maximum absolute output error.
 
 ### Quantization
 
@@ -188,14 +188,14 @@ See:
 - [Architecture](docs/architecture.md)
 - [Model format](docs/model-format.md)
 
-The next testing milestones are reproducible CPU/GPU comparison benchmarks and additional end-to-end plugin integration tests.
+The next testing milestone is additional end-to-end Notepad++ plugin integration coverage.
 
 ## Roadmap
 
 - [x] Runtime CPU feature detection for AVX2/FMA with scalar fallback
 - [x] Deterministic tensor unit tests
 - [x] Model serialization/version validation
-- [ ] Reproducible CPU/GPU benchmarks
+- [x] Reproducible CPU/GPU benchmarks
 - [x] Better tokenizer test coverage
 - [ ] Complete public-deployment API hardening (authentication policy, rate limiting policy, request-size enforcement, TLS termination, and data-retention/privacy policy)
 - [x] Model integrity checks / hashes
@@ -242,6 +242,8 @@ In this CI measurement, INT8 is slightly slower at 128x128, approximately even a
 The INT8 kernel was progressively optimized by moving quantization scaling outside the SIMD accumulation loop, widening the AVX2 loop, using four independent accumulators, applying FMA, and reducing accumulators directly in SIMD registers.
 
 Hosted GitHub Actions runners have variable hardware load, so these numbers are a reproducible CI reference rather than a hardware-independent performance guarantee. Performance changes should be evaluated across repeated runs instead of from a single timing sample.
+
+The benchmark also runs deterministic **CPU vs DirectX 11 GPU** FP32 comparisons at 128x128 and 256x256. It reports median CPU/GPU latency, their ratio, and maximum absolute output error. CI preserves these measurements in the benchmark artifact; when a runner has no usable D3D11 hardware device, the GPU comparison is reported as unavailable instead of failing the build.
 
 Build and run locally:
 
