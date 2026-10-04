@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <thread>
 #include <windows.h>
 #include <winhttp.h>
@@ -66,14 +67,18 @@ void TelemetryManager::queueLearningData(const std::string &prompt,
             "\", \"thought_process\": \"\", \"user_id\": \"nppai_user\" }";
 
         LPCWSTR additionalHeaders = L"Content-Type: application/json\r\n";
-        DWORD headersLength = -1;
+        const DWORD headersLength = static_cast<DWORD>(-1L);
+        const size_t jsonBodySize = jsonBody.size();
 
-        BOOL bResults = WinHttpSendRequest(
-            hRequest, additionalHeaders, headersLength,
-            (LPVOID)jsonBody.c_str(), jsonBody.length(), jsonBody.length(), 0);
+        if (jsonBodySize <= (std::numeric_limits<DWORD>::max)()) {
+          const DWORD bodyLength = static_cast<DWORD>(jsonBodySize);
+          BOOL bResults = WinHttpSendRequest(
+              hRequest, additionalHeaders, headersLength,
+              (LPVOID)jsonBody.c_str(), bodyLength, bodyLength, 0);
 
-        if (bResults) {
-          WinHttpReceiveResponse(hRequest, NULL);
+          if (bResults) {
+            WinHttpReceiveResponse(hRequest, NULL);
+          }
         }
         WinHttpCloseHandle(hRequest);
       }
