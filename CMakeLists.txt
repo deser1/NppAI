@@ -97,6 +97,8 @@ target_include_directories(TestTelemetryRedaction PRIVATE src)
 add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp)
 target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
+add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
+add_dependencies(TestPluginDllContract NppAI)
 
 add_test(NAME TensorMath COMMAND TestTensor)
 add_test(NAME ModelLoaderValidation COMMAND TestModelLoader)
@@ -110,6 +112,7 @@ add_test(NAME GenerationStreamRouter COMMAND TestGenerationStreamRouter)
 add_test(NAME GenerationTracking COMMAND TestGenerationTracking)
 add_test(NAME TelemetryRedaction COMMAND TestTelemetryRedaction)
 add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
+add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(ModelLoaderValidation PROPERTIES LABELS "unit;security" TIMEOUT 30)
@@ -123,6 +126,7 @@ set_tests_properties(GenerationStreamRouter PROPERTIES LABELS "unit;integration;
 set_tests_properties(GenerationTracking PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(TelemetryRedaction PROPERTIES LABELS "unit;security;telemetry" TIMEOUT 30)
 set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
+set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
