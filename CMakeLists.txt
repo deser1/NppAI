@@ -104,11 +104,15 @@ target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
 add_dependencies(TestPluginDllContract NppAI)
+add_executable(TestPluginHostLifecycle tests/test_plugin_host_lifecycle.cpp)
+target_include_directories(TestPluginHostLifecycle PRIVATE src)
+add_dependencies(TestPluginHostLifecycle NppAI)
 if(MSVC)
     # The DLL contract compares localized command names containing Polish
     # characters. Compile the test source as UTF-8 so its expected wide
     # string literals match the UTF-8-compiled plugin.
     target_compile_options(TestPluginDllContract PRIVATE /utf-8)
+    target_compile_options(TestPluginHostLifecycle PRIVATE /utf-8)
 endif()
 
 add_test(NAME TensorMath COMMAND TestTensor)
@@ -124,6 +128,7 @@ add_test(NAME GenerationTracking COMMAND TestGenerationTracking)
 add_test(NAME TelemetryRedaction COMMAND TestTelemetryRedaction)
 add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
 add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
+add_test(NAME PluginHostLifecycle COMMAND TestPluginHostLifecycle $<TARGET_FILE:NppAI>)
 
 set_tests_properties(TensorMath PROPERTIES LABELS "unit" TIMEOUT 30)
 set_tests_properties(ModelLoaderValidation PROPERTIES LABELS "unit;security" TIMEOUT 30)
@@ -138,6 +143,7 @@ set_tests_properties(GenerationTracking PROPERTIES LABELS "unit;integration;plug
 set_tests_properties(TelemetryRedaction PROPERTIES LABELS "unit;security;telemetry" TIMEOUT 30)
 set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
 set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
+set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;host" TIMEOUT 30)
 
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
