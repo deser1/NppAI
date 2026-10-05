@@ -27,6 +27,7 @@ add_library(NppAI SHARED
     src/AIManager.cpp
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
+    src/RepositoryIndexer.cpp
     src/TelemetryManager.cpp
     src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
@@ -99,7 +100,7 @@ add_executable(TestGenerationTracking tests/test_generation_tracking.cpp src/Gen
 target_include_directories(TestGenerationTracking PRIVATE src)
 add_executable(TestTelemetryRedaction tests/test_telemetry_redaction.cpp src/TelemetryRedaction.cpp)
 target_include_directories(TestTelemetryRedaction PRIVATE src)
-add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp)
+add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp src/RepositoryIndexer.cpp)
 target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
