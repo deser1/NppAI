@@ -15,6 +15,7 @@ public:
     // Dodaje nową wiedzę do bazy wektorowej (samoistne rekurencyjne uczenie się)
     void addDocument(const std::string& text);
     void addDocument(const std::string& text, const std::string& source, const std::string& language);
+    void updateSource(const std::string& text, const std::string& source, const std::string& language);
 
     // Wyszukuje najbardziej podobne fragmenty z bazy wiedzy
     std::string retrieveContext(const std::string& query, int topK = 3);
