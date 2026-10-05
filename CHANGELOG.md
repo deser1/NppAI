@@ -2,6 +2,22 @@
 
 All notable changes to NppAI are documented in this file.
 
+## [0.4.0] - 2026-10-05
+
+### Added
+- Repository-aware generation context for using relevant project files during AI-assisted code generation.
+- Automated release workflow for version tags.
+- Ready-to-install Notepad++ plugin ZIP packages for x64, x86, and ARM64.
+- Installation guidance for release packages and compatible .nppai models.
+
+### Changed
+- Release artifacts now use the Notepad++ plugin-directory layout and include README and model-format documentation.
+- Tagged releases are built directly from the tagged source revision for easier verification and evaluation.
+
+### Notes
+- The v0.4.0 release publishes NppAI-x64.zip, NppAI-x86.zip, and NppAI-arm64.zip.
+- Model files are intentionally not bundled with plugin release packages.
+
 ## [0.3.0] - 2026-10-03
 
 ### Added
