@@ -203,6 +203,26 @@ void RAGManager::addDocument(const std::string& text, const std::string& source,
     }
 }
 
+void RAGManager::updateSource(const std::string& text, const std::string& source,
+                              const std::string& language) {
+    if (source.empty())
+        return;
+
+    {
+        std::lock_guard<std::mutex> lock(dbMutex);
+        knowledgeBase.erase(
+            std::remove_if(knowledgeBase.begin(), knowledgeBase.end(),
+                           [&](const Document& doc) { return doc.source == source; }),
+            knowledgeBase.end());
+        documentKeys.clear();
+        for (const auto& doc : knowledgeBase)
+            documentKeys.insert(makeDocumentKey(doc.text, doc.source, doc.language));
+    }
+
+    if (!text.empty())
+        addDocument(text, source, language);
+}
+
 std::string RAGManager::retrieveContext(const std::string& query, int topK) {
     return retrieveContext(query, topK, "", "");
 }
