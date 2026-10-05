@@ -86,6 +86,17 @@ int main() {
                 "language filter excludes non-matching documents");
 
     rag.clearForTesting();
+    rag.updateSource("legacy parser implementation", "src/parser.cpp", "cpp");
+    rag.updateSource("modern parser implementation", "src/parser.cpp", "cpp");
+    const std::string updatedSource = rag.retrieveContext("parser implementation", 3, "src/parser.cpp", "cpp");
+    ok &= check(updatedSource.find("modern parser implementation") != std::string::npos &&
+                    updatedSource.find("legacy parser implementation") == std::string::npos,
+                "incremental source update replaces stale indexed content");
+    rag.updateSource("", "src/parser.cpp", "cpp");
+    ok &= check(rag.retrieveContext("parser implementation", 3, "src/parser.cpp", "cpp").empty(),
+                "empty source update removes deleted file content");
+
+    rag.clearForTesting();
     rag.addDocument("void parse_http_response();");
     rag.addDocument("void parseCacheEntry();");
     const std::string snakeCase = rag.retrieveContext("http response", 1);
