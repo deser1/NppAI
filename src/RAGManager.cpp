@@ -73,7 +73,7 @@ std::set<std::string> tokenizeUnique(const std::string& text) {
 
     for (char c : text) {
         const unsigned char uc = static_cast<unsigned char>(c);
-        if (std::isalnum(uc) || c == '_')
+        if (std::isalnum(uc) || c == '_' || uc >= 0x80)
             identifier += c;
         else
             addIdentifier();
@@ -101,8 +101,9 @@ std::vector<float> RAGManager::computeEmbedding(const std::string& text) {
     // Prosty tokenizator (dzielenie po spacjach i znakach interpunkcyjnych)
     std::string current_word = "";
     for (char c : text) {
-        if (std::isalnum(static_cast<unsigned char>(c))) {
-            current_word += static_cast<char>(std::tolower(c));
+        const unsigned char uc = static_cast<unsigned char>(c);
+        if (std::isalnum(uc) || uc >= 0x80) {
+            current_word += uc >= 0x80 ? c : static_cast<char>(std::tolower(uc));
         } else if (!current_word.empty()) {
             // Hash DJB2a
             unsigned long hash = 5381;

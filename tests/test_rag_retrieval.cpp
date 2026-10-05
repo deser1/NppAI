@@ -100,6 +100,13 @@ int main() {
                 "acronym boundaries in camelCase identifiers contribute to lexical ranking");
 
     rag.clearForTesting();
+    rag.addDocument("obsługa żądania użytkownika");
+    rag.addDocument("renderer texture shader");
+    const std::string utf8Tokens = rag.retrieveContext("żądania użytkownika", 1);
+    ok &= check(utf8Tokens.find("obsługa żądania użytkownika") != std::string::npos,
+                "UTF-8 words remain intact for lexical and embedding retrieval");
+
+    rag.clearForTesting();
     const std::string dbPath = "rag_metadata_v2_test.bin";
     rag.addDocument("persistent metadata token", "src/persist.cpp", "cpp");
     rag.saveDatabase(dbPath);
