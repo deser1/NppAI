@@ -215,7 +215,11 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
     std::lock_guard<std::mutex> lock(dbMutex);
     if (knowledgeBase.empty()) return "";
 
-    std::vector<std::pair<float, std::string>> scores;
+    struct RetrievalResult {
+        float score;
+        const Document* document;
+    };
+    std::vector<RetrievalResult> scores;
     for (const auto& doc : knowledgeBase) {
         if (!sourceFilter.empty() && doc.source != sourceFilter)
             continue;
@@ -225,23 +229,28 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
         const float lexical = lexicalOverlap(queryTokens, doc.text);
         const float score = cosine * 0.75f + lexical * 0.25f;
         if (score > 0.1f) { // próg odcięcia
-            scores.push_back({score, doc.text});
+            scores.push_back({score, &doc});
         }
     }
 
     // Sortowanie malejąco; tekst rozstrzyga remisy deterministycznie.
     std::sort(scores.begin(), scores.end(), [](const auto& a, const auto& b) {
-        if (std::fabs(a.first - b.first) > 1e-6f)
-            return a.first > b.first;
-        return a.second < b.second;
+        if (std::fabs(a.score - b.score) > 1e-6f)
+            return a.score > b.score;
+        return a.document->text < b.document->text;
     });
 
     std::string resultContext = "";
     int added = 0;
     for (const auto& score : scores) {
         if (added >= topK) break;
-        resultContext += "--- Zapisany Kontekst RAG (Podobieństwo: " + std::to_string(score.first) + ") ---\n";
-        resultContext += score.second + "\n\n";
+        resultContext += "--- Zapisany Kontekst RAG (Podobieństwo: " + std::to_string(score.score);
+        if (!score.document->source.empty())
+            resultContext += ", Źródło: " + score.document->source;
+        if (!score.document->language.empty())
+            resultContext += ", Język: " + score.document->language;
+        resultContext += ") ---\n";
+        resultContext += score.document->text + "\n\n";
         added++;
     }
     
