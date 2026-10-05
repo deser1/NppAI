@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <fstream>
 #include <cstdint>
+#include <filesystem>
 
 namespace {
 bool check(bool condition, const char* message) {
@@ -95,6 +96,23 @@ int main() {
     rag.updateSource("", "src/parser.cpp", "cpp");
     ok &= check(rag.retrieveContext("parser implementation", 3, "src/parser.cpp", "cpp").empty(),
                 "empty source update removes deleted file content");
+
+    rag.clearForTesting();
+    const std::filesystem::path repoFixture = "rag_repo_fixture";
+    std::filesystem::remove_all(repoFixture);
+    std::filesystem::create_directories(repoFixture / "src");
+    std::filesystem::create_directories(repoFixture / "node_modules");
+    { std::ofstream(repoFixture / "src" / "auth.cpp") << "repository index bearer authentication token"; }
+    { std::ofstream(repoFixture / "README.md") << "repository documentation marker"; }
+    { std::ofstream(repoFixture / "node_modules" / "ignored.js") << "ignored dependency marker"; }
+    const size_t indexedFiles = rag.indexRepository(repoFixture.string());
+    ok &= check(indexedFiles == 2, "repository indexer scans supported files and ignores dependency directories");
+    const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
+    ok &= check(repositoryContext.find("repository index bearer authentication token") != std::string::npos,
+                "repository indexer stores relative source and language metadata");
+    ok &= check(rag.retrieveContext("ignored dependency marker", 1).empty(),
+                "repository indexer excludes ignored directories");
+    std::filesystem::remove_all(repoFixture);
 
     rag.clearForTesting();
     rag.addDocument("void parse_http_response();");
