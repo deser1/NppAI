@@ -259,7 +259,7 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
     inFile.clear();
     inFile.seekg(0);
 
-    knowledgeBase.clear();
+    std::vector<Document> loadedDocuments;
     if (isV2) {
         uint32_t version = 0;
         uint64_t size = 0;
@@ -282,8 +282,9 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
             if (languageLen && !inFile.read(&doc.language[0], static_cast<std::streamsize>(languageLen))) return;
             doc.embedding.resize(VECTOR_DIM);
             if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
-            knowledgeBase.push_back(std::move(doc));
+            loadedDocuments.push_back(std::move(doc));
         }
+        knowledgeBase = std::move(loadedDocuments);
         return;
     }
 
@@ -297,8 +298,9 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
         if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
         doc.embedding.resize(VECTOR_DIM);
         if (!inFile.read(reinterpret_cast<char*>(doc.embedding.data()), VECTOR_DIM * sizeof(float))) return;
-        knowledgeBase.push_back(std::move(doc));
+        loadedDocuments.push_back(std::move(doc));
     }
+    knowledgeBase = std::move(loadedDocuments);
 }
 #ifdef NPPAI_TESTING
 void RAGManager::clearForTesting() {

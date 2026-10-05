@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <fstream>
+#include <cstdint>
 
 namespace {
 bool check(bool condition, const char* message) {
@@ -98,6 +100,27 @@ int main() {
     ok &= check(persisted.find("persistent metadata token") != std::string::npos,
                 "v2 database persists source and language metadata");
     std::remove(dbPath.c_str());
+
+    rag.clearForTesting();
+    rag.addDocument("existing atomic load sentinel");
+    const std::string corruptDbPath = "rag_corrupt_v2_test.bin";
+    {
+        std::ofstream corrupt(corruptDbPath, std::ios::binary);
+        const char magic[8] = {'N','P','P','R','A','G','2','\0'};
+        const uint32_t version = 2;
+        const uint64_t count = 1;
+        const uint64_t textLen = 64;
+        corrupt.write(magic, sizeof(magic));
+        corrupt.write(reinterpret_cast<const char*>(&version), sizeof(version));
+        corrupt.write(reinterpret_cast<const char*>(&count), sizeof(count));
+        corrupt.write(reinterpret_cast<const char*>(&textLen), sizeof(textLen));
+        corrupt.write("truncated", 9);
+    }
+    rag.loadDatabase(corruptDbPath);
+    const std::string afterCorruptLoad = rag.retrieveContext("atomic load sentinel", 1);
+    ok &= check(afterCorruptLoad.find("existing atomic load sentinel") != std::string::npos,
+                "corrupt database load leaves the existing index unchanged");
+    std::remove(corruptDbPath.c_str());
 
     rag.clearForTesting();
     const std::string filler(1100, 'x');
