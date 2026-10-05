@@ -102,9 +102,17 @@ int main() {
     std::filesystem::remove_all(repoFixture);
     std::filesystem::create_directories(repoFixture / "src");
     std::filesystem::create_directories(repoFixture / "node_modules");
+    std::filesystem::create_directories(repoFixture / "dist");
+    std::filesystem::create_directories(repoFixture / "vendor");
+    std::filesystem::create_directories(repoFixture / "target");
+    std::filesystem::create_directories(repoFixture / ".venv");
     { std::ofstream(repoFixture / "src" / "auth.cpp") << "repository index bearer authentication token"; }
     { std::ofstream(repoFixture / "README.md") << "repository documentation marker"; }
     { std::ofstream(repoFixture / "node_modules" / "ignored.js") << "ignored dependency marker"; }
+    { std::ofstream(repoFixture / "dist" / "bundle.js") << "generated distribution marker"; }
+    { std::ofstream(repoFixture / "vendor" / "library.php") << "vendored dependency marker"; }
+    { std::ofstream(repoFixture / "target" / "generated.rs") << "generated rust target marker"; }
+    { std::ofstream(repoFixture / ".venv" / "package.py") << "virtual environment marker"; }
     const size_t indexedFiles = rag.indexRepository(repoFixture.string());
     ok &= check(indexedFiles == 2, "repository indexer scans supported files and ignores dependency directories");
     const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
@@ -113,6 +121,14 @@ int main() {
     const std::string ignoredContext = rag.retrieveContext("ignored dependency marker", 2);
     ok &= check(ignoredContext.find("ignored dependency marker") == std::string::npos,
                 "repository indexer excludes ignored directories");
+    ok &= check(rag.retrieveContext("generated distribution marker", 2).empty(),
+                "repository indexer excludes distribution output");
+    ok &= check(rag.retrieveContext("vendored dependency marker", 2).empty(),
+                "repository indexer excludes vendored dependencies");
+    ok &= check(rag.retrieveContext("generated rust target marker", 2).empty(),
+                "repository indexer excludes generated target directories");
+    ok &= check(rag.retrieveContext("virtual environment marker", 2).empty(),
+                "repository indexer excludes virtual environments");
     std::filesystem::remove_all(repoFixture);
 
     rag.clearForTesting();
