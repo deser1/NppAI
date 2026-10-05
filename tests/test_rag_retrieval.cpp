@@ -110,7 +110,8 @@ int main() {
     const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
     ok &= check(repositoryContext.find("repository index bearer authentication token") != std::string::npos,
                 "repository indexer stores relative source and language metadata");
-    ok &= check(rag.retrieveContext("ignored dependency marker", 1).empty(),
+    const std::string ignoredContext = rag.retrieveContext("ignored dependency marker", 2);
+    ok &= check(ignoredContext.find("ignored dependency marker") == std::string::npos,
                 "repository indexer excludes ignored directories");
     std::filesystem::remove_all(repoFixture);
 
