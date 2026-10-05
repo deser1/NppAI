@@ -66,6 +66,9 @@ int main() {
     const std::string cppOnly = rag.retrieveContext("validate request token", 3, "src/api.cpp", "cpp");
     ok &= check(cppOnly.find("validate request token") != std::string::npos,
                 "source and language filters retain matching documents");
+    ok &= check(cppOnly.find("src/api.cpp") != std::string::npos &&
+                    cppOnly.find("cpp") != std::string::npos,
+                "retrieved context exposes source and language metadata");
     rag.addDocument("validate request token", "scripts/api.py", "python");
     const std::string pythonOnly = rag.retrieveContext(
         "validate request token", 3, "scripts/api.py", "python");
