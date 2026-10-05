@@ -230,7 +230,8 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
             continue;
         const float cosine = cosineSimilarity(queryVec, doc.embedding);
         const float lexical = lexicalOverlap(queryTokens, doc.text);
-        const float score = cosine * 0.75f + lexical * 0.25f;
+        const float exactCoverageBonus = lexical >= 0.999f ? 0.10f : 0.0f;
+        const float score = cosine * 0.65f + lexical * 0.35f + exactCoverageBonus;
         if (score > 0.1f) { // próg odcięcia
             scores.push_back({score, &doc});
         }

@@ -61,6 +61,13 @@ int main() {
                 "exact query-token coverage improves ranking beyond term frequency");
 
     rag.clearForTesting();
+    rag.addDocument("authentication bearer token exact coverage");
+    rag.addDocument("authentication authentication authentication bearer noise noise noise");
+    const std::string hybridRanked = rag.retrieveContext("authentication bearer token", 1);
+    ok &= check(hybridRanked.find("exact coverage") != std::string::npos,
+                "full query-token coverage receives a hybrid ranking bonus");
+
+    rag.clearForTesting();
     rag.addDocument("validate request token", "src/api.cpp", "cpp");
     rag.addDocument("validate request token", "scripts/api.py", "python");
     const std::string cppOnly = rag.retrieveContext("validate request token", 3, "src/api.cpp", "cpp");
