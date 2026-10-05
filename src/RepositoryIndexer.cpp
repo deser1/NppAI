@@ -25,7 +25,9 @@ std::string languageFor(const std::filesystem::path& path) {
 bool ignoredDirectory(const std::filesystem::path& path) {
     const auto name = path.filename().string();
     return name == ".git" || name == ".github" || name == "build" || name == "out" ||
-           name == "node_modules" || name == ".vs" || name == ".idea";
+           name == "node_modules" || name == "vendor" || name == "dist" ||
+           name == "target" || name == "coverage" || name == "__pycache__" ||
+           name == ".venv" || name == "venv" || name == ".vs" || name == ".idea";
 }
 }
 
