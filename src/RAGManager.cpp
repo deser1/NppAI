@@ -23,9 +23,15 @@ std::set<std::string> tokenizeUnique(const std::string& text) {
         std::string part;
         for (size_t i = 0; i < identifier.size(); ++i) {
             const unsigned char uc = static_cast<unsigned char>(identifier[i]);
-            const bool upperBoundary = i > 0 && std::isupper(uc) &&
+            const bool previousLowerOrDigit = i > 0 &&
                 (std::islower(static_cast<unsigned char>(identifier[i - 1])) ||
                  std::isdigit(static_cast<unsigned char>(identifier[i - 1])));
+            const bool acronymWordBoundary = i > 0 && i + 1 < identifier.size() &&
+                std::isupper(static_cast<unsigned char>(identifier[i - 1])) &&
+                std::isupper(uc) &&
+                std::islower(static_cast<unsigned char>(identifier[i + 1]));
+            const bool upperBoundary = std::isupper(uc) &&
+                (previousLowerOrDigit || acronymWordBoundary);
 
             if (identifier[i] == '_' || upperBoundary) {
                 if (!part.empty()) {
