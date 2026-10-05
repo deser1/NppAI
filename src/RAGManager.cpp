@@ -15,6 +15,18 @@ constexpr uint64_t MAX_PERSISTED_DOCUMENTS = 100000;
 constexpr uint64_t MAX_PERSISTED_TEXT_BYTES = 4 * 1024 * 1024;
 constexpr uint64_t MAX_PERSISTED_METADATA_BYTES = 16 * 1024;
 
+bool isUtf8Continuation(unsigned char byte) {
+    return (byte & 0xC0) == 0x80;
+}
+
+size_t utf8BoundaryAtOrBefore(const std::string& text, size_t position) {
+    position = std::min(position, text.size());
+    while (position > 0 && position < text.size() &&
+           isUtf8Continuation(static_cast<unsigned char>(text[position])))
+        --position;
+    return position;
+}
+
 std::set<std::string> tokenizeUnique(const std::string& text) {
     std::set<std::string> tokens;
     std::string identifier;
@@ -155,10 +167,14 @@ void RAGManager::addDocument(const std::string& text, const std::string& source,
                 if (newline != std::string::npos && newline > start + CHUNK_SIZE / 2)
                     end = newline + 1;
             }
+            end = utf8BoundaryAtOrBefore(text, end);
+            if (end <= start)
+                end = std::min(start + CHUNK_SIZE, text.size());
             chunks.push_back(text.substr(start, end - start));
             if (end == text.size())
                 break;
-            start = end > CHUNK_OVERLAP ? end - CHUNK_OVERLAP : end;
+            const size_t overlapStart = end > CHUNK_OVERLAP ? end - CHUNK_OVERLAP : end;
+            start = utf8BoundaryAtOrBefore(text, overlapStart);
         }
     }
 
