@@ -163,6 +163,17 @@ int main() {
                 "long documents are indexed as bounded chunks instead of one monolith");
 
     rag.clearForTesting();
+    const std::string utf8BoundaryDocument =
+        std::string(1199, 'x') + "\xC5\xBC" +
+        " utf8 boundary marker searchable token " + std::string(300, 'y');
+    rag.addDocument(utf8BoundaryDocument);
+    const std::string utf8Chunked = rag.retrieveContext("boundary marker searchable token", 1);
+    ok &= check(utf8Chunked.find("\xC5\xBC") != std::string::npos,
+                "UTF-8 multibyte characters remain intact at chunk boundaries");
+    ok &= check(utf8Chunked.find("boundary marker searchable token") != std::string::npos,
+                "UTF-8-safe chunking preserves retrieval content");
+
+    rag.clearForTesting();
     if (!ok) return 1;
     std::cout << "RAG retrieval tests passed.\n";
     return 0;
