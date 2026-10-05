@@ -242,9 +242,35 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
     });
 
     std::string resultContext = "";
+    std::vector<const Document*> selectedDocuments;
     int added = 0;
     for (const auto& score : scores) {
         if (added >= topK) break;
+
+        const auto candidateTokens = tokenizeUnique(score.document->text);
+        bool nearDuplicate = false;
+        for (const auto* selected : selectedDocuments) {
+            if (score.document->source != selected->source ||
+                score.document->language != selected->language)
+                continue;
+            const auto selectedTokens = tokenizeUnique(selected->text);
+            if (candidateTokens.empty() || selectedTokens.empty())
+                continue;
+            size_t shared = 0;
+            for (const auto& token : candidateTokens) {
+                if (selectedTokens.count(token) != 0)
+                    ++shared;
+            }
+            const size_t smaller = std::min(candidateTokens.size(), selectedTokens.size());
+            if (smaller > 0 &&
+                static_cast<float>(shared) / static_cast<float>(smaller) >= 0.8f) {
+                nearDuplicate = true;
+                break;
+            }
+        }
+        if (nearDuplicate)
+            continue;
+
         resultContext += "--- Zapisany Kontekst RAG (Podobieństwo: " + std::to_string(score.score);
         if (!score.document->source.empty())
             resultContext += ", Źródło: " + score.document->source;
@@ -252,6 +278,7 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
             resultContext += ", Język: " + score.document->language;
         resultContext += ") ---\n";
         resultContext += score.document->text + "\n\n";
+        selectedDocuments.push_back(score.document);
         added++;
     }
     
