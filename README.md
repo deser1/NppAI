@@ -93,6 +93,17 @@ For the Python tooling:
 python -m pip install -r requirements.txt
 ```
 
+## Installing the Notepad++ plugin
+
+Release tags publish ready-to-install ZIP packages for **x64**, **x86**, and **ARM64**.
+
+1. Download the ZIP matching your Notepad++ architecture from the GitHub release.
+2. Extract the included `NppAI` folder into the Notepad++ `plugins` directory. A typical x64 installation ends up with `C:\\Program Files\\Notepad++\\plugins\\NppAI\\NppAI.dll`.
+3. Restart Notepad++ and confirm that NppAI appears in the **Plugins** menu.
+4. Provide a compatible `.nppai` model as described in [Model format](docs/model-format.md). Model files are intentionally not bundled with the plugin package.
+
+The release ZIP contains the plugin DLL plus README/model-format documentation. The release workflow builds the binaries from the tagged commit, so downloadable packages correspond directly to the published source revision.
+
 ## Running the native smoke test
 
 The test executable expects a model file:

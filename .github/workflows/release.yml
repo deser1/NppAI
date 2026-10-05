@@ -1,0 +1,58 @@
+name: Release plugin packages
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        include:
+          - platform: x64
+            output: bin64
+            package: NppAI-x64
+          - platform: Win32
+            output: bin
+            package: NppAI-x86
+          - platform: ARM64
+            output: arm64
+            package: NppAI-arm64
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Build release DLL
+        working-directory: vs.proj\
+        run: msbuild NppAI.vcxproj /m /p:configuration=Release /p:platform="${{ matrix.platform }}"
+
+      - name: Package plugin
+        shell: pwsh
+        run: |
+          $packageRoot = "release\\${{ matrix.package }}\\NppAI"
+          New-Item -ItemType Directory -Force $packageRoot | Out-Null
+          Copy-Item "${{ matrix.output }}\\NppAI.dll" "$packageRoot\\NppAI.dll"
+          Copy-Item "README.md" "$packageRoot\\README.md"
+          Copy-Item "docs\\model-format.md" "$packageRoot\\model-format.md"
+          Compress-Archive -Path "release\\${{ matrix.package }}" -DestinationPath "release\\${{ matrix.package }}.zip"
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.package }}
+          path: release/${{ matrix.package }}.zip
+
+      - name: Attach package to GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.ref_name }}" "release\\${{ matrix.package }}.zip" --clobber
