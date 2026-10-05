@@ -24,6 +24,7 @@
 #include "DockingFeature/Docking.h"
 #include "Notepad_plus_msgs.h"
 #include "RAGManager.h"
+#include "RepositoryContext.h"
 #include "TelemetryManager.h"
 #include "menuCmdID.h"
 #include <atomic>
@@ -156,7 +157,8 @@ void ExecuteAIGeneration() {
       // wektorowej bazie
       RAGManager::getInstance().loadDatabase(currentFilePath + ".rag_db");
       const std::string retrievedContext =
-          RAGManager::getInstance().retrieveContext(prompt, 3);
+          RAGManager::getInstance().retrieveContext(
+              RepositoryContext::buildQuery(prompt, currentFilePath), 5);
 
       // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu tekstowego.
       std::string legacyContext;
@@ -171,7 +173,8 @@ void ExecuteAIGeneration() {
         }
       }
       currentContext =
-          GenerationContext::select(retrievedContext, legacyContext);
+          GenerationContext::select(
+              RepositoryContext::limit(retrievedContext), legacyContext);
     }
 
     GenerationStreamRouter streamRouter(
