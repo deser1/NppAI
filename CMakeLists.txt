@@ -28,6 +28,7 @@ add_library(NppAI SHARED
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
     src/RepositoryIndexer.cpp
+    src/RepositoryContext.cpp
     src/TelemetryManager.cpp
     src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
@@ -103,6 +104,8 @@ target_include_directories(TestTelemetryRedaction PRIVATE src)
 add_executable(TestRAGRetrieval tests/test_rag_retrieval.cpp src/RAGManager.cpp src/RepositoryIndexer.cpp)
 target_include_directories(TestRAGRetrieval PRIVATE src)
 target_compile_definitions(TestRAGRetrieval PRIVATE NPPAI_TESTING)
+add_executable(TestRepositoryContext tests/test_repository_context.cpp src/RepositoryContext.cpp)
+target_include_directories(TestRepositoryContext PRIVATE src)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
 add_dependencies(TestPluginDllContract NppAI)
 add_executable(TestPluginHostLifecycle tests/test_plugin_host_lifecycle.cpp)
@@ -128,6 +131,7 @@ add_test(NAME GenerationStreamRouter COMMAND TestGenerationStreamRouter)
 add_test(NAME GenerationTracking COMMAND TestGenerationTracking)
 add_test(NAME TelemetryRedaction COMMAND TestTelemetryRedaction)
 add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
+add_test(NAME RepositoryContext COMMAND TestRepositoryContext)
 add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
 add_test(NAME PluginHostLifecycle COMMAND TestPluginHostLifecycle $<TARGET_FILE:NppAI>)
 
@@ -143,6 +147,7 @@ set_tests_properties(GenerationStreamRouter PROPERTIES LABELS "unit;integration;
 set_tests_properties(GenerationTracking PROPERTIES LABELS "unit;integration;plugin" TIMEOUT 30)
 set_tests_properties(TelemetryRedaction PROPERTIES LABELS "unit;security;telemetry" TIMEOUT 30)
 set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
+set_tests_properties(RepositoryContext PROPERTIES LABELS "unit;integration;rag" TIMEOUT 30)
 set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
 set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;host" TIMEOUT 30)
 
