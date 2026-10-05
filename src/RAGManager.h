@@ -3,6 +3,7 @@
 #include <vector>
 #include <mutex>
 #include <map>
+#include <unordered_set>
 
 class RAGManager {
 public:
@@ -43,7 +44,12 @@ private:
     };
 
     std::vector<Document> knowledgeBase;
+    std::unordered_set<std::string> documentKeys;
     std::mutex dbMutex;
+
+    static std::string makeDocumentKey(const std::string& text,
+                                       const std::string& source,
+                                       const std::string& language);
 
     // Wbudowany lekki mechanizm generowania wektorów (Bag of Words / Hashing Trick)
     std::vector<float> computeEmbedding(const std::string& text);
