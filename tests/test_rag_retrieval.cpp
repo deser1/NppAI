@@ -130,6 +130,26 @@ int main() {
     std::remove(corruptDbPath.c_str());
 
     rag.clearForTesting();
+    rag.addDocument("oversized load sentinel");
+    const std::string oversizedDbPath = "rag_oversized_v2_test.bin";
+    {
+        std::ofstream oversized(oversizedDbPath, std::ios::binary);
+        const char magic[8] = {'N','P','P','R','A','G','2','\0'};
+        const uint32_t version = 2;
+        const uint64_t count = 1;
+        const uint64_t textLen = 64ULL * 1024ULL * 1024ULL;
+        oversized.write(magic, sizeof(magic));
+        oversized.write(reinterpret_cast<const char*>(&version), sizeof(version));
+        oversized.write(reinterpret_cast<const char*>(&count), sizeof(count));
+        oversized.write(reinterpret_cast<const char*>(&textLen), sizeof(textLen));
+    }
+    rag.loadDatabase(oversizedDbPath);
+    const std::string afterOversizedLoad = rag.retrieveContext("oversized load sentinel", 1);
+    ok &= check(afterOversizedLoad.find("oversized load sentinel") != std::string::npos,
+                "oversized persisted fields are rejected without replacing the active index");
+    std::remove(oversizedDbPath.c_str());
+
+    rag.clearForTesting();
     const std::string filler(1100, 'x');
     const std::string longDocument =
         filler + "\n"

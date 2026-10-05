@@ -11,6 +11,10 @@
 const int VECTOR_DIM = 256;
 
 namespace {
+constexpr uint64_t MAX_PERSISTED_DOCUMENTS = 100000;
+constexpr uint64_t MAX_PERSISTED_TEXT_BYTES = 4 * 1024 * 1024;
+constexpr uint64_t MAX_PERSISTED_METADATA_BYTES = 16 * 1024;
+
 std::set<std::string> tokenizeUnique(const std::string& text) {
     std::set<std::string> tokens;
     std::string identifier;
@@ -271,19 +275,23 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
         uint64_t size = 0;
         inFile.read(magic, sizeof(magic));
         if (!inFile.read(reinterpret_cast<char*>(&version), sizeof(version)) || version != 2 ||
-            !inFile.read(reinterpret_cast<char*>(&size), sizeof(size)))
+            !inFile.read(reinterpret_cast<char*>(&size), sizeof(size)) ||
+            size > MAX_PERSISTED_DOCUMENTS)
             return;
 
         for (uint64_t i = 0; i < size; ++i) {
             Document doc;
             uint64_t textLen = 0, sourceLen = 0, languageLen = 0;
-            if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
+            if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen)) ||
+                textLen > MAX_PERSISTED_TEXT_BYTES) return;
             doc.text.resize(static_cast<size_t>(textLen));
             if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
-            if (!inFile.read(reinterpret_cast<char*>(&sourceLen), sizeof(sourceLen))) return;
+            if (!inFile.read(reinterpret_cast<char*>(&sourceLen), sizeof(sourceLen)) ||
+                sourceLen > MAX_PERSISTED_METADATA_BYTES) return;
             doc.source.resize(static_cast<size_t>(sourceLen));
             if (sourceLen && !inFile.read(&doc.source[0], static_cast<std::streamsize>(sourceLen))) return;
-            if (!inFile.read(reinterpret_cast<char*>(&languageLen), sizeof(languageLen))) return;
+            if (!inFile.read(reinterpret_cast<char*>(&languageLen), sizeof(languageLen)) ||
+                languageLen > MAX_PERSISTED_METADATA_BYTES) return;
             doc.language.resize(static_cast<size_t>(languageLen));
             if (languageLen && !inFile.read(&doc.language[0], static_cast<std::streamsize>(languageLen))) return;
             doc.embedding.resize(VECTOR_DIM);
@@ -295,11 +303,13 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
     }
 
     size_t size = 0;
-    if (!inFile.read(reinterpret_cast<char*>(&size), sizeof(size))) return;
+    if (!inFile.read(reinterpret_cast<char*>(&size), sizeof(size)) ||
+        size > MAX_PERSISTED_DOCUMENTS) return;
     for (size_t i = 0; i < size; ++i) {
         Document doc;
         size_t textLen = 0;
-        if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen))) return;
+        if (!inFile.read(reinterpret_cast<char*>(&textLen), sizeof(textLen)) ||
+            textLen > MAX_PERSISTED_TEXT_BYTES) return;
         doc.text.resize(textLen);
         if (textLen && !inFile.read(&doc.text[0], static_cast<std::streamsize>(textLen))) return;
         doc.embedding.resize(VECTOR_DIM);
