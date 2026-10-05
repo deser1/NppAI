@@ -90,6 +90,13 @@ int main() {
                 "camelCase identifier parts contribute to lexical ranking");
 
     rag.clearForTesting();
+    rag.addDocument("void parseHTTPResponse();");
+    rag.addDocument("void parseCacheEntry();");
+    const std::string acronymCamelCase = rag.retrieveContext("http response", 1);
+    ok &= check(acronymCamelCase.find("parseHTTPResponse") != std::string::npos,
+                "acronym boundaries in camelCase identifiers contribute to lexical ranking");
+
+    rag.clearForTesting();
     const std::string dbPath = "rag_metadata_v2_test.bin";
     rag.addDocument("persistent metadata token", "src/persist.cpp", "cpp");
     rag.saveDatabase(dbPath);
