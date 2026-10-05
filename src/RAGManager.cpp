@@ -146,6 +146,14 @@ float RAGManager::cosineSimilarity(const std::vector<float>& vecA, const std::ve
     return dotProduct;
 }
 
+std::string RAGManager::makeDocumentKey(const std::string& text,
+                                        const std::string& source,
+                                        const std::string& language) {
+    return std::to_string(text.size()) + ":" + text +
+           std::to_string(source.size()) + ":" + source +
+           std::to_string(language.size()) + ":" + language;
+}
+
 void RAGManager::addDocument(const std::string& text) {
     addDocument(text, "", "");
 }
@@ -181,15 +189,8 @@ void RAGManager::addDocument(const std::string& text, const std::string& source,
 
     std::lock_guard<std::mutex> lock(dbMutex);
     for (const auto& chunk : chunks) {
-        bool duplicate = false;
-        for (const auto& existing : knowledgeBase) {
-            if (existing.text == chunk && existing.source == source &&
-                existing.language == language) {
-                duplicate = true;
-                break;
-            }
-        }
-        if (duplicate)
+        const std::string key = makeDocumentKey(chunk, source, language);
+        if (documentKeys.count(key) != 0)
             continue;
 
         Document doc;
@@ -198,6 +199,7 @@ void RAGManager::addDocument(const std::string& text, const std::string& source,
         doc.source = source;
         doc.language = language;
         knowledgeBase.push_back(std::move(doc));
+        documentKeys.insert(key);
     }
 }
 
@@ -352,6 +354,9 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
             loadedDocuments.push_back(std::move(doc));
         }
         knowledgeBase = std::move(loadedDocuments);
+        documentKeys.clear();
+        for (const auto& doc : knowledgeBase)
+            documentKeys.insert(makeDocumentKey(doc.text, doc.source, doc.language));
         return;
     }
 
@@ -370,10 +375,14 @@ void RAGManager::loadDatabase(const std::string& dbPath) {
         loadedDocuments.push_back(std::move(doc));
     }
     knowledgeBase = std::move(loadedDocuments);
+    documentKeys.clear();
+    for (const auto& doc : knowledgeBase)
+        documentKeys.insert(makeDocumentKey(doc.text, doc.source, doc.language));
 }
 #ifdef NPPAI_TESTING
 void RAGManager::clearForTesting() {
     std::lock_guard<std::mutex> lock(dbMutex);
     knowledgeBase.clear();
+    documentKeys.clear();
 }
 #endif
