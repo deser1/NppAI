@@ -173,6 +173,20 @@ int main() {
                 "long documents are indexed as bounded chunks instead of one monolith");
 
     rag.clearForTesting();
+    const std::string overlapCore =
+        "authentication middleware validates bearer token request response session";
+    rag.addDocument(overlapCore + " primary chunk detail", "src/auth.cpp", "cpp");
+    rag.addDocument(overlapCore + " overlapping chunk detail", "src/auth.cpp", "cpp");
+    rag.addDocument("authentication audit logger records security event", "src/audit.cpp", "cpp");
+    const std::string diversified = rag.retrieveContext("authentication bearer token", 2);
+    const bool hasPrimary = diversified.find("primary chunk detail") != std::string::npos;
+    const bool hasOverlap = diversified.find("overlapping chunk detail") != std::string::npos;
+    ok &= check(hasPrimary != hasOverlap,
+                "near-duplicate chunks from the same source consume only one result slot");
+    ok &= check(diversified.find("authentication audit logger") != std::string::npos,
+                "deduplicated retrieval fills topK with a distinct relevant result");
+
+    rag.clearForTesting();
     const std::string utf8BoundaryDocument =
         std::string(1199, 'x') + "\xC5\xBC" +
         " utf8 boundary marker searchable token " + std::string(300, 'y');
