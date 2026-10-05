@@ -1,5 +1,4 @@
 #include "RepositoryContext.h"
-#include <filesystem>
 
 namespace RepositoryContext {
 
@@ -7,8 +6,9 @@ std::string buildQuery(const std::string& prompt, const std::string& currentFile
     if (currentFilePath.empty())
         return prompt;
 
-    std::filesystem::path path(currentFilePath);
-    const std::string filename = path.filename().string();
+    const std::size_t separator = currentFilePath.find_last_of("\\\/");
+    const std::string filename =
+        separator == std::string::npos ? currentFilePath : currentFilePath.substr(separator + 1);
     if (filename.empty())
         return prompt;
 
