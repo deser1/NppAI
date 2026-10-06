@@ -11,6 +11,7 @@ All notable changes to NppAI are documented in this file.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- Repository indexing exclusion tests now verify ignored files by source metadata, avoiding false positives from hash-embedding collisions.
 - Release artifacts now use the Notepad++ plugin-directory layout and include README and model-format documentation.
 - Tagged releases are built directly from the tagged source revision for easier verification and evaluation.
 
