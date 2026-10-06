@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Context-aware RAG retrieval that can softly prioritize the active source file and programming language while retaining relevant cross-file results.
 - Repository-aware generation context for using relevant project files during AI-assisted code generation.
 - Automated release workflow for version tags.
 - Ready-to-install Notepad++ plugin ZIP packages for x64, x86, and ARM64.
