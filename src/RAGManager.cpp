@@ -308,6 +308,44 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
     return resultContext;
 }
 
+std::string RAGManager::retrieveContextRanked(const std::string& query, int topK,
+                                             const std::string& preferredSource,
+                                             const std::string& preferredLanguage) {
+    if (query.empty() || topK <= 0) return "";
+
+    const auto queryVec = computeEmbedding(query);
+    const auto queryTokens = tokenizeUnique(query);
+    std::lock_guard<std::mutex> lock(dbMutex);
+    if (knowledgeBase.empty()) return "";
+
+    struct RetrievalResult { float score; const Document* document; };
+    std::vector<RetrievalResult> scores;
+    for (const auto& doc : knowledgeBase) {
+        const float cosine = cosineSimilarity(queryVec, doc.embedding);
+        const float lexical = lexicalOverlap(queryTokens, doc.text);
+        const float exactCoverageBonus = lexical >= 0.999f ? 0.10f : 0.0f;
+        const float sourceBonus = !preferredSource.empty() && doc.source == preferredSource ? 0.12f : 0.0f;
+        const float languageBonus = !preferredLanguage.empty() && doc.language == preferredLanguage ? 0.06f : 0.0f;
+        const float score = cosine * 0.65f + lexical * 0.35f + exactCoverageBonus + sourceBonus + languageBonus;
+        if (score > 0.1f) scores.push_back({score, &doc});
+    }
+    std::sort(scores.begin(), scores.end(), [](const auto& a, const auto& b) {
+        if (std::fabs(a.score - b.score) > 1e-6f) return a.score > b.score;
+        return a.document->text < b.document->text;
+    });
+
+    std::string result;
+    int added = 0;
+    for (const auto& item : scores) {
+        if (added++ >= topK) break;
+        result += "--- Zapisany Kontekst RAG (Podobieństwo: " + std::to_string(item.score);
+        if (!item.document->source.empty()) result += ", Źródło: " + item.document->source;
+        if (!item.document->language.empty()) result += ", Język: " + item.document->language;
+        result += ") ---\\n" + item.document->text + "\\n\\n";
+    }
+    return result;
+}
+
 void RAGManager::saveDatabase(const std::string& dbPath) {
     std::lock_guard<std::mutex> lock(dbMutex);
     std::ofstream outFile(dbPath, std::ios::binary);
