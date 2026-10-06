@@ -118,21 +118,30 @@ int main() {
     const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
     ok &= check(repositoryContext.find("repository index bearer authentication token") != std::string::npos,
                 "repository indexer stores relative source and language metadata");
-    ok &= check(rag.retrieveContext("ignored dependency marker", 2,
-                                    "node_modules/ignored.js", "javascript").empty(),
-                "repository indexer excludes ignored directories");
-    ok &= check(rag.retrieveContext("generated distribution marker", 2,
-                                    "dist/bundle.js", "javascript").empty(),
-                "repository indexer excludes distribution output");
-    ok &= check(rag.retrieveContext("vendored dependency marker", 2,
-                                    "vendor/library.php", "php").empty(),
-                "repository indexer excludes vendored dependencies");
-    ok &= check(rag.retrieveContext("generated rust target marker", 2,
-                                    "target/generated.rs", "rust").empty(),
-                "repository indexer excludes generated target directories");
-    ok &= check(rag.retrieveContext("virtual environment marker", 2,
-                                    ".venv/package.py", "python").empty(),
-                "repository indexer excludes virtual environments");
+    // Verify ignored directories through isolated repository fixtures. This tests the
+    // indexer's observable file count directly and avoids retrieval-score behavior.
+    const auto checkIgnoredDirectory = [&](const std::string& directory,
+                                           const std::string& filename,
+                                           const char* message) {
+        rag.clearForTesting();
+        const std::filesystem::path ignoredFixture = "rag_ignored_fixture";
+        std::filesystem::remove_all(ignoredFixture);
+        std::filesystem::create_directories(ignoredFixture / directory);
+        { std::ofstream(ignoredFixture / directory / filename) << "must not be indexed"; }
+        const size_t count = rag.indexRepository(ignoredFixture.string());
+        std::filesystem::remove_all(ignoredFixture);
+        ok &= check(count == 0, message);
+    };
+    checkIgnoredDirectory("node_modules", "ignored.js",
+                          "repository indexer excludes ignored directories");
+    checkIgnoredDirectory("dist", "bundle.js",
+                          "repository indexer excludes distribution output");
+    checkIgnoredDirectory("vendor", "library.php",
+                          "repository indexer excludes vendored dependencies");
+    checkIgnoredDirectory("target", "generated.rs",
+                          "repository indexer excludes generated target directories");
+    checkIgnoredDirectory(".venv", "package.py",
+                          "repository indexer excludes virtual environments");
     std::filesystem::remove_all(repoFixture);
 
     rag.clearForTesting();
