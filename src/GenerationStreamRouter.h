@@ -9,7 +9,16 @@ struct GenerationProgressEvent {
         GenerationStarted,
         GenerationCompleted,
         GenerationCancelled,
-        GenerationFailed
+        GenerationFailed,
+        FileRead,
+        FileChanged,
+        BuildStarted,
+        BuildFailed,
+        BuildPassed,
+        TestStarted,
+        TestFailed,
+        TestPassed,
+        TaskCompleted
     };
 
     Type type;
