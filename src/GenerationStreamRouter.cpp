@@ -1,10 +1,12 @@
 #include "GenerationStreamRouter.h"
 
 GenerationStreamRouter::GenerationStreamRouter(
-    ThoughtUpdate thoughtUpdate, CodeAppend codeAppend, CodeRemove codeRemove)
+    ThoughtUpdate thoughtUpdate, CodeAppend codeAppend, CodeRemove codeRemove,
+    ProgressUpdate progressUpdate)
     : thoughtUpdate_(std::move(thoughtUpdate)),
       codeAppend_(std::move(codeAppend)),
-      codeRemove_(std::move(codeRemove)) {}
+      codeRemove_(std::move(codeRemove)),
+      progressUpdate_(std::move(progressUpdate)) {}
 
 void GenerationStreamRouter::onToken(char c, bool isThought) {
     if (isThought) {
@@ -24,4 +26,10 @@ void GenerationStreamRouter::onRemove(int count) {
 
 const std::string& GenerationStreamRouter::thoughtBuffer() const {
     return thoughtBuffer_;
+}
+
+void GenerationStreamRouter::onProgress(GenerationProgressEvent::Type type,
+                                        const std::string& message) {
+    if (progressUpdate_)
+        progressUpdate_({type, message});
 }
