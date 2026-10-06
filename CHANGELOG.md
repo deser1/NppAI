@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Structured coding-agent task outcome records with success/failure/rollback status, repair diagnostics, unified patch diff, and deterministic JSONL serialization for later correction-data pipelines.
 - Deterministic end-to-end coding-agent integration coverage for successful patch validation and failed-build rollback/recovery.
 - Guarded patch rollback/recovery that restores original content only when the workspace still matches the applied proposal, refusing to overwrite later user changes.
 - Bounded coding-agent repair controller with a hard validation-attempt limit and ordered diagnostic history for failed repair attempts.
