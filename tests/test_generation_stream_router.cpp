@@ -40,11 +40,25 @@ int main() {
     router.onProgress(GenerationProgressEvent::Type::ContextReady, "Repository context ready");
     router.onProgress(GenerationProgressEvent::Type::GenerationStarted);
     router.onProgress(GenerationProgressEvent::Type::GenerationCompleted, "Response ready");
-    ok &= check(progress.size() == 4, "observable progress events reach the UI-facing callback");
+    router.onProgress(GenerationProgressEvent::Type::FileRead, "src/main.cpp");
+    router.onProgress(GenerationProgressEvent::Type::FileChanged, "src/main.cpp");
+    router.onProgress(GenerationProgressEvent::Type::BuildStarted, "Building workspace");
+    router.onProgress(GenerationProgressEvent::Type::BuildPassed, "Build passed");
+    router.onProgress(GenerationProgressEvent::Type::TestStarted, "Running tests");
+    router.onProgress(GenerationProgressEvent::Type::TestPassed, "Tests passed");
+    router.onProgress(GenerationProgressEvent::Type::TaskCompleted, "Task completed");
+    ok &= check(progress.size() == 11, "observable progress events reach the UI-facing callback");
     ok &= check(progress[0].type == GenerationProgressEvent::Type::TaskStarted &&
                     progress[1].type == GenerationProgressEvent::Type::ContextReady &&
                     progress[2].type == GenerationProgressEvent::Type::GenerationStarted &&
-                    progress[3].type == GenerationProgressEvent::Type::GenerationCompleted,
+                    progress[3].type == GenerationProgressEvent::Type::GenerationCompleted &&
+                    progress[4].type == GenerationProgressEvent::Type::FileRead &&
+                    progress[5].type == GenerationProgressEvent::Type::FileChanged &&
+                    progress[6].type == GenerationProgressEvent::Type::BuildStarted &&
+                    progress[7].type == GenerationProgressEvent::Type::BuildPassed &&
+                    progress[8].type == GenerationProgressEvent::Type::TestStarted &&
+                    progress[9].type == GenerationProgressEvent::Type::TestPassed &&
+                    progress[10].type == GenerationProgressEvent::Type::TaskCompleted,
                 "progress event ordering is preserved");
     ok &= check(progress[1].message == "Repository context ready",
                 "progress events carry concise observable status messages");
