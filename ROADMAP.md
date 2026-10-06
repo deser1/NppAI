@@ -38,7 +38,7 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 - [ ] Stream generated code and assistant output incrementally into the Notepad++ panel
 - [x] Add structured coding-agent task events such as file read, file changed, build/test started, failed, passed, and task completed through `GenerationStreamRouter`
 - [ ] Show concise observable progress in the UI without exposing private model reasoning
-- [ ] Add controlled repository file-reading tools with explicit workspace boundaries
+- [x] Add controlled repository file-reading tools with explicit workspace boundaries
 - [ ] Generate structured patches/diffs instead of blindly overwriting files
 - [ ] Add a user review/accept/reject step before applying proposed code changes
 - [ ] Add a compiler/test feedback loop: task -> context -> patch -> build/test -> error feedback -> repair

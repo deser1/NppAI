@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Workspace-bounded coding-agent file reader with canonical path validation and configurable read-size limits.
 - Structured coding-agent progress events for repository file reads/changes, build and test lifecycle results, and task completion.
 - Context-aware RAG retrieval that can softly prioritize the active source file and programming language while retaining relevant cross-file results.
 - Repository-aware generation context for using relevant project files during AI-assisted code generation.
