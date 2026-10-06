@@ -41,7 +41,7 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 - [x] Add controlled repository file-reading tools with explicit workspace boundaries
 - [x] Generate structured patches/diffs instead of blindly overwriting files
 - [x] Add a user review/accept/reject step before applying proposed code changes
-- [ ] Add a compiler/test feedback loop: task -> context -> patch -> build/test -> error feedback -> repair
+- [x] Add a compiler/test feedback loop: task -> context -> patch -> build/test -> error feedback -> repair
 - [ ] Limit repair iterations and preserve diagnostics to prevent uncontrolled agent loops
 - [ ] Add rollback/recovery when an applied change breaks the workspace
 - [ ] Add deterministic integration tests for successful and failing coding-agent tasks
