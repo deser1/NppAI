@@ -102,17 +102,46 @@ int main() {
     std::filesystem::remove_all(repoFixture);
     std::filesystem::create_directories(repoFixture / "src");
     std::filesystem::create_directories(repoFixture / "node_modules");
+    std::filesystem::create_directories(repoFixture / "dist");
+    std::filesystem::create_directories(repoFixture / "vendor");
+    std::filesystem::create_directories(repoFixture / "target");
+    std::filesystem::create_directories(repoFixture / ".venv");
     { std::ofstream(repoFixture / "src" / "auth.cpp") << "repository index bearer authentication token"; }
     { std::ofstream(repoFixture / "README.md") << "repository documentation marker"; }
     { std::ofstream(repoFixture / "node_modules" / "ignored.js") << "ignored dependency marker"; }
+    { std::ofstream(repoFixture / "dist" / "bundle.js") << "generated distribution marker"; }
+    { std::ofstream(repoFixture / "vendor" / "library.php") << "vendored dependency marker"; }
+    { std::ofstream(repoFixture / "target" / "generated.rs") << "generated rust target marker"; }
+    { std::ofstream(repoFixture / ".venv" / "package.py") << "virtual environment marker"; }
     const size_t indexedFiles = rag.indexRepository(repoFixture.string());
     ok &= check(indexedFiles == 2, "repository indexer scans supported files and ignores dependency directories");
     const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
     ok &= check(repositoryContext.find("repository index bearer authentication token") != std::string::npos,
                 "repository indexer stores relative source and language metadata");
-    const std::string ignoredContext = rag.retrieveContext("ignored dependency marker", 2);
-    ok &= check(ignoredContext.find("ignored dependency marker") == std::string::npos,
-                "repository indexer excludes ignored directories");
+    // Verify ignored directories through isolated repository fixtures. This tests the
+    // indexer's observable file count directly and avoids retrieval-score behavior.
+    const auto checkIgnoredDirectory = [&](const std::string& directory,
+                                           const std::string& filename,
+                                           const char* message) {
+        rag.clearForTesting();
+        const std::filesystem::path ignoredFixture = "rag_ignored_fixture";
+        std::filesystem::remove_all(ignoredFixture);
+        std::filesystem::create_directories(ignoredFixture / directory);
+        { std::ofstream(ignoredFixture / directory / filename) << "must not be indexed"; }
+        const size_t count = rag.indexRepository(ignoredFixture.string());
+        std::filesystem::remove_all(ignoredFixture);
+        ok &= check(count == 0, message);
+    };
+    checkIgnoredDirectory("node_modules", "ignored.js",
+                          "repository indexer excludes ignored directories");
+    checkIgnoredDirectory("dist", "bundle.js",
+                          "repository indexer excludes distribution output");
+    checkIgnoredDirectory("vendor", "library.php",
+                          "repository indexer excludes vendored dependencies");
+    checkIgnoredDirectory("target", "generated.rs",
+                          "repository indexer excludes generated target directories");
+    checkIgnoredDirectory(".venv", "package.py",
+                          "repository indexer excludes virtual environments");
     std::filesystem::remove_all(repoFixture);
 
     rag.clearForTesting();
