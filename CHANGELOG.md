@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Explicit patch review workflow with pending/accepted/rejected decisions and guarded apply that refuses stale or out-of-workspace changes.
 - Reviewable structured patch model with before/after content, typed changed lines, and unified-diff preview without writing to disk.
 - Workspace-bounded coding-agent file reader with canonical path validation and configurable read-size limits.
 - Structured coding-agent progress events for repository file reads/changes, build and test lifecycle results, and task completion.

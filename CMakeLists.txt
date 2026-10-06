@@ -31,6 +31,7 @@ add_library(NppAI SHARED
     src/RepositoryContext.cpp
     src/WorkspaceFileReader.cpp
     src/StructuredPatch.cpp
+    src/PatchReview.cpp
     src/TelemetryManager.cpp
     src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
@@ -112,6 +113,8 @@ add_executable(TestWorkspaceFileReader tests/test_workspace_file_reader.cpp src/
 target_include_directories(TestWorkspaceFileReader PRIVATE src)
 add_executable(TestStructuredPatch tests/test_structured_patch.cpp src/StructuredPatch.cpp)
 target_include_directories(TestStructuredPatch PRIVATE src)
+add_executable(TestPatchReview tests/test_patch_review.cpp src/PatchReview.cpp src/StructuredPatch.cpp src/WorkspaceFileReader.cpp)
+target_include_directories(TestPatchReview PRIVATE src)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
 add_dependencies(TestPluginDllContract NppAI)
 add_executable(TestPluginHostLifecycle tests/test_plugin_host_lifecycle.cpp)
@@ -140,6 +143,7 @@ add_test(NAME RAGRetrieval COMMAND TestRAGRetrieval)
 add_test(NAME RepositoryContext COMMAND TestRepositoryContext)
 add_test(NAME WorkspaceFileReader COMMAND TestWorkspaceFileReader)
 add_test(NAME StructuredPatch COMMAND TestStructuredPatch)
+add_test(NAME PatchReview COMMAND TestPatchReview)
 add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
 add_test(NAME PluginHostLifecycle COMMAND TestPluginHostLifecycle $<TARGET_FILE:NppAI>)
 
@@ -158,6 +162,7 @@ set_tests_properties(RAGRetrieval PROPERTIES LABELS "unit;rag" TIMEOUT 30)
 set_tests_properties(RepositoryContext PROPERTIES LABELS "unit;integration;rag" TIMEOUT 30)
 set_tests_properties(WorkspaceFileReader PROPERTIES LABELS "unit;integration;security;agent" TIMEOUT 30)
 set_tests_properties(StructuredPatch PROPERTIES LABELS "unit;integration;agent" TIMEOUT 30)
+set_tests_properties(PatchReview PROPERTIES LABELS "unit;integration;security;agent" TIMEOUT 30)
 set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
 set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;host" TIMEOUT 30)
 
