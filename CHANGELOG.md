@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Bounded coding-agent repair controller with a hard validation-attempt limit and ordered diagnostic history for failed repair attempts.
 - Coding-agent build/test feedback loop that preserves compiler or test diagnostics as repair feedback and emits observable validation lifecycle events.
 - Explicit patch review workflow with pending/accepted/rejected decisions and guarded apply that refuses stale or out-of-workspace changes.
 - Reviewable structured patch model with before/after content, typed changed lines, and unified-diff preview without writing to disk.

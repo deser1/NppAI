@@ -33,6 +33,7 @@ add_library(NppAI SHARED
     src/StructuredPatch.cpp
     src/PatchReview.cpp
     src/AgentFeedbackLoop.cpp
+    src/BoundedRepairLoop.cpp
     src/TelemetryManager.cpp
     src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
@@ -118,6 +119,8 @@ add_executable(TestPatchReview tests/test_patch_review.cpp src/PatchReview.cpp s
 target_include_directories(TestPatchReview PRIVATE src)
 add_executable(TestAgentFeedbackLoop tests/test_agent_feedback_loop.cpp src/AgentFeedbackLoop.cpp src/GenerationStreamRouter.cpp)
 target_include_directories(TestAgentFeedbackLoop PRIVATE src)
+add_executable(TestBoundedRepairLoop tests/test_bounded_repair_loop.cpp src/BoundedRepairLoop.cpp src/AgentFeedbackLoop.cpp src/GenerationStreamRouter.cpp)
+target_include_directories(TestBoundedRepairLoop PRIVATE src)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
 add_dependencies(TestPluginDllContract NppAI)
 add_executable(TestPluginHostLifecycle tests/test_plugin_host_lifecycle.cpp)
@@ -148,6 +151,7 @@ add_test(NAME WorkspaceFileReader COMMAND TestWorkspaceFileReader)
 add_test(NAME StructuredPatch COMMAND TestStructuredPatch)
 add_test(NAME PatchReview COMMAND TestPatchReview)
 add_test(NAME AgentFeedbackLoop COMMAND TestAgentFeedbackLoop)
+add_test(NAME BoundedRepairLoop COMMAND TestBoundedRepairLoop)
 add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
 add_test(NAME PluginHostLifecycle COMMAND TestPluginHostLifecycle $<TARGET_FILE:NppAI>)
 
@@ -168,6 +172,7 @@ set_tests_properties(WorkspaceFileReader PROPERTIES LABELS "unit;integration;sec
 set_tests_properties(StructuredPatch PROPERTIES LABELS "unit;integration;agent" TIMEOUT 30)
 set_tests_properties(PatchReview PROPERTIES LABELS "unit;integration;security;agent" TIMEOUT 30)
 set_tests_properties(AgentFeedbackLoop PROPERTIES LABELS "unit;integration;agent" TIMEOUT 30)
+set_tests_properties(BoundedRepairLoop PROPERTIES LABELS "unit;integration;agent;safety" TIMEOUT 30)
 set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
 set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;host" TIMEOUT 30)
 
