@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Guarded patch rollback/recovery that restores original content only when the workspace still matches the applied proposal, refusing to overwrite later user changes.
 - Bounded coding-agent repair controller with a hard validation-attempt limit and ordered diagnostic history for failed repair attempts.
 - Coding-agent build/test feedback loop that preserves compiler or test diagnostics as repair feedback and emits observable validation lifecycle events.
 - Explicit patch review workflow with pending/accepted/rejected decisions and guarded apply that refuses stale or out-of-workspace changes.
