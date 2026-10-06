@@ -44,7 +44,7 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 - [x] Add a compiler/test feedback loop: task -> context -> patch -> build/test -> error feedback -> repair
 - [x] Limit repair iterations and preserve diagnostics to prevent uncontrolled agent loops
 - [x] Add rollback/recovery when an applied change breaks the workspace
-- [ ] Add deterministic integration tests for successful and failing coding-agent tasks
+- [x] Add deterministic integration tests for successful and failing coding-agent tasks
 - [ ] Record task outcomes suitable for later supervised/correction-data training
 - [ ] Evaluate coding quality on repository-level tasks, not only isolated generation prompts
 
