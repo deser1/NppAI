@@ -92,9 +92,11 @@ int main() {
     rag.addDocument("parser request validation helper", "scripts/active.py", "python");
     const std::string rankedContext = rag.retrieveContextRanked(
         "parser request validation helper", 3, "src/active.cpp", "cpp");
-    const auto activePos = rankedContext.find("Źródło: src/active.cpp");
-    const auto sharedPos = rankedContext.find("Źródło: src/shared.cpp");
-    const auto pythonPos = rankedContext.find("Źródło: scripts/active.py");
+    // Assert ranking by stable metadata values rather than localized presentation
+    // labels, which may be compiled through a non-UTF-8 MSVC code page.
+    const auto activePos = rankedContext.find("src/active.cpp");
+    const auto sharedPos = rankedContext.find("src/shared.cpp");
+    const auto pythonPos = rankedContext.find("scripts/active.py");
     ok &= check(activePos != std::string::npos && sharedPos != std::string::npos &&
                     pythonPos != std::string::npos && activePos < sharedPos && sharedPos < pythonPos,
                 "context-aware ranking prefers active source then matching language without filtering alternatives");
