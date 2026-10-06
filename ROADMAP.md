@@ -36,7 +36,7 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 
 - [x] Use the existing `NppAIEngine::generate(..., onToken, onRemove)` callbacks as the low-level token/backtracking stream
 - [ ] Stream generated code and assistant output incrementally into the Notepad++ panel
-- [ ] Add structured coding-agent task events such as file read, file changed, build/test started, failed, passed, and task completed (generation lifecycle events are now routed through `GenerationStreamRouter`)
+- [x] Add structured coding-agent task events such as file read, file changed, build/test started, failed, passed, and task completed through `GenerationStreamRouter`
 - [ ] Show concise observable progress in the UI without exposing private model reasoning
 - [ ] Add controlled repository file-reading tools with explicit workspace boundaries
 - [ ] Generate structured patches/diffs instead of blindly overwriting files
