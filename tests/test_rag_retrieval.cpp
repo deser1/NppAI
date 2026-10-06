@@ -118,16 +118,20 @@ int main() {
     const std::string repositoryContext = rag.retrieveContext("bearer authentication token", 1, "src/auth.cpp", "cpp");
     ok &= check(repositoryContext.find("repository index bearer authentication token") != std::string::npos,
                 "repository indexer stores relative source and language metadata");
-    const std::string ignoredContext = rag.retrieveContext("ignored dependency marker", 2);
-    ok &= check(ignoredContext.find("ignored dependency marker") == std::string::npos,
+    ok &= check(rag.retrieveContext("ignored dependency marker", 2,
+                                    "node_modules/ignored.js", "javascript").empty(),
                 "repository indexer excludes ignored directories");
-    ok &= check(rag.retrieveContext("generated distribution marker", 2).empty(),
+    ok &= check(rag.retrieveContext("generated distribution marker", 2,
+                                    "dist/bundle.js", "javascript").empty(),
                 "repository indexer excludes distribution output");
-    ok &= check(rag.retrieveContext("vendored dependency marker", 2).empty(),
+    ok &= check(rag.retrieveContext("vendored dependency marker", 2,
+                                    "vendor/library.php", "php").empty(),
                 "repository indexer excludes vendored dependencies");
-    ok &= check(rag.retrieveContext("generated rust target marker", 2).empty(),
+    ok &= check(rag.retrieveContext("generated rust target marker", 2,
+                                    "target/generated.rs", "rust").empty(),
                 "repository indexer excludes generated target directories");
-    ok &= check(rag.retrieveContext("virtual environment marker", 2).empty(),
+    ok &= check(rag.retrieveContext("virtual environment marker", 2,
+                                    ".venv/package.py", "python").empty(),
                 "repository indexer excludes virtual environments");
     std::filesystem::remove_all(repoFixture);
 
