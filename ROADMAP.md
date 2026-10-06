@@ -30,7 +30,56 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [ ] Define correction-data retention and privacy policy
 - [ ] Add abuse/error-path integration tests
 
-### 2. Experimental Mixture-of-Experts support
+### 2. Coding agent and live progress
+
+Turn NppAI from a code-answering assistant into a repository-aware local coding agent whose observable work can be followed in the Notepad++ UI.
+
+- [ ] Add token streaming from the inference engine (for example, `generateStream(callback)`)
+- [ ] Stream generated code and assistant output incrementally into the Notepad++ panel
+- [ ] Add structured task events such as task started, file read, file changed, build/test started, failed, passed, and task completed
+- [ ] Show concise observable progress in the UI without exposing private model reasoning
+- [ ] Add controlled repository file-reading tools with explicit workspace boundaries
+- [ ] Generate structured patches/diffs instead of blindly overwriting files
+- [ ] Add a user review/accept/reject step before applying proposed code changes
+- [ ] Add a compiler/test feedback loop: task -> context -> patch -> build/test -> error feedback -> repair
+- [ ] Limit repair iterations and preserve diagnostics to prevent uncontrolled agent loops
+- [ ] Add rollback/recovery when an applied change breaks the workspace
+- [ ] Add deterministic integration tests for successful and failing coding-agent tasks
+- [ ] Record task outcomes suitable for later supervised/correction-data training
+- [ ] Evaluate coding quality on repository-level tasks, not only isolated generation prompts
+
+Target workflow:
+
+```text
+User task
+   |
+   v
+Task planner
+   |
+   v
+Repository context / RAG
+   |
+   v
+NppAI model + streaming
+   |
+   v
+Read -> Patch -> Build -> Test
+                  |
+               failure
+                  |
+                  v
+            Diagnose -> Repair
+                  |
+                  v
+             Build -> Test
+                  |
+                success
+                  |
+                  v
+          Review diff -> Apply
+```
+
+### 3. Experimental Mixture-of-Experts support
 
 - [ ] Define MoE model-format metadata
 - [ ] Implement deterministic top-k expert routing
@@ -39,7 +88,7 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [ ] Extend Python export/validation tooling for MoE
 - [ ] Benchmark MoE against the dense baseline
 
-### 3. RAG quality and scale validation
+### 4. RAG quality and scale validation
 
 - [ ] Add retrieval-quality fixtures with expected top-k results
 - [ ] Measure indexing latency and memory use on larger repositories
@@ -47,7 +96,7 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [ ] Evaluate ranking weights against representative coding queries
 - [ ] Document quality/performance tradeoffs
 
-### 4. Model quality and training
+### 5. Model quality and training
 
 - [ ] Establish reproducible training/evaluation datasets
 - [ ] Add generation-quality evaluation metrics
@@ -55,7 +104,7 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [ ] Validate correction-data retraining on held-out examples
 - [ ] Publish reproducible model-quality reports
 
-### 5. Release readiness
+### 6. Release readiness
 
 - [ ] Add end-user installation/update validation
 - [ ] Document supported Notepad++ and Windows versions
