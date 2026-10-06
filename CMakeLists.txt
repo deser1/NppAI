@@ -35,6 +35,7 @@ add_library(NppAI SHARED
     src/PatchRollback.cpp
     src/AgentFeedbackLoop.cpp
     src/BoundedRepairLoop.cpp
+    src/AgentTaskOutcome.cpp
     src/TelemetryManager.cpp
     src/TelemetryRedaction.cpp
     src/NppAIEngine.cpp
@@ -124,6 +125,8 @@ add_executable(TestAgentFeedbackLoop tests/test_agent_feedback_loop.cpp src/Agen
 target_include_directories(TestAgentFeedbackLoop PRIVATE src)
 add_executable(TestBoundedRepairLoop tests/test_bounded_repair_loop.cpp src/BoundedRepairLoop.cpp src/AgentFeedbackLoop.cpp src/GenerationStreamRouter.cpp)
 target_include_directories(TestBoundedRepairLoop PRIVATE src)
+add_executable(TestAgentTaskOutcome tests/test_agent_task_outcome.cpp src/AgentTaskOutcome.cpp src/BoundedRepairLoop.cpp src/AgentFeedbackLoop.cpp src/GenerationStreamRouter.cpp src/StructuredPatch.cpp)
+target_include_directories(TestAgentTaskOutcome PRIVATE src)
 add_executable(TestAgentWorkflowIntegration tests/test_agent_workflow_integration.cpp src/AgentFeedbackLoop.cpp src/GenerationStreamRouter.cpp src/PatchReview.cpp src/PatchRollback.cpp src/StructuredPatch.cpp src/WorkspaceFileReader.cpp)
 target_include_directories(TestAgentWorkflowIntegration PRIVATE src)
 add_executable(TestPluginDllContract tests/test_plugin_dll_contract.cpp)
@@ -158,6 +161,7 @@ add_test(NAME PatchReview COMMAND TestPatchReview)
 add_test(NAME PatchRollback COMMAND TestPatchRollback)
 add_test(NAME AgentFeedbackLoop COMMAND TestAgentFeedbackLoop)
 add_test(NAME BoundedRepairLoop COMMAND TestBoundedRepairLoop)
+add_test(NAME AgentTaskOutcome COMMAND TestAgentTaskOutcome)
 add_test(NAME AgentWorkflowIntegration COMMAND TestAgentWorkflowIntegration)
 add_test(NAME PluginDllContract COMMAND TestPluginDllContract $<TARGET_FILE:NppAI>)
 add_test(NAME PluginHostLifecycle COMMAND TestPluginHostLifecycle $<TARGET_FILE:NppAI>)
@@ -181,6 +185,7 @@ set_tests_properties(PatchReview PROPERTIES LABELS "unit;integration;security;ag
 set_tests_properties(PatchRollback PROPERTIES LABELS "unit;integration;security;agent;recovery" TIMEOUT 30)
 set_tests_properties(AgentFeedbackLoop PROPERTIES LABELS "unit;integration;agent" TIMEOUT 30)
 set_tests_properties(BoundedRepairLoop PROPERTIES LABELS "unit;integration;agent;safety" TIMEOUT 30)
+set_tests_properties(AgentTaskOutcome PROPERTIES LABELS "unit;integration;agent;training" TIMEOUT 30)
 set_tests_properties(AgentWorkflowIntegration PROPERTIES LABELS "integration;agent;recovery" TIMEOUT 30)
 set_tests_properties(PluginDllContract PROPERTIES LABELS "integration;plugin" TIMEOUT 30)
 set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;host" TIMEOUT 30)
