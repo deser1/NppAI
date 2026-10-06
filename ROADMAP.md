@@ -34,9 +34,9 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 
 Turn NppAI from a code-answering assistant into a repository-aware local coding agent whose observable work can be followed in the Notepad++ UI.
 
-- [ ] Add token streaming from the inference engine (for example, `generateStream(callback)`)
+- [x] Use the existing `NppAIEngine::generate(..., onToken, onRemove)` callbacks as the low-level token/backtracking stream
 - [ ] Stream generated code and assistant output incrementally into the Notepad++ panel
-- [ ] Add structured task events such as task started, file read, file changed, build/test started, failed, passed, and task completed
+- [ ] Add structured coding-agent task events such as file read, file changed, build/test started, failed, passed, and task completed (generation lifecycle events are now routed through `GenerationStreamRouter`)
 - [ ] Show concise observable progress in the UI without exposing private model reasoning
 - [ ] Add controlled repository file-reading tools with explicit workspace boundaries
 - [ ] Generate structured patches/diffs instead of blindly overwriting files
@@ -47,6 +47,12 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 - [ ] Add deterministic integration tests for successful and failing coding-agent tasks
 - [ ] Record task outcomes suitable for later supervised/correction-data training
 - [ ] Evaluate coding quality on repository-level tasks, not only isolated generation prompts
+
+Streaming architecture decision:
+
+- `NppAIEngine::generate()` remains the low-level inference/token producer.
+- `GenerationStreamRouter` is the UI-facing streaming boundary for code, backtracking, and observable progress events.
+- Higher-level coding-agent orchestration should emit progress through the router rather than coupling Notepad++ UI code directly to the inference engine.
 
 Target workflow:
 
