@@ -5,12 +5,14 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Context-aware RAG retrieval that can softly prioritize the active source file and programming language while retaining relevant cross-file results.
 - Repository-aware generation context for using relevant project files during AI-assisted code generation.
 - Automated release workflow for version tags.
 - Ready-to-install Notepad++ plugin ZIP packages for x64, x86, and ARM64.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- Fixed the Windows/MSVC build for ranked RAG retrieval by declaring the new `retrieveContextRanked` public API in `RAGManager`, and made its ranking regression test independent of the compiler code page.
 - Repository indexing exclusion tests now use isolated fixtures and direct indexed-file counts, making generated/vendor/virtual-environment checks deterministic across Release builds.
 - Release artifacts now use the Notepad++ plugin-directory layout and include README and model-format documentation.
 - Tagged releases are built directly from the tagged source revision for easier verification and evaluation.

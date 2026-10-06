@@ -23,6 +23,9 @@ public:
     std::string retrieveContext(const std::string& query, int topK,
                                 const std::string& sourceFilter,
                                 const std::string& languageFilter);
+    std::string retrieveContextRanked(const std::string& query, int topK,
+                                      const std::string& preferredSource,
+                                      const std::string& preferredLanguage);
 
     // Zapis/Odczyt na dysk (trwała pamięć)
     void saveDatabase(const std::string& dbPath);

@@ -87,6 +87,21 @@ int main() {
                 "language filter excludes non-matching documents");
 
     rag.clearForTesting();
+    rag.addDocument("parser request validation helper", "src/shared.cpp", "cpp");
+    rag.addDocument("parser request validation helper", "src/active.cpp", "cpp");
+    rag.addDocument("parser request validation helper", "scripts/active.py", "python");
+    const std::string rankedContext = rag.retrieveContextRanked(
+        "parser request validation helper", 3, "src/active.cpp", "cpp");
+    // Assert ranking by stable metadata values rather than localized presentation
+    // labels, which may be compiled through a non-UTF-8 MSVC code page.
+    const auto activePos = rankedContext.find("src/active.cpp");
+    const auto sharedPos = rankedContext.find("src/shared.cpp");
+    const auto pythonPos = rankedContext.find("scripts/active.py");
+    ok &= check(activePos != std::string::npos && sharedPos != std::string::npos &&
+                    pythonPos != std::string::npos && activePos < sharedPos && sharedPos < pythonPos,
+                "context-aware ranking prefers active source then matching language without filtering alternatives");
+
+    rag.clearForTesting();
     rag.updateSource("legacy parser implementation", "src/parser.cpp", "cpp");
     rag.updateSource("modern parser implementation", "src/parser.cpp", "cpp");
     const std::string updatedSource = rag.retrieveContext("parser implementation", 3, "src/parser.cpp", "cpp");
