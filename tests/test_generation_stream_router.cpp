@@ -1,6 +1,7 @@
 #include "GenerationStreamRouter.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 static bool check(bool value, const char* message) {
     if (!value) std::cerr << "FAIL: " << message << "\n";
@@ -12,6 +13,7 @@ int main() {
     std::string code;
     std::string visibleThought;
     int removed = 0;
+    std::vector<GenerationProgressEvent> progress;
 
     GenerationStreamRouter router(
         [&](const std::string& thought) { visibleThought = thought; },
@@ -19,7 +21,8 @@ int main() {
         [&](int count) {
             removed += count;
             while (count-- > 0 && !code.empty()) code.pop_back();
-        });
+        },
+        [&](const GenerationProgressEvent& event) { progress.push_back(event); });
 
     router.onToken('a', false);
     router.onToken('b', false);
@@ -32,6 +35,19 @@ int main() {
     ok &= check(router.thoughtBuffer() == "x\n", "thought tokens stay out of generated code");
     ok &= check(visibleThought == "x\n", "thought callback flushes on newline");
     ok &= check(removed == 1, "remove callback receives requested count");
+
+    router.onProgress(GenerationProgressEvent::Type::TaskStarted, "Preparing coding task");
+    router.onProgress(GenerationProgressEvent::Type::ContextReady, "Repository context ready");
+    router.onProgress(GenerationProgressEvent::Type::GenerationStarted);
+    router.onProgress(GenerationProgressEvent::Type::GenerationCompleted, "Response ready");
+    ok &= check(progress.size() == 4, "observable progress events reach the UI-facing callback");
+    ok &= check(progress[0].type == GenerationProgressEvent::Type::TaskStarted &&
+                    progress[1].type == GenerationProgressEvent::Type::ContextReady &&
+                    progress[2].type == GenerationProgressEvent::Type::GenerationStarted &&
+                    progress[3].type == GenerationProgressEvent::Type::GenerationCompleted,
+                "progress event ordering is preserved");
+    ok &= check(progress[1].message == "Repository context ready",
+                "progress events carry concise observable status messages");
 
     std::string twenty;
     GenerationStreamRouter cadence(
