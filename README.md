@@ -211,7 +211,7 @@ The GUI-free DLL contract and host-level Notepad++ integration harness are cover
 - [ ] Complete public-deployment API hardening (authentication policy, rate limiting policy, request-size enforcement, TLS termination, and data-retention/privacy policy)
 - [x] Model integrity checks / hashes
 - [x] Formal release process
-- [ ] Improved RAG indexing and retrieval
+- [x] Improved RAG indexing and retrieval
 - [ ] Experimental MoE support
 - [x] Broader quantization correctness and accuracy coverage
 - [x] GUI-free Notepad++ plugin DLL contract test

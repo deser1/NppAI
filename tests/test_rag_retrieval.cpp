@@ -100,6 +100,26 @@ int main() {
     ok &= check(activePos != std::string::npos && sharedPos != std::string::npos &&
                     pythonPos != std::string::npos && activePos < sharedPos && sharedPos < pythonPos,
                 "context-aware ranking prefers active source then matching language without filtering alternatives");
+    ok &= check(rankedContext.find("\\n") == std::string::npos &&
+                    rankedContext.find('\n') != std::string::npos,
+                "ranked context uses real line breaks instead of escaped newline text");
+
+    rag.clearForTesting();
+    const std::string rankedOverlapCore =
+        "authentication middleware validates bearer token request response session";
+    rag.addDocument(rankedOverlapCore + " primary ranked detail", "src/auth.cpp", "cpp");
+    rag.addDocument(rankedOverlapCore + " overlapping ranked detail", "src/auth.cpp", "cpp");
+    rag.addDocument("authentication audit logger records security event", "src/audit.cpp", "cpp");
+    const std::string diversifiedRanked = rag.retrieveContextRanked(
+        "authentication bearer token", 2, "src/auth.cpp", "cpp");
+    const bool hasRankedPrimary =
+        diversifiedRanked.find("primary ranked detail") != std::string::npos;
+    const bool hasRankedOverlap =
+        diversifiedRanked.find("overlapping ranked detail") != std::string::npos;
+    ok &= check(hasRankedPrimary != hasRankedOverlap,
+                "ranked retrieval keeps only one near-duplicate chunk from the same source");
+    ok &= check(diversifiedRanked.find("authentication audit logger") != std::string::npos,
+                "ranked retrieval fills topK with a distinct relevant result");
 
     rag.clearForTesting();
     rag.updateSource("legacy parser implementation", "src/parser.cpp", "cpp");
