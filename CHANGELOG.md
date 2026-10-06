@@ -12,6 +12,7 @@ All notable changes to NppAI are documented in this file.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- Ranked RAG retrieval now emits normal multiline context and diversifies near-duplicate chunks from the same source while preserving source/language preference bonuses.
 - Fixed the Windows/MSVC build for ranked RAG retrieval by declaring the new `retrieveContextRanked` public API in `RAGManager`, and made its ranking regression test independent of the compiler code page.
 - Repository indexing exclusion tests now use isolated fixtures and direct indexed-file counts, making generated/vendor/virtual-environment checks deterministic across Release builds.
 - Release artifacts now use the Notepad++ plugin-directory layout and include README and model-format documentation.
