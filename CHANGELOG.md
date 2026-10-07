@@ -1,5 +1,6 @@
 ## Unreleased
 
+- Added deterministic RAG retrieval-quality fixtures covering representative JSON, authentication, SQL, DirectX, and Python coding queries with expected top-k ordering.
 - Added a deterministic CI benchmark comparing 8-expert dense combination with top-2 MoE routing; initial windows-2022 x64 baseline measured 20.962 us/op dense versus 21.1726 us/op MoE (0.990x dense/MoE ratio), documenting that the current routing path is not yet a speedup.
 
 # Changelog
