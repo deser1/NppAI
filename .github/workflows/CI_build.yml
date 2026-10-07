@@ -90,8 +90,8 @@ jobs:
     - name: Configure tensor benchmark
       run: cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
 
-    - name: Build tensor benchmark
-      run: cmake --build build-bench --config Release --target BenchmarkTensor
+    - name: Build benchmarks
+      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE
 
     - name: Run tensor benchmark
       shell: pwsh
@@ -170,6 +170,12 @@ jobs:
           throw "Tensor benchmark exceeded regression ceiling."
         }
         "Benchmark regression gate PASSED." | Tee-Object -FilePath benchmark-results\regression-gate.txt
+
+    - name: Run MoE vs dense benchmark
+      shell: pwsh
+      run: |
+        $output = & .\build-bench\Release\BenchmarkMoE.exe
+        $output | Tee-Object -FilePath benchmark-results\moe-vs-dense.txt
 
     - name: Upload benchmark results
       if: always()
