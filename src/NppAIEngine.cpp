@@ -609,6 +609,45 @@ bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
   data.clear(); data.shrink_to_fit(); return true;
 }
 
+// --- MOE INFERENCE ---
+Tensor MoEInference::combineExpertOutputs(
+    const std::vector<Tensor>& expertOutputs,
+    const std::vector<MoERoute>& routes) {
+  if (expertOutputs.empty() || routes.empty())
+    throw std::invalid_argument("MoEInference requires expert outputs and routes");
+
+  const std::vector<int>& shape = expertOutputs.front().shape;
+  const size_t valueCount = expertOutputs.front().data.size();
+  if (valueCount == 0 || !expertOutputs.front().data_q8.empty())
+    throw std::invalid_argument("MoEInference requires FP32 expert outputs");
+
+  double weightSum = 0.0;
+  for (const auto& route : routes) {
+    if (route.expertIndex < 0 ||
+        static_cast<size_t>(route.expertIndex) >= expertOutputs.size() ||
+        !std::isfinite(route.weight) || route.weight < 0.0f)
+      throw std::invalid_argument("MoEInference invalid route");
+    const Tensor& expert = expertOutputs[route.expertIndex];
+    if (expert.shape != shape || expert.data.size() != valueCount ||
+        !expert.data_q8.empty())
+      throw std::invalid_argument("MoEInference expert output shape mismatch");
+    weightSum += route.weight;
+  }
+  if (!std::isfinite(weightSum) || std::abs(weightSum - 1.0) > 1e-5)
+    throw std::invalid_argument("MoEInference route weights must sum to one");
+
+  Tensor result(shape);
+  for (const auto& route : routes) {
+    const Tensor& expert = expertOutputs[route.expertIndex];
+    for (size_t i = 0; i < valueCount; ++i) {
+      if (!std::isfinite(expert.data[i]))
+        throw std::invalid_argument("MoEInference requires finite expert outputs");
+      result.data[i] += route.weight * expert.data[i];
+    }
+  }
+  return result;
+}
+
 // --- MOE ROUTING ---
 std::vector<MoERoute> MoERouter::topK(const std::vector<float>& logits, int k) {
   if (k <= 0 || logits.empty() || static_cast<size_t>(k) > logits.size())

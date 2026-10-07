@@ -46,6 +46,15 @@ struct MoERoute {
     bool usedFallback = false;
 };
 
+class MoEInference {
+public:
+    // Combines same-shaped expert outputs using normalized routing weights.
+    // This is the execution boundary used by MoE inference after routing.
+    static Tensor combineExpertOutputs(
+        const std::vector<Tensor>& expertOutputs,
+        const std::vector<MoERoute>& routes);
+};
+
 class MoERouter {
 public:
     // Selects the k highest finite logits. Ties are resolved by the lower

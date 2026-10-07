@@ -90,7 +90,7 @@ Read -> Patch -> Build -> Test
 - [x] Define MoE model-format metadata
 - [x] Implement deterministic top-k expert routing
 - [x] Add expert capacity/fallback behavior
-- [ ] Add C++ inference correctness tests
+- [x] Add C++ inference correctness tests
 - [ ] Extend Python export/validation tooling for MoE
 - [ ] Benchmark MoE against the dense baseline
 
