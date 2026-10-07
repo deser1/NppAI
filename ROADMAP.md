@@ -46,7 +46,7 @@ Turn NppAI from a code-answering assistant into a repository-aware local coding 
 - [x] Add rollback/recovery when an applied change breaks the workspace
 - [x] Add deterministic integration tests for successful and failing coding-agent tasks
 - [x] Record task outcomes suitable for later supervised/correction-data training
-- [ ] Evaluate coding quality on repository-level tasks, not only isolated generation prompts
+- [x] Evaluate coding quality on repository-level tasks, not only isolated generation prompts
 
 Streaming architecture decision:
 
