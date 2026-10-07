@@ -140,6 +140,14 @@ class ApiKeyAuthenticationTests(unittest.IsolatedAsyncioTestCase):
             "user_id": "test",
         }).encode("utf-8")
 
+    async def test_fails_closed_when_api_key_is_not_configured(self):
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", {}, clear=True), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"):
+            status, body, _ = await call_app(self.valid_body(), None)
+        self.assertEqual(status, 503)
+        self.assertEqual(json.loads(body), {"detail": "API authentication is not configured"})
+
     async def test_requires_api_key_when_configured(self):
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", {server_backend.API_KEY_ENV: "secret"}, clear=False), \
