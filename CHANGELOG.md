@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Repository-level coding-agent quality evaluation metrics covering end-to-end task success, patch accuracy, build/test pass rates, workspace safety, and repair effort, with deterministic regression coverage.
 - Live incremental assistant/code output in the Notepad++ panel, synchronized with generation backtracking while keeping private reasoning out of the UI.
 - Concise generation status updates in the panel through `GenerationProgressEvent`.
 - Structured coding-agent task outcome records with success/failure/rollback status, repair diagnostics, unified patch diff, and deterministic JSONL serialization for later correction-data pipelines.
