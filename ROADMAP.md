@@ -92,7 +92,7 @@ Read -> Patch -> Build -> Test
 - [x] Add expert capacity/fallback behavior
 - [x] Add C++ inference correctness tests
 - [x] Extend Python export/validation tooling for MoE
-- [ ] Benchmark MoE against the dense baseline
+- [x] Benchmark MoE against the dense baseline (CI baseline: dense 20.962 us/op, MoE top-2 21.1726 us/op; 0.990x dense/MoE ratio on windows-2022 x64)
 
 ### 4. RAG quality and scale validation
 
