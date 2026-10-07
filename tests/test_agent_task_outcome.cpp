@@ -24,9 +24,9 @@ int main() {
                     good.attempts == 2 && good.diagnostics.size() == 1,
                 "successful repair result becomes a successful task outcome");
     const auto json = good.toJsonLine();
-    ok &= check(json.find(R"json("task":"Fix \\"x\\"\\nvalue")json") != std::string::npos,
+    ok &= check(json.find(R"json("task":"Fix \"x\"\nvalue")json") != std::string::npos,
                 "JSONL escapes task text deterministically");
-    ok &= check(json.find(R"json(compiler: expected \\";\\"\\nline 4)json") != std::string::npos,
+    ok &= check(json.find(R"json(compiler: expected \";\"\nline 4)json") != std::string::npos,
                 "JSONL escapes diagnostic text deterministically");
     ok &= check(json.find(R"json("status":"succeeded")json") != std::string::npos &&
                     json.find(R"json("patch":)json") != std::string::npos,
