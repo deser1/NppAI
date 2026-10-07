@@ -74,7 +74,7 @@ class CheckModelUpdateResponse(BaseModel):
 def require_api_key(x_api_key: str | None = Header(default=None)) -> None:
     expected_key = os.getenv(API_KEY_ENV)
     if not expected_key:
-        return
+        raise HTTPException(status_code=503, detail="API authentication is not configured")
     if x_api_key is None:
         raise HTTPException(status_code=401, detail="API key required")
     if not secrets.compare_digest(x_api_key, expected_key):
