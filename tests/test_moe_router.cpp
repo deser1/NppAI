@@ -38,6 +38,66 @@ int main() {
     catch (const std::invalid_argument&) { rejected = true; }
     if (!rejected) { std::cerr << "FAIL: non-finite router logits were accepted\n"; return 1; }
 
-    std::cout << "MoE top-k routing validation passed.\n";
+
+    {
+        std::vector<int> loads = {1, 0, 0};
+        const auto capacityRoutes =
+            MoERouter::topKWithCapacity({3.0f, 2.0f, 1.0f}, 2, loads, 1);
+        if (capacityRoutes.size() != 2 ||
+            capacityRoutes[0].expertIndex != 1 ||
+            capacityRoutes[1].expertIndex != 2 ||
+            !capacityRoutes[0].usedFallback ||
+            !capacityRoutes[1].usedFallback ||
+            loads != std::vector<int>({1, 1, 1}) ||
+            !closeEnough(capacityRoutes[0].weight + capacityRoutes[1].weight, 1.0f)) {
+            std::cerr << "FAIL: capacity fallback routing is incorrect\n";
+            return 1;
+        }
+    }
+
+    {
+        std::vector<int> loads = {0, 0, 0};
+        const auto capacityRoutes =
+            MoERouter::topKWithCapacity({3.0f, 2.0f, 1.0f}, 2, loads, 1);
+        if (capacityRoutes[0].expertIndex != 0 ||
+            capacityRoutes[1].expertIndex != 1 ||
+            capacityRoutes[0].usedFallback ||
+            capacityRoutes[1].usedFallback ||
+            loads != std::vector<int>({1, 1, 0})) {
+            std::cerr << "FAIL: capacity routing changed unconstrained top-k\n";
+            return 1;
+        }
+    }
+
+    {
+        std::vector<int> loads = {1, 1, 0};
+        const auto before = loads;
+        rejected = false;
+        try {
+            MoERouter::topKWithCapacity({3.0f, 2.0f, 1.0f}, 2, loads, 1);
+        } catch (const std::runtime_error&) {
+            rejected = true;
+        }
+        if (!rejected || loads != before) {
+            std::cerr << "FAIL: insufficient capacity was not atomic\n";
+            return 1;
+        }
+    }
+
+    {
+        std::vector<int> loads = {0, 0};
+        rejected = false;
+        try {
+            MoERouter::topKWithCapacity({1.0f, 2.0f}, 1, loads, 0);
+        } catch (const std::invalid_argument&) {
+            rejected = true;
+        }
+        if (!rejected) {
+            std::cerr << "FAIL: zero expert capacity was accepted\n";
+            return 1;
+        }
+    }
+
+    std::cout << "MoE top-k routing and capacity validation passed.\n";
     return 0;
 }
