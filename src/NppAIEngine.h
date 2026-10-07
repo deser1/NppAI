@@ -40,6 +40,18 @@ public:
 #endif
 };
 
+struct MoERoute {
+    int expertIndex = 0;
+    float weight = 0.0f;
+};
+
+class MoERouter {
+public:
+    // Selects the k highest finite logits. Ties are resolved by the lower
+    // expert index, and returned weights are a softmax over selected logits.
+    static std::vector<MoERoute> topK(const std::vector<float>& logits, int k);
+};
+
 struct TransformerLayer {
     Tensor wQ, wK, wV, wO;
     Tensor wGate, wDown, wUp;
