@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Correction-data retention and privacy policy documenting persisted fields, sensitive-data boundaries, operator retention duties, access controls, training/derived-artifact implications, logging, and incident handling.
 - Production TLS termination and backend deployment requirements, including trusted-proxy forwarding, secret handling, layered request/rate limits, and a deployment checklist.
 - Explicit backend authentication/authorization policy for correction-data writes, including API-key handling, authorization scope, rotation expectations, and deployment boundaries.
 - Repository-level coding-agent quality evaluation metrics covering end-to-end task success, patch accuracy, build/test pass rates, workspace safety, and repair effort, with deterministic regression coverage.
