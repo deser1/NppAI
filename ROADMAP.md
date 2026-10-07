@@ -88,7 +88,7 @@ Read -> Patch -> Build -> Test
 ### 3. Experimental Mixture-of-Experts support
 
 - [x] Define MoE model-format metadata
-- [ ] Implement deterministic top-k expert routing
+- [x] Implement deterministic top-k expert routing
 - [ ] Add expert capacity/fallback behavior
 - [ ] Add C++ inference correctness tests
 - [ ] Extend Python export/validation tooling for MoE
