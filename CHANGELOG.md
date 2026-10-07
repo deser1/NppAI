@@ -25,6 +25,7 @@ All notable changes to NppAI are documented in this file.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- Updated backend rate-limit tests to authenticate correction-data requests, preserving coverage after the API was changed to fail closed when no API key is configured.
 - Correction-data submission now fails closed when `NPPAI_API_KEY` is not configured instead of silently accepting unauthenticated writes.
 - The AI panel now displays user-visible assistant output instead of the internal thought stream; `GenerationStreamRouter` maintains a corrected assistant buffer for UI streaming.
 - Extended `GenerationStreamRouter` with typed observable generation-progress events while retaining `NppAIEngine::generate()` callbacks as the low-level streaming mechanism for the planned coding agent.
