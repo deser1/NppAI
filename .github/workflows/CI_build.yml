@@ -76,6 +76,9 @@ jobs:
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 
+    - name: Run model export tests
+      run: python -m unittest discover -s tests -p "test_model_export.py" -v
+
 
   benchmark:
     runs-on: windows-2022
