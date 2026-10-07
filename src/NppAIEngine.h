@@ -43,6 +43,7 @@ public:
 struct MoERoute {
     int expertIndex = 0;
     float weight = 0.0f;
+    bool usedFallback = false;
 };
 
 class MoERouter {
@@ -50,6 +51,17 @@ public:
     // Selects the k highest finite logits. Ties are resolved by the lower
     // expert index, and returned weights are a softmax over selected logits.
     static std::vector<MoERoute> topK(const std::vector<float>& logits, int k);
+
+    // Routes one token while respecting per-expert capacity. Preferred
+    // experts are considered in deterministic logit/index order. If fewer
+    // than k preferred experts have capacity, remaining experts are used as
+    // deterministic fallbacks. Throws when total remaining capacity is
+    // insufficient to route the token.
+    static std::vector<MoERoute> topKWithCapacity(
+        const std::vector<float>& logits,
+        int k,
+        std::vector<int>& expertLoads,
+        int capacityPerExpert);
 };
 
 struct TransformerLayer {
