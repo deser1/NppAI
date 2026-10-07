@@ -26,7 +26,7 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [x] Define authentication and authorization policy
 - [x] Add rate limiting
 - [x] Enforce request-size limits
-- [ ] Document TLS termination/deployment requirements
+- [x] Document TLS termination/deployment requirements
 - [ ] Define correction-data retention and privacy policy
 - [ ] Add abuse/error-path integration tests
 
