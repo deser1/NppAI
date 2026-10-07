@@ -637,9 +637,59 @@ std::vector<MoERoute> MoERouter::topK(const std::vector<float>& logits, int k) {
   routes.reserve(indices.size());
   for (int index : indices) {
     const double numerator = std::exp(static_cast<double>(logits[index] - maxLogit));
-    routes.push_back({index, static_cast<float>(numerator / denominator)});
+    routes.push_back({index, static_cast<float>(numerator / denominator), false});
   }
   return routes;
+}
+
+std::vector<MoERoute> MoERouter::topKWithCapacity(
+    const std::vector<float>& logits, int k, std::vector<int>& expertLoads,
+    int capacityPerExpert) {
+  if (capacityPerExpert <= 0 || expertLoads.size() != logits.size())
+    throw std::invalid_argument("MoERouter::topKWithCapacity invalid capacity state");
+  for (int load : expertLoads)
+    if (load < 0 || load > capacityPerExpert)
+      throw std::invalid_argument("MoERouter::topKWithCapacity invalid expert load");
+
+  // Request a full ranking so fallback selection obeys exactly the same
+  // deterministic ordering as topK.
+  const auto ranked = topK(logits, static_cast<int>(logits.size()));
+  std::vector<MoERoute> selected;
+  selected.reserve(static_cast<size_t>(k));
+  for (const auto& candidate : ranked) {
+    if (expertLoads[candidate.expertIndex] < capacityPerExpert) {
+      const bool fallback = selected.size() >= static_cast<size_t>(k) ? true : false;
+      selected.push_back({candidate.expertIndex, candidate.weight, fallback});
+      if (selected.size() == static_cast<size_t>(k)) break;
+    }
+  }
+  if (selected.size() != static_cast<size_t>(k))
+    throw std::runtime_error("MoERouter::topKWithCapacity insufficient expert capacity");
+
+  // A route is a fallback when a higher-ranked expert was skipped because it
+  // was full. Re-normalize only the experts that will actually execute.
+  bool skippedFull = false;
+  size_t selectedPos = 0;
+  for (const auto& candidate : ranked) {
+    if (selectedPos == selected.size()) break;
+    if (candidate.expertIndex == selected[selectedPos].expertIndex) {
+      selected[selectedPos].usedFallback = skippedFull;
+      ++selectedPos;
+    } else if (expertLoads[candidate.expertIndex] >= capacityPerExpert) {
+      skippedFull = true;
+    }
+  }
+
+  float maxLogit = logits[selected[0].expertIndex];
+  double denominator = 0.0;
+  for (const auto& route : selected)
+    denominator += std::exp(static_cast<double>(logits[route.expertIndex] - maxLogit));
+  for (auto& route : selected) {
+    route.weight = static_cast<float>(
+        std::exp(static_cast<double>(logits[route.expertIndex] - maxLogit)) / denominator);
+    ++expertLoads[route.expertIndex];
+  }
+  return selected;
 }
 
 // --- ENGINE IMPLEMENTATION ---
