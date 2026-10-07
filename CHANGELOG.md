@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Explicit backend authentication/authorization policy for correction-data writes, including API-key handling, authorization scope, rotation expectations, and deployment boundaries.
 - Repository-level coding-agent quality evaluation metrics covering end-to-end task success, patch accuracy, build/test pass rates, workspace safety, and repair effort, with deterministic regression coverage.
 - Live incremental assistant/code output in the Notepad++ panel, synchronized with generation backtracking while keeping private reasoning out of the UI.
 - Concise generation status updates in the panel through `GenerationProgressEvent`.
@@ -24,6 +25,7 @@ All notable changes to NppAI are documented in this file.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- Correction-data submission now fails closed when `NPPAI_API_KEY` is not configured instead of silently accepting unauthenticated writes.
 - The AI panel now displays user-visible assistant output instead of the internal thought stream; `GenerationStreamRouter` maintains a corrected assistant buffer for UI streaming.
 - Extended `GenerationStreamRouter` with typed observable generation-progress events while retaining `NppAIEngine::generate()` callbacks as the low-level streaming mechanism for the planned coding agent.
 - Expanded the project roadmap with a prioritized repository-aware coding-agent loop, live token/progress streaming, reviewable patches, build/test repair feedback, rollback, and agent integration testing.
