@@ -609,6 +609,39 @@ bool Tensor::readFromFile(std::ifstream &file, bool quantize) {
   data.clear(); data.shrink_to_fit(); return true;
 }
 
+// --- MOE ROUTING ---
+std::vector<MoERoute> MoERouter::topK(const std::vector<float>& logits, int k) {
+  if (k <= 0 || logits.empty() || static_cast<size_t>(k) > logits.size())
+    throw std::invalid_argument("MoERouter::topK invalid expert count");
+
+  std::vector<int> indices;
+  indices.reserve(logits.size());
+  for (size_t i = 0; i < logits.size(); ++i) {
+    if (!std::isfinite(logits[i]))
+      throw std::invalid_argument("MoERouter::topK requires finite logits");
+    indices.push_back(static_cast<int>(i));
+  }
+
+  std::stable_sort(indices.begin(), indices.end(), [&](int a, int b) {
+    if (logits[a] != logits[b]) return logits[a] > logits[b];
+    return a < b;
+  });
+  indices.resize(static_cast<size_t>(k));
+
+  float maxLogit = logits[indices[0]];
+  double denominator = 0.0;
+  for (int index : indices)
+    denominator += std::exp(static_cast<double>(logits[index] - maxLogit));
+
+  std::vector<MoERoute> routes;
+  routes.reserve(indices.size());
+  for (int index : indices) {
+    const double numerator = std::exp(static_cast<double>(logits[index] - maxLogit));
+    routes.push_back({index, static_cast<float>(numerator / denominator)});
+  }
+  return routes;
+}
+
 // --- ENGINE IMPLEMENTATION ---
 NppAIEngine::NppAIEngine() {}
 
