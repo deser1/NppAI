@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Python model-format v3 metadata validation and header export tooling for MoE development, with exact layout/hash tests and fail-closed rejection of MoE files until router/expert tensor serialization is specified.
 - C++ MoE inference correctness coverage and a validated expert-output combination boundary, including weighted top-k mixing, capacity fallback results, deterministic repeatability, and fail-fast shape/weight checks.
 - MoE expert-capacity routing with deterministic fallback to the next ranked available expert, post-fallback weight normalization, overload rejection, and atomic load accounting.
 - Deterministic MoE top-k expert router with stable expert-index tie-breaking, selected-expert softmax weights, finite-logit validation, and dedicated CTest regression coverage.

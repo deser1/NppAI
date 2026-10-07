@@ -91,7 +91,7 @@ Read -> Patch -> Build -> Test
 - [x] Implement deterministic top-k expert routing
 - [x] Add expert capacity/fallback behavior
 - [x] Add C++ inference correctness tests
-- [ ] Extend Python export/validation tooling for MoE
+- [x] Extend Python export/validation tooling for MoE
 - [ ] Benchmark MoE against the dense baseline
 
 ### 4. RAG quality and scale validation

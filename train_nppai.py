@@ -8,6 +8,8 @@ import math
 import sys
 import io
 import hashlib
+from model_format import (MODEL_ARCH_DENSE, MODEL_ARCH_MOE, build_v3_header,
+                          export_v3_metadata_model, validate_model_format_metadata)
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -129,7 +131,7 @@ def export_to_bin(model, filepath):
     payload_sha256 = hashlib.sha256(payload_bytes).digest()
 
     with open(filepath, 'wb') as f:
-        # v2 header: magic, version, dimensions, payload size, SHA-256.
+        # Dense training exports remain v2 until the C++ loader adopts v3.
         f.write(b"NPPAI\\0\\0\\0")
         f.write(struct.pack("<I", 2))
         f.write(struct.pack("<5i", model.dim, model.hidden_dim, model.n_layers,
