@@ -12,7 +12,8 @@ struct RetrievalFixture {
 };
 
 bool checkFixture(RAGManager& rag, const RetrievalFixture& fixture) {
-    const std::string context = rag.retrieveContextRanked(fixture.query, fixture.topK);
+    const std::string context =
+        rag.retrieveContextRanked(fixture.query, fixture.topK, "", "");
     std::size_t previous = 0;
     bool first = true;
 
