@@ -5,6 +5,8 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Live incremental assistant/code output in the Notepad++ panel, synchronized with generation backtracking while keeping private reasoning out of the UI.
+- Concise generation status updates in the panel through `GenerationProgressEvent`.
 - Structured coding-agent task outcome records with success/failure/rollback status, repair diagnostics, unified patch diff, and deterministic JSONL serialization for later correction-data pipelines.
 - Deterministic end-to-end coding-agent integration coverage for successful patch validation and failed-build rollback/recovery.
 - Guarded patch rollback/recovery that restores original content only when the workspace still matches the applied proposal, refusing to overwrite later user changes.
@@ -21,6 +23,7 @@ All notable changes to NppAI are documented in this file.
 - Installation guidance for release packages and compatible .nppai models.
 
 ### Changed
+- The AI panel now displays user-visible assistant output instead of the internal thought stream; `GenerationStreamRouter` maintains a corrected assistant buffer for UI streaming.
 - Extended `GenerationStreamRouter` with typed observable generation-progress events while retaining `NppAIEngine::generate()` callbacks as the low-level streaming mechanism for the planned coding agent.
 - Expanded the project roadmap with a prioritized repository-aware coding-agent loop, live token/progress streaming, reviewable patches, build/test repair feedback, rollback, and agent integration testing.
 - Ranked RAG retrieval now emits normal multiline context and diversifies near-duplicate chunks from the same source while preserving source/language preference bonuses.

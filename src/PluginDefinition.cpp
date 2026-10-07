@@ -106,9 +106,10 @@ void ExecuteAIGeneration() {
   // Wyczyść pole po pobraniu tekstu
   SetWindowTextW(g_hEdit, L"");
 
-  // Wyczyść historię myślenia
-  SetWindowTextW(g_hHistory, Loc(L"Czekam na odpowiedź...\r\n",
-                                 L"Waiting for response...\r\n")
+  // Panel pokazuje wyłącznie jawną odpowiedź i status pracy agenta.
+  // Prywatny strumień reasoning nie jest renderowany w UI.
+  SetWindowTextW(g_hHistory, Loc(L"Przygotowuję odpowiedź...\r\n",
+                                 L"Preparing response...\r\n")
                                  .c_str());
 
   // Pobranie uchwytu Scintilli
@@ -178,10 +179,7 @@ void ExecuteAIGeneration() {
     }
 
     GenerationStreamRouter streamRouter(
-        [](const std::string& thought) {
-          std::wstring w_think = Utf8ToUtf16(thought);
-          ::SetWindowTextW(g_hHistory, w_think.c_str());
-        },
+        nullptr,
         [curScintilla](char c) {
           std::string s(1, c);
           ::SendMessage(curScintilla, SCI_REPLACESEL, 0, (LPARAM)s.c_str());
@@ -189,7 +187,20 @@ void ExecuteAIGeneration() {
         [curScintilla](int count) {
           for (int i = 0; i < count; i++)
             ::SendMessage(curScintilla, SCI_DELETEBACK, 0, 0);
+        },
+        [](const GenerationProgressEvent& event) {
+          if (!event.message.empty()) {
+            const std::wstring status = Utf8ToUtf16(event.message);
+            ::SetWindowTextW(g_hStatusLabel, status.c_str());
+          }
+        },
+        [](const std::string& assistant) {
+          const std::wstring visible = Utf8ToUtf16(assistant);
+          ::SetWindowTextW(g_hHistory, visible.c_str());
         });
+
+    streamRouter.onProgress(GenerationProgressEvent::Type::GenerationStarted,
+                            Loc("Generowanie odpowiedzi...", "Generating response..."));
 
     std::string generated = AIManager::getInstance().generateCode(
         prompt, currentContext,
@@ -198,14 +209,14 @@ void ExecuteAIGeneration() {
         },
         [&streamRouter](int count) { streamRouter.onRemove(count); });
 
-    // Ustaw końcową historię myślenia
-    if (!streamRouter.thoughtBuffer().empty()) {
-      std::string think_buffer = streamRouter.thoughtBuffer();
-      think_buffer += Loc("\r\n[Koniec myślenia. Kod wygenerowany.]",
-                          "\r\n[End of thinking. Code generated.]");
-      std::wstring w_think = Utf8ToUtf16(think_buffer);
-      ::SetWindowTextW(g_hHistory, w_think.c_str());
-    }
+    streamRouter.onProgress(
+        GenerationProgressEvent::Type::GenerationCompleted,
+        Loc("Odpowiedź gotowa", "Response ready"));
+    // Flush the final visible response even when its length is not a multiple
+    // of the incremental update cadence.
+    const std::wstring finalResponse =
+        Utf8ToUtf16(streamRouter.assistantBuffer());
+    ::SetWindowTextW(g_hHistory, finalResponse.c_str());
 
     // Uruchomienie trackera na podstawie zaktualizowanych linii
     auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
@@ -231,10 +242,10 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
                              LPARAM lParam) {
   switch (msg) {
   case WM_CREATE: {
-    // Pole historii myślenia na samej górze
+    // Pole jawnej odpowiedzi AI na samej górze
     g_hHistory = CreateWindowExW(
         WS_EX_CLIENTEDGE, L"EDIT",
-        Loc(L"Panel Myślenia AI gotowy.\r\n", L"AI Thinking Panel ready.\r\n")
+        Loc(L"Panel odpowiedzi AI gotowy.\r\n", L"AI response panel ready.\r\n")
             .c_str(),
         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOVSCROLL | ES_MULTILINE |
             ES_READONLY,
@@ -279,9 +290,9 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     int width = LOWORD(lParam);
     int height = HIWORD(lParam);
     int btnHeight = 30;
-    int historyHeight = 60; // Wysokość paska myślenia na górze
+    int historyHeight = 120; // Więcej miejsca na strumieniowaną odpowiedź
 
-    // Okno myślenia na samej górze
+    // Okno odpowiedzi AI na samej górze
     MoveWindow(g_hHistory, 5, 5, width - 10, historyHeight, TRUE);
     // Pole tekstowe zajmuje przestrzeń pod oknem myślenia
     MoveWindow(g_hEdit, 5, historyHeight + 10, width - 10,
