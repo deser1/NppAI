@@ -14,6 +14,7 @@ int main() {
     std::string visibleThought;
     int removed = 0;
     std::vector<GenerationProgressEvent> progress;
+    std::string visibleAssistant;
 
     GenerationStreamRouter router(
         [&](const std::string& thought) { visibleThought = thought; },
@@ -22,7 +23,8 @@ int main() {
             removed += count;
             while (count-- > 0 && !code.empty()) code.pop_back();
         },
-        [&](const GenerationProgressEvent& event) { progress.push_back(event); });
+        [&](const GenerationProgressEvent& event) { progress.push_back(event); },
+        [&](const std::string& assistant) { visibleAssistant = assistant; });
 
     router.onToken('a', false);
     router.onToken('b', false);
@@ -35,6 +37,10 @@ int main() {
     ok &= check(router.thoughtBuffer() == "x\n", "thought tokens stay out of generated code");
     ok &= check(visibleThought == "x\n", "thought callback flushes on newline");
     ok &= check(removed == 1, "remove callback receives requested count");
+    ok &= check(router.assistantBuffer() == "ab",
+                "assistant buffer follows generated output and backtracking");
+    ok &= check(visibleAssistant == "ab",
+                "assistant UI callback receives corrected incremental output");
 
     router.onProgress(GenerationProgressEvent::Type::TaskStarted, "Preparing coding task");
     router.onProgress(GenerationProgressEvent::Type::ContextReady, "Repository context ready");
