@@ -28,7 +28,7 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [x] Enforce request-size limits
 - [x] Document TLS termination/deployment requirements
 - [x] Define correction-data retention and privacy policy
-- [ ] Add abuse/error-path integration tests
+- [x] Add abuse/error-path integration tests
 
 ### 2. Coding agent and live progress
 

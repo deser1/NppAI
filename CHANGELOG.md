@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Backend abuse/error-path integration coverage verifying authentication/rate-limit ordering, non-persistence of rejected samples, validation isolation, dataset-write failure handling, and early oversized-request rejection.
 - Correction-data retention and privacy policy documenting persisted fields, sensitive-data boundaries, operator retention duties, access controls, training/derived-artifact implications, logging, and incident handling.
 - Production TLS termination and backend deployment requirements, including trusted-proxy forwarding, secret handling, layered request/rate limits, and a deployment checklist.
 - Explicit backend authentication/authorization policy for correction-data writes, including API-key handling, authorization scope, rotation expectations, and deployment boundaries.
