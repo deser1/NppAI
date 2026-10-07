@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- Experimental model-format v3 architecture metadata contract for dense/MoE models, including expert-count and experts-per-token invariants while preserving v1/v2 compatibility boundaries.
 - Backend abuse/error-path integration coverage verifying authentication/rate-limit ordering, non-persistence of rejected samples, validation isolation, dataset-write failure handling, and early oversized-request rejection.
 - Correction-data retention and privacy policy documenting persisted fields, sensitive-data boundaries, operator retention duties, access controls, training/derived-artifact implications, logging, and incident handling.
 - Production TLS termination and backend deployment requirements, including trusted-proxy forwarding, secret handling, layered request/rate limits, and a deployment checklist.
