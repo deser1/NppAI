@@ -189,14 +189,15 @@ class RateLimitTests(unittest.IsolatedAsyncioTestCase):
         env = {
             server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
             server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+            server_backend.API_KEY_ENV: "rate-test-secret",
         }
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", env, clear=False), \
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
              patch.object(server_backend, "TRAINING_THRESHOLD", 100):
             server_backend.new_samples_count = 0
-            first, _, _ = await call_app(self.valid_body(), None)
-            second, body, headers = await call_app(self.valid_body(), None)
+            first, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"})
+            second, body, headers = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"})
 
         self.assertEqual(first, 200)
         self.assertEqual(second, 429)
@@ -208,6 +209,7 @@ class RateLimitTests(unittest.IsolatedAsyncioTestCase):
         env = {
             server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
             server_backend.RATE_LIMIT_WINDOW_ENV: "10",
+            server_backend.API_KEY_ENV: "rate-test-secret",
         }
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", env, clear=False), \
@@ -215,8 +217,8 @@ class RateLimitTests(unittest.IsolatedAsyncioTestCase):
              patch.object(server_backend, "TRAINING_THRESHOLD", 100), \
              patch.object(server_backend, "monotonic_time", side_effect=[100.0, 111.0]):
             server_backend.new_samples_count = 0
-            first, _, _ = await call_app(self.valid_body(), None)
-            second, _, _ = await call_app(self.valid_body(), None)
+            first, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"})
+            second, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"})
 
         self.assertEqual(first, 200)
         self.assertEqual(second, 200)
@@ -225,14 +227,15 @@ class RateLimitTests(unittest.IsolatedAsyncioTestCase):
         env = {
             server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
             server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+            server_backend.API_KEY_ENV: "rate-test-secret",
         }
         with tempfile.TemporaryDirectory() as tmpdir, \
              patch.dict("os.environ", env, clear=False), \
              patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
              patch.object(server_backend, "TRAINING_THRESHOLD", 100):
             server_backend.new_samples_count = 0
-            first, _, _ = await call_app(self.valid_body(), None, client_host="10.0.0.1")
-            second, _, _ = await call_app(self.valid_body(), None, client_host="10.0.0.2")
+            first, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"}, client_host="10.0.0.1")
+            second, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "rate-test-secret"}, client_host="10.0.0.2")
 
         self.assertEqual(first, 200)
         self.assertEqual(second, 200)
