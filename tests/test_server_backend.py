@@ -267,5 +267,104 @@ class RequestSizeLimitTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(json.loads(body), {"detail": "Request body too large"})
 
 
+class AbuseAndErrorPathIntegrationTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        server_backend.rate_limit_hits.clear()
+
+    def valid_body(self):
+        return json.dumps({
+            "prompt": "abuse-test",
+            "final_code": "print('ok')",
+            "user_id": "integration-user",
+        }).encode("utf-8")
+
+    async def test_unauthenticated_abuse_does_not_consume_rate_limit_budget(self):
+        env = {
+            server_backend.API_KEY_ENV: "secret",
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
+            server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt"), \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100):
+            server_backend.new_samples_count = 0
+            rejected, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "wrong"})
+            accepted, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "secret"})
+
+        self.assertEqual(rejected, 403)
+        self.assertEqual(accepted, 200)
+
+    async def test_rate_limited_request_is_not_persisted(self):
+        env = {
+            server_backend.API_KEY_ENV: "secret",
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "1",
+            server_backend.RATE_LIMIT_WINDOW_ENV: "60",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt") as dataset_path, \
+             patch.object(server_backend, "TRAINING_THRESHOLD", 100):
+            server_backend.new_samples_count = 0
+            first, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "secret"})
+            second, _, _ = await call_app(self.valid_body(), None, {"X-API-Key": "secret"})
+            content = dataset_path.read_text(encoding="utf-8")
+
+        self.assertEqual(first, 200)
+        self.assertEqual(second, 429)
+        self.assertEqual(content.count("<|endoftext|>"), 1)
+
+    async def test_validation_failure_is_not_persisted(self):
+        invalid_body = json.dumps({
+            "prompt": "",
+            "final_code": "print('should-not-save')",
+        }).encode("utf-8")
+        env = {
+            server_backend.API_KEY_ENV: "secret",
+            server_backend.RATE_LIMIT_REQUESTS_ENV: "10",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir) / "dataset.txt") as dataset_path:
+            status, _, _ = await call_app(invalid_body, None, {"X-API-Key": "secret"})
+            exists = dataset_path.exists()
+
+        self.assertEqual(status, 422)
+        self.assertFalse(exists)
+
+    async def test_dataset_write_failure_returns_500_without_scheduling_training(self):
+        env = {server_backend.API_KEY_ENV: "secret"}
+
+        class BackgroundTasksSpy:
+            def __init__(self):
+                self.tasks = []
+
+            def add_task(self, *args, **kwargs):
+                self.tasks.append((args, kwargs))
+
+        background_tasks = BackgroundTasksSpy()
+        payload = SubmitKnowledgeRequest(prompt="write-failure", final_code="print('x')")
+        with tempfile.TemporaryDirectory() as tmpdir, \
+             patch.dict("os.environ", env, clear=False), \
+             patch.object(server_backend, "DATASET_PATH", Path(tmpdir)):
+
+            with self.assertRaises(server_backend.HTTPException) as raised:
+                await submit_knowledge(payload, background_tasks)
+
+        self.assertEqual(raised.exception.status_code, 500)
+        self.assertEqual(raised.exception.detail, "Unable to persist training sample")
+        self.assertEqual(background_tasks.tasks, [])
+
+    async def test_oversized_request_is_rejected_before_authentication(self):
+        with patch.dict("os.environ", {}, clear=True):
+            status, body, _ = await call_app(
+                b"x" * (MAX_REQUEST_BYTES + 1),
+                None,
+            )
+
+        self.assertEqual(status, 413)
+        self.assertEqual(json.loads(body), {"detail": "Request body too large"})
+
+
 if __name__ == "__main__":
     unittest.main()
