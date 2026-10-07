@@ -159,7 +159,7 @@ def export_to_bin(model, filepath):
     payload_sha256 = hashlib.sha256(payload_bytes).digest()
 
     with open(filepath, 'wb') as f:
-        # v2 header: magic, version, dimensions, payload size, SHA-256.
+        # Dense training exports remain v2 until the C++ loader adopts v3.
         f.write(b"NPPAI\\0\\0\\0")
         f.write(struct.pack("<I", 2))
         f.write(struct.pack("<5i", model.dim, model.hidden_dim, model.n_layers,
@@ -169,6 +169,26 @@ def export_to_bin(model, filepath):
         f.write(payload_bytes)
 
     print(f"Zakończono pomyślnie! SHA-256 payloadu: {payload_sha256.hex()}")
+
+def export_v3_metadata_model(model, filepath, payload_bytes=b"",
+                             architecture=MODEL_ARCH_DENSE,
+                             num_experts=0, experts_per_token=0):
+    """Export a v3 container only when its payload semantics are defined.
+
+    Dense v3 can wrap a caller-provided payload. MoE tensor serialization is
+    intentionally blocked until router/expert tensor ordering is specified.
+    """
+    validate_model_format_metadata(architecture, num_experts, experts_per_token)
+    if architecture == MODEL_ARCH_MOE:
+        raise NotImplementedError(
+            "MoE v3 tensor serialization is not defined yet; refusing unsafe export"
+        )
+    header = build_v3_header(
+        model, payload_bytes, architecture, num_experts, experts_per_token
+    )
+    with open(filepath, "wb") as f:
+        f.write(header)
+        f.write(payload_bytes)
 
 # 3. Przygotowanie Datasetu w formacie "Instruct"
 def load_dataset(folder_path="datasets/"):
