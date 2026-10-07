@@ -5,6 +5,7 @@ All notable changes to NppAI are documented in this file.
 ## [0.4.0] - 2026-10-05
 
 ### Added
+- MoE expert-capacity routing with deterministic fallback to the next ranked available expert, post-fallback weight normalization, overload rejection, and atomic load accounting.
 - Deterministic MoE top-k expert router with stable expert-index tie-breaking, selected-expert softmax weights, finite-logit validation, and dedicated CTest regression coverage.
 - Experimental model-format v3 architecture metadata contract for dense/MoE models, including expert-count and experts-per-token invariants while preserving v1/v2 compatibility boundaries.
 - Backend abuse/error-path integration coverage verifying authentication/rate-limit ordering, non-persistence of rejected samples, validation isolation, dataset-write failure handling, and early oversized-request rejection.
