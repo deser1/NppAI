@@ -55,3 +55,18 @@ Five run times (ms): 14.9645, 14.4342, 14.3135, 14.1249, 14.1236. The per-file f
 ## Real-repository retrieval follow-up
 
 `BenchmarkRAGRetrieval --repo src` indexes real source files and measures warmup plus repeated ranked retrieval queries. The CI job stores `rag-real-retrieval.json` with median and p95 latency. Future validation should repeat this on larger, independently selected C++ and Python repositories, with pinned revisions and documented file counts; no external code is fetched by CI at this stage.
+
+
+### Measured real-source retrieval baseline (PR #105)
+
+Source: [main CI #37840908306](https://github.com/deser1/NppAI/actions/runs/37840908306), artifact `tensor-benchmark-x64/rag-real-retrieval.json`.
+
+| Metric | Observed |
+| --- | ---: |
+| Ranked retrieval median | 18.0616 ms |
+| Ranked retrieval p95 | 18.1552 ms |
+| Warmup queries | 3 |
+| Timed queries | 11 |
+| Accumulated returned context bytes (all 14 queries) | 53,466 |
+
+This is one shared-runner CI execution against the current NppAI `src/` tree, using a fixed retrieval query. The benchmark's `documents: 0` output is a placeholder in real-repository mode, **not** a claim that zero documents were indexed. This result is not a representative cross-project latency estimate or regression threshold. Next: expose indexed document count in retrieval JSON, run multiple CI repetitions, and test pinned larger C++ and Python repositories.
