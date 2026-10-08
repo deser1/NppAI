@@ -99,7 +99,7 @@ Read -> Patch -> Build -> Test
 - [x] Add retrieval-quality fixtures with expected top-k results
 - [x] Measure indexing latency and memory use on larger repositories (synthetic CI fixtures: 250/1000/2000 files; see docs/rag-index-benchmark.md)
 - [x] Benchmark retrieval latency as the index grows (250/1000/2000 synthetic documents; see docs/rag-retrieval-benchmark.md)
-- [ ] Evaluate ranking weights against representative coding queries
+- [x] Evaluate ranking weights against synthetic coding queries (17 fixtures; four configurations tied; see docs/rag-ranking-evaluation.md)
 - [ ] Document quality/performance tradeoffs
 
 ### 5. Model quality and training
