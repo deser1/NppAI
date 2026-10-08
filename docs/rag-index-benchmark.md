@@ -70,3 +70,18 @@ Source: [main CI #37840908306](https://github.com/deser1/NppAI/actions/runs/3784
 | Accumulated returned context bytes (all 14 queries) | 53,466 |
 
 This is one shared-runner CI execution against the current NppAI `src/` tree, using a fixed retrieval query. The benchmark's `documents: 0` output is a placeholder in real-repository mode, **not** a claim that zero documents were indexed. This result is not a representative cross-project latency estimate or regression threshold. Next: expose indexed document count in retrieval JSON, run multiple CI repetitions, and test pinned larger C++ and Python repositories.
+
+
+### Five-run real-source retrieval baseline (PR #107)
+
+Source: [main CI #37842891904](https://github.com/deser1/NppAI/actions/runs/37842891904), `tensor-benchmark-x64` artifact. Each run indexed **56** real source files, performed three warmups and eleven measured ranked retrieval queries.
+
+| Run | Retrieval median (ms) | Within-run p95 (ms) |
+| ---: | ---: | ---: |
+| 1 | 17.7344 | 17.8802 |
+| 2 | 17.7741 | 29.5506 |
+| 3 | 17.7416 | 18.0002 |
+| 4 | 20.3874 | 29.0550 |
+| 5 | 26.1959 | 28.8674 |
+
+The median **of the five per-run medians** is **17.7741 ms**. The accompanying `rag-real-retrieval-median.json` is the **middle run by median latency**, not an aggregate p95 across all 55 measured queries; its p95 value (29.5506 ms) must not be described as an overall p95. These measurements show variability on shared CI runners. They are not a cross-repository performance claim or a regression threshold.
