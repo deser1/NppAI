@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Added CI RAG retrieval-latency benchmark for synthetic indices of 250/1000/2000 documents, reporting median and p95 of 11 timed queries after warmup; measurements pending CI.
+- Added CI RAG retrieval-latency benchmark for synthetic indices of 250/1000/2000 documents, reporting median and p95 of 11 timed queries after warmup; validated in CI #37745155204; median latency 0.8125/3.2756/6.6754 ms at 250/1000/2000 documents; see docs/rag-retrieval-benchmark.md.
 
 - Added RAG indexing scale benchmark for 250/1000/2000 synthetic source files, recording wall-clock indexing latency and process peak RSS in CI artifacts; validated on windows-2022 x64: 143.332/1881.15/6704.31 ms for 250/1000/2000 files respectively; see docs/rag-index-benchmark.md.
 
