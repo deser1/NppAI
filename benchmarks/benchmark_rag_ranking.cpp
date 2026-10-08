@@ -23,6 +23,16 @@ int main() {
     rag.addDocument("render directx texture shader and vertex buffer", "src/render/directx.cpp", "cpp");
     rag.addDocument("python training loop computes optimizer loss and gradient", "train/model.py", "python");
 
+    // Hard negatives share vocabulary with the relevant document but address different tasks.
+    rag.addDocument("validate json response body and required fields for response schema", "src/http/response_schema.cpp", "cpp");
+    rag.addDocument("parse json request body for debug tracing and metrics", "src/http/request_trace.cpp", "cpp");
+    rag.addDocument("authentication token refresh endpoint logs expired bearer credentials", "src/security/token_logs.cpp", "cpp");
+    rag.addDocument("sql transaction report of rollback attempts and audit changes", "src/db/audit.cpp", "cpp");
+    rag.addDocument("render directx texture shader cache and debugging overlays", "src/render/debug.cpp", "cpp");
+    rag.addDocument("python optimizer loss gradient logging and metric dashboard", "train/metrics.py", "python");
+    rag.addDocument("oauth access token refresh instructions for documentation", "docs/oauth.md", "md");
+    rag.addDocument("sql bound parameters in tutorial sample", "docs/sql.md", "md");
+
     const std::vector<Fixture> fixtures = {
         {"json request validation", "src/http/json_request.cpp"},
         {"bearer authentication token", "src/security/auth.cpp"},
@@ -31,7 +41,16 @@ int main() {
         {"python optimizer gradient", "train/model.py"},
         {"oauth credentials expire", "src/security/oauth.cpp"},
         {"sql bound parameters", "src/db/query.cpp"},
-        {"json response status code", "src/http/json_response.cpp"}
+        {"json response status code", "src/http/json_response.cpp"},
+        {"json request required fields", "src/http/json_request.cpp"},
+        {"validate json response schema", "src/http/response_schema.cpp"},
+        {"json request debug tracing", "src/http/request_trace.cpp"},
+        {"expired bearer credentials logging", "src/security/token_logs.cpp"},
+        {"sql rollback audit changes", "src/db/audit.cpp"},
+        {"directx shader cache debugging", "src/render/debug.cpp"},
+        {"python gradient metrics dashboard", "train/metrics.py"},
+        {"oauth refresh documentation", "docs/oauth.md"},
+        {"sql parameters tutorial", "docs/sql.md"}
     };
     struct Weights { float cosine; float lexical; };
     const std::vector<Weights> variants = {{0.35f,0.65f},{0.50f,0.50f},{0.65f,0.35f},{0.80f,0.20f}};
