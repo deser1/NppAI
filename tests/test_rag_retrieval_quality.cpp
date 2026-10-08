@@ -67,6 +67,27 @@ int main() {
     for (const RetrievalFixture& fixture : fixtures)
         ok &= checkFixture(rag, fixture);
 
+    // Replacing one source must preserve unrelated keys and avoid stale chunks.
+    rag.updateSource("old sentinel_alpha payload", "src/updated.cpp", "cpp");
+    rag.updateSource("unrelated sentinel_beta payload", "src/untouched.cpp", "cpp");
+    rag.updateSource("new sentinel_gamma payload", "src/updated.cpp", "cpp");
+    const std::string newContext = rag.retrieveContextRanked("sentinel_gamma", 3, "", "");
+    const std::string oldContext = rag.retrieveContextRanked("sentinel_alpha", 3, "", "");
+    const std::string unrelatedContext = rag.retrieveContextRanked("sentinel_beta", 3, "", "");
+    if (newContext.find("src/updated.cpp") == std::string::npos ||
+        oldContext.find("old sentinel_alpha payload") != std::string::npos ||
+        unrelatedContext.find("src/untouched.cpp") == std::string::npos) {
+        std::cerr << "Incremental source replacement lost or retained invalid documents.\\n";
+        ok = false;
+    }
+    // Re-adding the same source after replacement must still deduplicate.
+    rag.addDocument("new sentinel_gamma payload", "src/updated.cpp", "cpp");
+    rag.updateSource("", "src/updated.cpp", "cpp");
+    if (rag.retrieveContextRanked("sentinel_gamma", 3, "src/updated.cpp", "").find("src/updated.cpp") != std::string::npos) {
+        std::cerr << "Empty source update did not remove indexed documents.\\n";
+        ok = false;
+    }
+
     rag.clearForTesting();
     if (!ok)
         return 1;
