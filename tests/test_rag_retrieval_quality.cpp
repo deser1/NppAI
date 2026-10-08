@@ -1,5 +1,7 @@
 #include "RAGManager.h"
 #include <algorithm>
+#include <chrono>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -87,8 +89,40 @@ int main() {
         ok = false;
     }
 
-    for (const RetrievalFixture& fixture : fixtures)
+    // Evaluate source ranking separately from formatted context and report reproducible metrics.
+    double reciprocalRankSum = 0.0;
+    double recallSum = 0.0;
+    std::size_t evaluated = 0;
+    const auto evaluationStart = std::chrono::steady_clock::now();
+    for (const RetrievalFixture& fixture : fixtures) {
         ok &= checkFixture(rag, fixture);
+        const auto sources = rag.retrieveRankedSources(fixture.query, fixture.topK);
+        std::size_t hits = 0;
+        double reciprocalRank = 0.0;
+        for (const auto& expected : fixture.expectedInOrder) {
+            const auto it = std::find(sources.begin(), sources.end(), expected);
+            if (it == sources.end()) continue;
+            ++hits;
+            const auto rank = static_cast<std::size_t>(std::distance(sources.begin(), it)) + 1;
+            reciprocalRank = std::max(reciprocalRank, 1.0 / static_cast<double>(rank));
+        }
+        const double recall = static_cast<double>(hits) / fixture.expectedInOrder.size();
+        recallSum += recall;
+        reciprocalRankSum += reciprocalRank;
+        ++evaluated;
+        if (hits != fixture.expectedInOrder.size()) {
+            std::cerr << "Structured source recall failed for query '" << fixture.query
+                      << "': " << hits << "/" << fixture.expectedInOrder.size() << "\\n";
+            ok = false;
+        }
+    }
+    const auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(
+        std::chrono::steady_clock::now() - evaluationStart).count();
+    std::cout << std::fixed << std::setprecision(3)
+              << "RAG quality: recall@K=" << recallSum / evaluated
+              << ", MRR@K=" << reciprocalRankSum / evaluated
+              << ", elapsed_us=" << elapsed
+              << ", queries=" << evaluated << "\\n";
 
     // Replacing one source must preserve unrelated keys and avoid stale chunks.
     rag.updateSource("old sentinel_alpha payload", "src/updated.cpp", "cpp");
