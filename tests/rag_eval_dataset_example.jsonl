@@ -1,0 +1,2 @@
+{"query_id":"auth-001","query":"Where is bearer token validation implemented?","language":"en","repository_revision":"REPLACE_WITH_COMMIT_SHA","relevant_sources":["src/security/auth.cpp"],"split":"development"}
+{"query_id":"http-001","query":"Gdzie jest obsługa odpowiedzi JSON?","language":"pl","repository_revision":"REPLACE_WITH_COMMIT_SHA","relevant_sources":["src/http/json_response.cpp"],"split":"test"}
