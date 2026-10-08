@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Documented RAG quality/performance tradeoffs using validated CI indexing latency, process peak RSS, retrieval median/p95, and ranking quality; production ranking weights remain unchanged.
+
 - Expanded RAG ranking-weight evaluation from 8 to 17 coding queries with overlapping-vocabulary hard negatives and documentation distractors; production weights remain unchanged.
 
 - Added an experimental RAG ranking-weight evaluation harness with recall@3 and MRR@3 across eight synthetic coding queries; production 65/35 weights unchanged pending CI evidence.
