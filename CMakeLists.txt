@@ -208,6 +208,11 @@ set_tests_properties(PluginHostLifecycle PROPERTIES LABELS "integration;plugin;h
 option(NPPAI_BUILD_BENCHMARKS "Build NppAI microbenchmarks" OFF)
 
 if(NPPAI_BUILD_BENCHMARKS)
+    add_executable(BenchmarkRAGIndex benchmarks/benchmark_rag_index.cpp src/RAGManager.cpp src/RepositoryIndexer.cpp)
+    target_include_directories(BenchmarkRAGIndex PRIVATE src)
+    if(WIN32)
+        target_link_libraries(BenchmarkRAGIndex PRIVATE psapi)
+    endif()
     add_executable(BenchmarkTensor benchmarks/benchmark_tensor.cpp src/NppAIEngine.cpp)
     target_include_directories(BenchmarkTensor PRIVATE src)
     target_compile_definitions(BenchmarkTensor PRIVATE NPPAI_TESTING)

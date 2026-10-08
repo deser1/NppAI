@@ -91,7 +91,7 @@ jobs:
       run: cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
 
     - name: Build benchmarks
-      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE
+      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE BenchmarkRAGIndex
 
     - name: Run tensor benchmark
       shell: pwsh
@@ -177,9 +177,20 @@ jobs:
         $output = & .\build-bench\Release\BenchmarkMoE.exe
         $output | Tee-Object -FilePath benchmark-results\moe-vs-dense.txt
 
+    - name: Run RAG indexing scale benchmark
+      shell: pwsh
+      run: |
+        foreach ($count in @(250, 1000, 2000)) {
+          $output = & .\\build-bench\\Release\\BenchmarkRAGIndex.exe $count
+          if ($LASTEXITCODE -ne 0) { throw "RAG indexing benchmark failed for $count files" }
+          $output | Tee-Object -FilePath "benchmark-results\\rag-index-$count.json"
+        }
+
     - name: Upload benchmark results
       if: always()
       uses: actions/upload-artifact@v7
       with:
         name: tensor-benchmark-x64
-        path: benchmark-results\*.txt
+        path: |
+          benchmark-results\*.txt
+          benchmark-results\*.json
