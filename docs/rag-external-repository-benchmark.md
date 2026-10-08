@@ -42,3 +42,21 @@ Store raw JSONL outputs, exact commit SHAs, NppAI build SHA, operating system, C
 - Report median of five per-process medians and the full spread, **not** the p95 from one process as a global p95.
 - The indexer may not support every Python/C++ file type; compare reported indexed counts with the source tree inventory. Do not equate tracked file count with indexed document count.
 - Keep real-source results separate from synthetic fixtures. Do not set a regression threshold or claim cross-language retrieval quality without a relevance-labeled query set.
+
+## Pinned candidates (selected 2026-10-08)
+
+| Language | Repository | Immutable Git commit | License |
+| --- | --- | --- | --- |
+| C++ | [fmtlib/fmt](https://github.com/fmtlib/fmt) | `35c58f084e7cd79b51997439cff68346f4c724c0` | MIT |
+| Python | [pallets/click](https://github.com/pallets/click) | `2247b35ea1c47c727d7a06e51fa280e12a863ff6` | BSD-3-Clause |
+
+These are **candidate source trees**, not completed measurements. Fetch the repository yourself in a trusted environment, verify the commit with `git rev-parse HEAD`, and supply its checkout path to the commands above. Do not run dependencies or build scripts from either repository.
+
+```powershell
+git clone https://github.com/fmtlib/fmt.git C:\bench-fixtures\fmt
+git -C C:\bench-fixtures\fmt checkout --detach 35c58f084e7cd79b51997439cff68346f4c724c0
+git clone https://github.com/pallets/click.git C:\bench-fixtures\click
+git -C C:\bench-fixtures\click checkout --detach 2247b35ea1c47c727d7a06e51fa280e12a863ff6
+```
+
+Run each fixture separately; update `$sourcePath` and move the generated JSONL outputs between runs. Before comparing results, verify that the indexer actually supports the source extensions used by each fixture. In particular, a nonzero index count does not establish Python-language support or semantic retrieval relevance.
