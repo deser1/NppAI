@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Optimized incremental RAG source replacement by removing only invalidated document keys instead of rebuilding the complete key set; added regression coverage for source replacement and deletion. Indexing performance awaits CI benchmark validation.
+
 - Documented RAG quality/performance tradeoffs using validated CI indexing latency, process peak RSS, retrieval median/p95, and ranking quality; production ranking weights remain unchanged.
 
 - Expanded RAG ranking-weight evaluation from 8 to 17 coding queries with overlapping-vocabulary hard negatives and documentation distractors; production weights remain unchanged.
