@@ -186,6 +186,22 @@ jobs:
           $output | Tee-Object -FilePath "benchmark-results\\rag-index-$count.json"
         }
 
+    - name: Run RAG indexing on real NppAI source tree
+      shell: pwsh
+      run: |
+        $samples = @()
+        foreach ($iteration in 1..5) {
+          $output = & .\\build-bench\\Release\\BenchmarkRAGIndex.exe --repo src
+          if ($LASTEXITCODE -ne 0) { throw "Real source indexing benchmark failed" }
+          $sample = $output | ConvertFrom-Json
+          if ($sample.indexed_files -le 0) { throw "No source files indexed" }
+          $samples += $sample
+          $output | Set-Content "benchmark-results\\rag-real-source-$iteration.json"
+        }
+        $sorted = @($samples | Sort-Object index_ms)
+        $median = $sorted[2]
+        $median | ConvertTo-Json -Compress | Set-Content "benchmark-results\\rag-real-source-median.json"
+
     - name: Run RAG retrieval scale benchmark
       shell: pwsh
       run: |

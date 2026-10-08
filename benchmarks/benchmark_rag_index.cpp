@@ -32,7 +32,26 @@ static size_t peakRssBytes() {
 
 int main(int argc, char** argv) {
     namespace fs = std::filesystem;
-    const int files = argc > 1 ? std::stoi(argv[1]) : 1000;
+    const int files = (argc > 1 && std::string(argv[1]) != "--repo") ? std::stoi(argv[1]) : 1000;
+
+    if (argc > 1 && std::string(argv[1]) == "--repo") {
+        if (argc != 3 || !fs::is_directory(argv[2])) return 2;
+        auto& rag = RAGManager::getInstance();
+        const size_t before = peakRssBytes();
+        const auto start = std::chrono::steady_clock::now();
+        const size_t indexed = rag.indexRepository(argv[2]);
+        const auto end = std::chrono::steady_clock::now();
+        if (indexed == 0) return 1;
+        const double milliseconds = std::chrono::duration<double, std::milli>(end - start).count();
+        const size_t after = peakRssBytes();
+        std::cout << "{\"mode\":\"real_repository\",\"indexed_files\":" << indexed
+                  << ",\"index_ms\":" << milliseconds
+                  << ",\"ms_per_file\":" << milliseconds / indexed
+                  << ",\"peak_rss_bytes\":" << after
+                  << ",\"peak_rss_growth_bytes\":" << (after >= before ? after - before : 0)
+                  << "}" << std::endl;
+        return 0;
+    }
     if (files <= 0 || files > 10000) return 2;
     const fs::path root = fs::temp_directory_path() / "nppai_rag_index_scale_fixture";
     fs::remove_all(root);
