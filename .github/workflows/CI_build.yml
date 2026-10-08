@@ -211,6 +211,13 @@ jobs:
           $output | Tee-Object -FilePath "benchmark-results\\rag-retrieval-$count.json"
         }
 
+    - name: Run RAG retrieval on real NppAI source tree
+      shell: pwsh
+      run: |
+        $output = & .\build-bench\Release\BenchmarkRAGRetrieval.exe --repo src
+        if ($LASTEXITCODE -ne 0) { throw "Real source retrieval benchmark failed" }
+        $output | Set-Content "benchmark-results\rag-real-retrieval.json"
+
     - name: Evaluate RAG ranking weights
       shell: pwsh
       run: |
