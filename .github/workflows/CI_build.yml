@@ -91,7 +91,7 @@ jobs:
       run: cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
 
     - name: Build benchmarks
-      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE BenchmarkRAGIndex
+      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE BenchmarkRAGIndex BenchmarkRAGRetrieval
 
     - name: Run tensor benchmark
       shell: pwsh
@@ -184,6 +184,15 @@ jobs:
           $output = & .\\build-bench\\Release\\BenchmarkRAGIndex.exe $count
           if ($LASTEXITCODE -ne 0) { throw "RAG indexing benchmark failed for $count files" }
           $output | Tee-Object -FilePath "benchmark-results\\rag-index-$count.json"
+        }
+
+    - name: Run RAG retrieval scale benchmark
+      shell: pwsh
+      run: |
+        foreach ($count in @(250, 1000, 2000)) {
+          $output = & .\\build-bench\\Release\\BenchmarkRAGRetrieval.exe $count
+          if ($LASTEXITCODE -ne 0) { throw "RAG retrieval benchmark failed for $count documents" }
+          $output | Tee-Object -FilePath "benchmark-results\\rag-retrieval-$count.json"
         }
 
     - name: Upload benchmark results
