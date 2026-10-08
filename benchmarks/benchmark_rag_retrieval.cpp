@@ -2,15 +2,20 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <filesystem>
 #include <numeric>
 #include <string>
 #include <vector>
 
 int main(int argc, char** argv) {
-    const int documents = argc > 1 ? std::stoi(argv[1]) : 1000;
-    if (documents <= 0 || documents > 10000) return 2;
+    const bool realRepository = argc > 1 && std::string(argv[1]) == "--repo";
+    const int documents = (argc > 1 && !realRepository) ? std::stoi(argv[1]) : 1000;
+    if (realRepository && (argc != 3 || !std::filesystem::is_directory(argv[2]))) return 2;
+    if (!realRepository && (documents <= 0 || documents > 10000)) return 2;
     auto& rag = RAGManager::getInstance();
-    for (int i = 0; i < documents; ++i) {
+    if (realRepository) {
+        if (rag.indexRepository(argv[2]) == 0) return 1;
+    } else for (int i = 0; i < documents; ++i) {
         const std::string source = "src/module_" + std::to_string(i) + ".cpp";
         const std::string text = "class Module" + std::to_string(i) +
             " { public: int calculateChecksum(int input) { return input + " +
@@ -26,7 +31,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < warmup + iterations; ++i) {
         const auto start = std::chrono::steady_clock::now();
         const std::string result = rag.retrieveContextRanked(
-            "calculateChecksum module input", 3, "", "cpp");
+            realRepository ? "RAGManager indexRepository retrieveContext" : "calculateChecksum module input", 3, "", realRepository ? "" : "cpp");
         const auto end = std::chrono::steady_clock::now();
         observedBytes += result.size();
         if (i >= warmup)
@@ -39,7 +44,8 @@ int main(int argc, char** argv) {
     std::sort(samples.begin(), samples.end());
     const double median = samples[samples.size() / 2];
     const double p95 = samples[static_cast<size_t>((samples.size() - 1) * 0.95)];
-    std::cout << "{\"documents\":" << documents
+    std::cout << "{\"mode\":\"" << (realRepository ? "real_repository" : "synthetic")
+              << "\",\"documents\":" << (realRepository ? 0 : documents)
               << ",\"retrieval_median_ms\":" << median
               << ",\"retrieval_p95_ms\":" << p95
               << ",\"warmup\":" << warmup

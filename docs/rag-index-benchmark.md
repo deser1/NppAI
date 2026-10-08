@@ -36,3 +36,22 @@ Source: [CI run #37776896318](https://github.com/deser1/NppAI/actions/runs/37776
 | 2,000 | 6,704.31 | 167.111 | 40.12x | 12,271,616 |
 
 The new time per file is approximately 0.078–0.084 ms across the three sizes. These are separate, single-run synthetic CI measurements, not a controlled paired benchmark; do not extrapolate the speedup as a guaranteed production result. The prior non-linear scaling observation above refers to the pre-optimization implementation.
+
+
+## Real NppAI source tree (PR #104)
+
+Source: [CI run #37827786426](https://github.com/deser1/NppAI/actions/runs/37827786426), Windows x64 Release, indexing the repository's real `src/` tree.
+
+| Metric | Value |
+| --- | ---: |
+| Indexed source files | 56 |
+| Indexing runs | 5 |
+| Median indexing wall time | 14.3135 ms |
+| Median time per indexed file | approximately 0.256 ms |
+| Reported process peak RSS growth | approximately 1.90 MB |
+
+Five run times (ms): 14.9645, 14.4342, 14.3135, 14.1249, 14.1236. The per-file figure cannot be compared directly with the synthetic fixture because file sizes, content, and languages differ. The peak-RSS metric is a process high-water mark, not a direct heap allocation measurement. These values are an initial CI baseline, not a performance gate.
+
+## Real-repository retrieval follow-up
+
+`BenchmarkRAGRetrieval --repo src` indexes real source files and measures warmup plus repeated ranked retrieval queries. The CI job stores `rag-real-retrieval.json` with median and p95 latency. Future validation should repeat this on larger, independently selected C++ and Python repositories, with pinned revisions and documented file counts; no external code is fetched by CI at this stage.
