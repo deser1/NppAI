@@ -1,4 +1,5 @@
 #include "RAGManager.h"
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -52,7 +53,9 @@ int main() {
 
     const std::vector<RetrievalFixture> fixtures = {
         {"json request validation", 2,
-         {"src/http/json_request.cpp", "src/http/json_response.cpp"}},
+         {"src/http/json_request.cpp"}},
+        {"serialize json response status code", 2,
+         {"src/http/json_response.cpp"}},
         {"bearer authentication token", 2,
          {"src/security/auth.cpp", "src/security/oauth.cpp"}},
         {"sql transaction rollback", 2,
@@ -63,7 +66,27 @@ int main() {
          {"train/model.py"}},
     };
 
+    // Structured source results must be ranked, unique, and safe for evaluation.
     bool ok = true;
+    const auto rankedPaths = rag.retrieveRankedSources("json request validation", 3);
+    if (rankedPaths.empty() || rankedPaths.front() != "src/http/json_request.cpp" ||
+        rankedPaths.size() > 3) {
+        std::cerr << "Structured RAG paths: unexpected ranking or result count.\\n";
+        ok = false;
+    }
+    const auto noHits = rag.retrieveRankedSources("zzzz_unknown_never_seen_913", 3);
+    if (!noHits.empty() || !rag.retrieveRankedSources("", 3).empty() ||
+        !rag.retrieveRankedSources("json request", 0).empty()) {
+        std::cerr << "Structured RAG paths: zero-hit or invalid-query behavior.\\n";
+        ok = false;
+    }
+    rag.addDocument("json request validation additional unique chunk", "src/http/json_request.cpp", "cpp");
+    const auto uniquePaths = rag.retrieveRankedSources("json request validation", 5);
+    if (std::count(uniquePaths.begin(), uniquePaths.end(), "src/http/json_request.cpp") != 1) {
+        std::cerr << "Structured RAG paths: duplicate source.\\n";
+        ok = false;
+    }
+
     for (const RetrievalFixture& fixture : fixtures)
         ok &= checkFixture(rag, fixture);
 

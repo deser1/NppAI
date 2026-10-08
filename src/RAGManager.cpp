@@ -389,6 +389,38 @@ std::string RAGManager::retrieveContextRankedWeighted(const std::string& query, 
     return result;
 }
 
+std::vector<std::string> RAGManager::retrieveRankedSources(const std::string& query, int topK) {
+    if (query.empty() || topK <= 0) return {};
+    const auto queryVec = computeEmbedding(query);
+    const auto queryTokens = tokenizeUnique(query);
+    std::lock_guard<std::mutex> lock(dbMutex);
+    struct Match { float score; const Document* document; };
+    std::vector<Match> scores;
+    for (const auto& doc : knowledgeBase) {
+        if (doc.source.empty()) continue;
+        const float cosine = cosineSimilarity(queryVec, doc.embedding);
+        const float lexical = lexicalOverlap(queryTokens, doc.text);
+        const float score = cosine * 0.65f + lexical * 0.35f +
+                            (lexical >= 0.999f ? 0.10f : 0.0f);
+        if (score > 0.1f) scores.push_back({score, &doc});
+    }
+    std::sort(scores.begin(), scores.end(), [](const Match& a, const Match& b) {
+        if (std::fabs(a.score - b.score) > 1e-6f) return a.score > b.score;
+        if (a.document->source != b.document->source)
+            return a.document->source < b.document->source;
+        return a.document->text < b.document->text;
+    });
+    std::vector<std::string> paths;
+    std::set<std::string> seen;
+    for (const auto& match : scores) {
+        if (seen.insert(match.document->source).second) {
+            paths.push_back(match.document->source);
+            if (paths.size() >= static_cast<size_t>(topK)) break;
+        }
+    }
+    return paths;
+}
+
 void RAGManager::saveDatabase(const std::string& dbPath) {
     std::lock_guard<std::mutex> lock(dbMutex);
     std::ofstream outFile(dbPath, std::ios::binary);

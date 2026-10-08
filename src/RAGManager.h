@@ -33,6 +33,10 @@ public:
                                               const std::string& preferredLanguage,
                                               float cosineWeight, float lexicalWeight);
 
+    // Ranked unique repository-relative source paths for retrieval-quality evaluation.
+    // Uses production ranking weights and returns paths without formatting context text.
+    std::vector<std::string> retrieveRankedSources(const std::string& query, int topK);
+
     // Zapis/Odczyt na dysk (trwała pamięć)
     void saveDatabase(const std::string& dbPath);
     void loadDatabase(const std::string& dbPath);
