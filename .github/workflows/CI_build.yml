@@ -211,12 +211,20 @@ jobs:
           $output | Tee-Object -FilePath "benchmark-results\\rag-retrieval-$count.json"
         }
 
-    - name: Run RAG retrieval on real NppAI source tree
+    - name: Run repeated RAG retrieval on real NppAI source tree
       shell: pwsh
       run: |
-        $output = & .\build-bench\Release\BenchmarkRAGRetrieval.exe --repo src
-        if ($LASTEXITCODE -ne 0) { throw "Real source retrieval benchmark failed" }
-        $output | Set-Content "benchmark-results\rag-real-retrieval.json"
+        $runs = @()
+        for ($i = 1; $i -le 5; $i++) {
+          $output = & .\build-bench\Release\BenchmarkRAGRetrieval.exe --repo src
+          if ($LASTEXITCODE -ne 0) { throw "Real source retrieval benchmark failed on run $i" }
+          $parsed = $output | ConvertFrom-Json
+          if ($parsed.documents -le 0 -or $parsed.samples -ne 11) { throw "Invalid retrieval benchmark output on run $i" }
+          $output | Set-Content "benchmark-results\rag-real-retrieval-$i.json"
+          $runs += $parsed
+        }
+        $sorted = @($runs | Sort-Object retrieval_median_ms)
+        $sorted[2] | ConvertTo-Json -Compress | Set-Content "benchmark-results\rag-real-retrieval-median.json"
 
     - name: Evaluate RAG ranking weights
       shell: pwsh
