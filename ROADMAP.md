@@ -97,7 +97,7 @@ Read -> Patch -> Build -> Test
 ### 4. RAG quality and scale validation
 
 - [x] Add retrieval-quality fixtures with expected top-k results
-- [ ] Measure indexing latency and memory use on larger repositories
+- [x] Measure indexing latency and memory use on larger repositories (synthetic CI fixtures: 250/1000/2000 files; see docs/rag-index-benchmark.md)
 - [ ] Benchmark retrieval latency as the index grows
 - [ ] Evaluate ranking weights against representative coding queries
 - [ ] Document quality/performance tradeoffs
