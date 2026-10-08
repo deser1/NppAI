@@ -210,13 +210,17 @@ void RAGManager::updateSource(const std::string& text, const std::string& source
 
     {
         std::lock_guard<std::mutex> lock(dbMutex);
+        // Remove keys only for documents belonging to the updated source.
+        // Rebuilding all keys on every file update made repository indexing quadratic.
         knowledgeBase.erase(
             std::remove_if(knowledgeBase.begin(), knowledgeBase.end(),
-                           [&](const Document& doc) { return doc.source == source; }),
+                           [&](const Document& doc) {
+                               if (doc.source != source)
+                                   return false;
+                               documentKeys.erase(makeDocumentKey(doc.text, doc.source, doc.language));
+                               return true;
+                           }),
             knowledgeBase.end());
-        documentKeys.clear();
-        for (const auto& doc : knowledgeBase)
-            documentKeys.insert(makeDocumentKey(doc.text, doc.source, doc.language));
     }
 
     if (!text.empty())
