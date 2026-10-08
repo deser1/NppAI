@@ -79,6 +79,9 @@ jobs:
     - name: Run model export tests
       run: python -m unittest discover -s tests -p "test_model_export.py" -v
 
+    - name: Run RAG relevance metric tests
+      run: python -m unittest discover -s tests -p "test_rag_relevance_metrics.py" -v
+
 
   benchmark:
     runs-on: windows-2022
