@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Added RAG indexing scale benchmark for 250/1000/2000 synthetic source files, recording wall-clock indexing latency and process peak RSS in CI artifacts; measurements are pending CI validation.
+- Added RAG indexing scale benchmark for 250/1000/2000 synthetic source files, recording wall-clock indexing latency and process peak RSS in CI artifacts; validated on windows-2022 x64: 143.332/1881.15/6704.31 ms for 250/1000/2000 files respectively; see docs/rag-index-benchmark.md.
 
 - Added deterministic RAG retrieval-quality fixtures covering representative JSON, authentication, SQL, DirectX, and Python coding queries with expected top-k ordering.
 - Added a deterministic CI benchmark comparing 8-expert dense combination with top-2 MoE routing; initial windows-2022 x64 baseline measured 20.962 us/op dense versus 21.1726 us/op MoE (0.990x dense/MoE ratio), documenting that the current routing path is not yet a speedup.
