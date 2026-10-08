@@ -1,0 +1,85 @@
+name: RAG pinned external repositories
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/rag-external-benchmark.yml
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-external:
+    runs-on: windows-2022
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - label: cpp-fmt
+            repository: fmtlib/fmt
+            revision: 35c58f084e7cd79b51997439cff68346f4c724c0
+          - label: python-click
+            repository: pallets/click
+            revision: 2247b35ea1c47c727d7a06e51fa280e12a863ff6
+    steps:
+      - name: Checkout NppAI
+        uses: actions/checkout@v4
+        with:
+          path: nppai
+          persist-credentials: false
+
+      - name: Checkout pinned source fixture (no scripts executed)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ matrix.revision }}
+          path: fixture
+          persist-credentials: false
+
+      - name: Verify fixture revision
+        shell: pwsh
+        run: |
+          $sha = git -C fixture rev-parse HEAD
+          if ($sha -ne "${{ matrix.revision }}") { throw "Fixture revision mismatch: $sha" }
+
+      - name: Build NppAI benchmark executables
+        shell: pwsh
+        run: |
+          cmake -S nppai -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
+          if ($LASTEXITCODE -ne 0) { throw "CMake configure failed" }
+          cmake --build build-bench --config Release --target BenchmarkRAGIndex BenchmarkRAGRetrieval
+          if ($LASTEXITCODE -ne 0) { throw "Benchmark build failed" }
+
+      - name: Measure five independent indexing and retrieval runs
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force results | Out-Null
+          $fixture = (Resolve-Path fixture).Path
+          $meta = @{ fixture = "${{ matrix.repository }}"; fixture_sha = "${{ matrix.revision }}"; nppai_sha = "${{ github.sha }}"; runner = "windows-2022" }
+          $meta | ConvertTo-Json -Compress | Set-Content results/metadata.json
+          foreach ($kind in @("index", "retrieval")) {
+            $exe = if ($kind -eq "index") { ".\\build-bench\\Release\\BenchmarkRAGIndex.exe" } else { ".\\build-bench\\Release\\BenchmarkRAGRetrieval.exe" }
+            $rows = @()
+            foreach ($i in 1..5) {
+              $raw = & $exe --repo $fixture
+              if ($LASTEXITCODE -ne 0) { throw "$kind benchmark failed on repetition $i" }
+              $record = $raw | ConvertFrom-Json
+              $count = if ($kind -eq "index") { $record.indexed_files } else { $record.documents }
+              if ($count -le 0) { throw "No indexed source files on $kind repetition $i" }
+              $rows += $record
+              $raw | Set-Content "results/$kind-$i.json"
+            }
+            $key = if ($kind -eq "index") { "index_ms" } else { "retrieval_median_ms" }
+            $sorted = @($rows | Sort-Object -Property $key)
+            $sorted[2] | ConvertTo-Json -Compress | Set-Content "results/$kind-middle-run.json"
+          }
+
+      - name: Upload raw benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rag-external-${{ matrix.label }}
+          path: results/
+          if-no-files-found: warn
