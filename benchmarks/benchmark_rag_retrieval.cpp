@@ -13,8 +13,10 @@ int main(int argc, char** argv) {
     if (realRepository && (argc != 3 || !std::filesystem::is_directory(argv[2]))) return 2;
     if (!realRepository && (documents <= 0 || documents > 10000)) return 2;
     auto& rag = RAGManager::getInstance();
+    size_t indexedFiles = 0;
     if (realRepository) {
-        if (rag.indexRepository(argv[2]) == 0) return 1;
+        indexedFiles = rag.indexRepository(argv[2]);
+        if (indexedFiles == 0) return 1;
     } else for (int i = 0; i < documents; ++i) {
         const std::string source = "src/module_" + std::to_string(i) + ".cpp";
         const std::string text = "class Module" + std::to_string(i) +
@@ -45,7 +47,7 @@ int main(int argc, char** argv) {
     const double median = samples[samples.size() / 2];
     const double p95 = samples[static_cast<size_t>((samples.size() - 1) * 0.95)];
     std::cout << "{\"mode\":\"" << (realRepository ? "real_repository" : "synthetic")
-              << "\",\"documents\":" << (realRepository ? 0 : documents)
+              << "\",\"documents\":" << (realRepository ? indexedFiles : static_cast<size_t>(documents))
               << ",\"retrieval_median_ms\":" << median
               << ",\"retrieval_p95_ms\":" << p95
               << ",\"warmup\":" << warmup
