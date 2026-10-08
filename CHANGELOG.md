@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Expanded RAG ranking-weight evaluation from 8 to 17 coding queries with overlapping-vocabulary hard negatives and documentation distractors; production weights remain unchanged.
+
 - Added an experimental RAG ranking-weight evaluation harness with recall@3 and MRR@3 across eight synthetic coding queries; production 65/35 weights unchanged pending CI evidence.
 
 - Added CI RAG retrieval-latency benchmark for synthetic indices of 250/1000/2000 documents, reporting median and p95 of 11 timed queries after warmup; validated in CI #37745155204; median latency 0.8125/3.2756/6.6754 ms at 250/1000/2000 documents; see docs/rag-retrieval-benchmark.md.
