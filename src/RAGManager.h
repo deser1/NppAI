@@ -27,6 +27,12 @@ public:
                                       const std::string& preferredSource,
                                       const std::string& preferredLanguage);
 
+    // Evaluate alternative cosine/lexical weights without changing production defaults.
+    std::string retrieveContextRankedWeighted(const std::string& query, int topK,
+                                              const std::string& preferredSource,
+                                              const std::string& preferredLanguage,
+                                              float cosineWeight, float lexicalWeight);
+
     // Zapis/Odczyt na dysk (trwała pamięć)
     void saveDatabase(const std::string& dbPath);
     void loadDatabase(const std::string& dbPath);
