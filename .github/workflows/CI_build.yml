@@ -91,7 +91,7 @@ jobs:
       run: cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
 
     - name: Build benchmarks
-      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE BenchmarkRAGIndex BenchmarkRAGRetrieval
+      run: cmake --build build-bench --config Release --target BenchmarkTensor BenchmarkMoE BenchmarkRAGIndex BenchmarkRAGRetrieval BenchmarkRAGRanking
 
     - name: Run tensor benchmark
       shell: pwsh
@@ -195,6 +195,12 @@ jobs:
           $output | Tee-Object -FilePath "benchmark-results\\rag-retrieval-$count.json"
         }
 
+    - name: Evaluate RAG ranking weights
+      shell: pwsh
+      run: |
+        & .\\build-bench\\Release\\BenchmarkRAGRanking.exe | Tee-Object -FilePath "benchmark-results\\rag-ranking-weights.jsonl"
+        if ($LASTEXITCODE -ne 0) { throw "RAG ranking benchmark failed" }
+
     - name: Upload benchmark results
       if: always()
       uses: actions/upload-artifact@v7
@@ -203,3 +209,4 @@ jobs:
         path: |
           benchmark-results\*.txt
           benchmark-results\*.json
+          benchmark-results\*.jsonl

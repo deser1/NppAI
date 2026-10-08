@@ -311,6 +311,17 @@ std::string RAGManager::retrieveContext(const std::string& query, int topK,
 std::string RAGManager::retrieveContextRanked(const std::string& query, int topK,
                                              const std::string& preferredSource,
                                              const std::string& preferredLanguage) {
+    return retrieveContextRankedWeighted(query, topK, preferredSource, preferredLanguage, 0.65f, 0.35f);
+}
+
+std::string RAGManager::retrieveContextRankedWeighted(const std::string& query, int topK,
+                                             const std::string& preferredSource,
+                                             const std::string& preferredLanguage,
+                                             float cosineWeight, float lexicalWeight) {
+    if (!std::isfinite(cosineWeight) || !std::isfinite(lexicalWeight) ||
+        cosineWeight < 0.0f || lexicalWeight < 0.0f ||
+        std::fabs(cosineWeight + lexicalWeight - 1.0f) > 1e-5f)
+        return "";
     if (query.empty() || topK <= 0) return "";
 
     const auto queryVec = computeEmbedding(query);
@@ -326,7 +337,7 @@ std::string RAGManager::retrieveContextRanked(const std::string& query, int topK
         const float exactCoverageBonus = lexical >= 0.999f ? 0.10f : 0.0f;
         const float sourceBonus = !preferredSource.empty() && doc.source == preferredSource ? 0.12f : 0.0f;
         const float languageBonus = !preferredLanguage.empty() && doc.language == preferredLanguage ? 0.06f : 0.0f;
-        const float score = cosine * 0.65f + lexical * 0.35f + exactCoverageBonus + sourceBonus + languageBonus;
+        const float score = cosine * cosineWeight + lexical * lexicalWeight + exactCoverageBonus + sourceBonus + languageBonus;
         if (score > 0.1f) scores.push_back({score, &doc});
     }
     std::sort(scores.begin(), scores.end(), [](const auto& a, const auto& b) {
