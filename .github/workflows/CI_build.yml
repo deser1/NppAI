@@ -209,3 +209,4 @@ jobs:
         path: |
           benchmark-results\*.txt
           benchmark-results\*.json
+          benchmark-results\*.jsonl
