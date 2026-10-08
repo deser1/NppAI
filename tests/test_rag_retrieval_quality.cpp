@@ -53,7 +53,9 @@ int main() {
 
     const std::vector<RetrievalFixture> fixtures = {
         {"json request validation", 2,
-         {"src/http/json_request.cpp", "src/http/json_response.cpp"}},
+         {"src/http/json_request.cpp"}},
+        {"serialize json response status code", 2,
+         {"src/http/json_response.cpp"}},
         {"bearer authentication token", 2,
          {"src/security/auth.cpp", "src/security/oauth.cpp"}},
         {"sql transaction rollback", 2,
