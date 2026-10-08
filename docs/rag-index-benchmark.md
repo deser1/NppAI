@@ -23,3 +23,16 @@ Configure with `-DNPPAI_BUILD_BENCHMARKS=ON`, build `BenchmarkRAGIndex` in Relea
 ## Next steps
 
 Profile `updateSource` and its key-set reconstruction, then measure retrieval latency across increasing index sizes. Repeat measurements with representative real repositories and multiple runs before setting performance thresholds.
+
+
+## After incremental key invalidation (PR #102)
+
+Source: [CI run #37776896318](https://github.com/deser1/NppAI/actions/runs/37776896318), benchmark job on Windows x64 Release, after replacing the full document-key rebuild with per-source key removal.
+
+| Files | Before (ms) | After (ms) | Before / after | After peak RSS growth (bytes) |
+| ---: | ---: | ---: | ---: | ---: |
+| 250 | 143.332 | 19.4122 | 7.38x | 1,683,456 |
+| 1,000 | 1,881.15 | 82.8891 | 22.69x | 6,189,056 |
+| 2,000 | 6,704.31 | 167.111 | 40.12x | 12,271,616 |
+
+The new time per file is approximately 0.078–0.084 ms across the three sizes. These are separate, single-run synthetic CI measurements, not a controlled paired benchmark; do not extrapolate the speedup as a guaranteed production result. The prior non-linear scaling observation above refers to the pre-optimization implementation.
