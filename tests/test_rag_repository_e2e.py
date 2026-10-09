@@ -117,6 +117,31 @@ class RepositoryRagEndToEnd(unittest.TestCase):
                     self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
                     self.assertIn("Invalid JSON string escape", result.stderr)
 
+    def test_invalid_jsonl_structure_is_rejected(self):
+        if len(sys.argv) < 2:
+            self.skipTest("pass RagRepositoryPredictions executable as argument")
+        executable = Path(sys.argv[1]).resolve()
+        cases = [
+            '{"query_id":"a","query":"auth","query":"duplicate"}',
+            '{"query_id":"a","query":"auth",}',
+            '{"query_id":"a","query":"auth"} trailing',
+            '{"query_id":"a","query":123}',
+            '{"query_id":"a","query":"auth","extra":[1,]}',
+            '{"query_id":"a","query":"auth","extra":{"nested":true,}}',
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "sample.cpp").write_text("authentication token\n", encoding="utf-8")
+            judgments = root / "judgments.jsonl"
+            for case in cases:
+                with self.subTest(case=case):
+                    judgments.write_text(case + "\n", encoding="utf-8")
+                    result = subprocess.run(
+                        [str(executable), str(root), str(judgments), "2"],
+                        capture_output=True, text=True, encoding="utf-8", timeout=30,
+                    )
+                    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+
     def test_invalid_json_escape_is_rejected(self):
         if len(sys.argv) < 2:
             self.skipTest("pass RagRepositoryPredictions executable as argument")
