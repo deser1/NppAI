@@ -1,0 +1,26 @@
+name: Code quality evaluator tests
+
+on:
+  push:
+    paths:
+      - 'scripts/evaluate_code_quality.py'
+      - 'tests/test_code_quality_evaluator.py'
+      - 'evaluation/code-quality/**'
+      - '.github/workflows/code-quality-evaluator.yml'
+  pull_request:
+    paths:
+      - 'scripts/evaluate_code_quality.py'
+      - 'tests/test_code_quality_evaluator.py'
+      - 'evaluation/code-quality/**'
+      - '.github/workflows/code-quality-evaluator.yml'
+
+jobs:
+  evaluator-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run evaluator regression tests
+        run: python -m unittest discover -s tests -p test_code_quality_evaluator.py -v
