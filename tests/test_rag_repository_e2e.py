@@ -50,7 +50,7 @@ class RepositoryRagEndToEnd(unittest.TestCase):
                 "authentication token renderer processing\n", encoding="utf-8"
             )
             judgments = root / "judgments.jsonl"
-            query_id = 'polski "test" \\ ścieżka'
+            query_id = 'polski "test" \\ ' + chr(0x015B) + 'cie' + chr(0x017C) + 'ka'
             query = 'authentication "token" \\ renderer'
             judgments.write_text(
                 json.dumps({"query_id": query_id, "query": query,
@@ -59,7 +59,7 @@ class RepositoryRagEndToEnd(unittest.TestCase):
             )
             result = subprocess.run(
                 [str(executable), str(root), str(judgments), "2"],
-                capture_output=True, text=True, timeout=30, check=True,
+                capture_output=True, text=True, encoding="utf-8", timeout=30, check=True,
             )
             records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
             self.assertEqual(len(records), 1)
