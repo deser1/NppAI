@@ -201,6 +201,12 @@ See:
 
 The GUI-free DLL contract and host-level Notepad++ integration harness are covered in CI. The host harness exercises runtime initialization, required plugin exports, notifications, command callbacks, active-editor selection, and Scintilla calltip interaction without requiring the Notepad++ GUI.
 
+## Project maturity and limitations
+
+NppAI is an **experimental** local coding assistant, not a validated production-grade autonomous programmer. Green CI confirms tested build configurations and deterministic fixtures; it does **not** establish model usefulness on real repositories, security of public deployment, or compatibility with every Notepad++ installation. A compatible `.nppai` model is required and is not included in release ZIPs.
+
+The repository's [detailed roadmap](ROADMAP.md) tracks implemented features, remaining model-quality evaluation, release-readiness work, and evidence gaps. In particular, the RAG evaluation helper currently extracts JSONL fields with regular expressions rather than a full JSON parser; it supports the tested fields and escapes but should not be treated as a general-purpose JSON validator.
+
 ## Roadmap
 
 - [x] Runtime CPU feature detection for AVX2/FMA with scalar fallback
@@ -208,11 +214,11 @@ The GUI-free DLL contract and host-level Notepad++ integration harness are cover
 - [x] Model serialization/version validation
 - [x] Reproducible CPU/GPU benchmarks
 - [x] Better tokenizer test coverage
-- [ ] Complete public-deployment API hardening (authentication policy, rate limiting policy, request-size enforcement, TLS termination, and data-retention/privacy policy)
+- [ ] Validate public backend deployment hardening end-to-end (policies and controls are documented/implemented; production review remains)
 - [x] Model integrity checks / hashes
 - [x] Formal release process
 - [x] Improved RAG indexing and retrieval
-- [ ] Experimental MoE support
+- [x] Experimental MoE inference and benchmark coverage (not a production quality claim)
 - [x] Broader quantization correctness and accuracy coverage
 - [x] GUI-free Notepad++ plugin DLL contract test
 - [x] Host-level Notepad++ integration test

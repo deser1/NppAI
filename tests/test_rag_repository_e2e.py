@@ -87,6 +87,36 @@ class RepositoryRagEndToEnd(unittest.TestCase):
             records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
             self.assertEqual(records[0]["query_id"], "emoji " + chr(0x1F680))
 
+    def test_malformed_json_string_escapes_are_rejected(self):
+        if len(sys.argv) < 2:
+            self.skipTest("pass RagRepositoryPredictions executable as argument")
+        executable = Path(sys.argv[1]).resolve()
+        invalid_ids = [
+            r"bad\u12",         # incomplete Unicode escape
+            r"bad\u12G4",       # non-hex Unicode digit
+            r"bad\uD800",       # missing low surrogate
+            r"bad\uDC00",       # unpaired low surrogate
+            r"bad\uD800\u0041", # invalid low surrogate
+            "bad" + chr(1),     # unescaped control character
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "sample.cpp").write_text("authentication token\n", encoding="utf-8")
+            judgments = root / "judgments.jsonl"
+            for query_id in invalid_ids:
+                with self.subTest(query_id=repr(query_id)):
+                    judgments.write_text(
+                        '{"query_id":"' + query_id +
+                        '","query":"authentication","relevant_sources":["sample.cpp"]}\n',
+                        encoding="utf-8",
+                    )
+                    result = subprocess.run(
+                        [str(executable), str(root), str(judgments), "2"],
+                        capture_output=True, text=True, encoding="utf-8", timeout=30,
+                    )
+                    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                    self.assertIn("Invalid JSON string escape", result.stderr)
+
     def test_invalid_json_escape_is_rejected(self):
         if len(sys.argv) < 2:
             self.skipTest("pass RagRepositoryPredictions executable as argument")

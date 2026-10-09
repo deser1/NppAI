@@ -19,9 +19,20 @@ This roadmap tracks the engineering milestones for NppAI as an experimental nati
 - [x] Context-aware RAG ranking with source/language preferences
 - [x] RAG near-duplicate diversification and deterministic regression coverage
 
+## Current status and evidence (October 2026)
+
+The completed checkboxes below describe implemented engineering milestones, **not** a production-ready autonomous coding model. CI validates native builds and deterministic test fixtures; real-world generation quality, end-user UX and production backend security require separate evidence. See the open work under model quality and release readiness.
+
+Recent RAG regression work:
+
+- [x] JSONL escaped-string decoding and UTF-8 round-trip regression coverage (PR #123)
+- [x] Non-BMP Unicode / UTF-16 surrogate-pair round-trip regression coverage (PR #124)
+- [ ] Negative JSONL cases: malformed Unicode escapes, unpaired surrogates, and control characters (proposed regression tests; merge after CI)
+- [ ] Replace the evaluation helper's regex-based JSONL field extraction with a complete JSON parser, with malformed-record validation
+
 ## Next
 
-### 1. Public API hardening
+### 1. Public API hardening (implementation checklist; deployment review still required)
 
 - [x] Define authentication and authorization policy
 - [x] Add rate limiting
