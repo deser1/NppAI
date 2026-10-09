@@ -66,6 +66,27 @@ class RepositoryRagEndToEnd(unittest.TestCase):
             self.assertEqual(records[0]["query_id"], query_id)
             self.assertIsInstance(records[0]["ranked_sources"], list)
 
+    def test_jsonl_unicode_surrogate_pair_roundtrip(self):
+        if len(sys.argv) < 2:
+            self.skipTest("pass RagRepositoryPredictions executable as argument")
+        executable = Path(sys.argv[1]).resolve()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "sample.cpp").write_text("authentication token\n", encoding="utf-8")
+            judgments = root / "judgments.jsonl"
+            judgments.write_text(
+                json.dumps({"query_id": "emoji " + chr(0x1F680),
+                            "query": "authentication token",
+                            "relevant_sources": ["sample.cpp"]}) + "\n",
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                [str(executable), str(root), str(judgments), "2"],
+                capture_output=True, text=True, encoding="utf-8", timeout=30, check=True,
+            )
+            records = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+            self.assertEqual(records[0]["query_id"], "emoji " + chr(0x1F680))
+
     def test_invalid_json_escape_is_rejected(self):
         if len(sys.argv) < 2:
             self.skipTest("pass RagRepositoryPredictions executable as argument")
