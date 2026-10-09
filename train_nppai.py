@@ -132,7 +132,7 @@ def export_to_bin(model, filepath):
 
     with open(filepath, 'wb') as f:
         # Dense training exports remain v2 until the C++ loader adopts v3.
-        f.write(b"NPPAI\\0\\0\\0")
+        f.write(b"NPPAI\0\0\0")
         f.write(struct.pack("<I", 2))
         f.write(struct.pack("<5i", model.dim, model.hidden_dim, model.n_layers,
                             model.max_seq_len, model.vocab_size))
