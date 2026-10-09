@@ -44,3 +44,13 @@ python scripts/evaluate_code_quality.py --manifest evaluation/code-quality/manif
 ```
 
 The capture script records the model SHA-256 and outputs, but does not fix a random seed or decoding configuration. These are actual generations only when run with a real checkpoint. CI mocks the capture adapter and does not run model inference. Do not interpret CI green as evidence of coding ability.
+
+## One-command evaluation
+
+With a local compatible checkpoint and built TestEngine, run:
+
+```powershell
+python scripts/run_model_code_evaluation.py --engine build/Release/TestEngine.exe --model models/NppAI-model-v1.nppai --output-dir evaluation-results
+```
+
+The output directory must be new or empty. The command captures actual generations, records checkpoint provenance, imports candidates and executes Python unittest fixtures. **Candidate code is executed**: use a trusted checkpoint/output and an isolated environment. A model checkpoint is not included in this repository, so CI only tests orchestration with mocked capture, not model performance.
