@@ -21,3 +21,14 @@ The evaluator reports submission coverage, syntax success, unit-test success, an
 2. Build a reproducible model inference adapter to save actual NppAI outputs as candidate files; pin model hash, decoding parameters and seed.
 3. Evaluate compilable solutions, behavioral correctness, and repair iterations separately, with repeated runs and confidence intervals.
 4. Compare to a documented baseline and publish artifacts; never equate infrastructure smoke tests with model competence.
+
+## Import recorded model outputs
+
+Capture actual model responses as a JSON array with records like `{"id":"sum_positive","output":"def sum_positive(numbers): ..."}`. Import into a **new empty** submissions directory:
+
+```powershell
+python scripts/import_generation_outputs.py --input recorded-outputs.json --manifest evaluation/code-quality/manifest.json --submissions submissions
+python scripts/evaluate_code_quality.py --manifest evaluation/code-quality/manifest.json --submissions submissions
+```
+
+The importer accepts raw Python or a single fenced Python block. It does not call the model, strip explanations from raw text, or validate provenance. Record the model checkpoint hash, prompt, decoding settings and generation logs independently; only genuine captured model responses support model-quality claims.
