@@ -1,0 +1,66 @@
+name: Native baseline model evaluation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/native-baseline-evaluation.yml'
+      - 'scripts/capture_model_code_outputs.py'
+      - 'scripts/run_model_code_evaluation.py'
+      - 'test_engine.cpp'
+      - 'src/NppAIEngine.cpp'
+
+jobs:
+  evaluate:
+    runs-on: windows-2022
+    timeout-minutes: 35
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download previously trained checkpoint
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $runs = gh api 'repos/${{ github.repository }}/actions/workflows/repository-model-baseline.yml/runs?status=success&per_page=30' | ConvertFrom-Json
+          $found = $false
+          foreach ($run in $runs.workflow_runs) {
+            if ($run.head_branch -ne 'main' -and $run.head_branch -ne 'feat/repository-training-bootstrap-20261009') { continue }
+            $artifacts = gh api "repos/${{ github.repository }}/actions/runs/$($run.id)/artifacts" | ConvertFrom-Json
+            if ($artifacts.artifacts.name -contains 'nppai-repository-baseline') {
+              gh run download $run.id --repo '${{ github.repository }}' --name nppai-repository-baseline --dir model-baseline
+              if ($LASTEXITCODE -ne 0) { throw 'Checkpoint download failed' }
+              $found = $true
+              break
+            }
+          }
+          if (-not $found) { throw 'No successful baseline training artifact found. Run Repository model baseline first.' }
+          if (-not (Test-Path model-baseline/NppAI-repository-baseline.nppai)) { throw 'Model checkpoint missing' }
+      - name: Configure native TestEngine
+        run: cmake -S . -B build-eval -A x64
+      - name: Build native TestEngine
+        run: cmake --build build-eval --config Release --target TestEngine
+      - name: Capture real native model generations
+        run: >-
+          python scripts/capture_model_code_outputs.py
+          --engine build-eval/Release/TestEngine.exe
+          --model model-baseline/NppAI-repository-baseline.nppai
+          --manifest evaluation/code-quality/manifest.json
+          --output recorded-outputs.json
+          --metadata generation-metadata.json
+          --timeout 120
+      - name: Publish raw generations and provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-native-generations
+          path: |
+            recorded-outputs.json
+            generation-metadata.json
+          if-no-files-found: warn
+          retention-days: 14
+      # Generated code is untrusted. Do not run it on a normal CI runner.
+      # Inspect recorded-outputs.json and evaluate candidates only in an
+      # isolated environment without secrets, network or writable host mounts.
