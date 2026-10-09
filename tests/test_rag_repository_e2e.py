@@ -75,7 +75,7 @@ class RepositoryRagEndToEnd(unittest.TestCase):
             (root / "sample.cpp").write_text("authentication token\n", encoding="utf-8")
             judgments = root / "judgments.jsonl"
             judgments.write_text(
-                '{"query_id":"bad\\\\x","query":"authentication","relevant_sources":["sample.cpp"]}\n',
+                '{"query_id":"bad\\x","query":"authentication","relevant_sources":["sample.cpp"]}\n',
                 encoding="utf-8",
             )
             result = subprocess.run(
