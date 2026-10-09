@@ -3,7 +3,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <regex>
+#include <cctype>
+#include <map>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -100,6 +101,118 @@ std::string decodeJsonString(const std::string& encoded) {
     return result;
 }
 
+
+namespace {
+class JsonReader {
+public:
+    explicit JsonReader(const std::string& text) : text_(text) {}
+    std::map<std::string, std::string> readJudgment() {
+        std::map<std::string, std::string> fields;
+        spaces();
+        expect('{');
+        spaces();
+        if (!take('}')) {
+            do {
+                spaces();
+                std::string key = stringValue();
+                spaces();
+                expect(':');
+                spaces();
+                if (fields.count(key)) throw std::runtime_error("duplicate JSON field");
+                if (key == "query_id" || key == "query") {
+                    if (peek() != '"') throw std::runtime_error("query fields must be strings");
+                    fields.emplace(key, stringValue());
+                } else {
+                    skipValue(0);
+                    fields.emplace(key, "");
+                }
+                spaces();
+                if (take('}')) break;
+                expect(',');
+            } while (true);
+        }
+        spaces();
+        if (pos_ != text_.size()) throw std::runtime_error("trailing JSON data");
+        if (!fields.count("query_id") || !fields.count("query"))
+            throw std::runtime_error("missing query_id or query");
+        return fields;
+    }
+private:
+    const std::string& text_;
+    size_t pos_ = 0;
+    void spaces() {
+        while (pos_ < text_.size() && (text_[pos_] == ' ' || text_[pos_] == '\t' ||
+               text_[pos_] == '\r' || text_[pos_] == '\n')) ++pos_;
+    }
+    char peek() const { return pos_ < text_.size() ? text_[pos_] : '\0'; }
+    bool take(char c) { if (peek() == c && pos_ < text_.size()) { ++pos_; return true; } return false; }
+    void expect(char c) { if (!take(c)) throw std::runtime_error("invalid JSON syntax"); }
+    std::string stringValue() {
+        expect('"');
+        std::string encoded;
+        bool escaped = false;
+        while (pos_ < text_.size()) {
+            char c = text_[pos_++];
+            if (c == '"' && !escaped) return decodeJsonString(encoded);
+            encoded += c;
+            if (c == '\\' && !escaped) escaped = true;
+            else escaped = false;
+        }
+        throw std::runtime_error("unterminated JSON string");
+    }
+    void literal(const char* word) {
+        while (*word) { if (pos_ == text_.size() || text_[pos_++] != *word++)
+            throw std::runtime_error("invalid JSON literal"); }
+    }
+    void number() {
+        take('-');
+        if (take('0')) {
+            if (peek() >= '0' && peek() <= '9') throw std::runtime_error("leading zero");
+        } else {
+            if (peek() < '1' || peek() > '9') throw std::runtime_error("invalid number");
+            while (peek() >= '0' && peek() <= '9') ++pos_;
+        }
+        if (take('.')) {
+            if (peek() < '0' || peek() > '9') throw std::runtime_error("invalid fraction");
+            while (peek() >= '0' && peek() <= '9') ++pos_;
+        }
+        if (take('e') || take('E')) {
+            if (!take('+')) take('-');
+            if (peek() < '0' || peek() > '9') throw std::runtime_error("invalid exponent");
+            while (peek() >= '0' && peek() <= '9') ++pos_;
+        }
+    }
+    void skipValue(int depth) {
+        if (depth > 64) throw std::runtime_error("JSON nesting limit exceeded");
+        spaces();
+        if (peek() == '"') { stringValue(); return; }
+        if (take('{')) {
+            spaces();
+            if (take('}')) return;
+            do {
+                spaces(); stringValue(); spaces(); expect(':');
+                skipValue(depth + 1); spaces();
+                if (take('}')) return;
+                expect(',');
+            } while (true);
+        }
+        if (take('[')) {
+            spaces();
+            if (take(']')) return;
+            do {
+                skipValue(depth + 1); spaces();
+                if (take(']')) return;
+                expect(',');
+            } while (true);
+        }
+        if (peek() == 't') { literal("true"); return; }
+        if (peek() == 'f') { literal("false"); return; }
+        if (peek() == 'n') { literal("null"); return; }
+        number();
+    }
+};
+}
+
 int main(int argc, char** argv) {
     if (argc != 4) {
         std::cerr << "Usage: RagRepositoryPredictions <repository-root> <judgments.jsonl> <top-k>\n";
@@ -119,24 +232,16 @@ int main(int argc, char** argv) {
         std::cerr << "No repository documents indexed\n";
         return 1;
     }
-    // Simple JSONL reader: query_id and query must be JSON strings on each line.
-    // For full JSON escaping and validation, use a proper JSON parser in a follow-up.
-    const std::regex idPattern(R"rgx("query_id"\s*:\s*"((?:\\.|[^"\\])*)")rgx");
-    const std::regex queryPattern(R"rgx("query"\s*:\s*"((?:\\.|[^"\\])*)")rgx");
     std::string line;
     while (std::getline(judgments, line)) {
         if (line.empty()) continue;
-        std::smatch id, query;
-        if (!std::regex_search(line, id, idPattern) || !std::regex_search(line, query, queryPattern)) {
-            std::cerr << "Invalid judgment record (query_id/query missing or escaped)\n";
-            return 2;
-        }
         std::string decodedId, decodedQuery;
         try {
-            decodedId = decodeJsonString(id[1].str());
-            decodedQuery = decodeJsonString(query[1].str());
+            const auto fields = JsonReader(line).readJudgment();
+            decodedId = fields.at("query_id");
+            decodedQuery = fields.at("query");
         } catch (const std::exception& error) {
-            std::cerr << "Invalid JSON string escape: " << error.what() << "\n";
+            std::cerr << "Invalid JSON string escape or judgment record: " << error.what() << "\n";
             return 2;
         }
         const auto sources = rag.retrieveRankedSources(decodedQuery, topK);
