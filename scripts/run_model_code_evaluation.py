@@ -4,8 +4,10 @@ Candidate code is executed by the evaluator. Use trusted code and an isolated ru
 """
 import argparse
 import json
-import tempfile
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scripts.capture_model_code_outputs import capture
 from scripts.import_generation_outputs import import_outputs
