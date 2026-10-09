@@ -1,0 +1,7 @@
+[
+  {
+    "id": "sum_positive",
+    "test_file": "test_sum_positive.py",
+    "prompt": "Implement sum_positive(numbers) returning the sum of positive integers; ignore zero and negative values."
+  }
+]
