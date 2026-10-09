@@ -6,7 +6,10 @@ import argparse
 import hashlib
 import json
 import random
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import torch
 import torch.nn.functional as F
