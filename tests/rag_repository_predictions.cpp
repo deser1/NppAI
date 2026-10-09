@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -24,6 +25,27 @@ std::string jsonEscape(const std::string& value) {
     }
     return out;
 }
+}
+
+// Decode JSON string escapes in the two required query fields.
+std::string decodeJsonString(const std::string& encoded) {
+    std::string result;
+    for (size_t i = 0; i < encoded.size(); ++i) {
+        if (encoded[i] != '\\') { result += encoded[i]; continue; }
+        if (++i >= encoded.size()) throw std::runtime_error("truncated escape");
+        switch (encoded[i]) {
+        case '"': result += '"'; break;
+        case '\\': result += '\\'; break;
+        case '/': result += '/'; break;
+        case 'n': result += '\n'; break;
+        case 'r': result += '\r'; break;
+        case 't': result += '\t'; break;
+        case 'b': result += '\b'; break;
+        case 'f': result += '\f'; break;
+        default: throw std::runtime_error("unsupported JSON escape");
+        }
+    }
+    return result;
 }
 
 int main(int argc, char** argv) {
@@ -47,8 +69,8 @@ int main(int argc, char** argv) {
     }
     // Simple JSONL reader: query_id and query must be JSON strings on each line.
     // For full JSON escaping and validation, use a proper JSON parser in a follow-up.
-    const std::regex idPattern(R"rgx("query_id"\s*:\s*"([^"\\]*)")rgx");
-    const std::regex queryPattern(R"rgx("query"\s*:\s*"([^"\\]*)")rgx");
+    const std::regex idPattern(R"rgx("query_id"\s*:\s*"((?:\\.|[^"\\])*)")rgx");
+    const std::regex queryPattern(R"rgx("query"\s*:\s*"((?:\\.|[^"\\])*)")rgx");
     std::string line;
     while (std::getline(judgments, line)) {
         if (line.empty()) continue;
@@ -57,8 +79,16 @@ int main(int argc, char** argv) {
             std::cerr << "Invalid judgment record (query_id/query missing or escaped)\n";
             return 2;
         }
-        const auto sources = rag.retrieveRankedSources(query[1].str(), topK);
-        std::cout << "{\"query_id\":\"" << jsonEscape(id[1].str()) << "\",\"ranked_sources\":[";
+        std::string decodedId, decodedQuery;
+        try {
+            decodedId = decodeJsonString(id[1].str());
+            decodedQuery = decodeJsonString(query[1].str());
+        } catch (const std::exception& error) {
+            std::cerr << "Invalid JSON string escape: " << error.what() << "\n";
+            return 2;
+        }
+        const auto sources = rag.retrieveRankedSources(decodedQuery, topK);
+        std::cout << "{\"query_id\":\"" << jsonEscape(decodedId) << "\",\"ranked_sources\":[";
         for (size_t i = 0; i < sources.size(); ++i) {
             if (i) std::cout << ',';
             std::cout << '"' << jsonEscape(sources[i]) << '"';
