@@ -28,7 +28,8 @@ Recent RAG regression work:
 - [x] JSONL escaped-string decoding and UTF-8 round-trip regression coverage (PR #123)
 - [x] Non-BMP Unicode / UTF-16 surrogate-pair round-trip regression coverage (PR #124)
 - [ ] Negative JSONL cases: malformed Unicode escapes, unpaired surrogates, and control characters (proposed regression tests; merge after CI)
-- [ ] Replace the evaluation helper's regex-based JSONL field extraction with a complete JSON parser, with malformed-record validation
+- [x] Replace regex-based JSONL field extraction with a bounded structural JSON reader for evaluation fixtures, including malformed-record and duplicate top-level field rejection (PR pending CI)
+- [ ] Evaluate a maintained JSON library for full schema validation and broader reuse
 
 ## Next
 

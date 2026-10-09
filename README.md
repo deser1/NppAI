@@ -205,7 +205,7 @@ The GUI-free DLL contract and host-level Notepad++ integration harness are cover
 
 NppAI is an **experimental** local coding assistant, not a validated production-grade autonomous programmer. Green CI confirms tested build configurations and deterministic fixtures; it does **not** establish model usefulness on real repositories, security of public deployment, or compatibility with every Notepad++ installation. A compatible `.nppai` model is required and is not included in release ZIPs.
 
-The repository's [detailed roadmap](ROADMAP.md) tracks implemented features, remaining model-quality evaluation, release-readiness work, and evidence gaps. In particular, the RAG evaluation helper currently extracts JSONL fields with regular expressions rather than a full JSON parser; it supports the tested fields and escapes but should not be treated as a general-purpose JSON validator.
+The repository's [detailed roadmap](ROADMAP.md) tracks implemented features, remaining model-quality evaluation, release-readiness work, and evidence gaps. In particular, the RAG evaluation helper uses a bounded structural JSON reader for its fixture fields and validates JSON syntax, but is not a general-purpose schema validator.
 
 ## Roadmap
 
