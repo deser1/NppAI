@@ -117,7 +117,8 @@ Read -> Patch -> Build -> Test
 ### 5. Model quality and training
 
 - [ ] Establish reproducible training/evaluation datasets
-- [ ] Add generation-quality evaluation metrics
+- [x] Add an offline Python candidate syntax/unit-test evaluation harness (infrastructure only; see docs/code-quality-evaluation.md)
+- [ ] Add generation-quality evaluation metrics on actual model outputs and held-out tasks
 - [ ] Compare FP32 and INT8 end-to-end generation quality
 - [ ] Validate correction-data retraining on held-out examples
 - [ ] Publish reproducible model-quality reports

@@ -189,6 +189,10 @@ The current backend implements **centralized collection and retraining of submit
 
 Similarly, the correction dataset is closer to supervised fine-tuning / human-correction data than a complete RLHF pipeline.
 
+## Code-generation quality evaluation
+
+An experimental [offline evaluation harness](docs/code-quality-evaluation.md) scores submitted Python code against unit-test fixtures. It does not yet invoke NppAI or measure the actual model's coding quality; the included fixture tests the harness only.
+
 ## Testing
 
 Current validation includes deterministic native unit tests, model-loader and tokenizer tests, end-to-end generation coverage, Python validation, and CI performance regression checks.
