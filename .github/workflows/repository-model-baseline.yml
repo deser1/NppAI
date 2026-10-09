@@ -1,0 +1,41 @@
+name: Repository model baseline
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/train_repository_baseline.py'
+      - 'train_nppai.py'
+      - '.github/workflows/repository-model-baseline.yml'
+
+jobs:
+  train-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install CPU PyTorch
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Train repository baseline
+        run: python scripts/train_repository_baseline.py --repo . --output model-baseline --steps 30
+      - name: Verify exported model header and report
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, struct
+          p = Path("model-baseline/NppAI-repository-baseline.nppai")
+          data = p.read_bytes()
+          assert data[:8] == b"NPPAI\0\0\0", repr(data[:8])
+          assert struct.unpack_from("<I", data, 8)[0] == 2
+          report = json.loads(Path("model-baseline/training-report.json").read_text())
+          assert report["steps"] == 30 and report["files"] > 0
+          print(report)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nppai-repository-baseline
+          path: model-baseline/
+          retention-days: 14
