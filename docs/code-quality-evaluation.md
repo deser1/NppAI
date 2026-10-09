@@ -32,3 +32,15 @@ python scripts/evaluate_code_quality.py --manifest evaluation/code-quality/manif
 ```
 
 The importer accepts raw Python or a single fenced Python block. It does not call the model, strip explanations from raw text, or validate provenance. Record the model checkpoint hash, prompt, decoding settings and generation logs independently; only genuine captured model responses support model-quality claims.
+
+## Capture actual NppAI model responses
+
+Build `TestEngine` and provide a compatible local model checkpoint. The native smoke-test executable now accepts optional arguments: `TestEngine <model> <prompt> <output-file>`. Capture all manifest prompts with:
+
+```powershell
+python scripts/capture_model_code_outputs.py --engine build/Release/TestEngine.exe --model models/NppAI-model-v1.nppai --manifest evaluation/code-quality/manifest.json --output recorded-outputs.json --metadata generation-metadata.json
+python scripts/import_generation_outputs.py --input recorded-outputs.json --manifest evaluation/code-quality/manifest.json --submissions submissions
+python scripts/evaluate_code_quality.py --manifest evaluation/code-quality/manifest.json --submissions submissions --output code-quality-results.json
+```
+
+The capture script records the model SHA-256 and outputs, but does not fix a random seed or decoding configuration. These are actual generations only when run with a real checkpoint. CI mocks the capture adapter and does not run model inference. Do not interpret CI green as evidence of coding ability.

@@ -5,6 +5,8 @@ on:
     paths:
       - 'scripts/evaluate_code_quality.py'
       - 'scripts/import_generation_outputs.py'
+      - 'scripts/capture_model_code_outputs.py'
+      - 'tests/test_model_code_capture.py'
       - 'tests/test_generation_output_import.py'
       - 'tests/test_code_quality_evaluator.py'
       - 'evaluation/code-quality/**'
@@ -28,3 +30,5 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*quality*.py' -v
       - name: Test generation output importer
         run: python -m unittest discover -s tests -p test_generation_output_import.py -v
+      - name: Test model generation capture adapter
+        run: python -m unittest discover -s tests -p test_model_code_capture.py -v
