@@ -30,8 +30,43 @@ std::string jsonEscape(const std::string& value) {
 // Decode JSON string escapes in the two required query fields.
 std::string decodeJsonString(const std::string& encoded) {
     std::string result;
+    auto appendUtf8 = [&](unsigned int cp) {
+        if (cp <= 0x7F) result += static_cast<char>(cp);
+        else if (cp <= 0x7FF) {
+            result += static_cast<char>(0xC0 | (cp >> 6));
+            result += static_cast<char>(0x80 | (cp & 0x3F));
+        } else if (cp <= 0xFFFF) {
+            result += static_cast<char>(0xE0 | (cp >> 12));
+            result += static_cast<char>(0x80 | ((cp >> 6) & 0x3F));
+            result += static_cast<char>(0x80 | (cp & 0x3F));
+        } else {
+            result += static_cast<char>(0xF0 | (cp >> 18));
+            result += static_cast<char>(0x80 | ((cp >> 12) & 0x3F));
+            result += static_cast<char>(0x80 | ((cp >> 6) & 0x3F));
+            result += static_cast<char>(0x80 | (cp & 0x3F));
+        }
+    };
+    auto hex4 = [&](size_t pos) -> unsigned int {
+        if (pos + 4 > encoded.size()) throw std::runtime_error("truncated Unicode escape");
+        unsigned int value = 0;
+        for (size_t j = 0; j < 4; ++j) {
+            char ch = encoded[pos + j];
+            unsigned int digit;
+            if (ch >= '0' && ch <= '9') digit = ch - '0';
+            else if (ch >= 'a' && ch <= 'f') digit = ch - 'a' + 10;
+            else if (ch >= 'A' && ch <= 'F') digit = ch - 'A' + 10;
+            else throw std::runtime_error("invalid Unicode escape");
+            value = (value << 4) | digit;
+        }
+        return value;
+    };
     for (size_t i = 0; i < encoded.size(); ++i) {
-        if (encoded[i] != '\\') { result += encoded[i]; continue; }
+        if (encoded[i] != '\\') {
+            if (static_cast<unsigned char>(encoded[i]) < 0x20)
+                throw std::runtime_error("unescaped control character");
+            result += encoded[i];
+            continue;
+        }
         if (++i >= encoded.size()) throw std::runtime_error("truncated escape");
         switch (encoded[i]) {
         case '"': result += '"'; break;
@@ -42,6 +77,23 @@ std::string decodeJsonString(const std::string& encoded) {
         case 't': result += '\t'; break;
         case 'b': result += '\b'; break;
         case 'f': result += '\f'; break;
+        case 'u': {
+            unsigned int cp = hex4(i + 1);
+            i += 4;
+            if (cp >= 0xD800 && cp <= 0xDBFF) {
+                if (i + 6 >= encoded.size() || encoded[i + 1] != '\\' || encoded[i + 2] != 'u')
+                    throw std::runtime_error("missing low surrogate");
+                unsigned int low = hex4(i + 3);
+                if (low < 0xDC00 || low > 0xDFFF)
+                    throw std::runtime_error("invalid low surrogate");
+                cp = 0x10000 + ((cp - 0xD800) << 10) + (low - 0xDC00);
+                i += 6;
+            } else if (cp >= 0xDC00 && cp <= 0xDFFF) {
+                throw std::runtime_error("unpaired low surrogate");
+            }
+            appendUtf8(cp);
+            break;
+        }
         default: throw std::runtime_error("unsupported JSON escape");
         }
     }
