@@ -31,7 +31,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $runs = gh api 'repos/${{ github.repository }}/actions/workflows/repository-model-baseline.yml/runs?status=success&per_page=30' | ConvertFrom-Json
-          $runs.workflow_runs = @($runs.workflow_runs | Sort-Object -Property created_at -Descending)
           $found = $false
           $requestedRun = '${{ inputs.training_run_id }}'
           if ($requestedRun -and $requestedRun -notmatch '^[0-9]+
@@ -81,7 +80,7 @@ jobs:
       # Inspect recorded-outputs.json and evaluate candidates only in an
       # isolated environment without secrets, network or writable host mounts.
 ) { throw 'training_run_id must be numeric' }
-          foreach ($run in $runs.workflow_runs) {
+          foreach ($run in @($runs.workflow_runs | Sort-Object -Property created_at -Descending)) {
             if ($requestedRun -and [string]$run.id -ne $requestedRun) { continue }
             if ($run.head_branch -ne 'main' -and $run.head_branch -ne 'feat/repository-training-bootstrap-20261009') { continue }
             $artifacts = gh api "repos/${{ github.repository }}/actions/runs/$($run.id)/artifacts" | ConvertFrom-Json
