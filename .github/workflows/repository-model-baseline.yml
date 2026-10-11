@@ -49,6 +49,6 @@ jobs:
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: nppai-repository-baseline-${{ inputs.steps || '30' }}
+          name: nppai-repository-baseline
           path: model-baseline/
           retention-days: 14
