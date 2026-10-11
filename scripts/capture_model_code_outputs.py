@@ -41,8 +41,8 @@ def capture(engine, model, manifest, timeout=120):
                 "id": case_id,
                 "returncode": result.returncode,
                 "output_file_exists": output_exists,
-                "stdout_tail": result.stdout[-2000:],
-                "stderr_tail": result.stderr[-2000:],
+                "stdout_tail": (getattr(result, "stdout", None) or "")[-2000:],
+                "stderr_tail": (getattr(result, "stderr", None) or "")[-2000:],
             })
             if result.returncode != 0 or not output_exists:
                 outputs.append({"id": case_id, "output": ""})
