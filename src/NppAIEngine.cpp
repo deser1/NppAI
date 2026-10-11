@@ -1145,6 +1145,7 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
 
   cancelRequested = false;
   std::vector<int> tokens = tokenize(prompt);
+  const size_t promptTokenCount = tokens.size();
   std::string current_output = prompt;
   bool is_thinking = false;
 
@@ -1202,11 +1203,13 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
     const std::string generated = current_output.substr(prompt.size());
     if (generated.find("[USER]") != std::string::npos ||
         generated.find("[SYSTEM]") != std::string::npos) {
-      // Remove the generated marker from returned tokens. It has not yet
-      // been emitted via onToken, so no onRemove callback is needed.
+      // Earlier marker characters were emitted, but the last one was not.
+      // Retract only those already sent to the streaming callback.
       const std::string marker =
           generated.find("[USER]") != std::string::npos ? "[USER]" : "[SYSTEM]";
-      for (size_t j = 0; j < marker.size() && tokens.size() > tokenize(prompt).size(); ++j)
+      if (onRemove)
+        onRemove(static_cast<int>(marker.size() - 1));
+      for (size_t j = 0; j < marker.size() && tokens.size() > promptTokenCount; ++j)
         tokens.pop_back();
       break;
     }
