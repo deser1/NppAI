@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
         return 3;
     }
 
-    out << result;
+    // The engine returns prompt + completion; evaluation must score only new text.\n    if (result.compare(0, prompt.size(), prompt) != 0) {\n        std::cerr << "ERROR: generated result does not start with the prompt\\n";\n        return 4;\n    }\n    const std::string completion = result.substr(prompt.size());\n    if (completion.empty()) {\n        std::cerr << "ERROR: no new tokens were generated\\n";\n        return 5;\n    }\n    out << completion;
 
     std::cout << "\nGenerated " << result.length()
               << " characters successfully.\n";
