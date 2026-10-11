@@ -33,7 +33,7 @@ jobs:
           assert data[:8] == b"NPPAI\0\0\0", repr(data[:8])
           assert struct.unpack_from("<I", data, 8)[0] == 2
           report = json.loads(Path("model-baseline/training-report.json").read_text())
-          assert report["steps"] == 30 and report["files"] > 0
+          assert report["steps"] == 30 and report["files"] > 0\n          assert report["validation_tokens"] > 64\n          assert 0 <= report["validation_loss"] < float("inf")
           print(report)
           PY
       - uses: actions/upload-artifact@v4
