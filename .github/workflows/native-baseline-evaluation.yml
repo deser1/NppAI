@@ -32,6 +32,7 @@ jobs:
         run: |
           $runs = gh api 'repos/${{ github.repository }}/actions/workflows/repository-model-baseline.yml/runs?status=success&per_page=30' | ConvertFrom-Json
           $found = $false
+          $selectedRun = ''
           $requestedRun = '${{ inputs.training_run_id }}'
           if ($requestedRun -and $requestedRun -notmatch '^[0-9]+$') { throw 'training_run_id must be numeric' }
           foreach ($run in @($runs.workflow_runs | Sort-Object -Property created_at -Descending)) {
@@ -41,6 +42,9 @@ jobs:
             if ($artifacts.artifacts.name -contains 'nppai-repository-baseline') {
               gh run download $run.id --repo '${{ github.repository }}' --name nppai-repository-baseline --dir model-baseline
               if ($LASTEXITCODE -ne 0) { throw 'Checkpoint download failed' }
+              $selectedRun = [string]$run.id
+              "NPPAI_TRAINING_RUN_ID=$selectedRun" >> $env:GITHUB_ENV
+              Write-Host "Selected training run: $selectedRun"
               $found = $true
               break
             }
