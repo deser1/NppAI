@@ -2,6 +2,15 @@ name: Repository model baseline
 
 on:
   workflow_dispatch:
+    inputs:
+      steps:
+        description: 'Training steps (30 baseline, 300 longer experiment)'
+        required: false
+        default: '30'
+        type: choice
+        options:
+          - '30'
+          - '300'
   pull_request:
     paths:
       - 'scripts/train_repository_baseline.py'
@@ -22,7 +31,7 @@ jobs:
           python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
           python -m pip install numpy
       - name: Train repository baseline
-        run: python scripts/train_repository_baseline.py --repo . --output model-baseline --steps 30
+        run: python scripts/train_repository_baseline.py --repo . --output model-baseline --steps ${{ inputs.steps || '30' }}
       - name: Verify exported model header and report
         run: |
           python - <<'PY'
@@ -33,13 +42,13 @@ jobs:
           assert data[:8] == b"NPPAI\0\0\0", repr(data[:8])
           assert struct.unpack_from("<I", data, 8)[0] == 2
           report = json.loads(Path("model-baseline/training-report.json").read_text())
-          assert report["steps"] == 30 and report["files"] > 0
+          assert report["steps"] == int("${{ inputs.steps || '30' }}") and report["files"] > 0
           assert report["validation_tokens"] > 64
           assert 0 <= report["validation_loss"] < float("inf")
           print(report)
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: nppai-repository-baseline
+          name: nppai-repository-baseline-${{ inputs.steps || '30' }}
           path: model-baseline/
           retention-days: 14
