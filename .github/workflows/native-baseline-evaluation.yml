@@ -2,6 +2,11 @@ name: Native baseline model evaluation
 
 on:
   workflow_dispatch:
+    inputs:
+      training_run_id:
+        description: 'Successful Repository model baseline run ID (optional)'
+        required: false
+        type: string
   pull_request:
     paths:
       - '.github/workflows/native-baseline-evaluation.yml'
@@ -27,7 +32,10 @@ jobs:
         run: |
           $runs = gh api 'repos/${{ github.repository }}/actions/workflows/repository-model-baseline.yml/runs?status=success&per_page=30' | ConvertFrom-Json
           $found = $false
-          foreach ($run in $runs.workflow_runs) {
+          $requestedRun = '${{ inputs.training_run_id }}'
+          if ($requestedRun -and $requestedRun -notmatch '^[0-9]+$') { throw 'training_run_id must be numeric' }
+          foreach ($run in @($runs.workflow_runs | Sort-Object -Property created_at -Descending)) {
+            if ($requestedRun -and [string]$run.id -ne $requestedRun) { continue }
             if ($run.head_branch -ne 'main' -and $run.head_branch -ne 'feat/repository-training-bootstrap-20261009') { continue }
             $artifacts = gh api "repos/${{ github.repository }}/actions/runs/$($run.id)/artifacts" | ConvertFrom-Json
             if ($artifacts.artifacts.name -contains 'nppai-repository-baseline') {
@@ -37,7 +45,7 @@ jobs:
               break
             }
           }
-          if (-not $found) { throw 'No successful baseline training artifact found. Run Repository model baseline first.' }
+          if (-not $found) { throw "No matching successful training artifact found (requested run: $requestedRun)." }
           if (-not (Test-Path model-baseline/NppAI-repository-baseline.nppai)) { throw 'Model checkpoint missing' }
       - name: Configure native TestEngine
         run: cmake -S . -B build-eval -A x64
