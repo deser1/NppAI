@@ -6,6 +6,7 @@ Model-generated code is NOT executed here; use the evaluator separately.
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -19,6 +20,7 @@ def capture(engine, model, manifest, timeout=120):
     if not isinstance(cases, list) or not cases:
         raise ValueError("manifest must be a nonempty JSON array")
     outputs = []
+    diagnostics = []
     seen = set()
     for case in cases:
         case_id, task = case["id"], case["prompt"]
@@ -32,13 +34,24 @@ def capture(engine, model, manifest, timeout=120):
                 [str(engine), str(model), prompt, str(target)],
                 cwd=directory, capture_output=True, text=True, timeout=timeout,
             )
-            # Model failures are scored as failed generations, not CI crashes.
-            if result.returncode != 0 or not target.is_file():
+            # Preserve the reason for failure; do not silently turn errors into
+            # apparently successful empty generations.
+            output_exists = target.is_file()
+            diagnostics.append({
+                "id": case_id,
+                "returncode": result.returncode,
+                "output_file_exists": output_exists,
+                "stdout_tail": result.stdout[-2000:],
+                "stderr_tail": result.stderr[-2000:],
+            })
+            if result.returncode != 0 or not output_exists:
                 outputs.append({"id": case_id, "output": ""})
                 continue
             outputs.append({"id": case_id, "output": target.read_text(encoding="utf-8")})
     metadata = {"model_sha256": hashlib.sha256(model.read_bytes()).hexdigest(),
                 "engine": str(engine), "cases": len(outputs),
+                "training_run_id": os.environ.get("NPPAI_TRAINING_RUN_ID", ""),
+                "diagnostics": diagnostics,
                 "note": "Captured with TestEngine defaults; sampling may be stochastic"}
     return outputs, metadata
 
