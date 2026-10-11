@@ -38,10 +38,20 @@ int main(int argc, char** argv) {
         return 3;
     }
 
-    out << result;
+    // The engine returns prompt + completion; score only generated text.
+    if (result.compare(0, prompt.size(), prompt) != 0) {
+        std::cerr << "ERROR: generated result does not start with the prompt\n";
+        return 4;
+    }
+    const std::string completion = result.substr(prompt.size());
+    if (completion.find_first_not_of(" \t\r\n") == std::string::npos) {
+        std::cerr << "ERROR: no non-whitespace completion was generated\n";
+        return 5;
+    }
+    out << completion;
 
-    std::cout << "\nGenerated " << result.length()
-              << " characters successfully.\n";
+    std::cout << "\nGenerated " << completion.length()
+              << " completion characters successfully.\n";
 
     return 0;
 }
