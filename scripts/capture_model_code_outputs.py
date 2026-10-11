@@ -32,9 +32,10 @@ def capture(engine, model, manifest, timeout=120):
                 [str(engine), str(model), prompt, str(target)],
                 cwd=directory, capture_output=True, text=True, timeout=timeout,
             )
+            # Model failures are scored as failed generations, not CI crashes.
             if result.returncode != 0 or not target.is_file():
-                raise RuntimeError("generation failed for " + case_id +
-                                   ": " + result.stderr[-1000:])
+                outputs.append({"id": case_id, "output": ""})
+                continue
             outputs.append({"id": case_id, "output": target.read_text(encoding="utf-8")})
     metadata = {"model_sha256": hashlib.sha256(model.read_bytes()).hexdigest(),
                 "engine": str(engine), "cases": len(outputs),
