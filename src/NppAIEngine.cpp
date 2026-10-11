@@ -1145,6 +1145,7 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
 
   cancelRequested = false;
   std::vector<int> tokens = tokenize(prompt);
+  const size_t promptTokenCount = tokens.size();
   std::string current_output = prompt;
   bool is_thinking = false;
 
@@ -1196,13 +1197,20 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
     // Buforowanie, by wykryć "[USER]" (model halucynuje, że on sam jest
     // użytkownikiem)
     current_output += c;
-    if (current_output.find("[USER]") != std::string::npos ||
-        current_output.find("[SYSTEM]") != std::string::npos) {
-      // AI zwariowało i weszło w pętle. Usuwamy ostatnie 6 znaków ("[USER]") z
-      // edytora
-      if (onRemove) {
-        onRemove(6); // Backspace 6 razy
-      }
+    // Only generated text may introduce a new conversation marker.
+    // The original prompt commonly contains "[USER]" and must not stop
+    // generation after its very first token.
+    const std::string generated = current_output.substr(prompt.size());
+    if (generated.find("[USER]") != std::string::npos ||
+        generated.find("[SYSTEM]") != std::string::npos) {
+      // Earlier marker characters were emitted, but the last one was not.
+      // Retract only those already sent to the streaming callback.
+      const std::string marker =
+          generated.find("[USER]") != std::string::npos ? "[USER]" : "[SYSTEM]";
+      if (onRemove)
+        onRemove(static_cast<int>(marker.size() - 1));
+      for (size_t j = 0; j < marker.size() && tokens.size() > promptTokenCount; ++j)
+        tokens.pop_back();
       break;
     }
     if (nextToken >= 0 && nextToken < 256) {
