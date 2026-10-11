@@ -37,10 +37,7 @@ def collect_corpus(repo, max_file_bytes=200_000):
             continue
         if body.strip():
             files.append(path.relative_to(repo).as_posix())
-            chunks.append("
-# FILE: " + files[-1] + "
-" + body + "
-")
+            chunks.append("\n# FILE: " + files[-1] + "\n" + body + "\n")
     if not chunks:
         raise ValueError("no supported repository source files found")
     return "".join(chunks), files
@@ -59,18 +56,18 @@ def train(repo, output, steps=30, seed=42, block_size=64, batch_size=4):
         raise ValueError("corpus is too short for context window")
     model = NppAIModel(vocab_size=256, dim=64, hidden_dim=128,
                        n_layers=2, max_seq_len=block_size)
-    # Reserve the final 10% of tokens for held-out next-token validation.
+    # Hold out the last 10% of corpus tokens for validation.
     split = max(block_size + 2, int(len(data) * 0.9))
     if len(data) - split <= block_size + 1:
-        raise ValueError("corpus too short for a held-out validation split")
+        raise ValueError("corpus too short for held-out validation")
     train_data, val_data = data[:split], data[split:]
     optimizer = torch.optim.AdamW(model.parameters(), lr=5e-4)
     losses = []
     model.train()
     for step in range(steps):
-        offsets = torch.randint(len(data) - block_size - 1, (batch_size,))
-        x = torch.stack([data[i:i + block_size] for i in offsets])
-        y = torch.stack([data[i + 1:i + block_size + 1] for i in offsets])
+        offsets = torch.randint(len(train_data) - block_size - 1, (batch_size,))
+        x = torch.stack([train_data[i:i + block_size] for i in offsets])
+        y = torch.stack([train_data[i + 1:i + block_size + 1] for i in offsets])
         logits = model(x)
         loss = F.cross_entropy(logits.reshape(-1, 256), y.reshape(-1))
         optimizer.zero_grad(set_to_none=True)
@@ -97,8 +94,7 @@ def train(repo, output, steps=30, seed=42, block_size=64, batch_size=4):
                 "validation_loss": round(validation_loss, 5),
                 "validation_tokens": len(val_data),
                 "limitations": "Tiny repo-only baseline; no verified coding competence"}
-    (target / "training-report.json").write_text(json.dumps(metadata, indent=2) + "
-",
+    (target / "training-report.json").write_text(json.dumps(metadata, indent=2) + "\n",
                                                  encoding="utf-8")
     return metadata
 
