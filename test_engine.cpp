@@ -38,10 +38,20 @@ int main(int argc, char** argv) {
         return 3;
     }
 
-    // The engine returns prompt + completion; evaluation must score only new text.\n    if (result.compare(0, prompt.size(), prompt) != 0) {\n        std::cerr << "ERROR: generated result does not start with the prompt\\n";\n        return 4;\n    }\n    const std::string completion = result.substr(prompt.size());\n    if (completion.empty()) {\n        std::cerr << "ERROR: no new tokens were generated\\n";\n        return 5;\n    }\n    out << completion;
+    // The engine returns prompt + completion; score only generated text.
+    if (result.compare(0, prompt.size(), prompt) != 0) {
+        std::cerr << "ERROR: generated result does not start with the prompt\n";
+        return 4;
+    }
+    const std::string completion = result.substr(prompt.size());
+    if (completion.find_first_not_of(" \t\r\n") == std::string::npos) {
+        std::cerr << "ERROR: no non-whitespace completion was generated\n";
+        return 5;
+    }
+    out << completion;
 
-    std::cout << "\nGenerated " << result.length()
-              << " characters successfully.\n";
+    std::cout << "\nGenerated " << completion.length()
+              << " completion characters successfully.\n";
 
     return 0;
 }
