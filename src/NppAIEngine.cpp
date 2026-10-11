@@ -1157,83 +1157,30 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
 
     Tensor logits = forward(tokens);
 
-    // Zabezpieczenie przed NaN (wybuchami w matematyce Tensorowej)
-    bool has_nan = false;
-    for (int v = 0; v < vocab_size; v++) {
-      if (std::isnan(logits.at(0, v))) {
-        has_nan = true;
-        break;
+    // Stable greedy decoding for reproducible baseline measurements.
+    // Never index logits with token IDs outside the vocabulary.
+    if (vocab_size <= 0) {
+      std::cerr << "ERROR: invalid vocabulary size" << std::endl;
+      break;
+    }
+    int nextToken = -1;
+    float bestLogit = -std::numeric_limits<float>::infinity();
+    for (int v = 0; v < vocab_size; ++v) {
+      const float score = logits.at(0, v);
+      if (!std::isfinite(score))
+        continue;
+      if (nextToken < 0 || score > bestLogit) {
+        nextToken = v;
+        bestLogit = score;
       }
     }
-
-    int nextToken = 0;
-    if (has_nan) {
-      nextToken = 0; // Fallback na bezpieczny token
-    } else {
-      // Repetition Penalty - obniżamy szansę na znaki, które wystąpiły niedawno
-      // w kontekście
-      float repetition_penalty = 1.3f; // Zwiększone z 1.2 na 1.3
-      for (int t : tokens) {
-        if (logits.at(0, t) > 0) {
-          logits.data[t] /= repetition_penalty;
-        } else {
-          logits.data[t] *= repetition_penalty;
-        }
-      }
-
-      // TOP-K Sampling (Rozwiązanie problemu "pustych spacji" i krzaczków)
-      // Zamiast brać absolutnie największą wartość (Greedy) lub losować ze
-      // wszystkich, ograniczamy wybór tylko do K najbardziej prawdopodobnych
-      // liter.
-      int K = 3; // Zmniejszamy K z 5 na 3, aby ograniczyć zniekształcenia
-                 // (halucynacje)
-      std::vector<std::pair<float, int>> top_logits;
-      for (int v = 0; v < vocab_size; ++v) {
-        top_logits.push_back({logits.at(0, v), v});
-      }
-
-      // Sortowanie malejąco
-      std::sort(
-          top_logits.begin(), top_logits.end(),
-          [](const std::pair<float, int> &a, const std::pair<float, int> &b) {
-            return a.first > b.first;
-          });
-
-      // Temperatura decyzyjna
-      float temperature = 0.35f; // Zmniejszamy z 0.5 na 0.35, aby model był
-                                 // "pewniejszy" i mniej zgadywał
-      std::vector<float> probs(K, 0.0f);
-      float sum_probs = 0.0f;
-
-      // Wyciągnięcie prawdopodobieństw tylko dla Top-K znaków
-      for (int j = 0; j < K; ++j) {
-        probs[j] = std::exp(top_logits[j].first / temperature);
-        sum_probs += probs[j];
-      }
-
-      // Rzutowanie losowe (Weighted Random) z Top-K
-      float r = (float)rand() / (float)RAND_MAX;
-      float cumulative = 0.0f;
-      bool selected = false;
-      for (int j = 0; j < K; ++j) {
-        cumulative += probs[j] / sum_probs;
-        if (r <= cumulative) {
-          nextToken = top_logits[j].second;
-          selected = true;
-          break;
-        }
-      }
-      if (!selected) {
-        nextToken = top_logits[0].second; // Fallback na najlepszą literę
-      }
-
-      // Zabezpieczenie przed niekontrolowanymi znakami kontrolnymi ASCII
-      // (czasami model próbuje wypluć null-bajty co w edytorze wygląda jak
-      // puste bloki)
-      if (nextToken < 32 && nextToken != '\n' && nextToken != '\r' &&
-          nextToken != '\t') {
-        nextToken = ' '; // Bezpieczny zamiennik
-      }
+    if (nextToken < 0) {
+      std::cerr << "ERROR: no finite generation logits" << std::endl;
+      break;
+    }
+    if (i < 8) {
+      std::cerr << "generation token[" << i << "]=" << nextToken
+                << " logit=" << bestLogit << std::endl;
     }
 
     tokens.push_back(nextToken);
