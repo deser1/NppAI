@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Diagnose identifier copying with per-byte teacher-forced predictions, autonomous and def-only headers on reloaded paired experiment checkpoints; keep these diagnostic metrics separate from syntax and code correctness.
+
 - Add a frozen random-identifier dataset and paired response-name loss experiment; preserve raw free-generation evidence without replacing the failed 300-step checkpoint.
 
 - Integrate explicit Python signature mode into the Notepad++ panel and AIManager, including input validation, visible help/status, synchronized prefix streaming and complete correction tracking.
