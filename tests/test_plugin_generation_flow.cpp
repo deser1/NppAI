@@ -86,6 +86,25 @@ int main() {
     ok &= check(removedCharacters == 2,
                 "model backtracking reaches the editor removal callback");
 
+    const auto guided = AIPromptPipeline::prepare(
+        "@python-signature total(values)\nReturn the sum of values.", context);
+    std::string guidedEditor, guidedPanel;
+    GenerationStreamRouter guidedRouter(nullptr,
+        [&](char c) { guidedEditor += c; },
+        [&](int count) { while (count-- > 0 && !guidedEditor.empty()) guidedEditor.pop_back(); },
+        nullptr, [&](const std::string& text) { guidedPanel = text; });
+    AIPromptPipeline::streamPrefix(guided, [&](char c, bool thought) { guidedRouter.onToken(c, thought); });
+    for (char c : std::string("return sum(valueX")) guidedRouter.onToken(c, false);
+    guidedRouter.onRemove(1);
+    for (char c : std::string("s)\n")) guidedRouter.onToken(c, false);
+    const std::string guidedExpected = "def total(values):\n    return sum(values)\n";
+    ok &= check(guidedEditor == guidedExpected && guidedPanel == guidedExpected &&
+                guidedRouter.assistantBuffer() == guidedExpected,
+                "prefix, streamed body and backtracking stay identical in editor and panel");
+    ok &= check(AIPromptPipeline::extractResponse(guided.basePrompt + guidedExpected, guided.basePrompt)
+                == guidedRouter.assistantBuffer(),
+                "tracked final response matches the full visible response");
+
     if (!ok)
         return 1;
 

@@ -90,18 +90,19 @@ std::string AIManager::generateCode(const std::string &prompt,
                                     std::function<void(int)> onRemove) {
   // Build the model-facing prompt through a pure helper so this plugin
   // boundary can be covered deterministically without a Notepad++ process.
-  const std::string formattedPrompt =
-      AIPromptPipeline::buildPrompt(prompt, currentContext);
+  const auto request = AIPromptPipeline::prepare(prompt, currentContext);
+  if (!request.error.empty()) return request.error;
+  AIPromptPipeline::streamPrefix(request, onToken);
 
   // Generowanie kodu za pomocą naszego własnego silnika Transformera
   // Zwiększamy limit tokenów do 4096, by model mógł wypisać dłuższą odpowiedź
   // HTML/Vue
   std::string generatedCode =
-      engine.generate(formattedPrompt, 4096, onToken, onRemove);
+      engine.generate(request.inferencePrompt, 4096, onToken, onRemove);
 
   // Usunięcie wpisanego promptu (z tagami), aby do edytora trafiła sama
   // wygenerowana odpowiedź AI
-  return AIPromptPipeline::extractResponse(generatedCode, formattedPrompt);
+  return AIPromptPipeline::extractResponse(generatedCode, request.basePrompt);
 }
 
 void AIManager::startTracking(const std::string &prompt,

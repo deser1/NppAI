@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Integrate explicit Python signature mode into the Notepad++ panel and AIManager, including input validation, visible help/status, synchronized prefix streaming and complete correction tracking.
+
 - Exclude EOS from detokenized generated source and streaming callbacks; add deterministic generation regression coverage.
 - Preserve LF bytes in Windows signature-prefix capture instead of translating model context to CRLF.
 

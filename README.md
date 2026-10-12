@@ -191,6 +191,11 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [Notepad++ Python signature mode](docs/notepad-python-signature-mode.md)
+is enabled by `@python-signature name(args)` on the first prompt line, followed
+by the task description. The application preserves the header while the model
+streams its body; ordinary prompts retain their existing behavior.
+
 [Signature-guided generation](docs/signature-guided-generation.md) can enforce a
 task's explicit function header before model-generated body completion. Its raw
 and scaffolded results are measured separately; it is an experimental CLI path.
