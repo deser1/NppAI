@@ -8,8 +8,9 @@ optimizer, context and frozen validation/test splits. The eight names are the
 first eight distinct names in training-file order, selected without reading
 validation or test records. Every selected name's records retain original order.
 
-The experiment changes training-set size and therefore exposure per example
-and sampled batch order. It does not isolate architecture or prove that more
+The experiment changes training-set size, potentially family coverage, exposure per example
+and sampled batch order. Selected families are reported, and family-exposure
+metrics refer to the actual selected training set. It does not isolate architecture or prove that more
 steps fix copying. One small-subset seed is a memorization sanity check, not a
 general programming benchmark. No test result selects settings or early stops.
 

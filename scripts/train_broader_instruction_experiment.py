@@ -129,6 +129,9 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
     validation = evaluate(model, read_split(root,"validation",manifest),context)
     test = evaluate(model, read_split(root,"test",manifest),context)
     unseen = set(manifest["unseen_test_families"])
+    if training_names is not None:
+        actual_families = {record["family"] for record in training}
+        unseen = {case["family"] for case in test["cases"] if case["family"] not in actual_families}
     test["by_family_exposure"] = {}
     for label, select in (("seen_family_new_task",False),("unseen_family",True)):
         cases=[case for case in test["cases"] if (case["family"] in unseen)==select]
@@ -152,6 +155,8 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
         "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark."}
     if training_names is not None:
         report["training_selection"] = selection_metadata(training, training_names)
+        report["training_selection"]["families"] = sorted(actual_families)
+        report["limitations"] = "Synthetic memorization probe with selected training names. Training-set size, family coverage, exposure per example and batch sampling may differ between arms. Family exposure metrics refer to the actual selected optimization set. Previously exposed tasks, one seed, no generated code execution, no native INT8 measurement or general correctness claim. Held-out results do not tune training."
         report["training_probe_first24"] = evaluate(model, training[:24], context)
         print(json.dumps({"training_selection_names": report["training_selection"]["names"],
                           "training_selection_records": len(training),
