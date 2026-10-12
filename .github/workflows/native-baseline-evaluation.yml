@@ -58,7 +58,9 @@ jobs:
       - name: Build native TestEngine
         run: cmake --build build-eval --config Release --target TestEngine DumpNativeLogits
       - name: Install CPU reference runtime
-        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+        run: |
+          python -m pip install numpy
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Compare native and Python logits
         run: >-
           python scripts/check_dense_runtime_parity.py
