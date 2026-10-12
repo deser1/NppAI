@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <iterator>
 
 int main(int argc, char** argv) {
     const std::string modelPath =
@@ -20,8 +21,19 @@ int main(int argc, char** argv) {
     // Optional evaluation prompt and output path; keep legacy smoke-test defaults.
     const std::string prompt = argc > 2 ? argv[2] : "[USER]: Lista todo w Vue\n[AI]:\n";
     const std::string outputPath = argc > 3 ? argv[3] : "output_test.txt";
+    std::string assistantPrefix;
+    if (argc > 4) {
+        std::ifstream prefixFile(argv[4], std::ios::binary);
+        if (!prefixFile) return 6;
+        char prefixBuffer[4097];
+        prefixFile.read(prefixBuffer, sizeof(prefixBuffer));
+        if (prefixFile.bad()) return 6;
+        assistantPrefix.assign(prefixBuffer, static_cast<std::size_t>(prefixFile.gcount()));
+        if (assistantPrefix.size() > 4096) return 6;
+    }
+    const std::string generationPrompt = prompt + assistantPrefix;
     const std::string result = engine.generate(
-        prompt,
+        generationPrompt,
         256,
         [](char, bool) {},
         [](int) {}
@@ -39,12 +51,13 @@ int main(int argc, char** argv) {
     }
 
     // The engine returns prompt + completion; score only generated text.
-    if (result.compare(0, prompt.size(), prompt) != 0) {
+    if (result.compare(0, generationPrompt.size(), generationPrompt) != 0) {
         std::cerr << "ERROR: generated result does not start with the prompt\n";
         return 4;
     }
     const std::string completion = result.substr(prompt.size());
-    if (completion.find_first_not_of(" \t\r\n") == std::string::npos) {
+    const std::string generatedBody = result.substr(generationPrompt.size());
+    if (generatedBody.find_first_not_of(" \t\r\n") == std::string::npos) {
         std::cerr << "ERROR: no non-whitespace completion was generated\n";
         return 5;
     }

@@ -191,6 +191,10 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+[Signature-guided generation](docs/signature-guided-generation.md) can enforce a
+task's explicit function header before model-generated body completion. Its raw
+and scaffolded results are measured separately; it is an experimental CLI path.
+
 The [identifier-distribution experiment](docs/instruction-identifier-ablation.md)
 improves synthetic test syntax to 15/28 locally, but requested identifiers remain
 wrong. These outputs are not counted as successfully completed tasks.

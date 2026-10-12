@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add explicit signature-guided evaluation and a bounded optional assistant-prefix file in TestEngine; report forced headers separately from generated bodies and compare PyTorch/native results.
+
 - Add frozen instruction dataset v2 with a shared identifier format across splits; compare v1/v2 and report function-name copying failures separately from syntax and reference AST matching.
 
 - Freeze synthetic instruction dataset v1 (576 train, 16 validation, 28 test), verify split isolation, and add a 3000-step experiment with held-out loss and raw generation reports.

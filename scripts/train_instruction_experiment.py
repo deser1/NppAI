@@ -35,9 +35,9 @@ def prompt(task):
     return "[USER]: " + task + "\n[AI]:\n"
 
 
-def generate(model, task, context):
-    tokens = list(prompt(task).encode("utf-8"))
-    output = []
+def generate(model, task, context, assistant_prefix=""):
+    tokens = list((prompt(task)+assistant_prefix).encode("utf-8"))
+    output = list(assistant_prefix.encode("utf-8"))
     with torch.no_grad():
         for _ in range(160):
             logits = model(torch.tensor([tokens[-context:]], dtype=torch.long))[0, -1]
