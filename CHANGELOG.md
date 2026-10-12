@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add bounded response-only instruction training with task-level holdout and explicit baseline comparison; publish measured memorization and held-out failures.
+
 - Compare dense checkpoint logits across PyTorch FP32, NumPy FP32/INT8 references and native INT8 inference with checkpoint hash evidence.
 
 - Optimized incremental RAG source replacement by removing only invalidated document keys instead of rebuilding the complete key set; added regression coverage for source replacement and deletion. Indexing performance awaits CI benchmark validation.

@@ -1,0 +1,67 @@
+{
+  "seed": 42,
+  "steps": 2000,
+  "context": 192,
+  "training_tasks": 8,
+  "held_out_tasks": 3,
+  "dataset_sha256": "4b13c4a0e8812c4517e33a530d8897aec223d25d5ff2a8793272ed7dfc8d6040",
+  "model_sha256": "a00824089ce88a26864e9534052f947accaea8fc1e8780c6e641f412ccad92fc",
+  "initial_loss": 5.7557692527771,
+  "final_loss": 0.0005928742466494441,
+  "held_out_nonempty": 3,
+  "held_out_syntax_functions": 0,
+  "training_exact_reconstructions": 8,
+  "cases": [
+    {
+      "id": "sum_positive",
+      "prompt": "Implement sum_positive(numbers) returning the sum of positive integers; ignore zero and negative values.",
+      "output": "  s):\n  rn   b\n",
+      "nonempty": true,
+      "syntax_function": false
+    },
+    {
+      "id": "triple",
+      "prompt": "Implement triple(x) returning three times x.",
+      "output": "ddd(a, b):\n    return    return x % 2 == 0\n",
+      "nonempty": true,
+      "syntax_function": false
+    },
+    {
+      "id": "is_odd",
+      "prompt": "Implement is_odd(x) returning whether x is odd.",
+      "output": "  subtract(a, rn x    return x % b\n",
+      "nonempty": true,
+      "syntax_function": false
+    }
+  ],
+  "limitations": "Eight synthetic training tasks; held-out syntax only, no execution or functional correctness claim. Separate new model, not continued training of the 300-step checkpoint.",
+  "baseline": {
+    "model_sha256": "9735e3545541b2c6115ba4eead8284c6c1606d93e9558cd054799d9f14846995",
+    "cases": [
+      {
+        "id": "sum_positive",
+        "prompt": "Implement sum_positive(numbers) returning the sum of positive integers; ignore zero and negative values.",
+        "output": "                                                                                                                                                                ",
+        "nonempty": false,
+        "syntax_function": false
+      },
+      {
+        "id": "triple",
+        "prompt": "Implement triple(x) returning three times x.",
+        "output": "                                                                                                                                                                ",
+        "nonempty": false,
+        "syntax_function": false
+      },
+      {
+        "id": "is_odd",
+        "prompt": "Implement is_odd(x) returning whether x is odd.",
+        "output": "                                                                                                                                                                ",
+        "nonempty": false,
+        "syntax_function": false
+      }
+    ],
+    "nonempty": 0,
+    "syntax_functions": 0,
+    "comparison_limit": "Same tasks and greedy FP32 decoding; training data, steps and context size differ, so this is not a single-variable ablation."
+  }
+}
