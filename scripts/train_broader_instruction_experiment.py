@@ -32,6 +32,27 @@ def sample(record, context):
     return x, y
 
 
+def identifier_weights(record, context, weight):
+    """Weight only response name bytes; prompt and padding stay ignored."""
+    x, y = sample(record, context)
+    weights = torch.ones_like(y, dtype=torch.float32)
+    prefix_length = len(prompt(record["prompt"]).encode("utf-8"))
+    expected_header = "def " + record["function"] + "("
+    if not record["answer"].startswith(expected_header):
+        raise ValueError("reference must start with its declared function")
+    start = prefix_length - 1 + len("def ")
+    weights[start:start + len(record["function"].encode("utf-8"))] = weight
+    weights[y == -100] = 0
+    return x, y, weights
+
+
+def weighted_response_loss(logits, targets, weights):
+    losses = F.cross_entropy(logits.reshape(-1,256), targets.reshape(-1),
+                             ignore_index=-100, reduction="none")
+    flat_weights = weights.reshape(-1)
+    return (losses * flat_weights).sum() / flat_weights.sum()
+
+
 def evaluate(model, records, context):
     cases = []
     with torch.no_grad():
@@ -40,11 +61,13 @@ def evaluate(model, records, context):
             syntax = False
             any_function = False
             body_match = False
+            reference_match = False
             try:
                 tree = ast.parse(text)
                 any_function = any(isinstance(n,ast.FunctionDef) for n in tree.body)
                 syntax = any(isinstance(n, ast.FunctionDef) and n.name == record["function"] for n in tree.body)
                 reference = ast.parse(record["answer"])
+                reference_match = ast.dump(tree) == ast.dump(reference)
                 if len(tree.body)==1 and isinstance(tree.body[0],ast.FunctionDef):
                     # Diagnostic only: ignore the function name in both ASTs.
                     # This does not count as passing the requested task.
@@ -59,18 +82,22 @@ def evaluate(model, records, context):
                 "nonempty":bool(text.strip()), "syntax_requested_function":syntax,
                 "syntax_any_function":any_function,
                 "ast_match_ignoring_function_name":body_match,
+                "reference_ast":reference_match,
                 "exact_match":text == record["answer"], "response_loss":float(loss)})
     return {"total":len(cases), "nonempty":sum(c["nonempty"] for c in cases),
         "syntax_requested_function":sum(c["syntax_requested_function"] for c in cases),
         "syntax_any_function":sum(c["syntax_any_function"] for c in cases),
         "ast_match_ignoring_function_name":sum(c["ast_match_ignoring_function_name"] for c in cases),
+        "reference_ast":sum(c["reference_ast"] for c in cases),
         "exact_match":sum(c["exact_match"] for c in cases),
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000):
+def run(dataset, output, steps=3000, identifier_weight=1.0):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
+    if not 1.0 <= identifier_weight <= 8.0:
+        raise ValueError("identifier weight must be 1..8")
     torch.manual_seed(42)
     random.seed(42)
     torch.set_num_threads(2)
@@ -78,7 +105,7 @@ def run(dataset, output, steps=3000):
     manifest = json.loads((root/"manifest.json").read_text())
     training = read_split(root, "train", manifest)
     context = 256
-    samples = [sample(record, context) for record in training]
+    samples = [identifier_weights(record, context, identifier_weight) for record in training]
     model = NppAIModel(256,64,128,2,context)
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
     losses=[]
@@ -87,7 +114,8 @@ def run(dataset, output, steps=3000):
         batch = random.sample(samples,4)
         x = torch.nn.utils.rnn.pad_sequence([b[0] for b in batch], batch_first=True)
         y = torch.nn.utils.rnn.pad_sequence([b[1] for b in batch], batch_first=True, padding_value=-100)
-        loss = F.cross_entropy(model(x).reshape(-1,256), y.reshape(-1), ignore_index=-100)
+        weights = torch.nn.utils.rnn.pad_sequence([b[2] for b in batch], batch_first=True, padding_value=0)
+        loss = weighted_response_loss(model(x), y, weights)
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(),1.0)
@@ -105,16 +133,22 @@ def run(dataset, output, steps=3000):
         cases=[case for case in test["cases"] if (case["family"] in unseen)==select]
         test["by_family_exposure"][label]={"total":len(cases),
             "syntax_requested_function":sum(case["syntax_requested_function"] for case in cases),
+            "reference_ast":sum(case["reference_ast"] for case in cases),
             "exact_match":sum(case["exact_match"] for case in cases)}
     destination=Path(output)
     destination.mkdir(parents=True,exist_ok=True)
     checkpoint=destination/"NppAI-broader-instruction.nppai"
     export_to_bin(model,str(checkpoint))
     report={"seed":42,"steps":steps,"batch_size":4,"context":context,
+        "identifier_weight":identifier_weight,
+        "architecture":{"vocabulary":256,"dimension":64,"hidden_dimension":128,"layers":2},
+        "runtime":{"python":sys.version.split()[0],"torch":torch.__version__,"device":"cpu","threads":2},
+        "optimizer":{"name":"AdamW","learning_rate":0.001,"gradient_clip_norm":1.0},
+        "training_loss_kind":"weighted response cross-entropy; reported evaluation loss is unweighted",
         "dataset_manifest":manifest,"model_sha256":hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
         "initial_training_loss":losses[0],"final_training_loss":losses[-1],
         "validation":validation,"test":test,
-        "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. One fixed-budget experiment; test results are not used to tune training."}
+        "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark."}
     (destination/"broader-report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({"validation":{k:v for k,v in validation.items() if k!="cases"},
                       "test":{k:v for k,v in test.items() if k!="cases"}},indent=2))
@@ -126,5 +160,6 @@ if __name__=="__main__":
     parser.add_argument("--dataset",required=True)
     parser.add_argument("--output",required=True)
     parser.add_argument("--steps",type=int,default=3000)
+    parser.add_argument("--identifier-weight",type=float,default=1.0)
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps)
+    run(args.dataset,args.output,args.steps,args.identifier_weight)

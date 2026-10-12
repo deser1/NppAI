@@ -1,0 +1,198 @@
+[
+  {
+    "id": "test-add-13-2",
+    "family": "add",
+    "function": "fn_ikg63h",
+    "prompt": "Define fn_ikg63h(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_ikg63h(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "test-subtract-13-2",
+    "family": "subtract",
+    "function": "fn_qbx31e",
+    "prompt": "Define fn_qbx31e(a, b) in Python to return a minus b.",
+    "answer": "def fn_qbx31e(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "test-multiply-13-2",
+    "family": "multiply",
+    "function": "fn_23qc7f",
+    "prompt": "Define fn_23qc7f(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_23qc7f(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "test-square-13-2",
+    "family": "square",
+    "function": "fn_cly3uf",
+    "prompt": "Define fn_cly3uf(x) in Python to return x squared.",
+    "answer": "def fn_cly3uf(x):\n    return x * x\n"
+  },
+  {
+    "id": "test-negate-13-2",
+    "family": "negate",
+    "function": "fn_fa51k0",
+    "prompt": "Define fn_fa51k0(x) in Python to return the negation of x.",
+    "answer": "def fn_fa51k0(x):\n    return -x\n"
+  },
+  {
+    "id": "test-absolute-13-2",
+    "family": "absolute",
+    "function": "fn_f6e8xu",
+    "prompt": "Define fn_f6e8xu(x) in Python to return the absolute value of x.",
+    "answer": "def fn_f6e8xu(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "test-length-13-2",
+    "family": "length",
+    "function": "fn_ochhcb",
+    "prompt": "Define fn_ochhcb(values) in Python to return the number of values.",
+    "answer": "def fn_ochhcb(values):\n    return len(values)\n"
+  },
+  {
+    "id": "test-total-13-2",
+    "family": "total",
+    "function": "fn_axe8dh",
+    "prompt": "Define fn_axe8dh(values) in Python to return the sum of values.",
+    "answer": "def fn_axe8dh(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "test-largest-13-2",
+    "family": "largest",
+    "function": "fn_5p3nfv",
+    "prompt": "Define fn_5p3nfv(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_5p3nfv(values):\n    return max(values)\n"
+  },
+  {
+    "id": "test-smallest-13-2",
+    "family": "smallest",
+    "function": "fn_h2v5wh",
+    "prompt": "Define fn_h2v5wh(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_h2v5wh(values):\n    return min(values)\n"
+  },
+  {
+    "id": "test-reverse-13-2",
+    "family": "reverse",
+    "function": "fn_1grkms",
+    "prompt": "Define fn_1grkms(text) in Python to return text reversed.",
+    "answer": "def fn_1grkms(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "test-lower-13-2",
+    "family": "lower",
+    "function": "fn_ycjg1a",
+    "prompt": "Define fn_ycjg1a(text) in Python to return text in lowercase.",
+    "answer": "def fn_ycjg1a(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "test-upper-13-2",
+    "family": "upper",
+    "function": "fn_oy5jp4",
+    "prompt": "Define fn_oy5jp4(text) in Python to return text in uppercase.",
+    "answer": "def fn_oy5jp4(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "test-strip-13-2",
+    "family": "strip",
+    "function": "fn_fxsy6t",
+    "prompt": "Define fn_fxsy6t(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_fxsy6t(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "test-even-13-2",
+    "family": "even",
+    "function": "fn_e9evd1",
+    "prompt": "Define fn_e9evd1(x) in Python to return whether x is even.",
+    "answer": "def fn_e9evd1(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "test-positive-13-2",
+    "family": "positive",
+    "function": "fn_5vg3xr",
+    "prompt": "Define fn_5vg3xr(x) in Python to return whether x is positive.",
+    "answer": "def fn_5vg3xr(x):\n    return x > 0\n"
+  },
+  {
+    "id": "test-sort-0-0",
+    "family": "sort",
+    "function": "fn_ysnuyc",
+    "prompt": "Implement fn_ysnuyc(values) returning a sorted copy of values.",
+    "answer": "def fn_ysnuyc(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-sort-1-1",
+    "family": "sort",
+    "function": "fn_78trah",
+    "prompt": "Write Python function fn_78trah(values). It must return a sorted copy of values.",
+    "answer": "def fn_78trah(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-sort-2-2",
+    "family": "sort",
+    "function": "fn_nta64g",
+    "prompt": "Define fn_nta64g(values) in Python to return a sorted copy of values.",
+    "answer": "def fn_nta64g(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-unique-0-0",
+    "family": "unique",
+    "function": "fn_gzx8vx",
+    "prompt": "Implement fn_gzx8vx(values) returning unique values preserving their order.",
+    "answer": "def fn_gzx8vx(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-unique-1-1",
+    "family": "unique",
+    "function": "fn_4vsw8r",
+    "prompt": "Write Python function fn_4vsw8r(values). It must return unique values preserving their order.",
+    "answer": "def fn_4vsw8r(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-unique-2-2",
+    "family": "unique",
+    "function": "fn_wj8fcz",
+    "prompt": "Define fn_wj8fcz(values) in Python to return unique values preserving their order.",
+    "answer": "def fn_wj8fcz(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-join-0-0",
+    "family": "join",
+    "function": "fn_iawmox",
+    "prompt": "Implement fn_iawmox(values) returning all strings in values joined together.",
+    "answer": "def fn_iawmox(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-join-1-1",
+    "family": "join",
+    "function": "fn_ozucf2",
+    "prompt": "Write Python function fn_ozucf2(values). It must return all strings in values joined together.",
+    "answer": "def fn_ozucf2(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-join-2-2",
+    "family": "join",
+    "function": "fn_ri49ja",
+    "prompt": "Define fn_ri49ja(values) in Python to return all strings in values joined together.",
+    "answer": "def fn_ri49ja(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-clamp-0-0",
+    "family": "clamp",
+    "function": "fn_udfvbf",
+    "prompt": "Implement fn_udfvbf(x, low, high) returning x clamped between low and high.",
+    "answer": "def fn_udfvbf(x, low, high):\n    return min(high, max(low, x))\n"
+  },
+  {
+    "id": "test-clamp-1-1",
+    "family": "clamp",
+    "function": "fn_solnmo",
+    "prompt": "Write Python function fn_solnmo(x, low, high). It must return x clamped between low and high.",
+    "answer": "def fn_solnmo(x, low, high):\n    return min(high, max(low, x))\n"
+  },
+  {
+    "id": "test-clamp-2-2",
+    "family": "clamp",
+    "function": "fn_o1tj9u",
+    "prompt": "Define fn_o1tj9u(x, low, high) in Python to return x clamped between low and high.",
+    "answer": "def fn_o1tj9u(x, low, high):\n    return min(high, max(low, x))\n"
+  }
+]

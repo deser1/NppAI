@@ -5,6 +5,8 @@ All templates are authored in this project; no external code is imported.
 import argparse
 import hashlib
 import json
+import random
+import string
 from pathlib import Path
 
 FAMILIES = {
@@ -33,9 +35,10 @@ UNSEEN = {
 }
 
 
-def record(family, spec, index, style, split, version=1):
+def record(family, spec, index, style, split, version=1, name=None):
     args, body, description = spec
-    name = f"{split}_{family}_{index}" if version == 1 else f"fn_{family}_{index:02d}"
+    if name is None:
+        name = f"{split}_{family}_{index}" if version == 1 else f"fn_{family}_{index:02d}"
     signature = name + "(" + args + ")"
     prompts = [f"Implement {signature} returning {description}.",
                f"Write Python function {signature}. It must return {description}.",
@@ -46,18 +49,27 @@ def record(family, spec, index, style, split, version=1):
 
 
 def build(version=1):
-    if version not in (1,2):
-        raise ValueError("dataset version must be 1 or 2")
+    if version not in (1,2,3):
+        raise ValueError("dataset version must be 1, 2 or 3")
+    rng = random.Random(173)
+    used_names = set()
+    def next_name():
+        while True:
+            name = "fn_" + "".join(rng.choices(string.ascii_lowercase + string.digits, k=6))
+            if name not in used_names:
+                used_names.add(name)
+                return name
     train, validation, test = [], [], []
     for family, spec in FAMILIES.items():
-        for index in range(12):
+        for index in range(32 if version == 3 else 12):
+            name = next_name() if version == 3 else None
             for style in range(3):
-                train.append(record(family, spec, index, style, "train",version))
-        validation.append(record(family, spec, 0 if version==1 else 12, 1, "validation",version))
-        test.append(record(family, spec, 0 if version==1 else 13, 2, "test",version))
+                train.append(record(family, spec, index, style, "train",version,name))
+        validation.append(record(family, spec, 0 if version==1 else 12, 1, "validation",version,next_name() if version==3 else None))
+        test.append(record(family, spec, 0 if version==1 else 13, 2, "test",version,next_name() if version==3 else None))
     for family, spec in UNSEEN.items():
         for index in range(3):
-            test.append(record(family, spec, index, index, "test",version))
+            test.append(record(family, spec, index, index, "test",version,next_name() if version==3 else None))
     # Exact prompts, function identifiers and responses may not cross splits.
     for field in ("prompt", "function", "answer"):
         sets = [{item[field] for item in records} for records in (train, validation, test)]
@@ -84,6 +96,6 @@ def save(directory, version=1):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--version",type=int,choices=(1,2),default=1)
+    parser.add_argument("--version",type=int,choices=(1,2,3),default=1)
     args=parser.parse_args()
     save(args.output,args.version)

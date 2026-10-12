@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a frozen random-identifier dataset and paired response-name loss experiment; preserve raw free-generation evidence without replacing the failed 300-step checkpoint.
+
 - Integrate explicit Python signature mode into the Notepad++ panel and AIManager, including input validation, visible help/status, synchronized prefix streaming and complete correction tracking.
 
 - Exclude EOS from detokenized generated source and streaming callbacks; add deterministic generation regression coverage.

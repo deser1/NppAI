@@ -191,6 +191,10 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [identifier copying experiment](docs/identifier-copy-training.md) compares
+two loss weights on the same frozen random-name dataset. Complete reference AST
+matches remain separate from syntax and from signature-guided generation.
+
 The [Notepad++ Python signature mode](docs/notepad-python-signature-mode.md)
 is enabled by `@python-signature name(args)` on the first prompt line, followed
 by the task description. The application preserves the header while the model
