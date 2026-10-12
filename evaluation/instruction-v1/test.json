@@ -1,0 +1,198 @@
+[
+  {
+    "id": "test-add-0-2",
+    "family": "add",
+    "function": "test_add_0",
+    "prompt": "Define test_add_0(a, b) in Python to return the sum of a and b.",
+    "answer": "def test_add_0(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "test-subtract-0-2",
+    "family": "subtract",
+    "function": "test_subtract_0",
+    "prompt": "Define test_subtract_0(a, b) in Python to return a minus b.",
+    "answer": "def test_subtract_0(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "test-multiply-0-2",
+    "family": "multiply",
+    "function": "test_multiply_0",
+    "prompt": "Define test_multiply_0(a, b) in Python to return the product of a and b.",
+    "answer": "def test_multiply_0(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "test-square-0-2",
+    "family": "square",
+    "function": "test_square_0",
+    "prompt": "Define test_square_0(x) in Python to return x squared.",
+    "answer": "def test_square_0(x):\n    return x * x\n"
+  },
+  {
+    "id": "test-negate-0-2",
+    "family": "negate",
+    "function": "test_negate_0",
+    "prompt": "Define test_negate_0(x) in Python to return the negation of x.",
+    "answer": "def test_negate_0(x):\n    return -x\n"
+  },
+  {
+    "id": "test-absolute-0-2",
+    "family": "absolute",
+    "function": "test_absolute_0",
+    "prompt": "Define test_absolute_0(x) in Python to return the absolute value of x.",
+    "answer": "def test_absolute_0(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "test-length-0-2",
+    "family": "length",
+    "function": "test_length_0",
+    "prompt": "Define test_length_0(values) in Python to return the number of values.",
+    "answer": "def test_length_0(values):\n    return len(values)\n"
+  },
+  {
+    "id": "test-total-0-2",
+    "family": "total",
+    "function": "test_total_0",
+    "prompt": "Define test_total_0(values) in Python to return the sum of values.",
+    "answer": "def test_total_0(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "test-largest-0-2",
+    "family": "largest",
+    "function": "test_largest_0",
+    "prompt": "Define test_largest_0(values) in Python to return the maximum of nonempty values.",
+    "answer": "def test_largest_0(values):\n    return max(values)\n"
+  },
+  {
+    "id": "test-smallest-0-2",
+    "family": "smallest",
+    "function": "test_smallest_0",
+    "prompt": "Define test_smallest_0(values) in Python to return the minimum of nonempty values.",
+    "answer": "def test_smallest_0(values):\n    return min(values)\n"
+  },
+  {
+    "id": "test-reverse-0-2",
+    "family": "reverse",
+    "function": "test_reverse_0",
+    "prompt": "Define test_reverse_0(text) in Python to return text reversed.",
+    "answer": "def test_reverse_0(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "test-lower-0-2",
+    "family": "lower",
+    "function": "test_lower_0",
+    "prompt": "Define test_lower_0(text) in Python to return text in lowercase.",
+    "answer": "def test_lower_0(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "test-upper-0-2",
+    "family": "upper",
+    "function": "test_upper_0",
+    "prompt": "Define test_upper_0(text) in Python to return text in uppercase.",
+    "answer": "def test_upper_0(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "test-strip-0-2",
+    "family": "strip",
+    "function": "test_strip_0",
+    "prompt": "Define test_strip_0(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def test_strip_0(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "test-even-0-2",
+    "family": "even",
+    "function": "test_even_0",
+    "prompt": "Define test_even_0(x) in Python to return whether x is even.",
+    "answer": "def test_even_0(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "test-positive-0-2",
+    "family": "positive",
+    "function": "test_positive_0",
+    "prompt": "Define test_positive_0(x) in Python to return whether x is positive.",
+    "answer": "def test_positive_0(x):\n    return x > 0\n"
+  },
+  {
+    "id": "test-sort-0-0",
+    "family": "sort",
+    "function": "test_sort_0",
+    "prompt": "Implement test_sort_0(values) returning a sorted copy of values.",
+    "answer": "def test_sort_0(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-sort-1-1",
+    "family": "sort",
+    "function": "test_sort_1",
+    "prompt": "Write Python function test_sort_1(values). It must return a sorted copy of values.",
+    "answer": "def test_sort_1(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-sort-2-2",
+    "family": "sort",
+    "function": "test_sort_2",
+    "prompt": "Define test_sort_2(values) in Python to return a sorted copy of values.",
+    "answer": "def test_sort_2(values):\n    return sorted(values)\n"
+  },
+  {
+    "id": "test-unique-0-0",
+    "family": "unique",
+    "function": "test_unique_0",
+    "prompt": "Implement test_unique_0(values) returning unique values preserving their order.",
+    "answer": "def test_unique_0(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-unique-1-1",
+    "family": "unique",
+    "function": "test_unique_1",
+    "prompt": "Write Python function test_unique_1(values). It must return unique values preserving their order.",
+    "answer": "def test_unique_1(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-unique-2-2",
+    "family": "unique",
+    "function": "test_unique_2",
+    "prompt": "Define test_unique_2(values) in Python to return unique values preserving their order.",
+    "answer": "def test_unique_2(values):\n    return list(dict.fromkeys(values))\n"
+  },
+  {
+    "id": "test-join-0-0",
+    "family": "join",
+    "function": "test_join_0",
+    "prompt": "Implement test_join_0(values) returning all strings in values joined together.",
+    "answer": "def test_join_0(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-join-1-1",
+    "family": "join",
+    "function": "test_join_1",
+    "prompt": "Write Python function test_join_1(values). It must return all strings in values joined together.",
+    "answer": "def test_join_1(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-join-2-2",
+    "family": "join",
+    "function": "test_join_2",
+    "prompt": "Define test_join_2(values) in Python to return all strings in values joined together.",
+    "answer": "def test_join_2(values):\n    return ''.join(values)\n"
+  },
+  {
+    "id": "test-clamp-0-0",
+    "family": "clamp",
+    "function": "test_clamp_0",
+    "prompt": "Implement test_clamp_0(x, low, high) returning x clamped between low and high.",
+    "answer": "def test_clamp_0(x, low, high):\n    return min(high, max(low, x))\n"
+  },
+  {
+    "id": "test-clamp-1-1",
+    "family": "clamp",
+    "function": "test_clamp_1",
+    "prompt": "Write Python function test_clamp_1(x, low, high). It must return x clamped between low and high.",
+    "answer": "def test_clamp_1(x, low, high):\n    return min(high, max(low, x))\n"
+  },
+  {
+    "id": "test-clamp-2-2",
+    "family": "clamp",
+    "function": "test_clamp_2",
+    "prompt": "Define test_clamp_2(x, low, high) in Python to return x clamped between low and high.",
+    "answer": "def test_clamp_2(x, low, high):\n    return min(high, max(low, x))\n"
+  }
+]

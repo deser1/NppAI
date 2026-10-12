@@ -1,0 +1,114 @@
+[
+  {
+    "id": "validation-add-0-1",
+    "family": "add",
+    "function": "validation_add_0",
+    "prompt": "Write Python function validation_add_0(a, b). It must return the sum of a and b.",
+    "answer": "def validation_add_0(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "validation-subtract-0-1",
+    "family": "subtract",
+    "function": "validation_subtract_0",
+    "prompt": "Write Python function validation_subtract_0(a, b). It must return a minus b.",
+    "answer": "def validation_subtract_0(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "validation-multiply-0-1",
+    "family": "multiply",
+    "function": "validation_multiply_0",
+    "prompt": "Write Python function validation_multiply_0(a, b). It must return the product of a and b.",
+    "answer": "def validation_multiply_0(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "validation-square-0-1",
+    "family": "square",
+    "function": "validation_square_0",
+    "prompt": "Write Python function validation_square_0(x). It must return x squared.",
+    "answer": "def validation_square_0(x):\n    return x * x\n"
+  },
+  {
+    "id": "validation-negate-0-1",
+    "family": "negate",
+    "function": "validation_negate_0",
+    "prompt": "Write Python function validation_negate_0(x). It must return the negation of x.",
+    "answer": "def validation_negate_0(x):\n    return -x\n"
+  },
+  {
+    "id": "validation-absolute-0-1",
+    "family": "absolute",
+    "function": "validation_absolute_0",
+    "prompt": "Write Python function validation_absolute_0(x). It must return the absolute value of x.",
+    "answer": "def validation_absolute_0(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "validation-length-0-1",
+    "family": "length",
+    "function": "validation_length_0",
+    "prompt": "Write Python function validation_length_0(values). It must return the number of values.",
+    "answer": "def validation_length_0(values):\n    return len(values)\n"
+  },
+  {
+    "id": "validation-total-0-1",
+    "family": "total",
+    "function": "validation_total_0",
+    "prompt": "Write Python function validation_total_0(values). It must return the sum of values.",
+    "answer": "def validation_total_0(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "validation-largest-0-1",
+    "family": "largest",
+    "function": "validation_largest_0",
+    "prompt": "Write Python function validation_largest_0(values). It must return the maximum of nonempty values.",
+    "answer": "def validation_largest_0(values):\n    return max(values)\n"
+  },
+  {
+    "id": "validation-smallest-0-1",
+    "family": "smallest",
+    "function": "validation_smallest_0",
+    "prompt": "Write Python function validation_smallest_0(values). It must return the minimum of nonempty values.",
+    "answer": "def validation_smallest_0(values):\n    return min(values)\n"
+  },
+  {
+    "id": "validation-reverse-0-1",
+    "family": "reverse",
+    "function": "validation_reverse_0",
+    "prompt": "Write Python function validation_reverse_0(text). It must return text reversed.",
+    "answer": "def validation_reverse_0(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "validation-lower-0-1",
+    "family": "lower",
+    "function": "validation_lower_0",
+    "prompt": "Write Python function validation_lower_0(text). It must return text in lowercase.",
+    "answer": "def validation_lower_0(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "validation-upper-0-1",
+    "family": "upper",
+    "function": "validation_upper_0",
+    "prompt": "Write Python function validation_upper_0(text). It must return text in uppercase.",
+    "answer": "def validation_upper_0(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "validation-strip-0-1",
+    "family": "strip",
+    "function": "validation_strip_0",
+    "prompt": "Write Python function validation_strip_0(text). It must return text without leading or trailing whitespace.",
+    "answer": "def validation_strip_0(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "validation-even-0-1",
+    "family": "even",
+    "function": "validation_even_0",
+    "prompt": "Write Python function validation_even_0(x). It must return whether x is even.",
+    "answer": "def validation_even_0(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "validation-positive-0-1",
+    "family": "positive",
+    "function": "validation_positive_0",
+    "prompt": "Write Python function validation_positive_0(x). It must return whether x is positive.",
+    "answer": "def validation_positive_0(x):\n    return x > 0\n"
+  }
+]

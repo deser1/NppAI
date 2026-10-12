@@ -1,0 +1,507 @@
+{
+  "seed": 42,
+  "steps": 3000,
+  "batch_size": 4,
+  "context": 256,
+  "dataset_manifest": {
+    "version": 2,
+    "source": "project-authored synthetic templates",
+    "limitations": "Template variations are correlated; sample count is not independent task diversity.",
+    "unseen_test_families": [
+      "clamp",
+      "join",
+      "sort",
+      "unique"
+    ],
+    "splits": {
+      "train": {
+        "count": 576,
+        "sha256": "cb9a1b49326370b607e6a640eea73d09c9b03eea44970b2602c528fb2813f98d"
+      },
+      "validation": {
+        "count": 16,
+        "sha256": "9c9a33523795b77362eadb4beb7508b63b6edeee36dfc092397880533366c7b0"
+      },
+      "test": {
+        "count": 28,
+        "sha256": "ff07d4db74c4c7d702f22bc65201c5b869db4dd8b9444d91112315a4f10476f4"
+      }
+    }
+  },
+  "model_sha256": "65a4a07ffb473cd0ee58573ef6df4afeb26bacd274916750f0b79054498af808",
+  "initial_training_loss": 5.733636379241943,
+  "final_training_loss": 0.04628656059503555,
+  "validation": {
+    "total": 16,
+    "nonempty": 16,
+    "syntax_requested_function": 0,
+    "syntax_any_function": 16,
+    "exact_match": 0,
+    "mean_response_loss": 0.19198317639529705,
+    "cases": [
+      {
+        "id": "validation-add-12-1",
+        "family": "add",
+        "output": "def fn_add_04(a, b):\n    return a + b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.21470607817173004
+      },
+      {
+        "id": "validation-subtract-12-1",
+        "family": "subtract",
+        "output": "def fn_subtract_01(a, b):\n    return a - b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.14498408138751984
+      },
+      {
+        "id": "validation-multiply-12-1",
+        "family": "multiply",
+        "output": "def fn_multiply_08(a, b):\n    return a * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.18524369597434998
+      },
+      {
+        "id": "validation-square-12-1",
+        "family": "square",
+        "output": "def fn_square_08(x):\n    return x * x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.30318111181259155
+      },
+      {
+        "id": "validation-negate-12-1",
+        "family": "negate",
+        "output": "def fn_negate_04(x):\n    return -x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.23050792515277863
+      },
+      {
+        "id": "validation-absolute-12-1",
+        "family": "absolute",
+        "output": "def fn_absolute_10(x):\n    return abs(x)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.20040270686149597
+      },
+      {
+        "id": "validation-length-12-1",
+        "family": "length",
+        "output": "def fn_length_08(values):\n    return len(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.22624963521957397
+      },
+      {
+        "id": "validation-total-12-1",
+        "family": "total",
+        "output": "def fn_total_01(values):\n    return sum(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.2022373378276825
+      },
+      {
+        "id": "validation-largest-12-1",
+        "family": "largest",
+        "output": "def fn_largest_10(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.1619793325662613
+      },
+      {
+        "id": "validation-smallest-12-1",
+        "family": "smallest",
+        "output": "def fn_smallest_00(values):\n    return min(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.183318629860878
+      },
+      {
+        "id": "validation-reverse-12-1",
+        "family": "reverse",
+        "output": "def fn_reverse_10(text):\n    return text[::-1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.10018295049667358
+      },
+      {
+        "id": "validation-lower-12-1",
+        "family": "lower",
+        "output": "def fn_lower_10(text):\n    return text.lower()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.13786853849887848
+      },
+      {
+        "id": "validation-upper-12-1",
+        "family": "upper",
+        "output": "def fn_upper_10(text):\n    return text.upper()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.13553167879581451
+      },
+      {
+        "id": "validation-strip-12-1",
+        "family": "strip",
+        "output": "def fn_strip_01(text):\n    return text.strip()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.18822093307971954
+      },
+      {
+        "id": "validation-even-12-1",
+        "family": "even",
+        "output": "def fn_even_10(x):\n    return x % 2 == 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.19809463620185852
+      },
+      {
+        "id": "validation-positive-12-1",
+        "family": "positive",
+        "output": "def fn_positive_01(x):\n    return x > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.2590215504169464
+      }
+    ]
+  },
+  "test": {
+    "total": 28,
+    "nonempty": 26,
+    "syntax_requested_function": 0,
+    "syntax_any_function": 15,
+    "exact_match": 0,
+    "mean_response_loss": 2.415794897824526,
+    "cases": [
+      {
+        "id": "test-add-13-2",
+        "family": "add",
+        "output": "def fn_add_01(a, b):\n    return a + b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.2847405672073364
+      },
+      {
+        "id": "test-subtract-13-2",
+        "family": "subtract",
+        "output": "def fn_subtract_10(a, b):\n    return a - b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.18253950774669647
+      },
+      {
+        "id": "test-multiply-13-2",
+        "family": "multiply",
+        "output": "def fn_multiply_01(a, b):\n    return a * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.19094063341617584
+      },
+      {
+        "id": "test-square-13-2",
+        "family": "square",
+        "output": "def fn_square_101(x):\n   return x * x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.19961917400360107
+      },
+      {
+        "id": "test-negate-13-2",
+        "family": "negate",
+        "output": "def fn_negate_08(x):\n    return -x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.28368905186653137
+      },
+      {
+        "id": "test-absolute-13-2",
+        "family": "absolute",
+        "output": "def fn_absolute_01(x):\n    return abs(x)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.19960176944732666
+      },
+      {
+        "id": "test-length-13-2",
+        "family": "length",
+        "output": "def fn_length_1010(x):\n     rext.lureturn max):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 0.13328827917575836
+      },
+      {
+        "id": "test-total-13-2",
+        "family": "total",
+        "output": "def fn_total_10(values):\n    return sum(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.1742485612630844
+      },
+      {
+        "id": "test-largest-13-2",
+        "family": "largest",
+        "output": "def fn_largest_08(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.11631530523300171
+      },
+      {
+        "id": "test-smallest-13-2",
+        "family": "smallest",
+        "output": "def fn_smallest_01(values):\n    return min(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.20925523340702057
+      },
+      {
+        "id": "test-reverse-13-2",
+        "family": "reverse",
+        "output": "def fn_reverse_08(text):\n    return text[::-1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.28904351592063904
+      },
+      {
+        "id": "test-lower-13-2",
+        "family": "lower",
+        "output": "def fn_lower_10(text):\n    return text.lower()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.23291712999343872
+      },
+      {
+        "id": "test-upper-13-2",
+        "family": "upper",
+        "output": "def fn_upper_10(text):\n    return text.upper()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.2390606552362442
+      },
+      {
+        "id": "test-strip-13-2",
+        "family": "strip",
+        "output": "def fn_strip_10(text):\n    return text.strip()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.1435081511735916
+      },
+      {
+        "id": "test-even-13-2",
+        "family": "even",
+        "output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.23044928908348083
+      },
+      {
+        "id": "test-positive-13-2",
+        "family": "positive",
+        "output": "def fn_positive_01(x):\n    return x > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "exact_match": false,
+        "response_loss": 0.20313170552253723
+      },
+      {
+        "id": "test-sort-0-0",
+        "family": "sort",
+        "output": "ddefn_08(t_08(a, ref  turn tup_04(a:\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 4.884824752807617
+      },
+      {
+        "id": "test-sort-1-1",
+        "family": "sort",
+        "output": "def fn_smallest_0(xtues):\n      res)\n  min(values)\n  re_01(vab)\nden    reresue_es):\n rn  rnet_010(valulos):\n malues):\n  return res):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 3.583641290664673
+      },
+      {
+        "id": "test-sort-2-2",
+        "family": "sort",
+        "output": "def f f fn_uppeturetivaluetue):\n       rn   abs):\n    return min(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 4.560866832733154
+      },
+      {
+        "id": "test-unique-0-0",
+        "family": "unique",
+        "output": "def fn_posivallestues):\n    ren   n m(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 5.427925109863281
+      },
+      {
+        "id": "test-unique-1-1",
+        "family": "unique",
+        "output": "des):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 7.007011413574219
+      },
+      {
+        "id": "test-unique-2-2",
+        "family": "unique",
+        "output": "",
+        "nonempty": false,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 5.942250728607178
+      },
+      {
+        "id": "test-join-0-0",
+        "family": "join",
+        "output": "des):\n    return al_08(x mipet_08(vax(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 4.0863447189331055
+      },
+      {
+        "id": "test-join-1-1",
+        "family": "join",
+        "output": "den lues):\nden_s):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 5.191147804260254
+      },
+      {
+        "id": "test-join-2-2",
+        "family": "join",
+        "output": "",
+        "nonempty": false,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 4.575656414031982
+      },
+      {
+        "id": "test-clamp-0-0",
+        "family": "clamp",
+        "output": "de_lax\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 5.329627990722656
+      },
+      {
+        "id": "test-clamp-1-1",
+        "family": "clamp",
+        "output": " fn  ref b):\n   returen ax(va   return text.s):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 6.485960960388184
+      },
+      {
+        "id": "test-clamp-2-2",
+        "family": "clamp",
+        "output": "   ren  reren 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "exact_match": false,
+        "response_loss": 7.254650592803955
+      }
+    ],
+    "by_family_exposure": {
+      "seen_family_new_task": {
+        "total": 16,
+        "syntax_requested_function": 0,
+        "exact_match": 0
+      },
+      "unseen_family": {
+        "total": 12,
+        "syntax_requested_function": 0,
+        "exact_match": 0
+      }
+    }
+  },
+  "limitations": "Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. One fixed-budget experiment; test results are not used to tune training."
+}

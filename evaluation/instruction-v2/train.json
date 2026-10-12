@@ -1,0 +1,4034 @@
+[
+  {
+    "id": "train-add-0-0",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Implement fn_add_00(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-0-1",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Write Python function fn_add_00(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-0-2",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Define fn_add_00(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-0",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Implement fn_add_01(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-1",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Write Python function fn_add_01(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-2",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Define fn_add_01(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-0",
+    "family": "add",
+    "function": "fn_add_02",
+    "prompt": "Implement fn_add_02(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_02(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-1",
+    "family": "add",
+    "function": "fn_add_02",
+    "prompt": "Write Python function fn_add_02(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_02(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-2",
+    "family": "add",
+    "function": "fn_add_02",
+    "prompt": "Define fn_add_02(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_02(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-0",
+    "family": "add",
+    "function": "fn_add_03",
+    "prompt": "Implement fn_add_03(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_03(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-1",
+    "family": "add",
+    "function": "fn_add_03",
+    "prompt": "Write Python function fn_add_03(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_03(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-2",
+    "family": "add",
+    "function": "fn_add_03",
+    "prompt": "Define fn_add_03(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_03(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-0",
+    "family": "add",
+    "function": "fn_add_04",
+    "prompt": "Implement fn_add_04(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_04(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-1",
+    "family": "add",
+    "function": "fn_add_04",
+    "prompt": "Write Python function fn_add_04(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_04(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-2",
+    "family": "add",
+    "function": "fn_add_04",
+    "prompt": "Define fn_add_04(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_04(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-0",
+    "family": "add",
+    "function": "fn_add_05",
+    "prompt": "Implement fn_add_05(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_05(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-1",
+    "family": "add",
+    "function": "fn_add_05",
+    "prompt": "Write Python function fn_add_05(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_05(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-2",
+    "family": "add",
+    "function": "fn_add_05",
+    "prompt": "Define fn_add_05(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_05(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-0",
+    "family": "add",
+    "function": "fn_add_06",
+    "prompt": "Implement fn_add_06(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_06(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-1",
+    "family": "add",
+    "function": "fn_add_06",
+    "prompt": "Write Python function fn_add_06(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_06(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-2",
+    "family": "add",
+    "function": "fn_add_06",
+    "prompt": "Define fn_add_06(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_06(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-0",
+    "family": "add",
+    "function": "fn_add_07",
+    "prompt": "Implement fn_add_07(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_07(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-1",
+    "family": "add",
+    "function": "fn_add_07",
+    "prompt": "Write Python function fn_add_07(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_07(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-2",
+    "family": "add",
+    "function": "fn_add_07",
+    "prompt": "Define fn_add_07(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_07(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-0",
+    "family": "add",
+    "function": "fn_add_08",
+    "prompt": "Implement fn_add_08(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_08(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-1",
+    "family": "add",
+    "function": "fn_add_08",
+    "prompt": "Write Python function fn_add_08(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_08(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-2",
+    "family": "add",
+    "function": "fn_add_08",
+    "prompt": "Define fn_add_08(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_08(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-0",
+    "family": "add",
+    "function": "fn_add_09",
+    "prompt": "Implement fn_add_09(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_09(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-1",
+    "family": "add",
+    "function": "fn_add_09",
+    "prompt": "Write Python function fn_add_09(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_09(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-2",
+    "family": "add",
+    "function": "fn_add_09",
+    "prompt": "Define fn_add_09(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_09(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-0",
+    "family": "add",
+    "function": "fn_add_10",
+    "prompt": "Implement fn_add_10(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-1",
+    "family": "add",
+    "function": "fn_add_10",
+    "prompt": "Write Python function fn_add_10(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-2",
+    "family": "add",
+    "function": "fn_add_10",
+    "prompt": "Define fn_add_10(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-0",
+    "family": "add",
+    "function": "fn_add_11",
+    "prompt": "Implement fn_add_11(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-1",
+    "family": "add",
+    "function": "fn_add_11",
+    "prompt": "Write Python function fn_add_11(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-2",
+    "family": "add",
+    "function": "fn_add_11",
+    "prompt": "Define fn_add_11(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-subtract-0-0",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Implement fn_subtract_00(a, b) returning a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-0-1",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Write Python function fn_subtract_00(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-0-2",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Define fn_subtract_00(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-0",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Implement fn_subtract_01(a, b) returning a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-1",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Write Python function fn_subtract_01(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-2",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Define fn_subtract_01(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-0",
+    "family": "subtract",
+    "function": "fn_subtract_02",
+    "prompt": "Implement fn_subtract_02(a, b) returning a minus b.",
+    "answer": "def fn_subtract_02(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-1",
+    "family": "subtract",
+    "function": "fn_subtract_02",
+    "prompt": "Write Python function fn_subtract_02(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_02(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-2",
+    "family": "subtract",
+    "function": "fn_subtract_02",
+    "prompt": "Define fn_subtract_02(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_02(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-0",
+    "family": "subtract",
+    "function": "fn_subtract_03",
+    "prompt": "Implement fn_subtract_03(a, b) returning a minus b.",
+    "answer": "def fn_subtract_03(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-1",
+    "family": "subtract",
+    "function": "fn_subtract_03",
+    "prompt": "Write Python function fn_subtract_03(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_03(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-2",
+    "family": "subtract",
+    "function": "fn_subtract_03",
+    "prompt": "Define fn_subtract_03(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_03(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-0",
+    "family": "subtract",
+    "function": "fn_subtract_04",
+    "prompt": "Implement fn_subtract_04(a, b) returning a minus b.",
+    "answer": "def fn_subtract_04(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-1",
+    "family": "subtract",
+    "function": "fn_subtract_04",
+    "prompt": "Write Python function fn_subtract_04(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_04(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-2",
+    "family": "subtract",
+    "function": "fn_subtract_04",
+    "prompt": "Define fn_subtract_04(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_04(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-0",
+    "family": "subtract",
+    "function": "fn_subtract_05",
+    "prompt": "Implement fn_subtract_05(a, b) returning a minus b.",
+    "answer": "def fn_subtract_05(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-1",
+    "family": "subtract",
+    "function": "fn_subtract_05",
+    "prompt": "Write Python function fn_subtract_05(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_05(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-2",
+    "family": "subtract",
+    "function": "fn_subtract_05",
+    "prompt": "Define fn_subtract_05(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_05(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-0",
+    "family": "subtract",
+    "function": "fn_subtract_06",
+    "prompt": "Implement fn_subtract_06(a, b) returning a minus b.",
+    "answer": "def fn_subtract_06(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-1",
+    "family": "subtract",
+    "function": "fn_subtract_06",
+    "prompt": "Write Python function fn_subtract_06(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_06(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-2",
+    "family": "subtract",
+    "function": "fn_subtract_06",
+    "prompt": "Define fn_subtract_06(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_06(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-0",
+    "family": "subtract",
+    "function": "fn_subtract_07",
+    "prompt": "Implement fn_subtract_07(a, b) returning a minus b.",
+    "answer": "def fn_subtract_07(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-1",
+    "family": "subtract",
+    "function": "fn_subtract_07",
+    "prompt": "Write Python function fn_subtract_07(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_07(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-2",
+    "family": "subtract",
+    "function": "fn_subtract_07",
+    "prompt": "Define fn_subtract_07(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_07(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-0",
+    "family": "subtract",
+    "function": "fn_subtract_08",
+    "prompt": "Implement fn_subtract_08(a, b) returning a minus b.",
+    "answer": "def fn_subtract_08(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-1",
+    "family": "subtract",
+    "function": "fn_subtract_08",
+    "prompt": "Write Python function fn_subtract_08(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_08(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-2",
+    "family": "subtract",
+    "function": "fn_subtract_08",
+    "prompt": "Define fn_subtract_08(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_08(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-0",
+    "family": "subtract",
+    "function": "fn_subtract_09",
+    "prompt": "Implement fn_subtract_09(a, b) returning a minus b.",
+    "answer": "def fn_subtract_09(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-1",
+    "family": "subtract",
+    "function": "fn_subtract_09",
+    "prompt": "Write Python function fn_subtract_09(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_09(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-2",
+    "family": "subtract",
+    "function": "fn_subtract_09",
+    "prompt": "Define fn_subtract_09(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_09(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-0",
+    "family": "subtract",
+    "function": "fn_subtract_10",
+    "prompt": "Implement fn_subtract_10(a, b) returning a minus b.",
+    "answer": "def fn_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-1",
+    "family": "subtract",
+    "function": "fn_subtract_10",
+    "prompt": "Write Python function fn_subtract_10(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-2",
+    "family": "subtract",
+    "function": "fn_subtract_10",
+    "prompt": "Define fn_subtract_10(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-0",
+    "family": "subtract",
+    "function": "fn_subtract_11",
+    "prompt": "Implement fn_subtract_11(a, b) returning a minus b.",
+    "answer": "def fn_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-1",
+    "family": "subtract",
+    "function": "fn_subtract_11",
+    "prompt": "Write Python function fn_subtract_11(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-2",
+    "family": "subtract",
+    "function": "fn_subtract_11",
+    "prompt": "Define fn_subtract_11(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-multiply-0-0",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Implement fn_multiply_00(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-0-1",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Write Python function fn_multiply_00(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-0-2",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Define fn_multiply_00(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-0",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Implement fn_multiply_01(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-1",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Write Python function fn_multiply_01(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-2",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Define fn_multiply_01(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-0",
+    "family": "multiply",
+    "function": "fn_multiply_02",
+    "prompt": "Implement fn_multiply_02(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_02(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-1",
+    "family": "multiply",
+    "function": "fn_multiply_02",
+    "prompt": "Write Python function fn_multiply_02(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_02(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-2",
+    "family": "multiply",
+    "function": "fn_multiply_02",
+    "prompt": "Define fn_multiply_02(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_02(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-0",
+    "family": "multiply",
+    "function": "fn_multiply_03",
+    "prompt": "Implement fn_multiply_03(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_03(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-1",
+    "family": "multiply",
+    "function": "fn_multiply_03",
+    "prompt": "Write Python function fn_multiply_03(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_03(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-2",
+    "family": "multiply",
+    "function": "fn_multiply_03",
+    "prompt": "Define fn_multiply_03(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_03(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-0",
+    "family": "multiply",
+    "function": "fn_multiply_04",
+    "prompt": "Implement fn_multiply_04(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_04(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-1",
+    "family": "multiply",
+    "function": "fn_multiply_04",
+    "prompt": "Write Python function fn_multiply_04(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_04(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-2",
+    "family": "multiply",
+    "function": "fn_multiply_04",
+    "prompt": "Define fn_multiply_04(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_04(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-0",
+    "family": "multiply",
+    "function": "fn_multiply_05",
+    "prompt": "Implement fn_multiply_05(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_05(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-1",
+    "family": "multiply",
+    "function": "fn_multiply_05",
+    "prompt": "Write Python function fn_multiply_05(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_05(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-2",
+    "family": "multiply",
+    "function": "fn_multiply_05",
+    "prompt": "Define fn_multiply_05(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_05(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-0",
+    "family": "multiply",
+    "function": "fn_multiply_06",
+    "prompt": "Implement fn_multiply_06(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_06(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-1",
+    "family": "multiply",
+    "function": "fn_multiply_06",
+    "prompt": "Write Python function fn_multiply_06(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_06(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-2",
+    "family": "multiply",
+    "function": "fn_multiply_06",
+    "prompt": "Define fn_multiply_06(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_06(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-0",
+    "family": "multiply",
+    "function": "fn_multiply_07",
+    "prompt": "Implement fn_multiply_07(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_07(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-1",
+    "family": "multiply",
+    "function": "fn_multiply_07",
+    "prompt": "Write Python function fn_multiply_07(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_07(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-2",
+    "family": "multiply",
+    "function": "fn_multiply_07",
+    "prompt": "Define fn_multiply_07(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_07(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-0",
+    "family": "multiply",
+    "function": "fn_multiply_08",
+    "prompt": "Implement fn_multiply_08(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_08(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-1",
+    "family": "multiply",
+    "function": "fn_multiply_08",
+    "prompt": "Write Python function fn_multiply_08(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_08(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-2",
+    "family": "multiply",
+    "function": "fn_multiply_08",
+    "prompt": "Define fn_multiply_08(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_08(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-0",
+    "family": "multiply",
+    "function": "fn_multiply_09",
+    "prompt": "Implement fn_multiply_09(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_09(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-1",
+    "family": "multiply",
+    "function": "fn_multiply_09",
+    "prompt": "Write Python function fn_multiply_09(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_09(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-2",
+    "family": "multiply",
+    "function": "fn_multiply_09",
+    "prompt": "Define fn_multiply_09(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_09(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-0",
+    "family": "multiply",
+    "function": "fn_multiply_10",
+    "prompt": "Implement fn_multiply_10(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-1",
+    "family": "multiply",
+    "function": "fn_multiply_10",
+    "prompt": "Write Python function fn_multiply_10(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-2",
+    "family": "multiply",
+    "function": "fn_multiply_10",
+    "prompt": "Define fn_multiply_10(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-0",
+    "family": "multiply",
+    "function": "fn_multiply_11",
+    "prompt": "Implement fn_multiply_11(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-1",
+    "family": "multiply",
+    "function": "fn_multiply_11",
+    "prompt": "Write Python function fn_multiply_11(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-2",
+    "family": "multiply",
+    "function": "fn_multiply_11",
+    "prompt": "Define fn_multiply_11(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-square-0-0",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Implement fn_square_00(x) returning x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-0-1",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Write Python function fn_square_00(x). It must return x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-0-2",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Define fn_square_00(x) in Python to return x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-0",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Implement fn_square_01(x) returning x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-1",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Write Python function fn_square_01(x). It must return x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-2",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Define fn_square_01(x) in Python to return x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-0",
+    "family": "square",
+    "function": "fn_square_02",
+    "prompt": "Implement fn_square_02(x) returning x squared.",
+    "answer": "def fn_square_02(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-1",
+    "family": "square",
+    "function": "fn_square_02",
+    "prompt": "Write Python function fn_square_02(x). It must return x squared.",
+    "answer": "def fn_square_02(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-2",
+    "family": "square",
+    "function": "fn_square_02",
+    "prompt": "Define fn_square_02(x) in Python to return x squared.",
+    "answer": "def fn_square_02(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-0",
+    "family": "square",
+    "function": "fn_square_03",
+    "prompt": "Implement fn_square_03(x) returning x squared.",
+    "answer": "def fn_square_03(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-1",
+    "family": "square",
+    "function": "fn_square_03",
+    "prompt": "Write Python function fn_square_03(x). It must return x squared.",
+    "answer": "def fn_square_03(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-2",
+    "family": "square",
+    "function": "fn_square_03",
+    "prompt": "Define fn_square_03(x) in Python to return x squared.",
+    "answer": "def fn_square_03(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-0",
+    "family": "square",
+    "function": "fn_square_04",
+    "prompt": "Implement fn_square_04(x) returning x squared.",
+    "answer": "def fn_square_04(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-1",
+    "family": "square",
+    "function": "fn_square_04",
+    "prompt": "Write Python function fn_square_04(x). It must return x squared.",
+    "answer": "def fn_square_04(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-2",
+    "family": "square",
+    "function": "fn_square_04",
+    "prompt": "Define fn_square_04(x) in Python to return x squared.",
+    "answer": "def fn_square_04(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-0",
+    "family": "square",
+    "function": "fn_square_05",
+    "prompt": "Implement fn_square_05(x) returning x squared.",
+    "answer": "def fn_square_05(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-1",
+    "family": "square",
+    "function": "fn_square_05",
+    "prompt": "Write Python function fn_square_05(x). It must return x squared.",
+    "answer": "def fn_square_05(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-2",
+    "family": "square",
+    "function": "fn_square_05",
+    "prompt": "Define fn_square_05(x) in Python to return x squared.",
+    "answer": "def fn_square_05(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-0",
+    "family": "square",
+    "function": "fn_square_06",
+    "prompt": "Implement fn_square_06(x) returning x squared.",
+    "answer": "def fn_square_06(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-1",
+    "family": "square",
+    "function": "fn_square_06",
+    "prompt": "Write Python function fn_square_06(x). It must return x squared.",
+    "answer": "def fn_square_06(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-2",
+    "family": "square",
+    "function": "fn_square_06",
+    "prompt": "Define fn_square_06(x) in Python to return x squared.",
+    "answer": "def fn_square_06(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-0",
+    "family": "square",
+    "function": "fn_square_07",
+    "prompt": "Implement fn_square_07(x) returning x squared.",
+    "answer": "def fn_square_07(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-1",
+    "family": "square",
+    "function": "fn_square_07",
+    "prompt": "Write Python function fn_square_07(x). It must return x squared.",
+    "answer": "def fn_square_07(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-2",
+    "family": "square",
+    "function": "fn_square_07",
+    "prompt": "Define fn_square_07(x) in Python to return x squared.",
+    "answer": "def fn_square_07(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-0",
+    "family": "square",
+    "function": "fn_square_08",
+    "prompt": "Implement fn_square_08(x) returning x squared.",
+    "answer": "def fn_square_08(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-1",
+    "family": "square",
+    "function": "fn_square_08",
+    "prompt": "Write Python function fn_square_08(x). It must return x squared.",
+    "answer": "def fn_square_08(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-2",
+    "family": "square",
+    "function": "fn_square_08",
+    "prompt": "Define fn_square_08(x) in Python to return x squared.",
+    "answer": "def fn_square_08(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-0",
+    "family": "square",
+    "function": "fn_square_09",
+    "prompt": "Implement fn_square_09(x) returning x squared.",
+    "answer": "def fn_square_09(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-1",
+    "family": "square",
+    "function": "fn_square_09",
+    "prompt": "Write Python function fn_square_09(x). It must return x squared.",
+    "answer": "def fn_square_09(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-2",
+    "family": "square",
+    "function": "fn_square_09",
+    "prompt": "Define fn_square_09(x) in Python to return x squared.",
+    "answer": "def fn_square_09(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-0",
+    "family": "square",
+    "function": "fn_square_10",
+    "prompt": "Implement fn_square_10(x) returning x squared.",
+    "answer": "def fn_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-1",
+    "family": "square",
+    "function": "fn_square_10",
+    "prompt": "Write Python function fn_square_10(x). It must return x squared.",
+    "answer": "def fn_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-2",
+    "family": "square",
+    "function": "fn_square_10",
+    "prompt": "Define fn_square_10(x) in Python to return x squared.",
+    "answer": "def fn_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-0",
+    "family": "square",
+    "function": "fn_square_11",
+    "prompt": "Implement fn_square_11(x) returning x squared.",
+    "answer": "def fn_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-1",
+    "family": "square",
+    "function": "fn_square_11",
+    "prompt": "Write Python function fn_square_11(x). It must return x squared.",
+    "answer": "def fn_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-2",
+    "family": "square",
+    "function": "fn_square_11",
+    "prompt": "Define fn_square_11(x) in Python to return x squared.",
+    "answer": "def fn_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-negate-0-0",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Implement fn_negate_00(x) returning the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-0-1",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Write Python function fn_negate_00(x). It must return the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-0-2",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Define fn_negate_00(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-0",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Implement fn_negate_01(x) returning the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-1",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Write Python function fn_negate_01(x). It must return the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-2",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Define fn_negate_01(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-0",
+    "family": "negate",
+    "function": "fn_negate_02",
+    "prompt": "Implement fn_negate_02(x) returning the negation of x.",
+    "answer": "def fn_negate_02(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-1",
+    "family": "negate",
+    "function": "fn_negate_02",
+    "prompt": "Write Python function fn_negate_02(x). It must return the negation of x.",
+    "answer": "def fn_negate_02(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-2",
+    "family": "negate",
+    "function": "fn_negate_02",
+    "prompt": "Define fn_negate_02(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_02(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-0",
+    "family": "negate",
+    "function": "fn_negate_03",
+    "prompt": "Implement fn_negate_03(x) returning the negation of x.",
+    "answer": "def fn_negate_03(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-1",
+    "family": "negate",
+    "function": "fn_negate_03",
+    "prompt": "Write Python function fn_negate_03(x). It must return the negation of x.",
+    "answer": "def fn_negate_03(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-2",
+    "family": "negate",
+    "function": "fn_negate_03",
+    "prompt": "Define fn_negate_03(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_03(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-0",
+    "family": "negate",
+    "function": "fn_negate_04",
+    "prompt": "Implement fn_negate_04(x) returning the negation of x.",
+    "answer": "def fn_negate_04(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-1",
+    "family": "negate",
+    "function": "fn_negate_04",
+    "prompt": "Write Python function fn_negate_04(x). It must return the negation of x.",
+    "answer": "def fn_negate_04(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-2",
+    "family": "negate",
+    "function": "fn_negate_04",
+    "prompt": "Define fn_negate_04(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_04(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-0",
+    "family": "negate",
+    "function": "fn_negate_05",
+    "prompt": "Implement fn_negate_05(x) returning the negation of x.",
+    "answer": "def fn_negate_05(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-1",
+    "family": "negate",
+    "function": "fn_negate_05",
+    "prompt": "Write Python function fn_negate_05(x). It must return the negation of x.",
+    "answer": "def fn_negate_05(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-2",
+    "family": "negate",
+    "function": "fn_negate_05",
+    "prompt": "Define fn_negate_05(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_05(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-0",
+    "family": "negate",
+    "function": "fn_negate_06",
+    "prompt": "Implement fn_negate_06(x) returning the negation of x.",
+    "answer": "def fn_negate_06(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-1",
+    "family": "negate",
+    "function": "fn_negate_06",
+    "prompt": "Write Python function fn_negate_06(x). It must return the negation of x.",
+    "answer": "def fn_negate_06(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-2",
+    "family": "negate",
+    "function": "fn_negate_06",
+    "prompt": "Define fn_negate_06(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_06(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-0",
+    "family": "negate",
+    "function": "fn_negate_07",
+    "prompt": "Implement fn_negate_07(x) returning the negation of x.",
+    "answer": "def fn_negate_07(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-1",
+    "family": "negate",
+    "function": "fn_negate_07",
+    "prompt": "Write Python function fn_negate_07(x). It must return the negation of x.",
+    "answer": "def fn_negate_07(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-2",
+    "family": "negate",
+    "function": "fn_negate_07",
+    "prompt": "Define fn_negate_07(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_07(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-0",
+    "family": "negate",
+    "function": "fn_negate_08",
+    "prompt": "Implement fn_negate_08(x) returning the negation of x.",
+    "answer": "def fn_negate_08(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-1",
+    "family": "negate",
+    "function": "fn_negate_08",
+    "prompt": "Write Python function fn_negate_08(x). It must return the negation of x.",
+    "answer": "def fn_negate_08(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-2",
+    "family": "negate",
+    "function": "fn_negate_08",
+    "prompt": "Define fn_negate_08(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_08(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-0",
+    "family": "negate",
+    "function": "fn_negate_09",
+    "prompt": "Implement fn_negate_09(x) returning the negation of x.",
+    "answer": "def fn_negate_09(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-1",
+    "family": "negate",
+    "function": "fn_negate_09",
+    "prompt": "Write Python function fn_negate_09(x). It must return the negation of x.",
+    "answer": "def fn_negate_09(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-2",
+    "family": "negate",
+    "function": "fn_negate_09",
+    "prompt": "Define fn_negate_09(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_09(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-0",
+    "family": "negate",
+    "function": "fn_negate_10",
+    "prompt": "Implement fn_negate_10(x) returning the negation of x.",
+    "answer": "def fn_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-1",
+    "family": "negate",
+    "function": "fn_negate_10",
+    "prompt": "Write Python function fn_negate_10(x). It must return the negation of x.",
+    "answer": "def fn_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-2",
+    "family": "negate",
+    "function": "fn_negate_10",
+    "prompt": "Define fn_negate_10(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-0",
+    "family": "negate",
+    "function": "fn_negate_11",
+    "prompt": "Implement fn_negate_11(x) returning the negation of x.",
+    "answer": "def fn_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-1",
+    "family": "negate",
+    "function": "fn_negate_11",
+    "prompt": "Write Python function fn_negate_11(x). It must return the negation of x.",
+    "answer": "def fn_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-2",
+    "family": "negate",
+    "function": "fn_negate_11",
+    "prompt": "Define fn_negate_11(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-absolute-0-0",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Implement fn_absolute_00(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-0-1",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Write Python function fn_absolute_00(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-0-2",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Define fn_absolute_00(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-0",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Implement fn_absolute_01(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-1",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Write Python function fn_absolute_01(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-2",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Define fn_absolute_01(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-0",
+    "family": "absolute",
+    "function": "fn_absolute_02",
+    "prompt": "Implement fn_absolute_02(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_02(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-1",
+    "family": "absolute",
+    "function": "fn_absolute_02",
+    "prompt": "Write Python function fn_absolute_02(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_02(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-2",
+    "family": "absolute",
+    "function": "fn_absolute_02",
+    "prompt": "Define fn_absolute_02(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_02(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-0",
+    "family": "absolute",
+    "function": "fn_absolute_03",
+    "prompt": "Implement fn_absolute_03(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_03(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-1",
+    "family": "absolute",
+    "function": "fn_absolute_03",
+    "prompt": "Write Python function fn_absolute_03(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_03(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-2",
+    "family": "absolute",
+    "function": "fn_absolute_03",
+    "prompt": "Define fn_absolute_03(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_03(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-0",
+    "family": "absolute",
+    "function": "fn_absolute_04",
+    "prompt": "Implement fn_absolute_04(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_04(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-1",
+    "family": "absolute",
+    "function": "fn_absolute_04",
+    "prompt": "Write Python function fn_absolute_04(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_04(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-2",
+    "family": "absolute",
+    "function": "fn_absolute_04",
+    "prompt": "Define fn_absolute_04(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_04(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-0",
+    "family": "absolute",
+    "function": "fn_absolute_05",
+    "prompt": "Implement fn_absolute_05(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_05(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-1",
+    "family": "absolute",
+    "function": "fn_absolute_05",
+    "prompt": "Write Python function fn_absolute_05(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_05(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-2",
+    "family": "absolute",
+    "function": "fn_absolute_05",
+    "prompt": "Define fn_absolute_05(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_05(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-0",
+    "family": "absolute",
+    "function": "fn_absolute_06",
+    "prompt": "Implement fn_absolute_06(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_06(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-1",
+    "family": "absolute",
+    "function": "fn_absolute_06",
+    "prompt": "Write Python function fn_absolute_06(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_06(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-2",
+    "family": "absolute",
+    "function": "fn_absolute_06",
+    "prompt": "Define fn_absolute_06(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_06(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-0",
+    "family": "absolute",
+    "function": "fn_absolute_07",
+    "prompt": "Implement fn_absolute_07(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_07(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-1",
+    "family": "absolute",
+    "function": "fn_absolute_07",
+    "prompt": "Write Python function fn_absolute_07(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_07(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-2",
+    "family": "absolute",
+    "function": "fn_absolute_07",
+    "prompt": "Define fn_absolute_07(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_07(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-0",
+    "family": "absolute",
+    "function": "fn_absolute_08",
+    "prompt": "Implement fn_absolute_08(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_08(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-1",
+    "family": "absolute",
+    "function": "fn_absolute_08",
+    "prompt": "Write Python function fn_absolute_08(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_08(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-2",
+    "family": "absolute",
+    "function": "fn_absolute_08",
+    "prompt": "Define fn_absolute_08(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_08(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-0",
+    "family": "absolute",
+    "function": "fn_absolute_09",
+    "prompt": "Implement fn_absolute_09(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_09(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-1",
+    "family": "absolute",
+    "function": "fn_absolute_09",
+    "prompt": "Write Python function fn_absolute_09(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_09(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-2",
+    "family": "absolute",
+    "function": "fn_absolute_09",
+    "prompt": "Define fn_absolute_09(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_09(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-0",
+    "family": "absolute",
+    "function": "fn_absolute_10",
+    "prompt": "Implement fn_absolute_10(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-1",
+    "family": "absolute",
+    "function": "fn_absolute_10",
+    "prompt": "Write Python function fn_absolute_10(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-2",
+    "family": "absolute",
+    "function": "fn_absolute_10",
+    "prompt": "Define fn_absolute_10(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-0",
+    "family": "absolute",
+    "function": "fn_absolute_11",
+    "prompt": "Implement fn_absolute_11(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-1",
+    "family": "absolute",
+    "function": "fn_absolute_11",
+    "prompt": "Write Python function fn_absolute_11(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-2",
+    "family": "absolute",
+    "function": "fn_absolute_11",
+    "prompt": "Define fn_absolute_11(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-length-0-0",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Implement fn_length_00(values) returning the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-0-1",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Write Python function fn_length_00(values). It must return the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-0-2",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Define fn_length_00(values) in Python to return the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-0",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Implement fn_length_01(values) returning the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-1",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Write Python function fn_length_01(values). It must return the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-2",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Define fn_length_01(values) in Python to return the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-0",
+    "family": "length",
+    "function": "fn_length_02",
+    "prompt": "Implement fn_length_02(values) returning the number of values.",
+    "answer": "def fn_length_02(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-1",
+    "family": "length",
+    "function": "fn_length_02",
+    "prompt": "Write Python function fn_length_02(values). It must return the number of values.",
+    "answer": "def fn_length_02(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-2",
+    "family": "length",
+    "function": "fn_length_02",
+    "prompt": "Define fn_length_02(values) in Python to return the number of values.",
+    "answer": "def fn_length_02(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-0",
+    "family": "length",
+    "function": "fn_length_03",
+    "prompt": "Implement fn_length_03(values) returning the number of values.",
+    "answer": "def fn_length_03(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-1",
+    "family": "length",
+    "function": "fn_length_03",
+    "prompt": "Write Python function fn_length_03(values). It must return the number of values.",
+    "answer": "def fn_length_03(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-2",
+    "family": "length",
+    "function": "fn_length_03",
+    "prompt": "Define fn_length_03(values) in Python to return the number of values.",
+    "answer": "def fn_length_03(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-0",
+    "family": "length",
+    "function": "fn_length_04",
+    "prompt": "Implement fn_length_04(values) returning the number of values.",
+    "answer": "def fn_length_04(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-1",
+    "family": "length",
+    "function": "fn_length_04",
+    "prompt": "Write Python function fn_length_04(values). It must return the number of values.",
+    "answer": "def fn_length_04(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-2",
+    "family": "length",
+    "function": "fn_length_04",
+    "prompt": "Define fn_length_04(values) in Python to return the number of values.",
+    "answer": "def fn_length_04(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-0",
+    "family": "length",
+    "function": "fn_length_05",
+    "prompt": "Implement fn_length_05(values) returning the number of values.",
+    "answer": "def fn_length_05(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-1",
+    "family": "length",
+    "function": "fn_length_05",
+    "prompt": "Write Python function fn_length_05(values). It must return the number of values.",
+    "answer": "def fn_length_05(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-2",
+    "family": "length",
+    "function": "fn_length_05",
+    "prompt": "Define fn_length_05(values) in Python to return the number of values.",
+    "answer": "def fn_length_05(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-0",
+    "family": "length",
+    "function": "fn_length_06",
+    "prompt": "Implement fn_length_06(values) returning the number of values.",
+    "answer": "def fn_length_06(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-1",
+    "family": "length",
+    "function": "fn_length_06",
+    "prompt": "Write Python function fn_length_06(values). It must return the number of values.",
+    "answer": "def fn_length_06(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-2",
+    "family": "length",
+    "function": "fn_length_06",
+    "prompt": "Define fn_length_06(values) in Python to return the number of values.",
+    "answer": "def fn_length_06(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-0",
+    "family": "length",
+    "function": "fn_length_07",
+    "prompt": "Implement fn_length_07(values) returning the number of values.",
+    "answer": "def fn_length_07(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-1",
+    "family": "length",
+    "function": "fn_length_07",
+    "prompt": "Write Python function fn_length_07(values). It must return the number of values.",
+    "answer": "def fn_length_07(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-2",
+    "family": "length",
+    "function": "fn_length_07",
+    "prompt": "Define fn_length_07(values) in Python to return the number of values.",
+    "answer": "def fn_length_07(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-0",
+    "family": "length",
+    "function": "fn_length_08",
+    "prompt": "Implement fn_length_08(values) returning the number of values.",
+    "answer": "def fn_length_08(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-1",
+    "family": "length",
+    "function": "fn_length_08",
+    "prompt": "Write Python function fn_length_08(values). It must return the number of values.",
+    "answer": "def fn_length_08(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-2",
+    "family": "length",
+    "function": "fn_length_08",
+    "prompt": "Define fn_length_08(values) in Python to return the number of values.",
+    "answer": "def fn_length_08(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-0",
+    "family": "length",
+    "function": "fn_length_09",
+    "prompt": "Implement fn_length_09(values) returning the number of values.",
+    "answer": "def fn_length_09(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-1",
+    "family": "length",
+    "function": "fn_length_09",
+    "prompt": "Write Python function fn_length_09(values). It must return the number of values.",
+    "answer": "def fn_length_09(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-2",
+    "family": "length",
+    "function": "fn_length_09",
+    "prompt": "Define fn_length_09(values) in Python to return the number of values.",
+    "answer": "def fn_length_09(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-0",
+    "family": "length",
+    "function": "fn_length_10",
+    "prompt": "Implement fn_length_10(values) returning the number of values.",
+    "answer": "def fn_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-1",
+    "family": "length",
+    "function": "fn_length_10",
+    "prompt": "Write Python function fn_length_10(values). It must return the number of values.",
+    "answer": "def fn_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-2",
+    "family": "length",
+    "function": "fn_length_10",
+    "prompt": "Define fn_length_10(values) in Python to return the number of values.",
+    "answer": "def fn_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-0",
+    "family": "length",
+    "function": "fn_length_11",
+    "prompt": "Implement fn_length_11(values) returning the number of values.",
+    "answer": "def fn_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-1",
+    "family": "length",
+    "function": "fn_length_11",
+    "prompt": "Write Python function fn_length_11(values). It must return the number of values.",
+    "answer": "def fn_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-2",
+    "family": "length",
+    "function": "fn_length_11",
+    "prompt": "Define fn_length_11(values) in Python to return the number of values.",
+    "answer": "def fn_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-total-0-0",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Implement fn_total_00(values) returning the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-0-1",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Write Python function fn_total_00(values). It must return the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-0-2",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Define fn_total_00(values) in Python to return the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-0",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Implement fn_total_01(values) returning the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-1",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Write Python function fn_total_01(values). It must return the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-2",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Define fn_total_01(values) in Python to return the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-0",
+    "family": "total",
+    "function": "fn_total_02",
+    "prompt": "Implement fn_total_02(values) returning the sum of values.",
+    "answer": "def fn_total_02(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-1",
+    "family": "total",
+    "function": "fn_total_02",
+    "prompt": "Write Python function fn_total_02(values). It must return the sum of values.",
+    "answer": "def fn_total_02(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-2",
+    "family": "total",
+    "function": "fn_total_02",
+    "prompt": "Define fn_total_02(values) in Python to return the sum of values.",
+    "answer": "def fn_total_02(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-0",
+    "family": "total",
+    "function": "fn_total_03",
+    "prompt": "Implement fn_total_03(values) returning the sum of values.",
+    "answer": "def fn_total_03(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-1",
+    "family": "total",
+    "function": "fn_total_03",
+    "prompt": "Write Python function fn_total_03(values). It must return the sum of values.",
+    "answer": "def fn_total_03(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-2",
+    "family": "total",
+    "function": "fn_total_03",
+    "prompt": "Define fn_total_03(values) in Python to return the sum of values.",
+    "answer": "def fn_total_03(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-0",
+    "family": "total",
+    "function": "fn_total_04",
+    "prompt": "Implement fn_total_04(values) returning the sum of values.",
+    "answer": "def fn_total_04(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-1",
+    "family": "total",
+    "function": "fn_total_04",
+    "prompt": "Write Python function fn_total_04(values). It must return the sum of values.",
+    "answer": "def fn_total_04(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-2",
+    "family": "total",
+    "function": "fn_total_04",
+    "prompt": "Define fn_total_04(values) in Python to return the sum of values.",
+    "answer": "def fn_total_04(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-0",
+    "family": "total",
+    "function": "fn_total_05",
+    "prompt": "Implement fn_total_05(values) returning the sum of values.",
+    "answer": "def fn_total_05(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-1",
+    "family": "total",
+    "function": "fn_total_05",
+    "prompt": "Write Python function fn_total_05(values). It must return the sum of values.",
+    "answer": "def fn_total_05(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-2",
+    "family": "total",
+    "function": "fn_total_05",
+    "prompt": "Define fn_total_05(values) in Python to return the sum of values.",
+    "answer": "def fn_total_05(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-0",
+    "family": "total",
+    "function": "fn_total_06",
+    "prompt": "Implement fn_total_06(values) returning the sum of values.",
+    "answer": "def fn_total_06(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-1",
+    "family": "total",
+    "function": "fn_total_06",
+    "prompt": "Write Python function fn_total_06(values). It must return the sum of values.",
+    "answer": "def fn_total_06(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-2",
+    "family": "total",
+    "function": "fn_total_06",
+    "prompt": "Define fn_total_06(values) in Python to return the sum of values.",
+    "answer": "def fn_total_06(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-0",
+    "family": "total",
+    "function": "fn_total_07",
+    "prompt": "Implement fn_total_07(values) returning the sum of values.",
+    "answer": "def fn_total_07(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-1",
+    "family": "total",
+    "function": "fn_total_07",
+    "prompt": "Write Python function fn_total_07(values). It must return the sum of values.",
+    "answer": "def fn_total_07(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-2",
+    "family": "total",
+    "function": "fn_total_07",
+    "prompt": "Define fn_total_07(values) in Python to return the sum of values.",
+    "answer": "def fn_total_07(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-0",
+    "family": "total",
+    "function": "fn_total_08",
+    "prompt": "Implement fn_total_08(values) returning the sum of values.",
+    "answer": "def fn_total_08(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-1",
+    "family": "total",
+    "function": "fn_total_08",
+    "prompt": "Write Python function fn_total_08(values). It must return the sum of values.",
+    "answer": "def fn_total_08(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-2",
+    "family": "total",
+    "function": "fn_total_08",
+    "prompt": "Define fn_total_08(values) in Python to return the sum of values.",
+    "answer": "def fn_total_08(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-0",
+    "family": "total",
+    "function": "fn_total_09",
+    "prompt": "Implement fn_total_09(values) returning the sum of values.",
+    "answer": "def fn_total_09(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-1",
+    "family": "total",
+    "function": "fn_total_09",
+    "prompt": "Write Python function fn_total_09(values). It must return the sum of values.",
+    "answer": "def fn_total_09(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-2",
+    "family": "total",
+    "function": "fn_total_09",
+    "prompt": "Define fn_total_09(values) in Python to return the sum of values.",
+    "answer": "def fn_total_09(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-0",
+    "family": "total",
+    "function": "fn_total_10",
+    "prompt": "Implement fn_total_10(values) returning the sum of values.",
+    "answer": "def fn_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-1",
+    "family": "total",
+    "function": "fn_total_10",
+    "prompt": "Write Python function fn_total_10(values). It must return the sum of values.",
+    "answer": "def fn_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-2",
+    "family": "total",
+    "function": "fn_total_10",
+    "prompt": "Define fn_total_10(values) in Python to return the sum of values.",
+    "answer": "def fn_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-0",
+    "family": "total",
+    "function": "fn_total_11",
+    "prompt": "Implement fn_total_11(values) returning the sum of values.",
+    "answer": "def fn_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-1",
+    "family": "total",
+    "function": "fn_total_11",
+    "prompt": "Write Python function fn_total_11(values). It must return the sum of values.",
+    "answer": "def fn_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-2",
+    "family": "total",
+    "function": "fn_total_11",
+    "prompt": "Define fn_total_11(values) in Python to return the sum of values.",
+    "answer": "def fn_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-largest-0-0",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Implement fn_largest_00(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-0-1",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Write Python function fn_largest_00(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-0-2",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Define fn_largest_00(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-0",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Implement fn_largest_01(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-1",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Write Python function fn_largest_01(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-2",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Define fn_largest_01(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-0",
+    "family": "largest",
+    "function": "fn_largest_02",
+    "prompt": "Implement fn_largest_02(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_02(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-1",
+    "family": "largest",
+    "function": "fn_largest_02",
+    "prompt": "Write Python function fn_largest_02(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_02(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-2",
+    "family": "largest",
+    "function": "fn_largest_02",
+    "prompt": "Define fn_largest_02(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_02(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-0",
+    "family": "largest",
+    "function": "fn_largest_03",
+    "prompt": "Implement fn_largest_03(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_03(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-1",
+    "family": "largest",
+    "function": "fn_largest_03",
+    "prompt": "Write Python function fn_largest_03(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_03(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-2",
+    "family": "largest",
+    "function": "fn_largest_03",
+    "prompt": "Define fn_largest_03(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_03(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-0",
+    "family": "largest",
+    "function": "fn_largest_04",
+    "prompt": "Implement fn_largest_04(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_04(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-1",
+    "family": "largest",
+    "function": "fn_largest_04",
+    "prompt": "Write Python function fn_largest_04(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_04(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-2",
+    "family": "largest",
+    "function": "fn_largest_04",
+    "prompt": "Define fn_largest_04(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_04(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-0",
+    "family": "largest",
+    "function": "fn_largest_05",
+    "prompt": "Implement fn_largest_05(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_05(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-1",
+    "family": "largest",
+    "function": "fn_largest_05",
+    "prompt": "Write Python function fn_largest_05(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_05(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-2",
+    "family": "largest",
+    "function": "fn_largest_05",
+    "prompt": "Define fn_largest_05(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_05(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-0",
+    "family": "largest",
+    "function": "fn_largest_06",
+    "prompt": "Implement fn_largest_06(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_06(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-1",
+    "family": "largest",
+    "function": "fn_largest_06",
+    "prompt": "Write Python function fn_largest_06(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_06(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-2",
+    "family": "largest",
+    "function": "fn_largest_06",
+    "prompt": "Define fn_largest_06(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_06(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-0",
+    "family": "largest",
+    "function": "fn_largest_07",
+    "prompt": "Implement fn_largest_07(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_07(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-1",
+    "family": "largest",
+    "function": "fn_largest_07",
+    "prompt": "Write Python function fn_largest_07(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_07(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-2",
+    "family": "largest",
+    "function": "fn_largest_07",
+    "prompt": "Define fn_largest_07(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_07(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-0",
+    "family": "largest",
+    "function": "fn_largest_08",
+    "prompt": "Implement fn_largest_08(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_08(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-1",
+    "family": "largest",
+    "function": "fn_largest_08",
+    "prompt": "Write Python function fn_largest_08(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_08(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-2",
+    "family": "largest",
+    "function": "fn_largest_08",
+    "prompt": "Define fn_largest_08(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_08(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-0",
+    "family": "largest",
+    "function": "fn_largest_09",
+    "prompt": "Implement fn_largest_09(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_09(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-1",
+    "family": "largest",
+    "function": "fn_largest_09",
+    "prompt": "Write Python function fn_largest_09(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_09(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-2",
+    "family": "largest",
+    "function": "fn_largest_09",
+    "prompt": "Define fn_largest_09(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_09(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-0",
+    "family": "largest",
+    "function": "fn_largest_10",
+    "prompt": "Implement fn_largest_10(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-1",
+    "family": "largest",
+    "function": "fn_largest_10",
+    "prompt": "Write Python function fn_largest_10(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-2",
+    "family": "largest",
+    "function": "fn_largest_10",
+    "prompt": "Define fn_largest_10(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-0",
+    "family": "largest",
+    "function": "fn_largest_11",
+    "prompt": "Implement fn_largest_11(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-1",
+    "family": "largest",
+    "function": "fn_largest_11",
+    "prompt": "Write Python function fn_largest_11(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-2",
+    "family": "largest",
+    "function": "fn_largest_11",
+    "prompt": "Define fn_largest_11(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-smallest-0-0",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Implement fn_smallest_00(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-0-1",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Write Python function fn_smallest_00(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-0-2",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Define fn_smallest_00(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-0",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Implement fn_smallest_01(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-1",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Write Python function fn_smallest_01(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-2",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Define fn_smallest_01(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-0",
+    "family": "smallest",
+    "function": "fn_smallest_02",
+    "prompt": "Implement fn_smallest_02(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_02(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-1",
+    "family": "smallest",
+    "function": "fn_smallest_02",
+    "prompt": "Write Python function fn_smallest_02(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_02(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-2",
+    "family": "smallest",
+    "function": "fn_smallest_02",
+    "prompt": "Define fn_smallest_02(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_02(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-0",
+    "family": "smallest",
+    "function": "fn_smallest_03",
+    "prompt": "Implement fn_smallest_03(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_03(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-1",
+    "family": "smallest",
+    "function": "fn_smallest_03",
+    "prompt": "Write Python function fn_smallest_03(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_03(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-2",
+    "family": "smallest",
+    "function": "fn_smallest_03",
+    "prompt": "Define fn_smallest_03(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_03(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-0",
+    "family": "smallest",
+    "function": "fn_smallest_04",
+    "prompt": "Implement fn_smallest_04(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_04(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-1",
+    "family": "smallest",
+    "function": "fn_smallest_04",
+    "prompt": "Write Python function fn_smallest_04(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_04(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-2",
+    "family": "smallest",
+    "function": "fn_smallest_04",
+    "prompt": "Define fn_smallest_04(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_04(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-0",
+    "family": "smallest",
+    "function": "fn_smallest_05",
+    "prompt": "Implement fn_smallest_05(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_05(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-1",
+    "family": "smallest",
+    "function": "fn_smallest_05",
+    "prompt": "Write Python function fn_smallest_05(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_05(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-2",
+    "family": "smallest",
+    "function": "fn_smallest_05",
+    "prompt": "Define fn_smallest_05(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_05(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-0",
+    "family": "smallest",
+    "function": "fn_smallest_06",
+    "prompt": "Implement fn_smallest_06(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_06(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-1",
+    "family": "smallest",
+    "function": "fn_smallest_06",
+    "prompt": "Write Python function fn_smallest_06(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_06(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-2",
+    "family": "smallest",
+    "function": "fn_smallest_06",
+    "prompt": "Define fn_smallest_06(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_06(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-0",
+    "family": "smallest",
+    "function": "fn_smallest_07",
+    "prompt": "Implement fn_smallest_07(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_07(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-1",
+    "family": "smallest",
+    "function": "fn_smallest_07",
+    "prompt": "Write Python function fn_smallest_07(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_07(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-2",
+    "family": "smallest",
+    "function": "fn_smallest_07",
+    "prompt": "Define fn_smallest_07(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_07(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-0",
+    "family": "smallest",
+    "function": "fn_smallest_08",
+    "prompt": "Implement fn_smallest_08(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_08(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-1",
+    "family": "smallest",
+    "function": "fn_smallest_08",
+    "prompt": "Write Python function fn_smallest_08(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_08(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-2",
+    "family": "smallest",
+    "function": "fn_smallest_08",
+    "prompt": "Define fn_smallest_08(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_08(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-0",
+    "family": "smallest",
+    "function": "fn_smallest_09",
+    "prompt": "Implement fn_smallest_09(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_09(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-1",
+    "family": "smallest",
+    "function": "fn_smallest_09",
+    "prompt": "Write Python function fn_smallest_09(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_09(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-2",
+    "family": "smallest",
+    "function": "fn_smallest_09",
+    "prompt": "Define fn_smallest_09(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_09(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-0",
+    "family": "smallest",
+    "function": "fn_smallest_10",
+    "prompt": "Implement fn_smallest_10(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-1",
+    "family": "smallest",
+    "function": "fn_smallest_10",
+    "prompt": "Write Python function fn_smallest_10(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-2",
+    "family": "smallest",
+    "function": "fn_smallest_10",
+    "prompt": "Define fn_smallest_10(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-0",
+    "family": "smallest",
+    "function": "fn_smallest_11",
+    "prompt": "Implement fn_smallest_11(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-1",
+    "family": "smallest",
+    "function": "fn_smallest_11",
+    "prompt": "Write Python function fn_smallest_11(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-2",
+    "family": "smallest",
+    "function": "fn_smallest_11",
+    "prompt": "Define fn_smallest_11(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-reverse-0-0",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Implement fn_reverse_00(text) returning text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-0-1",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Write Python function fn_reverse_00(text). It must return text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-0-2",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Define fn_reverse_00(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-0",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Implement fn_reverse_01(text) returning text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-1",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Write Python function fn_reverse_01(text). It must return text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-2",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Define fn_reverse_01(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-0",
+    "family": "reverse",
+    "function": "fn_reverse_02",
+    "prompt": "Implement fn_reverse_02(text) returning text reversed.",
+    "answer": "def fn_reverse_02(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-1",
+    "family": "reverse",
+    "function": "fn_reverse_02",
+    "prompt": "Write Python function fn_reverse_02(text). It must return text reversed.",
+    "answer": "def fn_reverse_02(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-2",
+    "family": "reverse",
+    "function": "fn_reverse_02",
+    "prompt": "Define fn_reverse_02(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_02(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-0",
+    "family": "reverse",
+    "function": "fn_reverse_03",
+    "prompt": "Implement fn_reverse_03(text) returning text reversed.",
+    "answer": "def fn_reverse_03(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-1",
+    "family": "reverse",
+    "function": "fn_reverse_03",
+    "prompt": "Write Python function fn_reverse_03(text). It must return text reversed.",
+    "answer": "def fn_reverse_03(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-2",
+    "family": "reverse",
+    "function": "fn_reverse_03",
+    "prompt": "Define fn_reverse_03(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_03(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-0",
+    "family": "reverse",
+    "function": "fn_reverse_04",
+    "prompt": "Implement fn_reverse_04(text) returning text reversed.",
+    "answer": "def fn_reverse_04(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-1",
+    "family": "reverse",
+    "function": "fn_reverse_04",
+    "prompt": "Write Python function fn_reverse_04(text). It must return text reversed.",
+    "answer": "def fn_reverse_04(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-2",
+    "family": "reverse",
+    "function": "fn_reverse_04",
+    "prompt": "Define fn_reverse_04(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_04(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-0",
+    "family": "reverse",
+    "function": "fn_reverse_05",
+    "prompt": "Implement fn_reverse_05(text) returning text reversed.",
+    "answer": "def fn_reverse_05(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-1",
+    "family": "reverse",
+    "function": "fn_reverse_05",
+    "prompt": "Write Python function fn_reverse_05(text). It must return text reversed.",
+    "answer": "def fn_reverse_05(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-2",
+    "family": "reverse",
+    "function": "fn_reverse_05",
+    "prompt": "Define fn_reverse_05(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_05(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-0",
+    "family": "reverse",
+    "function": "fn_reverse_06",
+    "prompt": "Implement fn_reverse_06(text) returning text reversed.",
+    "answer": "def fn_reverse_06(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-1",
+    "family": "reverse",
+    "function": "fn_reverse_06",
+    "prompt": "Write Python function fn_reverse_06(text). It must return text reversed.",
+    "answer": "def fn_reverse_06(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-2",
+    "family": "reverse",
+    "function": "fn_reverse_06",
+    "prompt": "Define fn_reverse_06(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_06(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-0",
+    "family": "reverse",
+    "function": "fn_reverse_07",
+    "prompt": "Implement fn_reverse_07(text) returning text reversed.",
+    "answer": "def fn_reverse_07(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-1",
+    "family": "reverse",
+    "function": "fn_reverse_07",
+    "prompt": "Write Python function fn_reverse_07(text). It must return text reversed.",
+    "answer": "def fn_reverse_07(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-2",
+    "family": "reverse",
+    "function": "fn_reverse_07",
+    "prompt": "Define fn_reverse_07(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_07(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-0",
+    "family": "reverse",
+    "function": "fn_reverse_08",
+    "prompt": "Implement fn_reverse_08(text) returning text reversed.",
+    "answer": "def fn_reverse_08(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-1",
+    "family": "reverse",
+    "function": "fn_reverse_08",
+    "prompt": "Write Python function fn_reverse_08(text). It must return text reversed.",
+    "answer": "def fn_reverse_08(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-2",
+    "family": "reverse",
+    "function": "fn_reverse_08",
+    "prompt": "Define fn_reverse_08(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_08(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-0",
+    "family": "reverse",
+    "function": "fn_reverse_09",
+    "prompt": "Implement fn_reverse_09(text) returning text reversed.",
+    "answer": "def fn_reverse_09(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-1",
+    "family": "reverse",
+    "function": "fn_reverse_09",
+    "prompt": "Write Python function fn_reverse_09(text). It must return text reversed.",
+    "answer": "def fn_reverse_09(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-2",
+    "family": "reverse",
+    "function": "fn_reverse_09",
+    "prompt": "Define fn_reverse_09(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_09(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-0",
+    "family": "reverse",
+    "function": "fn_reverse_10",
+    "prompt": "Implement fn_reverse_10(text) returning text reversed.",
+    "answer": "def fn_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-1",
+    "family": "reverse",
+    "function": "fn_reverse_10",
+    "prompt": "Write Python function fn_reverse_10(text). It must return text reversed.",
+    "answer": "def fn_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-2",
+    "family": "reverse",
+    "function": "fn_reverse_10",
+    "prompt": "Define fn_reverse_10(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-0",
+    "family": "reverse",
+    "function": "fn_reverse_11",
+    "prompt": "Implement fn_reverse_11(text) returning text reversed.",
+    "answer": "def fn_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-1",
+    "family": "reverse",
+    "function": "fn_reverse_11",
+    "prompt": "Write Python function fn_reverse_11(text). It must return text reversed.",
+    "answer": "def fn_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-2",
+    "family": "reverse",
+    "function": "fn_reverse_11",
+    "prompt": "Define fn_reverse_11(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-lower-0-0",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Implement fn_lower_00(text) returning text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-0-1",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Write Python function fn_lower_00(text). It must return text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-0-2",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Define fn_lower_00(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-0",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Implement fn_lower_01(text) returning text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-1",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Write Python function fn_lower_01(text). It must return text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-2",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Define fn_lower_01(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-0",
+    "family": "lower",
+    "function": "fn_lower_02",
+    "prompt": "Implement fn_lower_02(text) returning text in lowercase.",
+    "answer": "def fn_lower_02(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-1",
+    "family": "lower",
+    "function": "fn_lower_02",
+    "prompt": "Write Python function fn_lower_02(text). It must return text in lowercase.",
+    "answer": "def fn_lower_02(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-2",
+    "family": "lower",
+    "function": "fn_lower_02",
+    "prompt": "Define fn_lower_02(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_02(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-0",
+    "family": "lower",
+    "function": "fn_lower_03",
+    "prompt": "Implement fn_lower_03(text) returning text in lowercase.",
+    "answer": "def fn_lower_03(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-1",
+    "family": "lower",
+    "function": "fn_lower_03",
+    "prompt": "Write Python function fn_lower_03(text). It must return text in lowercase.",
+    "answer": "def fn_lower_03(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-2",
+    "family": "lower",
+    "function": "fn_lower_03",
+    "prompt": "Define fn_lower_03(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_03(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-0",
+    "family": "lower",
+    "function": "fn_lower_04",
+    "prompt": "Implement fn_lower_04(text) returning text in lowercase.",
+    "answer": "def fn_lower_04(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-1",
+    "family": "lower",
+    "function": "fn_lower_04",
+    "prompt": "Write Python function fn_lower_04(text). It must return text in lowercase.",
+    "answer": "def fn_lower_04(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-2",
+    "family": "lower",
+    "function": "fn_lower_04",
+    "prompt": "Define fn_lower_04(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_04(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-0",
+    "family": "lower",
+    "function": "fn_lower_05",
+    "prompt": "Implement fn_lower_05(text) returning text in lowercase.",
+    "answer": "def fn_lower_05(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-1",
+    "family": "lower",
+    "function": "fn_lower_05",
+    "prompt": "Write Python function fn_lower_05(text). It must return text in lowercase.",
+    "answer": "def fn_lower_05(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-2",
+    "family": "lower",
+    "function": "fn_lower_05",
+    "prompt": "Define fn_lower_05(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_05(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-0",
+    "family": "lower",
+    "function": "fn_lower_06",
+    "prompt": "Implement fn_lower_06(text) returning text in lowercase.",
+    "answer": "def fn_lower_06(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-1",
+    "family": "lower",
+    "function": "fn_lower_06",
+    "prompt": "Write Python function fn_lower_06(text). It must return text in lowercase.",
+    "answer": "def fn_lower_06(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-2",
+    "family": "lower",
+    "function": "fn_lower_06",
+    "prompt": "Define fn_lower_06(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_06(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-0",
+    "family": "lower",
+    "function": "fn_lower_07",
+    "prompt": "Implement fn_lower_07(text) returning text in lowercase.",
+    "answer": "def fn_lower_07(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-1",
+    "family": "lower",
+    "function": "fn_lower_07",
+    "prompt": "Write Python function fn_lower_07(text). It must return text in lowercase.",
+    "answer": "def fn_lower_07(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-2",
+    "family": "lower",
+    "function": "fn_lower_07",
+    "prompt": "Define fn_lower_07(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_07(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-0",
+    "family": "lower",
+    "function": "fn_lower_08",
+    "prompt": "Implement fn_lower_08(text) returning text in lowercase.",
+    "answer": "def fn_lower_08(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-1",
+    "family": "lower",
+    "function": "fn_lower_08",
+    "prompt": "Write Python function fn_lower_08(text). It must return text in lowercase.",
+    "answer": "def fn_lower_08(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-2",
+    "family": "lower",
+    "function": "fn_lower_08",
+    "prompt": "Define fn_lower_08(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_08(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-0",
+    "family": "lower",
+    "function": "fn_lower_09",
+    "prompt": "Implement fn_lower_09(text) returning text in lowercase.",
+    "answer": "def fn_lower_09(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-1",
+    "family": "lower",
+    "function": "fn_lower_09",
+    "prompt": "Write Python function fn_lower_09(text). It must return text in lowercase.",
+    "answer": "def fn_lower_09(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-2",
+    "family": "lower",
+    "function": "fn_lower_09",
+    "prompt": "Define fn_lower_09(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_09(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-0",
+    "family": "lower",
+    "function": "fn_lower_10",
+    "prompt": "Implement fn_lower_10(text) returning text in lowercase.",
+    "answer": "def fn_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-1",
+    "family": "lower",
+    "function": "fn_lower_10",
+    "prompt": "Write Python function fn_lower_10(text). It must return text in lowercase.",
+    "answer": "def fn_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-2",
+    "family": "lower",
+    "function": "fn_lower_10",
+    "prompt": "Define fn_lower_10(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-0",
+    "family": "lower",
+    "function": "fn_lower_11",
+    "prompt": "Implement fn_lower_11(text) returning text in lowercase.",
+    "answer": "def fn_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-1",
+    "family": "lower",
+    "function": "fn_lower_11",
+    "prompt": "Write Python function fn_lower_11(text). It must return text in lowercase.",
+    "answer": "def fn_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-2",
+    "family": "lower",
+    "function": "fn_lower_11",
+    "prompt": "Define fn_lower_11(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-upper-0-0",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Implement fn_upper_00(text) returning text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-0-1",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Write Python function fn_upper_00(text). It must return text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-0-2",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Define fn_upper_00(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-0",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Implement fn_upper_01(text) returning text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-1",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Write Python function fn_upper_01(text). It must return text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-2",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Define fn_upper_01(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-0",
+    "family": "upper",
+    "function": "fn_upper_02",
+    "prompt": "Implement fn_upper_02(text) returning text in uppercase.",
+    "answer": "def fn_upper_02(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-1",
+    "family": "upper",
+    "function": "fn_upper_02",
+    "prompt": "Write Python function fn_upper_02(text). It must return text in uppercase.",
+    "answer": "def fn_upper_02(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-2",
+    "family": "upper",
+    "function": "fn_upper_02",
+    "prompt": "Define fn_upper_02(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_02(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-0",
+    "family": "upper",
+    "function": "fn_upper_03",
+    "prompt": "Implement fn_upper_03(text) returning text in uppercase.",
+    "answer": "def fn_upper_03(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-1",
+    "family": "upper",
+    "function": "fn_upper_03",
+    "prompt": "Write Python function fn_upper_03(text). It must return text in uppercase.",
+    "answer": "def fn_upper_03(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-2",
+    "family": "upper",
+    "function": "fn_upper_03",
+    "prompt": "Define fn_upper_03(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_03(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-0",
+    "family": "upper",
+    "function": "fn_upper_04",
+    "prompt": "Implement fn_upper_04(text) returning text in uppercase.",
+    "answer": "def fn_upper_04(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-1",
+    "family": "upper",
+    "function": "fn_upper_04",
+    "prompt": "Write Python function fn_upper_04(text). It must return text in uppercase.",
+    "answer": "def fn_upper_04(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-2",
+    "family": "upper",
+    "function": "fn_upper_04",
+    "prompt": "Define fn_upper_04(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_04(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-0",
+    "family": "upper",
+    "function": "fn_upper_05",
+    "prompt": "Implement fn_upper_05(text) returning text in uppercase.",
+    "answer": "def fn_upper_05(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-1",
+    "family": "upper",
+    "function": "fn_upper_05",
+    "prompt": "Write Python function fn_upper_05(text). It must return text in uppercase.",
+    "answer": "def fn_upper_05(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-2",
+    "family": "upper",
+    "function": "fn_upper_05",
+    "prompt": "Define fn_upper_05(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_05(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-0",
+    "family": "upper",
+    "function": "fn_upper_06",
+    "prompt": "Implement fn_upper_06(text) returning text in uppercase.",
+    "answer": "def fn_upper_06(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-1",
+    "family": "upper",
+    "function": "fn_upper_06",
+    "prompt": "Write Python function fn_upper_06(text). It must return text in uppercase.",
+    "answer": "def fn_upper_06(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-2",
+    "family": "upper",
+    "function": "fn_upper_06",
+    "prompt": "Define fn_upper_06(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_06(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-0",
+    "family": "upper",
+    "function": "fn_upper_07",
+    "prompt": "Implement fn_upper_07(text) returning text in uppercase.",
+    "answer": "def fn_upper_07(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-1",
+    "family": "upper",
+    "function": "fn_upper_07",
+    "prompt": "Write Python function fn_upper_07(text). It must return text in uppercase.",
+    "answer": "def fn_upper_07(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-2",
+    "family": "upper",
+    "function": "fn_upper_07",
+    "prompt": "Define fn_upper_07(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_07(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-0",
+    "family": "upper",
+    "function": "fn_upper_08",
+    "prompt": "Implement fn_upper_08(text) returning text in uppercase.",
+    "answer": "def fn_upper_08(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-1",
+    "family": "upper",
+    "function": "fn_upper_08",
+    "prompt": "Write Python function fn_upper_08(text). It must return text in uppercase.",
+    "answer": "def fn_upper_08(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-2",
+    "family": "upper",
+    "function": "fn_upper_08",
+    "prompt": "Define fn_upper_08(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_08(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-0",
+    "family": "upper",
+    "function": "fn_upper_09",
+    "prompt": "Implement fn_upper_09(text) returning text in uppercase.",
+    "answer": "def fn_upper_09(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-1",
+    "family": "upper",
+    "function": "fn_upper_09",
+    "prompt": "Write Python function fn_upper_09(text). It must return text in uppercase.",
+    "answer": "def fn_upper_09(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-2",
+    "family": "upper",
+    "function": "fn_upper_09",
+    "prompt": "Define fn_upper_09(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_09(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-0",
+    "family": "upper",
+    "function": "fn_upper_10",
+    "prompt": "Implement fn_upper_10(text) returning text in uppercase.",
+    "answer": "def fn_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-1",
+    "family": "upper",
+    "function": "fn_upper_10",
+    "prompt": "Write Python function fn_upper_10(text). It must return text in uppercase.",
+    "answer": "def fn_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-2",
+    "family": "upper",
+    "function": "fn_upper_10",
+    "prompt": "Define fn_upper_10(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-0",
+    "family": "upper",
+    "function": "fn_upper_11",
+    "prompt": "Implement fn_upper_11(text) returning text in uppercase.",
+    "answer": "def fn_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-1",
+    "family": "upper",
+    "function": "fn_upper_11",
+    "prompt": "Write Python function fn_upper_11(text). It must return text in uppercase.",
+    "answer": "def fn_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-2",
+    "family": "upper",
+    "function": "fn_upper_11",
+    "prompt": "Define fn_upper_11(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-strip-0-0",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Implement fn_strip_00(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-0-1",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Write Python function fn_strip_00(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-0-2",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Define fn_strip_00(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-0",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Implement fn_strip_01(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-1",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Write Python function fn_strip_01(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-2",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Define fn_strip_01(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-0",
+    "family": "strip",
+    "function": "fn_strip_02",
+    "prompt": "Implement fn_strip_02(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_02(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-1",
+    "family": "strip",
+    "function": "fn_strip_02",
+    "prompt": "Write Python function fn_strip_02(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_02(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-2",
+    "family": "strip",
+    "function": "fn_strip_02",
+    "prompt": "Define fn_strip_02(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_02(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-0",
+    "family": "strip",
+    "function": "fn_strip_03",
+    "prompt": "Implement fn_strip_03(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_03(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-1",
+    "family": "strip",
+    "function": "fn_strip_03",
+    "prompt": "Write Python function fn_strip_03(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_03(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-2",
+    "family": "strip",
+    "function": "fn_strip_03",
+    "prompt": "Define fn_strip_03(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_03(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-0",
+    "family": "strip",
+    "function": "fn_strip_04",
+    "prompt": "Implement fn_strip_04(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_04(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-1",
+    "family": "strip",
+    "function": "fn_strip_04",
+    "prompt": "Write Python function fn_strip_04(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_04(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-2",
+    "family": "strip",
+    "function": "fn_strip_04",
+    "prompt": "Define fn_strip_04(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_04(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-0",
+    "family": "strip",
+    "function": "fn_strip_05",
+    "prompt": "Implement fn_strip_05(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_05(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-1",
+    "family": "strip",
+    "function": "fn_strip_05",
+    "prompt": "Write Python function fn_strip_05(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_05(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-2",
+    "family": "strip",
+    "function": "fn_strip_05",
+    "prompt": "Define fn_strip_05(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_05(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-0",
+    "family": "strip",
+    "function": "fn_strip_06",
+    "prompt": "Implement fn_strip_06(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_06(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-1",
+    "family": "strip",
+    "function": "fn_strip_06",
+    "prompt": "Write Python function fn_strip_06(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_06(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-2",
+    "family": "strip",
+    "function": "fn_strip_06",
+    "prompt": "Define fn_strip_06(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_06(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-0",
+    "family": "strip",
+    "function": "fn_strip_07",
+    "prompt": "Implement fn_strip_07(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_07(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-1",
+    "family": "strip",
+    "function": "fn_strip_07",
+    "prompt": "Write Python function fn_strip_07(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_07(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-2",
+    "family": "strip",
+    "function": "fn_strip_07",
+    "prompt": "Define fn_strip_07(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_07(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-0",
+    "family": "strip",
+    "function": "fn_strip_08",
+    "prompt": "Implement fn_strip_08(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_08(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-1",
+    "family": "strip",
+    "function": "fn_strip_08",
+    "prompt": "Write Python function fn_strip_08(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_08(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-2",
+    "family": "strip",
+    "function": "fn_strip_08",
+    "prompt": "Define fn_strip_08(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_08(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-0",
+    "family": "strip",
+    "function": "fn_strip_09",
+    "prompt": "Implement fn_strip_09(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_09(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-1",
+    "family": "strip",
+    "function": "fn_strip_09",
+    "prompt": "Write Python function fn_strip_09(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_09(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-2",
+    "family": "strip",
+    "function": "fn_strip_09",
+    "prompt": "Define fn_strip_09(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_09(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-0",
+    "family": "strip",
+    "function": "fn_strip_10",
+    "prompt": "Implement fn_strip_10(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-1",
+    "family": "strip",
+    "function": "fn_strip_10",
+    "prompt": "Write Python function fn_strip_10(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-2",
+    "family": "strip",
+    "function": "fn_strip_10",
+    "prompt": "Define fn_strip_10(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-0",
+    "family": "strip",
+    "function": "fn_strip_11",
+    "prompt": "Implement fn_strip_11(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-1",
+    "family": "strip",
+    "function": "fn_strip_11",
+    "prompt": "Write Python function fn_strip_11(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-2",
+    "family": "strip",
+    "function": "fn_strip_11",
+    "prompt": "Define fn_strip_11(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-even-0-0",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Implement fn_even_00(x) returning whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-0-1",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Write Python function fn_even_00(x). It must return whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-0-2",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Define fn_even_00(x) in Python to return whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-0",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Implement fn_even_01(x) returning whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-1",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Write Python function fn_even_01(x). It must return whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-2",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Define fn_even_01(x) in Python to return whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-0",
+    "family": "even",
+    "function": "fn_even_02",
+    "prompt": "Implement fn_even_02(x) returning whether x is even.",
+    "answer": "def fn_even_02(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-1",
+    "family": "even",
+    "function": "fn_even_02",
+    "prompt": "Write Python function fn_even_02(x). It must return whether x is even.",
+    "answer": "def fn_even_02(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-2",
+    "family": "even",
+    "function": "fn_even_02",
+    "prompt": "Define fn_even_02(x) in Python to return whether x is even.",
+    "answer": "def fn_even_02(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-0",
+    "family": "even",
+    "function": "fn_even_03",
+    "prompt": "Implement fn_even_03(x) returning whether x is even.",
+    "answer": "def fn_even_03(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-1",
+    "family": "even",
+    "function": "fn_even_03",
+    "prompt": "Write Python function fn_even_03(x). It must return whether x is even.",
+    "answer": "def fn_even_03(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-2",
+    "family": "even",
+    "function": "fn_even_03",
+    "prompt": "Define fn_even_03(x) in Python to return whether x is even.",
+    "answer": "def fn_even_03(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-0",
+    "family": "even",
+    "function": "fn_even_04",
+    "prompt": "Implement fn_even_04(x) returning whether x is even.",
+    "answer": "def fn_even_04(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-1",
+    "family": "even",
+    "function": "fn_even_04",
+    "prompt": "Write Python function fn_even_04(x). It must return whether x is even.",
+    "answer": "def fn_even_04(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-2",
+    "family": "even",
+    "function": "fn_even_04",
+    "prompt": "Define fn_even_04(x) in Python to return whether x is even.",
+    "answer": "def fn_even_04(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-0",
+    "family": "even",
+    "function": "fn_even_05",
+    "prompt": "Implement fn_even_05(x) returning whether x is even.",
+    "answer": "def fn_even_05(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-1",
+    "family": "even",
+    "function": "fn_even_05",
+    "prompt": "Write Python function fn_even_05(x). It must return whether x is even.",
+    "answer": "def fn_even_05(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-2",
+    "family": "even",
+    "function": "fn_even_05",
+    "prompt": "Define fn_even_05(x) in Python to return whether x is even.",
+    "answer": "def fn_even_05(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-0",
+    "family": "even",
+    "function": "fn_even_06",
+    "prompt": "Implement fn_even_06(x) returning whether x is even.",
+    "answer": "def fn_even_06(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-1",
+    "family": "even",
+    "function": "fn_even_06",
+    "prompt": "Write Python function fn_even_06(x). It must return whether x is even.",
+    "answer": "def fn_even_06(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-2",
+    "family": "even",
+    "function": "fn_even_06",
+    "prompt": "Define fn_even_06(x) in Python to return whether x is even.",
+    "answer": "def fn_even_06(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-0",
+    "family": "even",
+    "function": "fn_even_07",
+    "prompt": "Implement fn_even_07(x) returning whether x is even.",
+    "answer": "def fn_even_07(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-1",
+    "family": "even",
+    "function": "fn_even_07",
+    "prompt": "Write Python function fn_even_07(x). It must return whether x is even.",
+    "answer": "def fn_even_07(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-2",
+    "family": "even",
+    "function": "fn_even_07",
+    "prompt": "Define fn_even_07(x) in Python to return whether x is even.",
+    "answer": "def fn_even_07(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-0",
+    "family": "even",
+    "function": "fn_even_08",
+    "prompt": "Implement fn_even_08(x) returning whether x is even.",
+    "answer": "def fn_even_08(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-1",
+    "family": "even",
+    "function": "fn_even_08",
+    "prompt": "Write Python function fn_even_08(x). It must return whether x is even.",
+    "answer": "def fn_even_08(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-2",
+    "family": "even",
+    "function": "fn_even_08",
+    "prompt": "Define fn_even_08(x) in Python to return whether x is even.",
+    "answer": "def fn_even_08(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-0",
+    "family": "even",
+    "function": "fn_even_09",
+    "prompt": "Implement fn_even_09(x) returning whether x is even.",
+    "answer": "def fn_even_09(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-1",
+    "family": "even",
+    "function": "fn_even_09",
+    "prompt": "Write Python function fn_even_09(x). It must return whether x is even.",
+    "answer": "def fn_even_09(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-2",
+    "family": "even",
+    "function": "fn_even_09",
+    "prompt": "Define fn_even_09(x) in Python to return whether x is even.",
+    "answer": "def fn_even_09(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-0",
+    "family": "even",
+    "function": "fn_even_10",
+    "prompt": "Implement fn_even_10(x) returning whether x is even.",
+    "answer": "def fn_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-1",
+    "family": "even",
+    "function": "fn_even_10",
+    "prompt": "Write Python function fn_even_10(x). It must return whether x is even.",
+    "answer": "def fn_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-2",
+    "family": "even",
+    "function": "fn_even_10",
+    "prompt": "Define fn_even_10(x) in Python to return whether x is even.",
+    "answer": "def fn_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-0",
+    "family": "even",
+    "function": "fn_even_11",
+    "prompt": "Implement fn_even_11(x) returning whether x is even.",
+    "answer": "def fn_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-1",
+    "family": "even",
+    "function": "fn_even_11",
+    "prompt": "Write Python function fn_even_11(x). It must return whether x is even.",
+    "answer": "def fn_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-2",
+    "family": "even",
+    "function": "fn_even_11",
+    "prompt": "Define fn_even_11(x) in Python to return whether x is even.",
+    "answer": "def fn_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-positive-0-0",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Implement fn_positive_00(x) returning whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-0-1",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Write Python function fn_positive_00(x). It must return whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-0-2",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Define fn_positive_00(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-0",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Implement fn_positive_01(x) returning whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-1",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Write Python function fn_positive_01(x). It must return whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-2",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Define fn_positive_01(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-0",
+    "family": "positive",
+    "function": "fn_positive_02",
+    "prompt": "Implement fn_positive_02(x) returning whether x is positive.",
+    "answer": "def fn_positive_02(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-1",
+    "family": "positive",
+    "function": "fn_positive_02",
+    "prompt": "Write Python function fn_positive_02(x). It must return whether x is positive.",
+    "answer": "def fn_positive_02(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-2",
+    "family": "positive",
+    "function": "fn_positive_02",
+    "prompt": "Define fn_positive_02(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_02(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-0",
+    "family": "positive",
+    "function": "fn_positive_03",
+    "prompt": "Implement fn_positive_03(x) returning whether x is positive.",
+    "answer": "def fn_positive_03(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-1",
+    "family": "positive",
+    "function": "fn_positive_03",
+    "prompt": "Write Python function fn_positive_03(x). It must return whether x is positive.",
+    "answer": "def fn_positive_03(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-2",
+    "family": "positive",
+    "function": "fn_positive_03",
+    "prompt": "Define fn_positive_03(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_03(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-0",
+    "family": "positive",
+    "function": "fn_positive_04",
+    "prompt": "Implement fn_positive_04(x) returning whether x is positive.",
+    "answer": "def fn_positive_04(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-1",
+    "family": "positive",
+    "function": "fn_positive_04",
+    "prompt": "Write Python function fn_positive_04(x). It must return whether x is positive.",
+    "answer": "def fn_positive_04(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-2",
+    "family": "positive",
+    "function": "fn_positive_04",
+    "prompt": "Define fn_positive_04(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_04(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-0",
+    "family": "positive",
+    "function": "fn_positive_05",
+    "prompt": "Implement fn_positive_05(x) returning whether x is positive.",
+    "answer": "def fn_positive_05(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-1",
+    "family": "positive",
+    "function": "fn_positive_05",
+    "prompt": "Write Python function fn_positive_05(x). It must return whether x is positive.",
+    "answer": "def fn_positive_05(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-2",
+    "family": "positive",
+    "function": "fn_positive_05",
+    "prompt": "Define fn_positive_05(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_05(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-0",
+    "family": "positive",
+    "function": "fn_positive_06",
+    "prompt": "Implement fn_positive_06(x) returning whether x is positive.",
+    "answer": "def fn_positive_06(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-1",
+    "family": "positive",
+    "function": "fn_positive_06",
+    "prompt": "Write Python function fn_positive_06(x). It must return whether x is positive.",
+    "answer": "def fn_positive_06(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-2",
+    "family": "positive",
+    "function": "fn_positive_06",
+    "prompt": "Define fn_positive_06(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_06(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-0",
+    "family": "positive",
+    "function": "fn_positive_07",
+    "prompt": "Implement fn_positive_07(x) returning whether x is positive.",
+    "answer": "def fn_positive_07(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-1",
+    "family": "positive",
+    "function": "fn_positive_07",
+    "prompt": "Write Python function fn_positive_07(x). It must return whether x is positive.",
+    "answer": "def fn_positive_07(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-2",
+    "family": "positive",
+    "function": "fn_positive_07",
+    "prompt": "Define fn_positive_07(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_07(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-0",
+    "family": "positive",
+    "function": "fn_positive_08",
+    "prompt": "Implement fn_positive_08(x) returning whether x is positive.",
+    "answer": "def fn_positive_08(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-1",
+    "family": "positive",
+    "function": "fn_positive_08",
+    "prompt": "Write Python function fn_positive_08(x). It must return whether x is positive.",
+    "answer": "def fn_positive_08(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-2",
+    "family": "positive",
+    "function": "fn_positive_08",
+    "prompt": "Define fn_positive_08(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_08(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-0",
+    "family": "positive",
+    "function": "fn_positive_09",
+    "prompt": "Implement fn_positive_09(x) returning whether x is positive.",
+    "answer": "def fn_positive_09(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-1",
+    "family": "positive",
+    "function": "fn_positive_09",
+    "prompt": "Write Python function fn_positive_09(x). It must return whether x is positive.",
+    "answer": "def fn_positive_09(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-2",
+    "family": "positive",
+    "function": "fn_positive_09",
+    "prompt": "Define fn_positive_09(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_09(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-0",
+    "family": "positive",
+    "function": "fn_positive_10",
+    "prompt": "Implement fn_positive_10(x) returning whether x is positive.",
+    "answer": "def fn_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-1",
+    "family": "positive",
+    "function": "fn_positive_10",
+    "prompt": "Write Python function fn_positive_10(x). It must return whether x is positive.",
+    "answer": "def fn_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-2",
+    "family": "positive",
+    "function": "fn_positive_10",
+    "prompt": "Define fn_positive_10(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-0",
+    "family": "positive",
+    "function": "fn_positive_11",
+    "prompt": "Implement fn_positive_11(x) returning whether x is positive.",
+    "answer": "def fn_positive_11(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-1",
+    "family": "positive",
+    "function": "fn_positive_11",
+    "prompt": "Write Python function fn_positive_11(x). It must return whether x is positive.",
+    "answer": "def fn_positive_11(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-2",
+    "family": "positive",
+    "function": "fn_positive_11",
+    "prompt": "Define fn_positive_11(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_11(x):\n    return x > 0\n"
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "validation-add-12-1",
+    "family": "add",
+    "function": "fn_add_12",
+    "prompt": "Write Python function fn_add_12(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_12(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "validation-subtract-12-1",
+    "family": "subtract",
+    "function": "fn_subtract_12",
+    "prompt": "Write Python function fn_subtract_12(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_12(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "validation-multiply-12-1",
+    "family": "multiply",
+    "function": "fn_multiply_12",
+    "prompt": "Write Python function fn_multiply_12(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_12(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "validation-square-12-1",
+    "family": "square",
+    "function": "fn_square_12",
+    "prompt": "Write Python function fn_square_12(x). It must return x squared.",
+    "answer": "def fn_square_12(x):\n    return x * x\n"
+  },
+  {
+    "id": "validation-negate-12-1",
+    "family": "negate",
+    "function": "fn_negate_12",
+    "prompt": "Write Python function fn_negate_12(x). It must return the negation of x.",
+    "answer": "def fn_negate_12(x):\n    return -x\n"
+  },
+  {
+    "id": "validation-absolute-12-1",
+    "family": "absolute",
+    "function": "fn_absolute_12",
+    "prompt": "Write Python function fn_absolute_12(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_12(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "validation-length-12-1",
+    "family": "length",
+    "function": "fn_length_12",
+    "prompt": "Write Python function fn_length_12(values). It must return the number of values.",
+    "answer": "def fn_length_12(values):\n    return len(values)\n"
+  },
+  {
+    "id": "validation-total-12-1",
+    "family": "total",
+    "function": "fn_total_12",
+    "prompt": "Write Python function fn_total_12(values). It must return the sum of values.",
+    "answer": "def fn_total_12(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "validation-largest-12-1",
+    "family": "largest",
+    "function": "fn_largest_12",
+    "prompt": "Write Python function fn_largest_12(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_12(values):\n    return max(values)\n"
+  },
+  {
+    "id": "validation-smallest-12-1",
+    "family": "smallest",
+    "function": "fn_smallest_12",
+    "prompt": "Write Python function fn_smallest_12(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_12(values):\n    return min(values)\n"
+  },
+  {
+    "id": "validation-reverse-12-1",
+    "family": "reverse",
+    "function": "fn_reverse_12",
+    "prompt": "Write Python function fn_reverse_12(text). It must return text reversed.",
+    "answer": "def fn_reverse_12(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "validation-lower-12-1",
+    "family": "lower",
+    "function": "fn_lower_12",
+    "prompt": "Write Python function fn_lower_12(text). It must return text in lowercase.",
+    "answer": "def fn_lower_12(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "validation-upper-12-1",
+    "family": "upper",
+    "function": "fn_upper_12",
+    "prompt": "Write Python function fn_upper_12(text). It must return text in uppercase.",
+    "answer": "def fn_upper_12(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "validation-strip-12-1",
+    "family": "strip",
+    "function": "fn_strip_12",
+    "prompt": "Write Python function fn_strip_12(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_12(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "validation-even-12-1",
+    "family": "even",
+    "function": "fn_even_12",
+    "prompt": "Write Python function fn_even_12(x). It must return whether x is even.",
+    "answer": "def fn_even_12(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "validation-positive-12-1",
+    "family": "positive",
+    "function": "fn_positive_12",
+    "prompt": "Write Python function fn_positive_12(x). It must return whether x is positive.",
+    "answer": "def fn_positive_12(x):\n    return x > 0\n"
+  }
+]
