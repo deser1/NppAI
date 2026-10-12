@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a bounded fixed-format identifier echo sanity experiment with frozen name splits, separate autonomous/teacher-forced metrics and exported-checkpoint reload verification.
+
 - Add a fixed-budget eight-versus-512-name memorization probe with training-only deterministic selection, provenance and separate seen-data reconstruction metrics.
 
 - Diagnose identifier copying with per-byte teacher-forced predictions, autonomous and def-only headers on reloaded paired experiment checkpoints; keep these diagnostic metrics separate from syntax and code correctness.

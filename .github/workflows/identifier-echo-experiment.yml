@@ -1,0 +1,31 @@
+name: Identifier echo sanity experiment
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/train_identifier_echo.py'
+      - 'tests/test_identifier_echo.py'
+      - '.github/workflows/identifier-echo-experiment.yml'
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install measured CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Check echo targets and frozen data
+        run: python -m unittest tests.test_identifier_echo tests.test_instruction_dataset
+      - name: Train bounded fixed-format copy task
+        run: python scripts/train_identifier_echo.py --dataset evaluation/instruction-v3 --output echo-experiment --steps 3000
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-identifier-echo-sanity
+          path: echo-experiment/
+          retention-days: 14
