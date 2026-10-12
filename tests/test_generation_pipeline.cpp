@@ -137,7 +137,16 @@ int main() {
         mergedEngine.generate("AB", 1, [](char, bool) {}, [](int) {});
     const std::string fallbackResult =
         fallbackEngine.generate("AB", 1, [](char, bool) {}, [](int) {});
+    int eosCallbacks = 0;
+    // C has zero embedding in this fixture, so tied logits select token 0.
+    const std::string eosResult = mergedEngine.generate("C", 8,
+        [&eosCallbacks](char, bool) { ++eosCallbacks; }, [](int) {});
     std::filesystem::remove_all(root);
+
+    if (eosResult != "C" || eosCallbacks != 0) {
+        std::cerr << "FAIL: EOS must not appear in returned text or callbacks\n";
+        return 1;
+    }
 
     if (mergedResult != "ABX") {
         std::cerr << "FAIL: merged-token generation did not select X\n";

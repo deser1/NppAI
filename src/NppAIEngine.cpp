@@ -1184,11 +1184,12 @@ std::string NppAIEngine::generate(const std::string &prompt, int maxTokens,
                 << " logit=" << bestLogit << std::endl;
     }
 
-    tokens.push_back(nextToken);
-
     // Warunek stopu (zakładamy 0 jako EOS)
     if (nextToken == 0)
       break;
+
+    // EOS is a control token, not a NUL byte in returned source code.
+    tokens.push_back(nextToken);
 
     // Zatrzymujemy generowanie od razu, jeśli model próbuje rozpocząć nową
     // "rozmowę"

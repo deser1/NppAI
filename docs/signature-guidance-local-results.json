@@ -1,0 +1,496 @@
+{
+  "model_sha256": "65a4a07ffb473cd0ee58573ef6df4afeb26bacd274916750f0b79054498af808",
+  "dataset_sha256": "ff07d4db74c4c7d702f22bc65201c5b869db4dd8b9444d91112315a4f10476f4",
+  "total": 28,
+  "summary": {
+    "raw": {
+      "syntax": 18,
+      "requested_function": 0,
+      "reference_ast": 0
+    },
+    "guided": {
+      "syntax": 18,
+      "requested_function": 18,
+      "reference_ast": 16
+    }
+  },
+  "cases": [
+    {
+      "id": "test-add-13-2",
+      "family": "add",
+      "forced_prefix": "def fn_add_13(a, b):\n    ",
+      "raw_output": "def fn_add_01(a, b):\n    return a + b\n",
+      "guided_output": "def fn_add_13(a, b):\n    return a + b\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-subtract-13-2",
+      "family": "subtract",
+      "forced_prefix": "def fn_subtract_13(a, b):\n    ",
+      "raw_output": "def fn_subtract_10(a, b):\n    return a - b\n",
+      "guided_output": "def fn_subtract_13(a, b):\n    return a - b\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-multiply-13-2",
+      "family": "multiply",
+      "forced_prefix": "def fn_multiply_13(a, b):\n    ",
+      "raw_output": "def fn_multiply_01(a, b):\n    return a * b\n",
+      "guided_output": "def fn_multiply_13(a, b):\n    return a * b\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-square-13-2",
+      "family": "square",
+      "forced_prefix": "def fn_square_13(x):\n    ",
+      "raw_output": "def fn_square_101(x):\n   return x * x\n",
+      "guided_output": "def fn_square_13(x):\n    return x * x\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-negate-13-2",
+      "family": "negate",
+      "forced_prefix": "def fn_negate_13(x):\n    ",
+      "raw_output": "def fn_negate_08(x):\n    return -x\n",
+      "guided_output": "def fn_negate_13(x):\n    return -x\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-absolute-13-2",
+      "family": "absolute",
+      "forced_prefix": "def fn_absolute_13(x):\n    ",
+      "raw_output": "def fn_absolute_01(x):\n    return abs(x)\n",
+      "guided_output": "def fn_absolute_13(x):\n    return abs(x)\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-length-13-2",
+      "family": "length",
+      "forced_prefix": "def fn_length_13(values):\n    ",
+      "raw_output": "def fn_length_1010(x):\n     rext.lureturn max):\n",
+      "guided_output": "def fn_length_13(values):\n    return len(values)\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-total-13-2",
+      "family": "total",
+      "forced_prefix": "def fn_total_13(values):\n    ",
+      "raw_output": "def fn_total_10(values):\n    return sum(values)\n",
+      "guided_output": "def fn_total_13(values):\n    return sum(values)\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-largest-13-2",
+      "family": "largest",
+      "forced_prefix": "def fn_largest_13(values):\n    ",
+      "raw_output": "def fn_largest_08(values):\n    return max(values)\n",
+      "guided_output": "def fn_largest_13(values):\n    return max(values)\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-smallest-13-2",
+      "family": "smallest",
+      "forced_prefix": "def fn_smallest_13(values):\n    ",
+      "raw_output": "def fn_smallest_01(values):\n    return min(values)\n",
+      "guided_output": "def fn_smallest_13(values):\n    return min(values)\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-reverse-13-2",
+      "family": "reverse",
+      "forced_prefix": "def fn_reverse_13(text):\n    ",
+      "raw_output": "def fn_reverse_08(text):\n    return text[::-1]\n",
+      "guided_output": "def fn_reverse_13(text):\n    return text[::-1]\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-lower-13-2",
+      "family": "lower",
+      "forced_prefix": "def fn_lower_13(text):\n    ",
+      "raw_output": "def fn_lower_10(text):\n    return text.lower()\n",
+      "guided_output": "def fn_lower_13(text):\n    return text.lower()\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-upper-13-2",
+      "family": "upper",
+      "forced_prefix": "def fn_upper_13(text):\n    ",
+      "raw_output": "def fn_upper_10(text):\n    return text.upper()\n",
+      "guided_output": "def fn_upper_13(text):\n    return text.upper()\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-strip-13-2",
+      "family": "strip",
+      "forced_prefix": "def fn_strip_13(text):\n    ",
+      "raw_output": "def fn_strip_10(text):\n    return text.strip()\n",
+      "guided_output": "def fn_strip_13(text):\n    return text.strip()\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-even-13-2",
+      "family": "even",
+      "forced_prefix": "def fn_even_13(x):\n    ",
+      "raw_output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+      "guided_output": "def fn_even_13(x):\n    return x % 2 == 0\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-positive-13-2",
+      "family": "positive",
+      "forced_prefix": "def fn_positive_13(x):\n    ",
+      "raw_output": "def fn_positive_01(x):\n    return x > 0\n",
+      "guided_output": "def fn_positive_13(x):\n    return x > 0\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": true
+      }
+    },
+    {
+      "id": "test-sort-0-0",
+      "family": "sort",
+      "forced_prefix": "def fn_sort_00(values):\n    ",
+      "raw_output": "ddefn_08(t_08(a, ref  turn tup_04(a:\n",
+      "guided_output": "def fn_sort_00(values):\n    b\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-sort-1-1",
+      "family": "sort",
+      "forced_prefix": "def fn_sort_01(values):\n    ",
+      "raw_output": "def fn_smallest_0(xtues):\n      res)\n  min(values)\n  re_01(vab)\nden    reresue_es):\n rn  rnet_010(valulos):\n malues):\n  return res):\n",
+      "guided_output": "def fn_sort_01(values):\n    b\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": true,
+        "requested_function": true,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-sort-2-2",
+      "family": "sort",
+      "forced_prefix": "def fn_sort_02(values):\n    ",
+      "raw_output": "def f f fn_uppeturetivaluetue):\n       rn   abs):\n    return min(values)\n",
+      "guided_output": "def fn_sort_02(values):\n    rip_04(valuexturn  lues)\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-unique-0-0",
+      "family": "unique",
+      "forced_prefix": "def fn_unique_00(values):\n    ",
+      "raw_output": "def fn_posivallestues):\n    ren   n m(values)\n",
+      "guided_output": "def fn_unique_00(values):\n     rn restur()\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-unique-1-1",
+      "family": "unique",
+      "forced_prefix": "def fn_unique_01(values):\n    ",
+      "raw_output": "des):\n",
+      "guided_output": "def fn_unique_01(values):\n     res)\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-unique-2-2",
+      "family": "unique",
+      "forced_prefix": "def fn_unique_02(values):\n    ",
+      "raw_output": "",
+      "guided_output": "def fn_unique_02(values):\n    bs):\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-join-0-0",
+      "family": "join",
+      "forced_prefix": "def fn_join_00(values):\n    ",
+      "raw_output": "des):\n    return al_08(x mipet_08(vax(values)\n",
+      "guided_output": "def fn_join_00(values):\n    retuext.lures):\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-join-1-1",
+      "family": "join",
+      "forced_prefix": "def fn_join_01(values):\n    ",
+      "raw_output": "den lues):\nden_s):\n",
+      "guided_output": "def fn_join_01(values):\n     res)\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-join-2-2",
+      "family": "join",
+      "forced_prefix": "def fn_join_02(values):\n    ",
+      "raw_output": "",
+      "guided_output": "def fn_join_02(values):\n    res):\n    return max(valuex)\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-clamp-0-0",
+      "family": "clamp",
+      "forced_prefix": "def fn_clamp_00(x, low, high):\n    ",
+      "raw_output": "de_lax\n",
+      "guided_output": "def fn_clamp_00(x, low, high):\n     rn  r()\n",
+      "raw_score": {
+        "syntax": true,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-clamp-1-1",
+      "family": "clamp",
+      "forced_prefix": "def fn_clamp_01(x, low, high):\n    ",
+      "raw_output": " fn  ref b):\n   returen ax(va   return text.s):\n",
+      "guided_output": "def fn_clamp_01(x, low, high):\n     bs):\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    },
+    {
+      "id": "test-clamp-2-2",
+      "family": "clamp",
+      "forced_prefix": "def fn_clamp_02(x, low, high):\n    ",
+      "raw_output": "   ren  reren 0\n",
+      "guided_output": "def fn_clamp_02(x, low, high):\n     min retueturn b\n",
+      "raw_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      },
+      "guided_score": {
+        "syntax": false,
+        "requested_function": false,
+        "reference_ast": false
+      }
+    }
+  ],
+  "limitations": "Exposed v2 regression tasks. Guided signatures are forced from the task, not copied by the model. Static AST matching only; generated code is never executed. PyTorch FP32 and native INT8 may differ."
+}
