@@ -84,6 +84,7 @@ function(add_nppai_test target source)
 endfunction()
 
 add_nppai_test(TestEngine test_engine.cpp)
+add_nppai_test(DumpNativeLogits tests/dump_native_logits.cpp)
 add_nppai_test(TestTensor tests/test_tensor.cpp)
 add_nppai_test(TestModelLoader tests/test_model_loader.cpp)
 add_nppai_test(TestMoERouter tests/test_moe_router.cpp)

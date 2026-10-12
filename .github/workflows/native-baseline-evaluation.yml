@@ -15,6 +15,8 @@ on:
       - 'scripts/run_model_code_evaluation.py'
       - 'test_engine.cpp'
       - 'src/NppAIEngine.cpp'
+      - 'scripts/check_dense_runtime_parity.py'
+      - 'tests/dump_native_logits.cpp'
 
 jobs:
   evaluate:
@@ -54,7 +56,15 @@ jobs:
       - name: Configure native TestEngine
         run: cmake -S . -B build-eval -A x64
       - name: Build native TestEngine
-        run: cmake --build build-eval --config Release --target TestEngine
+        run: cmake --build build-eval --config Release --target TestEngine DumpNativeLogits
+      - name: Install CPU reference runtime
+        run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Compare native and Python logits
+        run: >-
+          python scripts/check_dense_runtime_parity.py
+          --model model-baseline/NppAI-repository-baseline.nppai
+          --native build-eval/Release/DumpNativeLogits.exe --torch
+          --output runtime-parity.json
       - name: Capture real native model generations
         run: >-
           python scripts/capture_model_code_outputs.py
@@ -80,6 +90,7 @@ jobs:
             recorded-outputs.json
             generation-metadata.json
             syntax-score.json
+            runtime-parity.json
           if-no-files-found: warn
           retention-days: 14
       - name: Report generation diagnostics

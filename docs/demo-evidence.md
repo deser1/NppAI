@@ -34,6 +34,19 @@ training. Do not hide this result by excluding whitespace from candidate tokens.
 The evaluation workflow now fails on nonzero native exits or empty completions
 after publishing diagnostics, so a successful capture cannot mask unusable output.
 
+### Independent reference comparison
+
+The same checkpoint and prompt were evaluated locally with the NumPy FP32
+reference and with all linear weights rounded/dequantized exactly as the native
+INT8 loader does. Both selected token 32 at the first eight steps. The INT8
+reference logits were 4.850454, 5.197291, 5.223784, 5.432514, 5.393361,
+5.421512, 5.451832 and 5.443099, matching the native trace to its printed
+precision. This establishes that space-token selection is reproducible outside
+C++; it is not caused solely by native quantization. Full native/PyTorch logit
+parity is checked separately by the evaluation workflow and published in
+`runtime-parity.json`. These eight steps on one prompt are not a coding-quality
+benchmark.
+
 ## Repeat the measurement
 
 Run `Native baseline model evaluation` with an explicit successful training run ID

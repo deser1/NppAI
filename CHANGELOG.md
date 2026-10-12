@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Compare dense checkpoint logits across PyTorch FP32, NumPy FP32/INT8 references and native INT8 inference with checkpoint hash evidence.
+
 - Optimized incremental RAG source replacement by removing only invalidated document keys instead of rebuilding the complete key set; added regression coverage for source replacement and deletion. Indexing performance awaits CI benchmark validation.
 
 - Documented RAG quality/performance tradeoffs using validated CI indexing latency, process peak RSS, retrieval median/p95, and ranking quality; production ranking weights remain unchanged.
