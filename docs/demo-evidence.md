@@ -16,6 +16,24 @@ the measurement completed; it does not mean generation passed. The cause of the
 empty completion is not yet established. Syntax validity does not prove functional
 correctness.
 
+### Diagnostic rerun, 12 October 2026
+
+[Run 38310929407](https://github.com/deser1/NppAI/actions/runs/38310929407)
+used training run `38176338536` and model SHA-256
+`9735e3545541b2c6115ba4eead8284c6c1606d93e9558cd054799d9f14846995`.
+The model loaded successfully. `TestEngine` returned exit code 5:
+`no non-whitespace completion was generated`. The first eight generated tokens
+were all token 32 (space). The syntax score remained 0/1.
+
+The measured checkpoint with greedy decoding produces whitespace-only output;
+this is not a loader or linker failure. It does not yet distinguish undertraining
+from a Python/native inference discrepancy. Compare logits and completions for
+the same prompt/checkpoint in both runtimes before changing decoding or increasing
+training. Do not hide this result by excluding whitespace from candidate tokens.
+
+The evaluation workflow now fails on nonzero native exits or empty completions
+after publishing diagnostics, so a successful capture cannot mask unusable output.
+
 ## Repeat the measurement
 
 Run `Native baseline model evaluation` with an explicit successful training run ID
