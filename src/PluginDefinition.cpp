@@ -19,6 +19,7 @@
 #include "AIManager.h"
 #include "GenerationContext.h"
 #include "GenerationStreamRouter.h"
+#include "AIPromptPipeline.h"
 #include "GenerationTracking.h"
 #include "PluginPromptActions.h"
 #include "DockingFeature/Docking.h"
@@ -102,6 +103,15 @@ void ExecuteAIGeneration() {
   std::string prompt = buf;
   if (prompt.empty())
     return;
+
+  const auto checkedRequest = AIPromptPipeline::prepare(prompt, "");
+  if (!checkedRequest.error.empty()) {
+    const std::wstring error = Loc(
+        L"W pierwszej linii wpisz @python-signature nazwa(arg1, arg2), a w kolejnej opis funkcji. Użyj prostych, różnych nazw argumentów.",
+        L"Enter @python-signature name(arg1, arg2) on the first line, then describe the function. Use plain, distinct parameter names.");
+    MessageBoxW(g_hEdit, error.c_str(), L"NppAI", MB_OK | MB_ICONINFORMATION);
+    return;
+  }
 
   // Wyczyść pole po pobraniu tekstu
   SetWindowTextW(g_hEdit, L"");
@@ -200,7 +210,9 @@ void ExecuteAIGeneration() {
         });
 
     streamRouter.onProgress(GenerationProgressEvent::Type::GenerationStarted,
-                            Loc("Generowanie odpowiedzi...", "Generating response..."));
+                            AIPromptPipeline::prepare(prompt, "").assistantPrefix.empty()
+                                ? Loc("Generowanie odpowiedzi...", "Generating response...")
+                                : Loc("Generowanie funkcji Python...", "Generating Python function..."));
 
     std::string generated = AIManager::getInstance().generateCode(
         prompt, currentContext,
@@ -245,7 +257,8 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     // Pole jawnej odpowiedzi AI na samej górze
     g_hHistory = CreateWindowExW(
         WS_EX_CLIENTEDGE, L"EDIT",
-        Loc(L"Panel odpowiedzi AI gotowy.\r\n", L"AI response panel ready.\r\n")
+        Loc(L"Panel odpowiedzi AI gotowy.\r\nTryb funkcji Python: wpisz @python-signature nazwa(argumenty) w pierwszej linii, a opis w kolejnej.\r\n",
+            L"AI response panel ready.\r\nPython function mode: enter @python-signature name(arguments) on the first line, then the task description.\r\n")
             .c_str(),
         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOVSCROLL | ES_MULTILINE |
             ES_READONLY,
