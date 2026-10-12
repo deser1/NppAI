@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add fixed copying-to-code curriculum schedules, compatible full-checkpoint initialization and an equal-step direct-code control without promoting a model.
+
 - Add a bounded fixed-format identifier echo sanity experiment with frozen name splits, separate autonomous/teacher-forced metrics and exported-checkpoint reload verification.
 
 - Add a fixed-budget eight-versus-512-name memorization probe with training-only deterministic selection, provenance and separate seen-data reconstruction metrics.

@@ -94,7 +94,7 @@ def evaluate(model, records, context):
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None):
+def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     if not 1.0 <= identifier_weight <= 8.0:
@@ -108,6 +108,12 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
     context = 256
     samples = [identifier_weights(record, context, identifier_weight) for record in training]
     model = NppAIModel(256,64,128,2,context)
+    if initial_model is not None:
+        from scripts.check_dense_runtime_parity import load_weights, torch_model
+        from scripts.identifier_curriculum import validate_initial_weights
+        initial_weights = load_weights(initial_model)
+        validate_initial_weights(initial_weights)
+        model.load_state_dict(torch_model(initial_weights).state_dict())
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
     losses=[]
     model.train()
@@ -153,6 +159,9 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
         "initial_training_loss":losses[0],"final_training_loss":losses[-1],
         "validation":validation,"test":test,
         "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark."}
+    if initial_model is not None:
+        report["initialization"] = {"checkpoint_sha256": hashlib.sha256(Path(initial_model).read_bytes()).hexdigest(),
+                                    "method": "all dense FP32 weights; fresh AdamW optimizer"}
     if training_names is not None:
         report["training_selection"] = selection_metadata(training, training_names)
         report["training_selection"]["families"] = sorted(actual_families)
@@ -174,5 +183,6 @@ if __name__=="__main__":
     parser.add_argument("--steps",type=int,default=3000)
     parser.add_argument("--identifier-weight",type=float,default=1.0)
     parser.add_argument("--training-names", type=int, help="use first N distinct training names; all styles retained")
+    parser.add_argument("--initial-model", help="initialize from a compatible dense FP32 checkpoint; optimizer resets")
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names)
+    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model)
