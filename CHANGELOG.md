@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Exclude EOS from detokenized generated source and streaming callbacks; add deterministic generation regression coverage.
+- Preserve LF bytes in Windows signature-prefix capture instead of translating model context to CRLF.
+
 - Add explicit signature-guided evaluation and a bounded optional assistant-prefix file in TestEngine; report forced headers separately from generated bodies and compare PyTorch/native results.
 
 - Add frozen instruction dataset v2 with a shared identifier format across splits; compare v1/v2 and report function-name copying failures separately from syntax and reference AST matching.

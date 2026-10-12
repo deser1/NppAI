@@ -62,7 +62,8 @@ def run(model_path,dataset,output,native=None):
             with tempfile.TemporaryDirectory() as directory:
                 prefixfile=Path(directory)/"prefix.txt"
                 target=Path(directory)/"output.txt"
-                prefixfile.write_text(prefix,encoding="utf-8")
+                # Preserve LF bytes on Windows; CRLF changes model context.
+                prefixfile.write_bytes(prefix.encode("utf-8"))
                 result=subprocess.run([native,str(model_path),prompt(record["prompt"]),str(target),str(prefixfile)],capture_output=True,text=True,timeout=120)
                 native_output=target.read_text(encoding="utf-8") if target.exists() else ""
                 case.update(native_output=native_output,native_returncode=result.returncode,
