@@ -1,0 +1,4034 @@
+[
+  {
+    "id": "train-add-0-0",
+    "family": "add",
+    "function": "train_add_0",
+    "prompt": "Implement train_add_0(a, b) returning the sum of a and b.",
+    "answer": "def train_add_0(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-0-1",
+    "family": "add",
+    "function": "train_add_0",
+    "prompt": "Write Python function train_add_0(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_0(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-0-2",
+    "family": "add",
+    "function": "train_add_0",
+    "prompt": "Define train_add_0(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_0(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-0",
+    "family": "add",
+    "function": "train_add_1",
+    "prompt": "Implement train_add_1(a, b) returning the sum of a and b.",
+    "answer": "def train_add_1(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-1",
+    "family": "add",
+    "function": "train_add_1",
+    "prompt": "Write Python function train_add_1(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_1(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-1-2",
+    "family": "add",
+    "function": "train_add_1",
+    "prompt": "Define train_add_1(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_1(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-0",
+    "family": "add",
+    "function": "train_add_2",
+    "prompt": "Implement train_add_2(a, b) returning the sum of a and b.",
+    "answer": "def train_add_2(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-1",
+    "family": "add",
+    "function": "train_add_2",
+    "prompt": "Write Python function train_add_2(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_2(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-2-2",
+    "family": "add",
+    "function": "train_add_2",
+    "prompt": "Define train_add_2(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_2(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-0",
+    "family": "add",
+    "function": "train_add_3",
+    "prompt": "Implement train_add_3(a, b) returning the sum of a and b.",
+    "answer": "def train_add_3(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-1",
+    "family": "add",
+    "function": "train_add_3",
+    "prompt": "Write Python function train_add_3(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_3(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-3-2",
+    "family": "add",
+    "function": "train_add_3",
+    "prompt": "Define train_add_3(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_3(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-0",
+    "family": "add",
+    "function": "train_add_4",
+    "prompt": "Implement train_add_4(a, b) returning the sum of a and b.",
+    "answer": "def train_add_4(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-1",
+    "family": "add",
+    "function": "train_add_4",
+    "prompt": "Write Python function train_add_4(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_4(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-4-2",
+    "family": "add",
+    "function": "train_add_4",
+    "prompt": "Define train_add_4(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_4(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-0",
+    "family": "add",
+    "function": "train_add_5",
+    "prompt": "Implement train_add_5(a, b) returning the sum of a and b.",
+    "answer": "def train_add_5(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-1",
+    "family": "add",
+    "function": "train_add_5",
+    "prompt": "Write Python function train_add_5(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_5(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-5-2",
+    "family": "add",
+    "function": "train_add_5",
+    "prompt": "Define train_add_5(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_5(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-0",
+    "family": "add",
+    "function": "train_add_6",
+    "prompt": "Implement train_add_6(a, b) returning the sum of a and b.",
+    "answer": "def train_add_6(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-1",
+    "family": "add",
+    "function": "train_add_6",
+    "prompt": "Write Python function train_add_6(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_6(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-6-2",
+    "family": "add",
+    "function": "train_add_6",
+    "prompt": "Define train_add_6(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_6(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-0",
+    "family": "add",
+    "function": "train_add_7",
+    "prompt": "Implement train_add_7(a, b) returning the sum of a and b.",
+    "answer": "def train_add_7(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-1",
+    "family": "add",
+    "function": "train_add_7",
+    "prompt": "Write Python function train_add_7(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_7(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-7-2",
+    "family": "add",
+    "function": "train_add_7",
+    "prompt": "Define train_add_7(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_7(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-0",
+    "family": "add",
+    "function": "train_add_8",
+    "prompt": "Implement train_add_8(a, b) returning the sum of a and b.",
+    "answer": "def train_add_8(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-1",
+    "family": "add",
+    "function": "train_add_8",
+    "prompt": "Write Python function train_add_8(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_8(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-8-2",
+    "family": "add",
+    "function": "train_add_8",
+    "prompt": "Define train_add_8(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_8(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-0",
+    "family": "add",
+    "function": "train_add_9",
+    "prompt": "Implement train_add_9(a, b) returning the sum of a and b.",
+    "answer": "def train_add_9(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-1",
+    "family": "add",
+    "function": "train_add_9",
+    "prompt": "Write Python function train_add_9(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_9(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-9-2",
+    "family": "add",
+    "function": "train_add_9",
+    "prompt": "Define train_add_9(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_9(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-0",
+    "family": "add",
+    "function": "train_add_10",
+    "prompt": "Implement train_add_10(a, b) returning the sum of a and b.",
+    "answer": "def train_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-1",
+    "family": "add",
+    "function": "train_add_10",
+    "prompt": "Write Python function train_add_10(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-10-2",
+    "family": "add",
+    "function": "train_add_10",
+    "prompt": "Define train_add_10(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_10(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-0",
+    "family": "add",
+    "function": "train_add_11",
+    "prompt": "Implement train_add_11(a, b) returning the sum of a and b.",
+    "answer": "def train_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-1",
+    "family": "add",
+    "function": "train_add_11",
+    "prompt": "Write Python function train_add_11(a, b). It must return the sum of a and b.",
+    "answer": "def train_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-add-11-2",
+    "family": "add",
+    "function": "train_add_11",
+    "prompt": "Define train_add_11(a, b) in Python to return the sum of a and b.",
+    "answer": "def train_add_11(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "train-subtract-0-0",
+    "family": "subtract",
+    "function": "train_subtract_0",
+    "prompt": "Implement train_subtract_0(a, b) returning a minus b.",
+    "answer": "def train_subtract_0(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-0-1",
+    "family": "subtract",
+    "function": "train_subtract_0",
+    "prompt": "Write Python function train_subtract_0(a, b). It must return a minus b.",
+    "answer": "def train_subtract_0(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-0-2",
+    "family": "subtract",
+    "function": "train_subtract_0",
+    "prompt": "Define train_subtract_0(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_0(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-0",
+    "family": "subtract",
+    "function": "train_subtract_1",
+    "prompt": "Implement train_subtract_1(a, b) returning a minus b.",
+    "answer": "def train_subtract_1(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-1",
+    "family": "subtract",
+    "function": "train_subtract_1",
+    "prompt": "Write Python function train_subtract_1(a, b). It must return a minus b.",
+    "answer": "def train_subtract_1(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-1-2",
+    "family": "subtract",
+    "function": "train_subtract_1",
+    "prompt": "Define train_subtract_1(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_1(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-0",
+    "family": "subtract",
+    "function": "train_subtract_2",
+    "prompt": "Implement train_subtract_2(a, b) returning a minus b.",
+    "answer": "def train_subtract_2(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-1",
+    "family": "subtract",
+    "function": "train_subtract_2",
+    "prompt": "Write Python function train_subtract_2(a, b). It must return a minus b.",
+    "answer": "def train_subtract_2(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-2-2",
+    "family": "subtract",
+    "function": "train_subtract_2",
+    "prompt": "Define train_subtract_2(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_2(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-0",
+    "family": "subtract",
+    "function": "train_subtract_3",
+    "prompt": "Implement train_subtract_3(a, b) returning a minus b.",
+    "answer": "def train_subtract_3(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-1",
+    "family": "subtract",
+    "function": "train_subtract_3",
+    "prompt": "Write Python function train_subtract_3(a, b). It must return a minus b.",
+    "answer": "def train_subtract_3(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-3-2",
+    "family": "subtract",
+    "function": "train_subtract_3",
+    "prompt": "Define train_subtract_3(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_3(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-0",
+    "family": "subtract",
+    "function": "train_subtract_4",
+    "prompt": "Implement train_subtract_4(a, b) returning a minus b.",
+    "answer": "def train_subtract_4(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-1",
+    "family": "subtract",
+    "function": "train_subtract_4",
+    "prompt": "Write Python function train_subtract_4(a, b). It must return a minus b.",
+    "answer": "def train_subtract_4(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-4-2",
+    "family": "subtract",
+    "function": "train_subtract_4",
+    "prompt": "Define train_subtract_4(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_4(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-0",
+    "family": "subtract",
+    "function": "train_subtract_5",
+    "prompt": "Implement train_subtract_5(a, b) returning a minus b.",
+    "answer": "def train_subtract_5(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-1",
+    "family": "subtract",
+    "function": "train_subtract_5",
+    "prompt": "Write Python function train_subtract_5(a, b). It must return a minus b.",
+    "answer": "def train_subtract_5(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-5-2",
+    "family": "subtract",
+    "function": "train_subtract_5",
+    "prompt": "Define train_subtract_5(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_5(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-0",
+    "family": "subtract",
+    "function": "train_subtract_6",
+    "prompt": "Implement train_subtract_6(a, b) returning a minus b.",
+    "answer": "def train_subtract_6(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-1",
+    "family": "subtract",
+    "function": "train_subtract_6",
+    "prompt": "Write Python function train_subtract_6(a, b). It must return a minus b.",
+    "answer": "def train_subtract_6(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-6-2",
+    "family": "subtract",
+    "function": "train_subtract_6",
+    "prompt": "Define train_subtract_6(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_6(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-0",
+    "family": "subtract",
+    "function": "train_subtract_7",
+    "prompt": "Implement train_subtract_7(a, b) returning a minus b.",
+    "answer": "def train_subtract_7(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-1",
+    "family": "subtract",
+    "function": "train_subtract_7",
+    "prompt": "Write Python function train_subtract_7(a, b). It must return a minus b.",
+    "answer": "def train_subtract_7(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-7-2",
+    "family": "subtract",
+    "function": "train_subtract_7",
+    "prompt": "Define train_subtract_7(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_7(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-0",
+    "family": "subtract",
+    "function": "train_subtract_8",
+    "prompt": "Implement train_subtract_8(a, b) returning a minus b.",
+    "answer": "def train_subtract_8(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-1",
+    "family": "subtract",
+    "function": "train_subtract_8",
+    "prompt": "Write Python function train_subtract_8(a, b). It must return a minus b.",
+    "answer": "def train_subtract_8(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-8-2",
+    "family": "subtract",
+    "function": "train_subtract_8",
+    "prompt": "Define train_subtract_8(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_8(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-0",
+    "family": "subtract",
+    "function": "train_subtract_9",
+    "prompt": "Implement train_subtract_9(a, b) returning a minus b.",
+    "answer": "def train_subtract_9(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-1",
+    "family": "subtract",
+    "function": "train_subtract_9",
+    "prompt": "Write Python function train_subtract_9(a, b). It must return a minus b.",
+    "answer": "def train_subtract_9(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-9-2",
+    "family": "subtract",
+    "function": "train_subtract_9",
+    "prompt": "Define train_subtract_9(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_9(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-0",
+    "family": "subtract",
+    "function": "train_subtract_10",
+    "prompt": "Implement train_subtract_10(a, b) returning a minus b.",
+    "answer": "def train_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-1",
+    "family": "subtract",
+    "function": "train_subtract_10",
+    "prompt": "Write Python function train_subtract_10(a, b). It must return a minus b.",
+    "answer": "def train_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-10-2",
+    "family": "subtract",
+    "function": "train_subtract_10",
+    "prompt": "Define train_subtract_10(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_10(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-0",
+    "family": "subtract",
+    "function": "train_subtract_11",
+    "prompt": "Implement train_subtract_11(a, b) returning a minus b.",
+    "answer": "def train_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-1",
+    "family": "subtract",
+    "function": "train_subtract_11",
+    "prompt": "Write Python function train_subtract_11(a, b). It must return a minus b.",
+    "answer": "def train_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-subtract-11-2",
+    "family": "subtract",
+    "function": "train_subtract_11",
+    "prompt": "Define train_subtract_11(a, b) in Python to return a minus b.",
+    "answer": "def train_subtract_11(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "train-multiply-0-0",
+    "family": "multiply",
+    "function": "train_multiply_0",
+    "prompt": "Implement train_multiply_0(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_0(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-0-1",
+    "family": "multiply",
+    "function": "train_multiply_0",
+    "prompt": "Write Python function train_multiply_0(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_0(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-0-2",
+    "family": "multiply",
+    "function": "train_multiply_0",
+    "prompt": "Define train_multiply_0(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_0(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-0",
+    "family": "multiply",
+    "function": "train_multiply_1",
+    "prompt": "Implement train_multiply_1(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_1(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-1",
+    "family": "multiply",
+    "function": "train_multiply_1",
+    "prompt": "Write Python function train_multiply_1(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_1(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-1-2",
+    "family": "multiply",
+    "function": "train_multiply_1",
+    "prompt": "Define train_multiply_1(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_1(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-0",
+    "family": "multiply",
+    "function": "train_multiply_2",
+    "prompt": "Implement train_multiply_2(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_2(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-1",
+    "family": "multiply",
+    "function": "train_multiply_2",
+    "prompt": "Write Python function train_multiply_2(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_2(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-2-2",
+    "family": "multiply",
+    "function": "train_multiply_2",
+    "prompt": "Define train_multiply_2(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_2(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-0",
+    "family": "multiply",
+    "function": "train_multiply_3",
+    "prompt": "Implement train_multiply_3(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_3(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-1",
+    "family": "multiply",
+    "function": "train_multiply_3",
+    "prompt": "Write Python function train_multiply_3(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_3(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-3-2",
+    "family": "multiply",
+    "function": "train_multiply_3",
+    "prompt": "Define train_multiply_3(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_3(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-0",
+    "family": "multiply",
+    "function": "train_multiply_4",
+    "prompt": "Implement train_multiply_4(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_4(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-1",
+    "family": "multiply",
+    "function": "train_multiply_4",
+    "prompt": "Write Python function train_multiply_4(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_4(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-4-2",
+    "family": "multiply",
+    "function": "train_multiply_4",
+    "prompt": "Define train_multiply_4(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_4(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-0",
+    "family": "multiply",
+    "function": "train_multiply_5",
+    "prompt": "Implement train_multiply_5(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_5(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-1",
+    "family": "multiply",
+    "function": "train_multiply_5",
+    "prompt": "Write Python function train_multiply_5(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_5(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-5-2",
+    "family": "multiply",
+    "function": "train_multiply_5",
+    "prompt": "Define train_multiply_5(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_5(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-0",
+    "family": "multiply",
+    "function": "train_multiply_6",
+    "prompt": "Implement train_multiply_6(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_6(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-1",
+    "family": "multiply",
+    "function": "train_multiply_6",
+    "prompt": "Write Python function train_multiply_6(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_6(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-6-2",
+    "family": "multiply",
+    "function": "train_multiply_6",
+    "prompt": "Define train_multiply_6(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_6(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-0",
+    "family": "multiply",
+    "function": "train_multiply_7",
+    "prompt": "Implement train_multiply_7(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_7(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-1",
+    "family": "multiply",
+    "function": "train_multiply_7",
+    "prompt": "Write Python function train_multiply_7(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_7(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-7-2",
+    "family": "multiply",
+    "function": "train_multiply_7",
+    "prompt": "Define train_multiply_7(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_7(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-0",
+    "family": "multiply",
+    "function": "train_multiply_8",
+    "prompt": "Implement train_multiply_8(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_8(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-1",
+    "family": "multiply",
+    "function": "train_multiply_8",
+    "prompt": "Write Python function train_multiply_8(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_8(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-8-2",
+    "family": "multiply",
+    "function": "train_multiply_8",
+    "prompt": "Define train_multiply_8(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_8(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-0",
+    "family": "multiply",
+    "function": "train_multiply_9",
+    "prompt": "Implement train_multiply_9(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_9(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-1",
+    "family": "multiply",
+    "function": "train_multiply_9",
+    "prompt": "Write Python function train_multiply_9(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_9(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-9-2",
+    "family": "multiply",
+    "function": "train_multiply_9",
+    "prompt": "Define train_multiply_9(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_9(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-0",
+    "family": "multiply",
+    "function": "train_multiply_10",
+    "prompt": "Implement train_multiply_10(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-1",
+    "family": "multiply",
+    "function": "train_multiply_10",
+    "prompt": "Write Python function train_multiply_10(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-10-2",
+    "family": "multiply",
+    "function": "train_multiply_10",
+    "prompt": "Define train_multiply_10(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_10(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-0",
+    "family": "multiply",
+    "function": "train_multiply_11",
+    "prompt": "Implement train_multiply_11(a, b) returning the product of a and b.",
+    "answer": "def train_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-1",
+    "family": "multiply",
+    "function": "train_multiply_11",
+    "prompt": "Write Python function train_multiply_11(a, b). It must return the product of a and b.",
+    "answer": "def train_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-multiply-11-2",
+    "family": "multiply",
+    "function": "train_multiply_11",
+    "prompt": "Define train_multiply_11(a, b) in Python to return the product of a and b.",
+    "answer": "def train_multiply_11(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "train-square-0-0",
+    "family": "square",
+    "function": "train_square_0",
+    "prompt": "Implement train_square_0(x) returning x squared.",
+    "answer": "def train_square_0(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-0-1",
+    "family": "square",
+    "function": "train_square_0",
+    "prompt": "Write Python function train_square_0(x). It must return x squared.",
+    "answer": "def train_square_0(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-0-2",
+    "family": "square",
+    "function": "train_square_0",
+    "prompt": "Define train_square_0(x) in Python to return x squared.",
+    "answer": "def train_square_0(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-0",
+    "family": "square",
+    "function": "train_square_1",
+    "prompt": "Implement train_square_1(x) returning x squared.",
+    "answer": "def train_square_1(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-1",
+    "family": "square",
+    "function": "train_square_1",
+    "prompt": "Write Python function train_square_1(x). It must return x squared.",
+    "answer": "def train_square_1(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-1-2",
+    "family": "square",
+    "function": "train_square_1",
+    "prompt": "Define train_square_1(x) in Python to return x squared.",
+    "answer": "def train_square_1(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-0",
+    "family": "square",
+    "function": "train_square_2",
+    "prompt": "Implement train_square_2(x) returning x squared.",
+    "answer": "def train_square_2(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-1",
+    "family": "square",
+    "function": "train_square_2",
+    "prompt": "Write Python function train_square_2(x). It must return x squared.",
+    "answer": "def train_square_2(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-2-2",
+    "family": "square",
+    "function": "train_square_2",
+    "prompt": "Define train_square_2(x) in Python to return x squared.",
+    "answer": "def train_square_2(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-0",
+    "family": "square",
+    "function": "train_square_3",
+    "prompt": "Implement train_square_3(x) returning x squared.",
+    "answer": "def train_square_3(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-1",
+    "family": "square",
+    "function": "train_square_3",
+    "prompt": "Write Python function train_square_3(x). It must return x squared.",
+    "answer": "def train_square_3(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-3-2",
+    "family": "square",
+    "function": "train_square_3",
+    "prompt": "Define train_square_3(x) in Python to return x squared.",
+    "answer": "def train_square_3(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-0",
+    "family": "square",
+    "function": "train_square_4",
+    "prompt": "Implement train_square_4(x) returning x squared.",
+    "answer": "def train_square_4(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-1",
+    "family": "square",
+    "function": "train_square_4",
+    "prompt": "Write Python function train_square_4(x). It must return x squared.",
+    "answer": "def train_square_4(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-4-2",
+    "family": "square",
+    "function": "train_square_4",
+    "prompt": "Define train_square_4(x) in Python to return x squared.",
+    "answer": "def train_square_4(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-0",
+    "family": "square",
+    "function": "train_square_5",
+    "prompt": "Implement train_square_5(x) returning x squared.",
+    "answer": "def train_square_5(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-1",
+    "family": "square",
+    "function": "train_square_5",
+    "prompt": "Write Python function train_square_5(x). It must return x squared.",
+    "answer": "def train_square_5(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-5-2",
+    "family": "square",
+    "function": "train_square_5",
+    "prompt": "Define train_square_5(x) in Python to return x squared.",
+    "answer": "def train_square_5(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-0",
+    "family": "square",
+    "function": "train_square_6",
+    "prompt": "Implement train_square_6(x) returning x squared.",
+    "answer": "def train_square_6(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-1",
+    "family": "square",
+    "function": "train_square_6",
+    "prompt": "Write Python function train_square_6(x). It must return x squared.",
+    "answer": "def train_square_6(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-6-2",
+    "family": "square",
+    "function": "train_square_6",
+    "prompt": "Define train_square_6(x) in Python to return x squared.",
+    "answer": "def train_square_6(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-0",
+    "family": "square",
+    "function": "train_square_7",
+    "prompt": "Implement train_square_7(x) returning x squared.",
+    "answer": "def train_square_7(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-1",
+    "family": "square",
+    "function": "train_square_7",
+    "prompt": "Write Python function train_square_7(x). It must return x squared.",
+    "answer": "def train_square_7(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-7-2",
+    "family": "square",
+    "function": "train_square_7",
+    "prompt": "Define train_square_7(x) in Python to return x squared.",
+    "answer": "def train_square_7(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-0",
+    "family": "square",
+    "function": "train_square_8",
+    "prompt": "Implement train_square_8(x) returning x squared.",
+    "answer": "def train_square_8(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-1",
+    "family": "square",
+    "function": "train_square_8",
+    "prompt": "Write Python function train_square_8(x). It must return x squared.",
+    "answer": "def train_square_8(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-8-2",
+    "family": "square",
+    "function": "train_square_8",
+    "prompt": "Define train_square_8(x) in Python to return x squared.",
+    "answer": "def train_square_8(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-0",
+    "family": "square",
+    "function": "train_square_9",
+    "prompt": "Implement train_square_9(x) returning x squared.",
+    "answer": "def train_square_9(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-1",
+    "family": "square",
+    "function": "train_square_9",
+    "prompt": "Write Python function train_square_9(x). It must return x squared.",
+    "answer": "def train_square_9(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-9-2",
+    "family": "square",
+    "function": "train_square_9",
+    "prompt": "Define train_square_9(x) in Python to return x squared.",
+    "answer": "def train_square_9(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-0",
+    "family": "square",
+    "function": "train_square_10",
+    "prompt": "Implement train_square_10(x) returning x squared.",
+    "answer": "def train_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-1",
+    "family": "square",
+    "function": "train_square_10",
+    "prompt": "Write Python function train_square_10(x). It must return x squared.",
+    "answer": "def train_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-10-2",
+    "family": "square",
+    "function": "train_square_10",
+    "prompt": "Define train_square_10(x) in Python to return x squared.",
+    "answer": "def train_square_10(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-0",
+    "family": "square",
+    "function": "train_square_11",
+    "prompt": "Implement train_square_11(x) returning x squared.",
+    "answer": "def train_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-1",
+    "family": "square",
+    "function": "train_square_11",
+    "prompt": "Write Python function train_square_11(x). It must return x squared.",
+    "answer": "def train_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-square-11-2",
+    "family": "square",
+    "function": "train_square_11",
+    "prompt": "Define train_square_11(x) in Python to return x squared.",
+    "answer": "def train_square_11(x):\n    return x * x\n"
+  },
+  {
+    "id": "train-negate-0-0",
+    "family": "negate",
+    "function": "train_negate_0",
+    "prompt": "Implement train_negate_0(x) returning the negation of x.",
+    "answer": "def train_negate_0(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-0-1",
+    "family": "negate",
+    "function": "train_negate_0",
+    "prompt": "Write Python function train_negate_0(x). It must return the negation of x.",
+    "answer": "def train_negate_0(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-0-2",
+    "family": "negate",
+    "function": "train_negate_0",
+    "prompt": "Define train_negate_0(x) in Python to return the negation of x.",
+    "answer": "def train_negate_0(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-0",
+    "family": "negate",
+    "function": "train_negate_1",
+    "prompt": "Implement train_negate_1(x) returning the negation of x.",
+    "answer": "def train_negate_1(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-1",
+    "family": "negate",
+    "function": "train_negate_1",
+    "prompt": "Write Python function train_negate_1(x). It must return the negation of x.",
+    "answer": "def train_negate_1(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-1-2",
+    "family": "negate",
+    "function": "train_negate_1",
+    "prompt": "Define train_negate_1(x) in Python to return the negation of x.",
+    "answer": "def train_negate_1(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-0",
+    "family": "negate",
+    "function": "train_negate_2",
+    "prompt": "Implement train_negate_2(x) returning the negation of x.",
+    "answer": "def train_negate_2(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-1",
+    "family": "negate",
+    "function": "train_negate_2",
+    "prompt": "Write Python function train_negate_2(x). It must return the negation of x.",
+    "answer": "def train_negate_2(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-2-2",
+    "family": "negate",
+    "function": "train_negate_2",
+    "prompt": "Define train_negate_2(x) in Python to return the negation of x.",
+    "answer": "def train_negate_2(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-0",
+    "family": "negate",
+    "function": "train_negate_3",
+    "prompt": "Implement train_negate_3(x) returning the negation of x.",
+    "answer": "def train_negate_3(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-1",
+    "family": "negate",
+    "function": "train_negate_3",
+    "prompt": "Write Python function train_negate_3(x). It must return the negation of x.",
+    "answer": "def train_negate_3(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-3-2",
+    "family": "negate",
+    "function": "train_negate_3",
+    "prompt": "Define train_negate_3(x) in Python to return the negation of x.",
+    "answer": "def train_negate_3(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-0",
+    "family": "negate",
+    "function": "train_negate_4",
+    "prompt": "Implement train_negate_4(x) returning the negation of x.",
+    "answer": "def train_negate_4(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-1",
+    "family": "negate",
+    "function": "train_negate_4",
+    "prompt": "Write Python function train_negate_4(x). It must return the negation of x.",
+    "answer": "def train_negate_4(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-4-2",
+    "family": "negate",
+    "function": "train_negate_4",
+    "prompt": "Define train_negate_4(x) in Python to return the negation of x.",
+    "answer": "def train_negate_4(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-0",
+    "family": "negate",
+    "function": "train_negate_5",
+    "prompt": "Implement train_negate_5(x) returning the negation of x.",
+    "answer": "def train_negate_5(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-1",
+    "family": "negate",
+    "function": "train_negate_5",
+    "prompt": "Write Python function train_negate_5(x). It must return the negation of x.",
+    "answer": "def train_negate_5(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-5-2",
+    "family": "negate",
+    "function": "train_negate_5",
+    "prompt": "Define train_negate_5(x) in Python to return the negation of x.",
+    "answer": "def train_negate_5(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-0",
+    "family": "negate",
+    "function": "train_negate_6",
+    "prompt": "Implement train_negate_6(x) returning the negation of x.",
+    "answer": "def train_negate_6(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-1",
+    "family": "negate",
+    "function": "train_negate_6",
+    "prompt": "Write Python function train_negate_6(x). It must return the negation of x.",
+    "answer": "def train_negate_6(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-6-2",
+    "family": "negate",
+    "function": "train_negate_6",
+    "prompt": "Define train_negate_6(x) in Python to return the negation of x.",
+    "answer": "def train_negate_6(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-0",
+    "family": "negate",
+    "function": "train_negate_7",
+    "prompt": "Implement train_negate_7(x) returning the negation of x.",
+    "answer": "def train_negate_7(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-1",
+    "family": "negate",
+    "function": "train_negate_7",
+    "prompt": "Write Python function train_negate_7(x). It must return the negation of x.",
+    "answer": "def train_negate_7(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-7-2",
+    "family": "negate",
+    "function": "train_negate_7",
+    "prompt": "Define train_negate_7(x) in Python to return the negation of x.",
+    "answer": "def train_negate_7(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-0",
+    "family": "negate",
+    "function": "train_negate_8",
+    "prompt": "Implement train_negate_8(x) returning the negation of x.",
+    "answer": "def train_negate_8(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-1",
+    "family": "negate",
+    "function": "train_negate_8",
+    "prompt": "Write Python function train_negate_8(x). It must return the negation of x.",
+    "answer": "def train_negate_8(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-8-2",
+    "family": "negate",
+    "function": "train_negate_8",
+    "prompt": "Define train_negate_8(x) in Python to return the negation of x.",
+    "answer": "def train_negate_8(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-0",
+    "family": "negate",
+    "function": "train_negate_9",
+    "prompt": "Implement train_negate_9(x) returning the negation of x.",
+    "answer": "def train_negate_9(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-1",
+    "family": "negate",
+    "function": "train_negate_9",
+    "prompt": "Write Python function train_negate_9(x). It must return the negation of x.",
+    "answer": "def train_negate_9(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-9-2",
+    "family": "negate",
+    "function": "train_negate_9",
+    "prompt": "Define train_negate_9(x) in Python to return the negation of x.",
+    "answer": "def train_negate_9(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-0",
+    "family": "negate",
+    "function": "train_negate_10",
+    "prompt": "Implement train_negate_10(x) returning the negation of x.",
+    "answer": "def train_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-1",
+    "family": "negate",
+    "function": "train_negate_10",
+    "prompt": "Write Python function train_negate_10(x). It must return the negation of x.",
+    "answer": "def train_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-10-2",
+    "family": "negate",
+    "function": "train_negate_10",
+    "prompt": "Define train_negate_10(x) in Python to return the negation of x.",
+    "answer": "def train_negate_10(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-0",
+    "family": "negate",
+    "function": "train_negate_11",
+    "prompt": "Implement train_negate_11(x) returning the negation of x.",
+    "answer": "def train_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-1",
+    "family": "negate",
+    "function": "train_negate_11",
+    "prompt": "Write Python function train_negate_11(x). It must return the negation of x.",
+    "answer": "def train_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-negate-11-2",
+    "family": "negate",
+    "function": "train_negate_11",
+    "prompt": "Define train_negate_11(x) in Python to return the negation of x.",
+    "answer": "def train_negate_11(x):\n    return -x\n"
+  },
+  {
+    "id": "train-absolute-0-0",
+    "family": "absolute",
+    "function": "train_absolute_0",
+    "prompt": "Implement train_absolute_0(x) returning the absolute value of x.",
+    "answer": "def train_absolute_0(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-0-1",
+    "family": "absolute",
+    "function": "train_absolute_0",
+    "prompt": "Write Python function train_absolute_0(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_0(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-0-2",
+    "family": "absolute",
+    "function": "train_absolute_0",
+    "prompt": "Define train_absolute_0(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_0(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-0",
+    "family": "absolute",
+    "function": "train_absolute_1",
+    "prompt": "Implement train_absolute_1(x) returning the absolute value of x.",
+    "answer": "def train_absolute_1(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-1",
+    "family": "absolute",
+    "function": "train_absolute_1",
+    "prompt": "Write Python function train_absolute_1(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_1(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-1-2",
+    "family": "absolute",
+    "function": "train_absolute_1",
+    "prompt": "Define train_absolute_1(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_1(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-0",
+    "family": "absolute",
+    "function": "train_absolute_2",
+    "prompt": "Implement train_absolute_2(x) returning the absolute value of x.",
+    "answer": "def train_absolute_2(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-1",
+    "family": "absolute",
+    "function": "train_absolute_2",
+    "prompt": "Write Python function train_absolute_2(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_2(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-2-2",
+    "family": "absolute",
+    "function": "train_absolute_2",
+    "prompt": "Define train_absolute_2(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_2(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-0",
+    "family": "absolute",
+    "function": "train_absolute_3",
+    "prompt": "Implement train_absolute_3(x) returning the absolute value of x.",
+    "answer": "def train_absolute_3(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-1",
+    "family": "absolute",
+    "function": "train_absolute_3",
+    "prompt": "Write Python function train_absolute_3(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_3(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-3-2",
+    "family": "absolute",
+    "function": "train_absolute_3",
+    "prompt": "Define train_absolute_3(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_3(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-0",
+    "family": "absolute",
+    "function": "train_absolute_4",
+    "prompt": "Implement train_absolute_4(x) returning the absolute value of x.",
+    "answer": "def train_absolute_4(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-1",
+    "family": "absolute",
+    "function": "train_absolute_4",
+    "prompt": "Write Python function train_absolute_4(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_4(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-4-2",
+    "family": "absolute",
+    "function": "train_absolute_4",
+    "prompt": "Define train_absolute_4(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_4(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-0",
+    "family": "absolute",
+    "function": "train_absolute_5",
+    "prompt": "Implement train_absolute_5(x) returning the absolute value of x.",
+    "answer": "def train_absolute_5(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-1",
+    "family": "absolute",
+    "function": "train_absolute_5",
+    "prompt": "Write Python function train_absolute_5(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_5(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-5-2",
+    "family": "absolute",
+    "function": "train_absolute_5",
+    "prompt": "Define train_absolute_5(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_5(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-0",
+    "family": "absolute",
+    "function": "train_absolute_6",
+    "prompt": "Implement train_absolute_6(x) returning the absolute value of x.",
+    "answer": "def train_absolute_6(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-1",
+    "family": "absolute",
+    "function": "train_absolute_6",
+    "prompt": "Write Python function train_absolute_6(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_6(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-6-2",
+    "family": "absolute",
+    "function": "train_absolute_6",
+    "prompt": "Define train_absolute_6(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_6(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-0",
+    "family": "absolute",
+    "function": "train_absolute_7",
+    "prompt": "Implement train_absolute_7(x) returning the absolute value of x.",
+    "answer": "def train_absolute_7(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-1",
+    "family": "absolute",
+    "function": "train_absolute_7",
+    "prompt": "Write Python function train_absolute_7(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_7(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-7-2",
+    "family": "absolute",
+    "function": "train_absolute_7",
+    "prompt": "Define train_absolute_7(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_7(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-0",
+    "family": "absolute",
+    "function": "train_absolute_8",
+    "prompt": "Implement train_absolute_8(x) returning the absolute value of x.",
+    "answer": "def train_absolute_8(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-1",
+    "family": "absolute",
+    "function": "train_absolute_8",
+    "prompt": "Write Python function train_absolute_8(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_8(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-8-2",
+    "family": "absolute",
+    "function": "train_absolute_8",
+    "prompt": "Define train_absolute_8(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_8(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-0",
+    "family": "absolute",
+    "function": "train_absolute_9",
+    "prompt": "Implement train_absolute_9(x) returning the absolute value of x.",
+    "answer": "def train_absolute_9(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-1",
+    "family": "absolute",
+    "function": "train_absolute_9",
+    "prompt": "Write Python function train_absolute_9(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_9(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-9-2",
+    "family": "absolute",
+    "function": "train_absolute_9",
+    "prompt": "Define train_absolute_9(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_9(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-0",
+    "family": "absolute",
+    "function": "train_absolute_10",
+    "prompt": "Implement train_absolute_10(x) returning the absolute value of x.",
+    "answer": "def train_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-1",
+    "family": "absolute",
+    "function": "train_absolute_10",
+    "prompt": "Write Python function train_absolute_10(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-10-2",
+    "family": "absolute",
+    "function": "train_absolute_10",
+    "prompt": "Define train_absolute_10(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_10(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-0",
+    "family": "absolute",
+    "function": "train_absolute_11",
+    "prompt": "Implement train_absolute_11(x) returning the absolute value of x.",
+    "answer": "def train_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-1",
+    "family": "absolute",
+    "function": "train_absolute_11",
+    "prompt": "Write Python function train_absolute_11(x). It must return the absolute value of x.",
+    "answer": "def train_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-absolute-11-2",
+    "family": "absolute",
+    "function": "train_absolute_11",
+    "prompt": "Define train_absolute_11(x) in Python to return the absolute value of x.",
+    "answer": "def train_absolute_11(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "train-length-0-0",
+    "family": "length",
+    "function": "train_length_0",
+    "prompt": "Implement train_length_0(values) returning the number of values.",
+    "answer": "def train_length_0(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-0-1",
+    "family": "length",
+    "function": "train_length_0",
+    "prompt": "Write Python function train_length_0(values). It must return the number of values.",
+    "answer": "def train_length_0(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-0-2",
+    "family": "length",
+    "function": "train_length_0",
+    "prompt": "Define train_length_0(values) in Python to return the number of values.",
+    "answer": "def train_length_0(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-0",
+    "family": "length",
+    "function": "train_length_1",
+    "prompt": "Implement train_length_1(values) returning the number of values.",
+    "answer": "def train_length_1(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-1",
+    "family": "length",
+    "function": "train_length_1",
+    "prompt": "Write Python function train_length_1(values). It must return the number of values.",
+    "answer": "def train_length_1(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-1-2",
+    "family": "length",
+    "function": "train_length_1",
+    "prompt": "Define train_length_1(values) in Python to return the number of values.",
+    "answer": "def train_length_1(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-0",
+    "family": "length",
+    "function": "train_length_2",
+    "prompt": "Implement train_length_2(values) returning the number of values.",
+    "answer": "def train_length_2(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-1",
+    "family": "length",
+    "function": "train_length_2",
+    "prompt": "Write Python function train_length_2(values). It must return the number of values.",
+    "answer": "def train_length_2(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-2-2",
+    "family": "length",
+    "function": "train_length_2",
+    "prompt": "Define train_length_2(values) in Python to return the number of values.",
+    "answer": "def train_length_2(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-0",
+    "family": "length",
+    "function": "train_length_3",
+    "prompt": "Implement train_length_3(values) returning the number of values.",
+    "answer": "def train_length_3(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-1",
+    "family": "length",
+    "function": "train_length_3",
+    "prompt": "Write Python function train_length_3(values). It must return the number of values.",
+    "answer": "def train_length_3(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-3-2",
+    "family": "length",
+    "function": "train_length_3",
+    "prompt": "Define train_length_3(values) in Python to return the number of values.",
+    "answer": "def train_length_3(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-0",
+    "family": "length",
+    "function": "train_length_4",
+    "prompt": "Implement train_length_4(values) returning the number of values.",
+    "answer": "def train_length_4(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-1",
+    "family": "length",
+    "function": "train_length_4",
+    "prompt": "Write Python function train_length_4(values). It must return the number of values.",
+    "answer": "def train_length_4(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-4-2",
+    "family": "length",
+    "function": "train_length_4",
+    "prompt": "Define train_length_4(values) in Python to return the number of values.",
+    "answer": "def train_length_4(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-0",
+    "family": "length",
+    "function": "train_length_5",
+    "prompt": "Implement train_length_5(values) returning the number of values.",
+    "answer": "def train_length_5(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-1",
+    "family": "length",
+    "function": "train_length_5",
+    "prompt": "Write Python function train_length_5(values). It must return the number of values.",
+    "answer": "def train_length_5(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-5-2",
+    "family": "length",
+    "function": "train_length_5",
+    "prompt": "Define train_length_5(values) in Python to return the number of values.",
+    "answer": "def train_length_5(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-0",
+    "family": "length",
+    "function": "train_length_6",
+    "prompt": "Implement train_length_6(values) returning the number of values.",
+    "answer": "def train_length_6(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-1",
+    "family": "length",
+    "function": "train_length_6",
+    "prompt": "Write Python function train_length_6(values). It must return the number of values.",
+    "answer": "def train_length_6(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-6-2",
+    "family": "length",
+    "function": "train_length_6",
+    "prompt": "Define train_length_6(values) in Python to return the number of values.",
+    "answer": "def train_length_6(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-0",
+    "family": "length",
+    "function": "train_length_7",
+    "prompt": "Implement train_length_7(values) returning the number of values.",
+    "answer": "def train_length_7(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-1",
+    "family": "length",
+    "function": "train_length_7",
+    "prompt": "Write Python function train_length_7(values). It must return the number of values.",
+    "answer": "def train_length_7(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-7-2",
+    "family": "length",
+    "function": "train_length_7",
+    "prompt": "Define train_length_7(values) in Python to return the number of values.",
+    "answer": "def train_length_7(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-0",
+    "family": "length",
+    "function": "train_length_8",
+    "prompt": "Implement train_length_8(values) returning the number of values.",
+    "answer": "def train_length_8(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-1",
+    "family": "length",
+    "function": "train_length_8",
+    "prompt": "Write Python function train_length_8(values). It must return the number of values.",
+    "answer": "def train_length_8(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-8-2",
+    "family": "length",
+    "function": "train_length_8",
+    "prompt": "Define train_length_8(values) in Python to return the number of values.",
+    "answer": "def train_length_8(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-0",
+    "family": "length",
+    "function": "train_length_9",
+    "prompt": "Implement train_length_9(values) returning the number of values.",
+    "answer": "def train_length_9(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-1",
+    "family": "length",
+    "function": "train_length_9",
+    "prompt": "Write Python function train_length_9(values). It must return the number of values.",
+    "answer": "def train_length_9(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-9-2",
+    "family": "length",
+    "function": "train_length_9",
+    "prompt": "Define train_length_9(values) in Python to return the number of values.",
+    "answer": "def train_length_9(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-0",
+    "family": "length",
+    "function": "train_length_10",
+    "prompt": "Implement train_length_10(values) returning the number of values.",
+    "answer": "def train_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-1",
+    "family": "length",
+    "function": "train_length_10",
+    "prompt": "Write Python function train_length_10(values). It must return the number of values.",
+    "answer": "def train_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-10-2",
+    "family": "length",
+    "function": "train_length_10",
+    "prompt": "Define train_length_10(values) in Python to return the number of values.",
+    "answer": "def train_length_10(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-0",
+    "family": "length",
+    "function": "train_length_11",
+    "prompt": "Implement train_length_11(values) returning the number of values.",
+    "answer": "def train_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-1",
+    "family": "length",
+    "function": "train_length_11",
+    "prompt": "Write Python function train_length_11(values). It must return the number of values.",
+    "answer": "def train_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-length-11-2",
+    "family": "length",
+    "function": "train_length_11",
+    "prompt": "Define train_length_11(values) in Python to return the number of values.",
+    "answer": "def train_length_11(values):\n    return len(values)\n"
+  },
+  {
+    "id": "train-total-0-0",
+    "family": "total",
+    "function": "train_total_0",
+    "prompt": "Implement train_total_0(values) returning the sum of values.",
+    "answer": "def train_total_0(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-0-1",
+    "family": "total",
+    "function": "train_total_0",
+    "prompt": "Write Python function train_total_0(values). It must return the sum of values.",
+    "answer": "def train_total_0(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-0-2",
+    "family": "total",
+    "function": "train_total_0",
+    "prompt": "Define train_total_0(values) in Python to return the sum of values.",
+    "answer": "def train_total_0(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-0",
+    "family": "total",
+    "function": "train_total_1",
+    "prompt": "Implement train_total_1(values) returning the sum of values.",
+    "answer": "def train_total_1(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-1",
+    "family": "total",
+    "function": "train_total_1",
+    "prompt": "Write Python function train_total_1(values). It must return the sum of values.",
+    "answer": "def train_total_1(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-1-2",
+    "family": "total",
+    "function": "train_total_1",
+    "prompt": "Define train_total_1(values) in Python to return the sum of values.",
+    "answer": "def train_total_1(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-0",
+    "family": "total",
+    "function": "train_total_2",
+    "prompt": "Implement train_total_2(values) returning the sum of values.",
+    "answer": "def train_total_2(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-1",
+    "family": "total",
+    "function": "train_total_2",
+    "prompt": "Write Python function train_total_2(values). It must return the sum of values.",
+    "answer": "def train_total_2(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-2-2",
+    "family": "total",
+    "function": "train_total_2",
+    "prompt": "Define train_total_2(values) in Python to return the sum of values.",
+    "answer": "def train_total_2(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-0",
+    "family": "total",
+    "function": "train_total_3",
+    "prompt": "Implement train_total_3(values) returning the sum of values.",
+    "answer": "def train_total_3(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-1",
+    "family": "total",
+    "function": "train_total_3",
+    "prompt": "Write Python function train_total_3(values). It must return the sum of values.",
+    "answer": "def train_total_3(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-3-2",
+    "family": "total",
+    "function": "train_total_3",
+    "prompt": "Define train_total_3(values) in Python to return the sum of values.",
+    "answer": "def train_total_3(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-0",
+    "family": "total",
+    "function": "train_total_4",
+    "prompt": "Implement train_total_4(values) returning the sum of values.",
+    "answer": "def train_total_4(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-1",
+    "family": "total",
+    "function": "train_total_4",
+    "prompt": "Write Python function train_total_4(values). It must return the sum of values.",
+    "answer": "def train_total_4(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-4-2",
+    "family": "total",
+    "function": "train_total_4",
+    "prompt": "Define train_total_4(values) in Python to return the sum of values.",
+    "answer": "def train_total_4(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-0",
+    "family": "total",
+    "function": "train_total_5",
+    "prompt": "Implement train_total_5(values) returning the sum of values.",
+    "answer": "def train_total_5(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-1",
+    "family": "total",
+    "function": "train_total_5",
+    "prompt": "Write Python function train_total_5(values). It must return the sum of values.",
+    "answer": "def train_total_5(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-5-2",
+    "family": "total",
+    "function": "train_total_5",
+    "prompt": "Define train_total_5(values) in Python to return the sum of values.",
+    "answer": "def train_total_5(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-0",
+    "family": "total",
+    "function": "train_total_6",
+    "prompt": "Implement train_total_6(values) returning the sum of values.",
+    "answer": "def train_total_6(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-1",
+    "family": "total",
+    "function": "train_total_6",
+    "prompt": "Write Python function train_total_6(values). It must return the sum of values.",
+    "answer": "def train_total_6(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-6-2",
+    "family": "total",
+    "function": "train_total_6",
+    "prompt": "Define train_total_6(values) in Python to return the sum of values.",
+    "answer": "def train_total_6(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-0",
+    "family": "total",
+    "function": "train_total_7",
+    "prompt": "Implement train_total_7(values) returning the sum of values.",
+    "answer": "def train_total_7(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-1",
+    "family": "total",
+    "function": "train_total_7",
+    "prompt": "Write Python function train_total_7(values). It must return the sum of values.",
+    "answer": "def train_total_7(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-7-2",
+    "family": "total",
+    "function": "train_total_7",
+    "prompt": "Define train_total_7(values) in Python to return the sum of values.",
+    "answer": "def train_total_7(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-0",
+    "family": "total",
+    "function": "train_total_8",
+    "prompt": "Implement train_total_8(values) returning the sum of values.",
+    "answer": "def train_total_8(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-1",
+    "family": "total",
+    "function": "train_total_8",
+    "prompt": "Write Python function train_total_8(values). It must return the sum of values.",
+    "answer": "def train_total_8(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-8-2",
+    "family": "total",
+    "function": "train_total_8",
+    "prompt": "Define train_total_8(values) in Python to return the sum of values.",
+    "answer": "def train_total_8(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-0",
+    "family": "total",
+    "function": "train_total_9",
+    "prompt": "Implement train_total_9(values) returning the sum of values.",
+    "answer": "def train_total_9(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-1",
+    "family": "total",
+    "function": "train_total_9",
+    "prompt": "Write Python function train_total_9(values). It must return the sum of values.",
+    "answer": "def train_total_9(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-9-2",
+    "family": "total",
+    "function": "train_total_9",
+    "prompt": "Define train_total_9(values) in Python to return the sum of values.",
+    "answer": "def train_total_9(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-0",
+    "family": "total",
+    "function": "train_total_10",
+    "prompt": "Implement train_total_10(values) returning the sum of values.",
+    "answer": "def train_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-1",
+    "family": "total",
+    "function": "train_total_10",
+    "prompt": "Write Python function train_total_10(values). It must return the sum of values.",
+    "answer": "def train_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-10-2",
+    "family": "total",
+    "function": "train_total_10",
+    "prompt": "Define train_total_10(values) in Python to return the sum of values.",
+    "answer": "def train_total_10(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-0",
+    "family": "total",
+    "function": "train_total_11",
+    "prompt": "Implement train_total_11(values) returning the sum of values.",
+    "answer": "def train_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-1",
+    "family": "total",
+    "function": "train_total_11",
+    "prompt": "Write Python function train_total_11(values). It must return the sum of values.",
+    "answer": "def train_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-total-11-2",
+    "family": "total",
+    "function": "train_total_11",
+    "prompt": "Define train_total_11(values) in Python to return the sum of values.",
+    "answer": "def train_total_11(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "train-largest-0-0",
+    "family": "largest",
+    "function": "train_largest_0",
+    "prompt": "Implement train_largest_0(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_0(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-0-1",
+    "family": "largest",
+    "function": "train_largest_0",
+    "prompt": "Write Python function train_largest_0(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_0(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-0-2",
+    "family": "largest",
+    "function": "train_largest_0",
+    "prompt": "Define train_largest_0(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_0(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-0",
+    "family": "largest",
+    "function": "train_largest_1",
+    "prompt": "Implement train_largest_1(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_1(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-1",
+    "family": "largest",
+    "function": "train_largest_1",
+    "prompt": "Write Python function train_largest_1(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_1(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-1-2",
+    "family": "largest",
+    "function": "train_largest_1",
+    "prompt": "Define train_largest_1(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_1(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-0",
+    "family": "largest",
+    "function": "train_largest_2",
+    "prompt": "Implement train_largest_2(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_2(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-1",
+    "family": "largest",
+    "function": "train_largest_2",
+    "prompt": "Write Python function train_largest_2(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_2(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-2-2",
+    "family": "largest",
+    "function": "train_largest_2",
+    "prompt": "Define train_largest_2(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_2(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-0",
+    "family": "largest",
+    "function": "train_largest_3",
+    "prompt": "Implement train_largest_3(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_3(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-1",
+    "family": "largest",
+    "function": "train_largest_3",
+    "prompt": "Write Python function train_largest_3(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_3(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-3-2",
+    "family": "largest",
+    "function": "train_largest_3",
+    "prompt": "Define train_largest_3(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_3(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-0",
+    "family": "largest",
+    "function": "train_largest_4",
+    "prompt": "Implement train_largest_4(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_4(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-1",
+    "family": "largest",
+    "function": "train_largest_4",
+    "prompt": "Write Python function train_largest_4(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_4(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-4-2",
+    "family": "largest",
+    "function": "train_largest_4",
+    "prompt": "Define train_largest_4(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_4(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-0",
+    "family": "largest",
+    "function": "train_largest_5",
+    "prompt": "Implement train_largest_5(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_5(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-1",
+    "family": "largest",
+    "function": "train_largest_5",
+    "prompt": "Write Python function train_largest_5(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_5(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-5-2",
+    "family": "largest",
+    "function": "train_largest_5",
+    "prompt": "Define train_largest_5(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_5(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-0",
+    "family": "largest",
+    "function": "train_largest_6",
+    "prompt": "Implement train_largest_6(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_6(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-1",
+    "family": "largest",
+    "function": "train_largest_6",
+    "prompt": "Write Python function train_largest_6(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_6(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-6-2",
+    "family": "largest",
+    "function": "train_largest_6",
+    "prompt": "Define train_largest_6(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_6(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-0",
+    "family": "largest",
+    "function": "train_largest_7",
+    "prompt": "Implement train_largest_7(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_7(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-1",
+    "family": "largest",
+    "function": "train_largest_7",
+    "prompt": "Write Python function train_largest_7(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_7(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-7-2",
+    "family": "largest",
+    "function": "train_largest_7",
+    "prompt": "Define train_largest_7(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_7(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-0",
+    "family": "largest",
+    "function": "train_largest_8",
+    "prompt": "Implement train_largest_8(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_8(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-1",
+    "family": "largest",
+    "function": "train_largest_8",
+    "prompt": "Write Python function train_largest_8(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_8(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-8-2",
+    "family": "largest",
+    "function": "train_largest_8",
+    "prompt": "Define train_largest_8(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_8(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-0",
+    "family": "largest",
+    "function": "train_largest_9",
+    "prompt": "Implement train_largest_9(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_9(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-1",
+    "family": "largest",
+    "function": "train_largest_9",
+    "prompt": "Write Python function train_largest_9(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_9(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-9-2",
+    "family": "largest",
+    "function": "train_largest_9",
+    "prompt": "Define train_largest_9(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_9(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-0",
+    "family": "largest",
+    "function": "train_largest_10",
+    "prompt": "Implement train_largest_10(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-1",
+    "family": "largest",
+    "function": "train_largest_10",
+    "prompt": "Write Python function train_largest_10(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-10-2",
+    "family": "largest",
+    "function": "train_largest_10",
+    "prompt": "Define train_largest_10(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_10(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-0",
+    "family": "largest",
+    "function": "train_largest_11",
+    "prompt": "Implement train_largest_11(values) returning the maximum of nonempty values.",
+    "answer": "def train_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-1",
+    "family": "largest",
+    "function": "train_largest_11",
+    "prompt": "Write Python function train_largest_11(values). It must return the maximum of nonempty values.",
+    "answer": "def train_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-largest-11-2",
+    "family": "largest",
+    "function": "train_largest_11",
+    "prompt": "Define train_largest_11(values) in Python to return the maximum of nonempty values.",
+    "answer": "def train_largest_11(values):\n    return max(values)\n"
+  },
+  {
+    "id": "train-smallest-0-0",
+    "family": "smallest",
+    "function": "train_smallest_0",
+    "prompt": "Implement train_smallest_0(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_0(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-0-1",
+    "family": "smallest",
+    "function": "train_smallest_0",
+    "prompt": "Write Python function train_smallest_0(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_0(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-0-2",
+    "family": "smallest",
+    "function": "train_smallest_0",
+    "prompt": "Define train_smallest_0(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_0(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-0",
+    "family": "smallest",
+    "function": "train_smallest_1",
+    "prompt": "Implement train_smallest_1(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_1(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-1",
+    "family": "smallest",
+    "function": "train_smallest_1",
+    "prompt": "Write Python function train_smallest_1(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_1(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-1-2",
+    "family": "smallest",
+    "function": "train_smallest_1",
+    "prompt": "Define train_smallest_1(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_1(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-0",
+    "family": "smallest",
+    "function": "train_smallest_2",
+    "prompt": "Implement train_smallest_2(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_2(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-1",
+    "family": "smallest",
+    "function": "train_smallest_2",
+    "prompt": "Write Python function train_smallest_2(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_2(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-2-2",
+    "family": "smallest",
+    "function": "train_smallest_2",
+    "prompt": "Define train_smallest_2(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_2(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-0",
+    "family": "smallest",
+    "function": "train_smallest_3",
+    "prompt": "Implement train_smallest_3(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_3(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-1",
+    "family": "smallest",
+    "function": "train_smallest_3",
+    "prompt": "Write Python function train_smallest_3(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_3(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-3-2",
+    "family": "smallest",
+    "function": "train_smallest_3",
+    "prompt": "Define train_smallest_3(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_3(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-0",
+    "family": "smallest",
+    "function": "train_smallest_4",
+    "prompt": "Implement train_smallest_4(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_4(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-1",
+    "family": "smallest",
+    "function": "train_smallest_4",
+    "prompt": "Write Python function train_smallest_4(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_4(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-4-2",
+    "family": "smallest",
+    "function": "train_smallest_4",
+    "prompt": "Define train_smallest_4(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_4(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-0",
+    "family": "smallest",
+    "function": "train_smallest_5",
+    "prompt": "Implement train_smallest_5(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_5(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-1",
+    "family": "smallest",
+    "function": "train_smallest_5",
+    "prompt": "Write Python function train_smallest_5(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_5(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-5-2",
+    "family": "smallest",
+    "function": "train_smallest_5",
+    "prompt": "Define train_smallest_5(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_5(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-0",
+    "family": "smallest",
+    "function": "train_smallest_6",
+    "prompt": "Implement train_smallest_6(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_6(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-1",
+    "family": "smallest",
+    "function": "train_smallest_6",
+    "prompt": "Write Python function train_smallest_6(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_6(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-6-2",
+    "family": "smallest",
+    "function": "train_smallest_6",
+    "prompt": "Define train_smallest_6(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_6(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-0",
+    "family": "smallest",
+    "function": "train_smallest_7",
+    "prompt": "Implement train_smallest_7(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_7(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-1",
+    "family": "smallest",
+    "function": "train_smallest_7",
+    "prompt": "Write Python function train_smallest_7(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_7(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-7-2",
+    "family": "smallest",
+    "function": "train_smallest_7",
+    "prompt": "Define train_smallest_7(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_7(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-0",
+    "family": "smallest",
+    "function": "train_smallest_8",
+    "prompt": "Implement train_smallest_8(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_8(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-1",
+    "family": "smallest",
+    "function": "train_smallest_8",
+    "prompt": "Write Python function train_smallest_8(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_8(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-8-2",
+    "family": "smallest",
+    "function": "train_smallest_8",
+    "prompt": "Define train_smallest_8(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_8(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-0",
+    "family": "smallest",
+    "function": "train_smallest_9",
+    "prompt": "Implement train_smallest_9(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_9(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-1",
+    "family": "smallest",
+    "function": "train_smallest_9",
+    "prompt": "Write Python function train_smallest_9(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_9(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-9-2",
+    "family": "smallest",
+    "function": "train_smallest_9",
+    "prompt": "Define train_smallest_9(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_9(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-0",
+    "family": "smallest",
+    "function": "train_smallest_10",
+    "prompt": "Implement train_smallest_10(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-1",
+    "family": "smallest",
+    "function": "train_smallest_10",
+    "prompt": "Write Python function train_smallest_10(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-10-2",
+    "family": "smallest",
+    "function": "train_smallest_10",
+    "prompt": "Define train_smallest_10(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_10(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-0",
+    "family": "smallest",
+    "function": "train_smallest_11",
+    "prompt": "Implement train_smallest_11(values) returning the minimum of nonempty values.",
+    "answer": "def train_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-1",
+    "family": "smallest",
+    "function": "train_smallest_11",
+    "prompt": "Write Python function train_smallest_11(values). It must return the minimum of nonempty values.",
+    "answer": "def train_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-smallest-11-2",
+    "family": "smallest",
+    "function": "train_smallest_11",
+    "prompt": "Define train_smallest_11(values) in Python to return the minimum of nonempty values.",
+    "answer": "def train_smallest_11(values):\n    return min(values)\n"
+  },
+  {
+    "id": "train-reverse-0-0",
+    "family": "reverse",
+    "function": "train_reverse_0",
+    "prompt": "Implement train_reverse_0(text) returning text reversed.",
+    "answer": "def train_reverse_0(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-0-1",
+    "family": "reverse",
+    "function": "train_reverse_0",
+    "prompt": "Write Python function train_reverse_0(text). It must return text reversed.",
+    "answer": "def train_reverse_0(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-0-2",
+    "family": "reverse",
+    "function": "train_reverse_0",
+    "prompt": "Define train_reverse_0(text) in Python to return text reversed.",
+    "answer": "def train_reverse_0(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-0",
+    "family": "reverse",
+    "function": "train_reverse_1",
+    "prompt": "Implement train_reverse_1(text) returning text reversed.",
+    "answer": "def train_reverse_1(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-1",
+    "family": "reverse",
+    "function": "train_reverse_1",
+    "prompt": "Write Python function train_reverse_1(text). It must return text reversed.",
+    "answer": "def train_reverse_1(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-1-2",
+    "family": "reverse",
+    "function": "train_reverse_1",
+    "prompt": "Define train_reverse_1(text) in Python to return text reversed.",
+    "answer": "def train_reverse_1(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-0",
+    "family": "reverse",
+    "function": "train_reverse_2",
+    "prompt": "Implement train_reverse_2(text) returning text reversed.",
+    "answer": "def train_reverse_2(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-1",
+    "family": "reverse",
+    "function": "train_reverse_2",
+    "prompt": "Write Python function train_reverse_2(text). It must return text reversed.",
+    "answer": "def train_reverse_2(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-2-2",
+    "family": "reverse",
+    "function": "train_reverse_2",
+    "prompt": "Define train_reverse_2(text) in Python to return text reversed.",
+    "answer": "def train_reverse_2(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-0",
+    "family": "reverse",
+    "function": "train_reverse_3",
+    "prompt": "Implement train_reverse_3(text) returning text reversed.",
+    "answer": "def train_reverse_3(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-1",
+    "family": "reverse",
+    "function": "train_reverse_3",
+    "prompt": "Write Python function train_reverse_3(text). It must return text reversed.",
+    "answer": "def train_reverse_3(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-3-2",
+    "family": "reverse",
+    "function": "train_reverse_3",
+    "prompt": "Define train_reverse_3(text) in Python to return text reversed.",
+    "answer": "def train_reverse_3(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-0",
+    "family": "reverse",
+    "function": "train_reverse_4",
+    "prompt": "Implement train_reverse_4(text) returning text reversed.",
+    "answer": "def train_reverse_4(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-1",
+    "family": "reverse",
+    "function": "train_reverse_4",
+    "prompt": "Write Python function train_reverse_4(text). It must return text reversed.",
+    "answer": "def train_reverse_4(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-4-2",
+    "family": "reverse",
+    "function": "train_reverse_4",
+    "prompt": "Define train_reverse_4(text) in Python to return text reversed.",
+    "answer": "def train_reverse_4(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-0",
+    "family": "reverse",
+    "function": "train_reverse_5",
+    "prompt": "Implement train_reverse_5(text) returning text reversed.",
+    "answer": "def train_reverse_5(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-1",
+    "family": "reverse",
+    "function": "train_reverse_5",
+    "prompt": "Write Python function train_reverse_5(text). It must return text reversed.",
+    "answer": "def train_reverse_5(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-5-2",
+    "family": "reverse",
+    "function": "train_reverse_5",
+    "prompt": "Define train_reverse_5(text) in Python to return text reversed.",
+    "answer": "def train_reverse_5(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-0",
+    "family": "reverse",
+    "function": "train_reverse_6",
+    "prompt": "Implement train_reverse_6(text) returning text reversed.",
+    "answer": "def train_reverse_6(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-1",
+    "family": "reverse",
+    "function": "train_reverse_6",
+    "prompt": "Write Python function train_reverse_6(text). It must return text reversed.",
+    "answer": "def train_reverse_6(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-6-2",
+    "family": "reverse",
+    "function": "train_reverse_6",
+    "prompt": "Define train_reverse_6(text) in Python to return text reversed.",
+    "answer": "def train_reverse_6(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-0",
+    "family": "reverse",
+    "function": "train_reverse_7",
+    "prompt": "Implement train_reverse_7(text) returning text reversed.",
+    "answer": "def train_reverse_7(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-1",
+    "family": "reverse",
+    "function": "train_reverse_7",
+    "prompt": "Write Python function train_reverse_7(text). It must return text reversed.",
+    "answer": "def train_reverse_7(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-7-2",
+    "family": "reverse",
+    "function": "train_reverse_7",
+    "prompt": "Define train_reverse_7(text) in Python to return text reversed.",
+    "answer": "def train_reverse_7(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-0",
+    "family": "reverse",
+    "function": "train_reverse_8",
+    "prompt": "Implement train_reverse_8(text) returning text reversed.",
+    "answer": "def train_reverse_8(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-1",
+    "family": "reverse",
+    "function": "train_reverse_8",
+    "prompt": "Write Python function train_reverse_8(text). It must return text reversed.",
+    "answer": "def train_reverse_8(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-8-2",
+    "family": "reverse",
+    "function": "train_reverse_8",
+    "prompt": "Define train_reverse_8(text) in Python to return text reversed.",
+    "answer": "def train_reverse_8(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-0",
+    "family": "reverse",
+    "function": "train_reverse_9",
+    "prompt": "Implement train_reverse_9(text) returning text reversed.",
+    "answer": "def train_reverse_9(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-1",
+    "family": "reverse",
+    "function": "train_reverse_9",
+    "prompt": "Write Python function train_reverse_9(text). It must return text reversed.",
+    "answer": "def train_reverse_9(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-9-2",
+    "family": "reverse",
+    "function": "train_reverse_9",
+    "prompt": "Define train_reverse_9(text) in Python to return text reversed.",
+    "answer": "def train_reverse_9(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-0",
+    "family": "reverse",
+    "function": "train_reverse_10",
+    "prompt": "Implement train_reverse_10(text) returning text reversed.",
+    "answer": "def train_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-1",
+    "family": "reverse",
+    "function": "train_reverse_10",
+    "prompt": "Write Python function train_reverse_10(text). It must return text reversed.",
+    "answer": "def train_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-10-2",
+    "family": "reverse",
+    "function": "train_reverse_10",
+    "prompt": "Define train_reverse_10(text) in Python to return text reversed.",
+    "answer": "def train_reverse_10(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-0",
+    "family": "reverse",
+    "function": "train_reverse_11",
+    "prompt": "Implement train_reverse_11(text) returning text reversed.",
+    "answer": "def train_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-1",
+    "family": "reverse",
+    "function": "train_reverse_11",
+    "prompt": "Write Python function train_reverse_11(text). It must return text reversed.",
+    "answer": "def train_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-reverse-11-2",
+    "family": "reverse",
+    "function": "train_reverse_11",
+    "prompt": "Define train_reverse_11(text) in Python to return text reversed.",
+    "answer": "def train_reverse_11(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "train-lower-0-0",
+    "family": "lower",
+    "function": "train_lower_0",
+    "prompt": "Implement train_lower_0(text) returning text in lowercase.",
+    "answer": "def train_lower_0(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-0-1",
+    "family": "lower",
+    "function": "train_lower_0",
+    "prompt": "Write Python function train_lower_0(text). It must return text in lowercase.",
+    "answer": "def train_lower_0(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-0-2",
+    "family": "lower",
+    "function": "train_lower_0",
+    "prompt": "Define train_lower_0(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_0(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-0",
+    "family": "lower",
+    "function": "train_lower_1",
+    "prompt": "Implement train_lower_1(text) returning text in lowercase.",
+    "answer": "def train_lower_1(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-1",
+    "family": "lower",
+    "function": "train_lower_1",
+    "prompt": "Write Python function train_lower_1(text). It must return text in lowercase.",
+    "answer": "def train_lower_1(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-1-2",
+    "family": "lower",
+    "function": "train_lower_1",
+    "prompt": "Define train_lower_1(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_1(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-0",
+    "family": "lower",
+    "function": "train_lower_2",
+    "prompt": "Implement train_lower_2(text) returning text in lowercase.",
+    "answer": "def train_lower_2(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-1",
+    "family": "lower",
+    "function": "train_lower_2",
+    "prompt": "Write Python function train_lower_2(text). It must return text in lowercase.",
+    "answer": "def train_lower_2(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-2-2",
+    "family": "lower",
+    "function": "train_lower_2",
+    "prompt": "Define train_lower_2(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_2(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-0",
+    "family": "lower",
+    "function": "train_lower_3",
+    "prompt": "Implement train_lower_3(text) returning text in lowercase.",
+    "answer": "def train_lower_3(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-1",
+    "family": "lower",
+    "function": "train_lower_3",
+    "prompt": "Write Python function train_lower_3(text). It must return text in lowercase.",
+    "answer": "def train_lower_3(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-3-2",
+    "family": "lower",
+    "function": "train_lower_3",
+    "prompt": "Define train_lower_3(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_3(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-0",
+    "family": "lower",
+    "function": "train_lower_4",
+    "prompt": "Implement train_lower_4(text) returning text in lowercase.",
+    "answer": "def train_lower_4(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-1",
+    "family": "lower",
+    "function": "train_lower_4",
+    "prompt": "Write Python function train_lower_4(text). It must return text in lowercase.",
+    "answer": "def train_lower_4(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-4-2",
+    "family": "lower",
+    "function": "train_lower_4",
+    "prompt": "Define train_lower_4(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_4(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-0",
+    "family": "lower",
+    "function": "train_lower_5",
+    "prompt": "Implement train_lower_5(text) returning text in lowercase.",
+    "answer": "def train_lower_5(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-1",
+    "family": "lower",
+    "function": "train_lower_5",
+    "prompt": "Write Python function train_lower_5(text). It must return text in lowercase.",
+    "answer": "def train_lower_5(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-5-2",
+    "family": "lower",
+    "function": "train_lower_5",
+    "prompt": "Define train_lower_5(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_5(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-0",
+    "family": "lower",
+    "function": "train_lower_6",
+    "prompt": "Implement train_lower_6(text) returning text in lowercase.",
+    "answer": "def train_lower_6(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-1",
+    "family": "lower",
+    "function": "train_lower_6",
+    "prompt": "Write Python function train_lower_6(text). It must return text in lowercase.",
+    "answer": "def train_lower_6(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-6-2",
+    "family": "lower",
+    "function": "train_lower_6",
+    "prompt": "Define train_lower_6(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_6(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-0",
+    "family": "lower",
+    "function": "train_lower_7",
+    "prompt": "Implement train_lower_7(text) returning text in lowercase.",
+    "answer": "def train_lower_7(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-1",
+    "family": "lower",
+    "function": "train_lower_7",
+    "prompt": "Write Python function train_lower_7(text). It must return text in lowercase.",
+    "answer": "def train_lower_7(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-7-2",
+    "family": "lower",
+    "function": "train_lower_7",
+    "prompt": "Define train_lower_7(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_7(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-0",
+    "family": "lower",
+    "function": "train_lower_8",
+    "prompt": "Implement train_lower_8(text) returning text in lowercase.",
+    "answer": "def train_lower_8(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-1",
+    "family": "lower",
+    "function": "train_lower_8",
+    "prompt": "Write Python function train_lower_8(text). It must return text in lowercase.",
+    "answer": "def train_lower_8(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-8-2",
+    "family": "lower",
+    "function": "train_lower_8",
+    "prompt": "Define train_lower_8(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_8(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-0",
+    "family": "lower",
+    "function": "train_lower_9",
+    "prompt": "Implement train_lower_9(text) returning text in lowercase.",
+    "answer": "def train_lower_9(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-1",
+    "family": "lower",
+    "function": "train_lower_9",
+    "prompt": "Write Python function train_lower_9(text). It must return text in lowercase.",
+    "answer": "def train_lower_9(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-9-2",
+    "family": "lower",
+    "function": "train_lower_9",
+    "prompt": "Define train_lower_9(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_9(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-0",
+    "family": "lower",
+    "function": "train_lower_10",
+    "prompt": "Implement train_lower_10(text) returning text in lowercase.",
+    "answer": "def train_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-1",
+    "family": "lower",
+    "function": "train_lower_10",
+    "prompt": "Write Python function train_lower_10(text). It must return text in lowercase.",
+    "answer": "def train_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-10-2",
+    "family": "lower",
+    "function": "train_lower_10",
+    "prompt": "Define train_lower_10(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_10(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-0",
+    "family": "lower",
+    "function": "train_lower_11",
+    "prompt": "Implement train_lower_11(text) returning text in lowercase.",
+    "answer": "def train_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-1",
+    "family": "lower",
+    "function": "train_lower_11",
+    "prompt": "Write Python function train_lower_11(text). It must return text in lowercase.",
+    "answer": "def train_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-lower-11-2",
+    "family": "lower",
+    "function": "train_lower_11",
+    "prompt": "Define train_lower_11(text) in Python to return text in lowercase.",
+    "answer": "def train_lower_11(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "train-upper-0-0",
+    "family": "upper",
+    "function": "train_upper_0",
+    "prompt": "Implement train_upper_0(text) returning text in uppercase.",
+    "answer": "def train_upper_0(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-0-1",
+    "family": "upper",
+    "function": "train_upper_0",
+    "prompt": "Write Python function train_upper_0(text). It must return text in uppercase.",
+    "answer": "def train_upper_0(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-0-2",
+    "family": "upper",
+    "function": "train_upper_0",
+    "prompt": "Define train_upper_0(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_0(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-0",
+    "family": "upper",
+    "function": "train_upper_1",
+    "prompt": "Implement train_upper_1(text) returning text in uppercase.",
+    "answer": "def train_upper_1(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-1",
+    "family": "upper",
+    "function": "train_upper_1",
+    "prompt": "Write Python function train_upper_1(text). It must return text in uppercase.",
+    "answer": "def train_upper_1(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-1-2",
+    "family": "upper",
+    "function": "train_upper_1",
+    "prompt": "Define train_upper_1(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_1(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-0",
+    "family": "upper",
+    "function": "train_upper_2",
+    "prompt": "Implement train_upper_2(text) returning text in uppercase.",
+    "answer": "def train_upper_2(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-1",
+    "family": "upper",
+    "function": "train_upper_2",
+    "prompt": "Write Python function train_upper_2(text). It must return text in uppercase.",
+    "answer": "def train_upper_2(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-2-2",
+    "family": "upper",
+    "function": "train_upper_2",
+    "prompt": "Define train_upper_2(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_2(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-0",
+    "family": "upper",
+    "function": "train_upper_3",
+    "prompt": "Implement train_upper_3(text) returning text in uppercase.",
+    "answer": "def train_upper_3(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-1",
+    "family": "upper",
+    "function": "train_upper_3",
+    "prompt": "Write Python function train_upper_3(text). It must return text in uppercase.",
+    "answer": "def train_upper_3(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-3-2",
+    "family": "upper",
+    "function": "train_upper_3",
+    "prompt": "Define train_upper_3(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_3(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-0",
+    "family": "upper",
+    "function": "train_upper_4",
+    "prompt": "Implement train_upper_4(text) returning text in uppercase.",
+    "answer": "def train_upper_4(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-1",
+    "family": "upper",
+    "function": "train_upper_4",
+    "prompt": "Write Python function train_upper_4(text). It must return text in uppercase.",
+    "answer": "def train_upper_4(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-4-2",
+    "family": "upper",
+    "function": "train_upper_4",
+    "prompt": "Define train_upper_4(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_4(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-0",
+    "family": "upper",
+    "function": "train_upper_5",
+    "prompt": "Implement train_upper_5(text) returning text in uppercase.",
+    "answer": "def train_upper_5(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-1",
+    "family": "upper",
+    "function": "train_upper_5",
+    "prompt": "Write Python function train_upper_5(text). It must return text in uppercase.",
+    "answer": "def train_upper_5(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-5-2",
+    "family": "upper",
+    "function": "train_upper_5",
+    "prompt": "Define train_upper_5(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_5(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-0",
+    "family": "upper",
+    "function": "train_upper_6",
+    "prompt": "Implement train_upper_6(text) returning text in uppercase.",
+    "answer": "def train_upper_6(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-1",
+    "family": "upper",
+    "function": "train_upper_6",
+    "prompt": "Write Python function train_upper_6(text). It must return text in uppercase.",
+    "answer": "def train_upper_6(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-6-2",
+    "family": "upper",
+    "function": "train_upper_6",
+    "prompt": "Define train_upper_6(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_6(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-0",
+    "family": "upper",
+    "function": "train_upper_7",
+    "prompt": "Implement train_upper_7(text) returning text in uppercase.",
+    "answer": "def train_upper_7(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-1",
+    "family": "upper",
+    "function": "train_upper_7",
+    "prompt": "Write Python function train_upper_7(text). It must return text in uppercase.",
+    "answer": "def train_upper_7(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-7-2",
+    "family": "upper",
+    "function": "train_upper_7",
+    "prompt": "Define train_upper_7(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_7(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-0",
+    "family": "upper",
+    "function": "train_upper_8",
+    "prompt": "Implement train_upper_8(text) returning text in uppercase.",
+    "answer": "def train_upper_8(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-1",
+    "family": "upper",
+    "function": "train_upper_8",
+    "prompt": "Write Python function train_upper_8(text). It must return text in uppercase.",
+    "answer": "def train_upper_8(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-8-2",
+    "family": "upper",
+    "function": "train_upper_8",
+    "prompt": "Define train_upper_8(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_8(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-0",
+    "family": "upper",
+    "function": "train_upper_9",
+    "prompt": "Implement train_upper_9(text) returning text in uppercase.",
+    "answer": "def train_upper_9(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-1",
+    "family": "upper",
+    "function": "train_upper_9",
+    "prompt": "Write Python function train_upper_9(text). It must return text in uppercase.",
+    "answer": "def train_upper_9(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-9-2",
+    "family": "upper",
+    "function": "train_upper_9",
+    "prompt": "Define train_upper_9(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_9(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-0",
+    "family": "upper",
+    "function": "train_upper_10",
+    "prompt": "Implement train_upper_10(text) returning text in uppercase.",
+    "answer": "def train_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-1",
+    "family": "upper",
+    "function": "train_upper_10",
+    "prompt": "Write Python function train_upper_10(text). It must return text in uppercase.",
+    "answer": "def train_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-10-2",
+    "family": "upper",
+    "function": "train_upper_10",
+    "prompt": "Define train_upper_10(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_10(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-0",
+    "family": "upper",
+    "function": "train_upper_11",
+    "prompt": "Implement train_upper_11(text) returning text in uppercase.",
+    "answer": "def train_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-1",
+    "family": "upper",
+    "function": "train_upper_11",
+    "prompt": "Write Python function train_upper_11(text). It must return text in uppercase.",
+    "answer": "def train_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-upper-11-2",
+    "family": "upper",
+    "function": "train_upper_11",
+    "prompt": "Define train_upper_11(text) in Python to return text in uppercase.",
+    "answer": "def train_upper_11(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "train-strip-0-0",
+    "family": "strip",
+    "function": "train_strip_0",
+    "prompt": "Implement train_strip_0(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_0(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-0-1",
+    "family": "strip",
+    "function": "train_strip_0",
+    "prompt": "Write Python function train_strip_0(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_0(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-0-2",
+    "family": "strip",
+    "function": "train_strip_0",
+    "prompt": "Define train_strip_0(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_0(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-0",
+    "family": "strip",
+    "function": "train_strip_1",
+    "prompt": "Implement train_strip_1(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_1(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-1",
+    "family": "strip",
+    "function": "train_strip_1",
+    "prompt": "Write Python function train_strip_1(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_1(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-1-2",
+    "family": "strip",
+    "function": "train_strip_1",
+    "prompt": "Define train_strip_1(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_1(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-0",
+    "family": "strip",
+    "function": "train_strip_2",
+    "prompt": "Implement train_strip_2(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_2(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-1",
+    "family": "strip",
+    "function": "train_strip_2",
+    "prompt": "Write Python function train_strip_2(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_2(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-2-2",
+    "family": "strip",
+    "function": "train_strip_2",
+    "prompt": "Define train_strip_2(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_2(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-0",
+    "family": "strip",
+    "function": "train_strip_3",
+    "prompt": "Implement train_strip_3(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_3(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-1",
+    "family": "strip",
+    "function": "train_strip_3",
+    "prompt": "Write Python function train_strip_3(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_3(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-3-2",
+    "family": "strip",
+    "function": "train_strip_3",
+    "prompt": "Define train_strip_3(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_3(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-0",
+    "family": "strip",
+    "function": "train_strip_4",
+    "prompt": "Implement train_strip_4(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_4(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-1",
+    "family": "strip",
+    "function": "train_strip_4",
+    "prompt": "Write Python function train_strip_4(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_4(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-4-2",
+    "family": "strip",
+    "function": "train_strip_4",
+    "prompt": "Define train_strip_4(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_4(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-0",
+    "family": "strip",
+    "function": "train_strip_5",
+    "prompt": "Implement train_strip_5(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_5(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-1",
+    "family": "strip",
+    "function": "train_strip_5",
+    "prompt": "Write Python function train_strip_5(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_5(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-5-2",
+    "family": "strip",
+    "function": "train_strip_5",
+    "prompt": "Define train_strip_5(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_5(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-0",
+    "family": "strip",
+    "function": "train_strip_6",
+    "prompt": "Implement train_strip_6(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_6(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-1",
+    "family": "strip",
+    "function": "train_strip_6",
+    "prompt": "Write Python function train_strip_6(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_6(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-6-2",
+    "family": "strip",
+    "function": "train_strip_6",
+    "prompt": "Define train_strip_6(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_6(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-0",
+    "family": "strip",
+    "function": "train_strip_7",
+    "prompt": "Implement train_strip_7(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_7(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-1",
+    "family": "strip",
+    "function": "train_strip_7",
+    "prompt": "Write Python function train_strip_7(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_7(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-7-2",
+    "family": "strip",
+    "function": "train_strip_7",
+    "prompt": "Define train_strip_7(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_7(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-0",
+    "family": "strip",
+    "function": "train_strip_8",
+    "prompt": "Implement train_strip_8(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_8(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-1",
+    "family": "strip",
+    "function": "train_strip_8",
+    "prompt": "Write Python function train_strip_8(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_8(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-8-2",
+    "family": "strip",
+    "function": "train_strip_8",
+    "prompt": "Define train_strip_8(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_8(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-0",
+    "family": "strip",
+    "function": "train_strip_9",
+    "prompt": "Implement train_strip_9(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_9(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-1",
+    "family": "strip",
+    "function": "train_strip_9",
+    "prompt": "Write Python function train_strip_9(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_9(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-9-2",
+    "family": "strip",
+    "function": "train_strip_9",
+    "prompt": "Define train_strip_9(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_9(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-0",
+    "family": "strip",
+    "function": "train_strip_10",
+    "prompt": "Implement train_strip_10(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-1",
+    "family": "strip",
+    "function": "train_strip_10",
+    "prompt": "Write Python function train_strip_10(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-10-2",
+    "family": "strip",
+    "function": "train_strip_10",
+    "prompt": "Define train_strip_10(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_10(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-0",
+    "family": "strip",
+    "function": "train_strip_11",
+    "prompt": "Implement train_strip_11(text) returning text without leading or trailing whitespace.",
+    "answer": "def train_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-1",
+    "family": "strip",
+    "function": "train_strip_11",
+    "prompt": "Write Python function train_strip_11(text). It must return text without leading or trailing whitespace.",
+    "answer": "def train_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-strip-11-2",
+    "family": "strip",
+    "function": "train_strip_11",
+    "prompt": "Define train_strip_11(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def train_strip_11(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "train-even-0-0",
+    "family": "even",
+    "function": "train_even_0",
+    "prompt": "Implement train_even_0(x) returning whether x is even.",
+    "answer": "def train_even_0(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-0-1",
+    "family": "even",
+    "function": "train_even_0",
+    "prompt": "Write Python function train_even_0(x). It must return whether x is even.",
+    "answer": "def train_even_0(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-0-2",
+    "family": "even",
+    "function": "train_even_0",
+    "prompt": "Define train_even_0(x) in Python to return whether x is even.",
+    "answer": "def train_even_0(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-0",
+    "family": "even",
+    "function": "train_even_1",
+    "prompt": "Implement train_even_1(x) returning whether x is even.",
+    "answer": "def train_even_1(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-1",
+    "family": "even",
+    "function": "train_even_1",
+    "prompt": "Write Python function train_even_1(x). It must return whether x is even.",
+    "answer": "def train_even_1(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-1-2",
+    "family": "even",
+    "function": "train_even_1",
+    "prompt": "Define train_even_1(x) in Python to return whether x is even.",
+    "answer": "def train_even_1(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-0",
+    "family": "even",
+    "function": "train_even_2",
+    "prompt": "Implement train_even_2(x) returning whether x is even.",
+    "answer": "def train_even_2(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-1",
+    "family": "even",
+    "function": "train_even_2",
+    "prompt": "Write Python function train_even_2(x). It must return whether x is even.",
+    "answer": "def train_even_2(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-2-2",
+    "family": "even",
+    "function": "train_even_2",
+    "prompt": "Define train_even_2(x) in Python to return whether x is even.",
+    "answer": "def train_even_2(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-0",
+    "family": "even",
+    "function": "train_even_3",
+    "prompt": "Implement train_even_3(x) returning whether x is even.",
+    "answer": "def train_even_3(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-1",
+    "family": "even",
+    "function": "train_even_3",
+    "prompt": "Write Python function train_even_3(x). It must return whether x is even.",
+    "answer": "def train_even_3(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-3-2",
+    "family": "even",
+    "function": "train_even_3",
+    "prompt": "Define train_even_3(x) in Python to return whether x is even.",
+    "answer": "def train_even_3(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-0",
+    "family": "even",
+    "function": "train_even_4",
+    "prompt": "Implement train_even_4(x) returning whether x is even.",
+    "answer": "def train_even_4(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-1",
+    "family": "even",
+    "function": "train_even_4",
+    "prompt": "Write Python function train_even_4(x). It must return whether x is even.",
+    "answer": "def train_even_4(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-4-2",
+    "family": "even",
+    "function": "train_even_4",
+    "prompt": "Define train_even_4(x) in Python to return whether x is even.",
+    "answer": "def train_even_4(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-0",
+    "family": "even",
+    "function": "train_even_5",
+    "prompt": "Implement train_even_5(x) returning whether x is even.",
+    "answer": "def train_even_5(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-1",
+    "family": "even",
+    "function": "train_even_5",
+    "prompt": "Write Python function train_even_5(x). It must return whether x is even.",
+    "answer": "def train_even_5(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-5-2",
+    "family": "even",
+    "function": "train_even_5",
+    "prompt": "Define train_even_5(x) in Python to return whether x is even.",
+    "answer": "def train_even_5(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-0",
+    "family": "even",
+    "function": "train_even_6",
+    "prompt": "Implement train_even_6(x) returning whether x is even.",
+    "answer": "def train_even_6(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-1",
+    "family": "even",
+    "function": "train_even_6",
+    "prompt": "Write Python function train_even_6(x). It must return whether x is even.",
+    "answer": "def train_even_6(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-6-2",
+    "family": "even",
+    "function": "train_even_6",
+    "prompt": "Define train_even_6(x) in Python to return whether x is even.",
+    "answer": "def train_even_6(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-0",
+    "family": "even",
+    "function": "train_even_7",
+    "prompt": "Implement train_even_7(x) returning whether x is even.",
+    "answer": "def train_even_7(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-1",
+    "family": "even",
+    "function": "train_even_7",
+    "prompt": "Write Python function train_even_7(x). It must return whether x is even.",
+    "answer": "def train_even_7(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-7-2",
+    "family": "even",
+    "function": "train_even_7",
+    "prompt": "Define train_even_7(x) in Python to return whether x is even.",
+    "answer": "def train_even_7(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-0",
+    "family": "even",
+    "function": "train_even_8",
+    "prompt": "Implement train_even_8(x) returning whether x is even.",
+    "answer": "def train_even_8(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-1",
+    "family": "even",
+    "function": "train_even_8",
+    "prompt": "Write Python function train_even_8(x). It must return whether x is even.",
+    "answer": "def train_even_8(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-8-2",
+    "family": "even",
+    "function": "train_even_8",
+    "prompt": "Define train_even_8(x) in Python to return whether x is even.",
+    "answer": "def train_even_8(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-0",
+    "family": "even",
+    "function": "train_even_9",
+    "prompt": "Implement train_even_9(x) returning whether x is even.",
+    "answer": "def train_even_9(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-1",
+    "family": "even",
+    "function": "train_even_9",
+    "prompt": "Write Python function train_even_9(x). It must return whether x is even.",
+    "answer": "def train_even_9(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-9-2",
+    "family": "even",
+    "function": "train_even_9",
+    "prompt": "Define train_even_9(x) in Python to return whether x is even.",
+    "answer": "def train_even_9(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-0",
+    "family": "even",
+    "function": "train_even_10",
+    "prompt": "Implement train_even_10(x) returning whether x is even.",
+    "answer": "def train_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-1",
+    "family": "even",
+    "function": "train_even_10",
+    "prompt": "Write Python function train_even_10(x). It must return whether x is even.",
+    "answer": "def train_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-10-2",
+    "family": "even",
+    "function": "train_even_10",
+    "prompt": "Define train_even_10(x) in Python to return whether x is even.",
+    "answer": "def train_even_10(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-0",
+    "family": "even",
+    "function": "train_even_11",
+    "prompt": "Implement train_even_11(x) returning whether x is even.",
+    "answer": "def train_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-1",
+    "family": "even",
+    "function": "train_even_11",
+    "prompt": "Write Python function train_even_11(x). It must return whether x is even.",
+    "answer": "def train_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-even-11-2",
+    "family": "even",
+    "function": "train_even_11",
+    "prompt": "Define train_even_11(x) in Python to return whether x is even.",
+    "answer": "def train_even_11(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "train-positive-0-0",
+    "family": "positive",
+    "function": "train_positive_0",
+    "prompt": "Implement train_positive_0(x) returning whether x is positive.",
+    "answer": "def train_positive_0(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-0-1",
+    "family": "positive",
+    "function": "train_positive_0",
+    "prompt": "Write Python function train_positive_0(x). It must return whether x is positive.",
+    "answer": "def train_positive_0(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-0-2",
+    "family": "positive",
+    "function": "train_positive_0",
+    "prompt": "Define train_positive_0(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_0(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-0",
+    "family": "positive",
+    "function": "train_positive_1",
+    "prompt": "Implement train_positive_1(x) returning whether x is positive.",
+    "answer": "def train_positive_1(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-1",
+    "family": "positive",
+    "function": "train_positive_1",
+    "prompt": "Write Python function train_positive_1(x). It must return whether x is positive.",
+    "answer": "def train_positive_1(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-1-2",
+    "family": "positive",
+    "function": "train_positive_1",
+    "prompt": "Define train_positive_1(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_1(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-0",
+    "family": "positive",
+    "function": "train_positive_2",
+    "prompt": "Implement train_positive_2(x) returning whether x is positive.",
+    "answer": "def train_positive_2(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-1",
+    "family": "positive",
+    "function": "train_positive_2",
+    "prompt": "Write Python function train_positive_2(x). It must return whether x is positive.",
+    "answer": "def train_positive_2(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-2-2",
+    "family": "positive",
+    "function": "train_positive_2",
+    "prompt": "Define train_positive_2(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_2(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-0",
+    "family": "positive",
+    "function": "train_positive_3",
+    "prompt": "Implement train_positive_3(x) returning whether x is positive.",
+    "answer": "def train_positive_3(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-1",
+    "family": "positive",
+    "function": "train_positive_3",
+    "prompt": "Write Python function train_positive_3(x). It must return whether x is positive.",
+    "answer": "def train_positive_3(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-3-2",
+    "family": "positive",
+    "function": "train_positive_3",
+    "prompt": "Define train_positive_3(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_3(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-0",
+    "family": "positive",
+    "function": "train_positive_4",
+    "prompt": "Implement train_positive_4(x) returning whether x is positive.",
+    "answer": "def train_positive_4(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-1",
+    "family": "positive",
+    "function": "train_positive_4",
+    "prompt": "Write Python function train_positive_4(x). It must return whether x is positive.",
+    "answer": "def train_positive_4(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-4-2",
+    "family": "positive",
+    "function": "train_positive_4",
+    "prompt": "Define train_positive_4(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_4(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-0",
+    "family": "positive",
+    "function": "train_positive_5",
+    "prompt": "Implement train_positive_5(x) returning whether x is positive.",
+    "answer": "def train_positive_5(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-1",
+    "family": "positive",
+    "function": "train_positive_5",
+    "prompt": "Write Python function train_positive_5(x). It must return whether x is positive.",
+    "answer": "def train_positive_5(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-5-2",
+    "family": "positive",
+    "function": "train_positive_5",
+    "prompt": "Define train_positive_5(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_5(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-0",
+    "family": "positive",
+    "function": "train_positive_6",
+    "prompt": "Implement train_positive_6(x) returning whether x is positive.",
+    "answer": "def train_positive_6(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-1",
+    "family": "positive",
+    "function": "train_positive_6",
+    "prompt": "Write Python function train_positive_6(x). It must return whether x is positive.",
+    "answer": "def train_positive_6(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-6-2",
+    "family": "positive",
+    "function": "train_positive_6",
+    "prompt": "Define train_positive_6(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_6(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-0",
+    "family": "positive",
+    "function": "train_positive_7",
+    "prompt": "Implement train_positive_7(x) returning whether x is positive.",
+    "answer": "def train_positive_7(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-1",
+    "family": "positive",
+    "function": "train_positive_7",
+    "prompt": "Write Python function train_positive_7(x). It must return whether x is positive.",
+    "answer": "def train_positive_7(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-7-2",
+    "family": "positive",
+    "function": "train_positive_7",
+    "prompt": "Define train_positive_7(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_7(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-0",
+    "family": "positive",
+    "function": "train_positive_8",
+    "prompt": "Implement train_positive_8(x) returning whether x is positive.",
+    "answer": "def train_positive_8(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-1",
+    "family": "positive",
+    "function": "train_positive_8",
+    "prompt": "Write Python function train_positive_8(x). It must return whether x is positive.",
+    "answer": "def train_positive_8(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-8-2",
+    "family": "positive",
+    "function": "train_positive_8",
+    "prompt": "Define train_positive_8(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_8(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-0",
+    "family": "positive",
+    "function": "train_positive_9",
+    "prompt": "Implement train_positive_9(x) returning whether x is positive.",
+    "answer": "def train_positive_9(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-1",
+    "family": "positive",
+    "function": "train_positive_9",
+    "prompt": "Write Python function train_positive_9(x). It must return whether x is positive.",
+    "answer": "def train_positive_9(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-9-2",
+    "family": "positive",
+    "function": "train_positive_9",
+    "prompt": "Define train_positive_9(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_9(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-0",
+    "family": "positive",
+    "function": "train_positive_10",
+    "prompt": "Implement train_positive_10(x) returning whether x is positive.",
+    "answer": "def train_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-1",
+    "family": "positive",
+    "function": "train_positive_10",
+    "prompt": "Write Python function train_positive_10(x). It must return whether x is positive.",
+    "answer": "def train_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-10-2",
+    "family": "positive",
+    "function": "train_positive_10",
+    "prompt": "Define train_positive_10(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_10(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-0",
+    "family": "positive",
+    "function": "train_positive_11",
+    "prompt": "Implement train_positive_11(x) returning whether x is positive.",
+    "answer": "def train_positive_11(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-1",
+    "family": "positive",
+    "function": "train_positive_11",
+    "prompt": "Write Python function train_positive_11(x). It must return whether x is positive.",
+    "answer": "def train_positive_11(x):\n    return x > 0\n"
+  },
+  {
+    "id": "train-positive-11-2",
+    "family": "positive",
+    "function": "train_positive_11",
+    "prompt": "Define train_positive_11(x) in Python to return whether x is positive.",
+    "answer": "def train_positive_11(x):\n    return x > 0\n"
+  }
+]

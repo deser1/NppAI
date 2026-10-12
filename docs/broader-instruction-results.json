@@ -1,0 +1,449 @@
+{
+  "seed": 42,
+  "steps": 3000,
+  "batch_size": 4,
+  "context": 256,
+  "dataset_manifest": {
+    "version": 1,
+    "source": "project-authored synthetic templates",
+    "limitations": "Template variations are correlated; sample count is not independent task diversity.",
+    "unseen_test_families": [
+      "clamp",
+      "join",
+      "sort",
+      "unique"
+    ],
+    "splits": {
+      "train": {
+        "count": 576,
+        "sha256": "9c3104f0e63fc8be24efa22c9d9bea6aa19ff91a1d27fc53493afb30ee06eb69"
+      },
+      "validation": {
+        "count": 16,
+        "sha256": "68376771012a8f80f7a4a0bb1203fc07ef3459c2a05788719de044dcb2a4326a"
+      },
+      "test": {
+        "count": 28,
+        "sha256": "943bf3edc8d27b5b71a5770bd3244ec4881b1ee31b419775e5959293e43fd9dd"
+      }
+    }
+  },
+  "model_sha256": "88a6b3b40b85ab50a1ef384a381771ac60fc9b69b6355f5390ca9fdd9be175d6",
+  "initial_training_loss": 5.736998081207275,
+  "final_training_loss": 0.05047121271491051,
+  "validation": {
+    "total": 16,
+    "nonempty": 16,
+    "syntax_requested_function": 0,
+    "exact_match": 0,
+    "mean_response_loss": 4.795851647853851,
+    "cases": [
+      {
+        "id": "validation-add-0-1",
+        "family": "add",
+        "output": "def tradd_ly_1mure_8(vabs):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.584106922149658
+      },
+      {
+        "id": "validation-subtract-0-1",
+        "family": "subtract",
+        "output": "def train_ltiplera, bth_10(va  bsturesturn bs):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.968881607055664
+      },
+      {
+        "id": "validation-multiply-0-1",
+        "family": "multiply",
+        "output": "deref t_1(va, letuest_1(va, res)\n a * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.496522426605225
+      },
+      {
+        "id": "validation-square-0-1",
+        "family": "square",
+        "output": "def train_aingtevain t_1(vale_1(vab):\n    rn x > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.280487537384033
+      },
+      {
+        "id": "validation-negate-0-1",
+        "family": "negate",
+        "output": "def train_totalargt):\n  bs):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.557708263397217
+      },
+      {
+        "id": "validation-absolute-0-1",
+        "family": "absolute",
+        "output": "def t.surn te_1(vab):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.241765975952148
+      },
+      {
+        "id": "validation-length-0-1",
+        "family": "length",
+        "output": "de_2(va, bs):\n   lueturn len b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.8599114418029785
+      },
+      {
+        "id": "validation-total-0-1",
+        "family": "total",
+        "output": "def traly_length_8(valalues):\n    return min(valures)n minvalues)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.277153491973877
+      },
+      {
+        "id": "validation-largest-0-1",
+        "family": "largest",
+        "output": "de_s):\n    retur_1(vaxales):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.008240222930908
+      },
+      {
+        "id": "validation-smallest-0-1",
+        "family": "smallest",
+        "output": " aluref s):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.713873386383057
+      },
+      {
+        "id": "validation-reverse-0-1",
+        "family": "reverse",
+        "output": "de_10(value_1(ven    retuex):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.600949764251709
+      },
+      {
+        "id": "validation-lower-0-1",
+        "family": "lower",
+        "output": "def train_pler):\n    res)\n  > rn * x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.8250932693481445
+      },
+      {
+        "id": "validation-upper-0-1",
+        "family": "upper",
+        "output": "def train_1(x\n re_1]\n ter(vax\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.155628204345703
+      },
+      {
+        "id": "validation-strip-0-1",
+        "family": "strip",
+        "output": "deref rrrr alowern minges)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 6.608893394470215
+      },
+      {
+        "id": "validation-even-0-1",
+        "family": "even",
+        "output": "def train_smaiplevef towevale_1(vetuexturn abs)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.475567817687988
+      },
+      {
+        "id": "validation-positive-0-1",
+        "family": "positive",
+        "output": "def tin_stef tiplowen_1(valestrin     rn r(valurn max)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.078842639923096
+      }
+    ]
+  },
+  "test": {
+    "total": 28,
+    "nonempty": 27,
+    "syntax_requested_function": 0,
+    "exact_match": 0,
+    "mean_response_loss": 4.276022877011981,
+    "cases": [
+      {
+        "id": "test-add-0-2",
+        "family": "add",
+        "output": "def tractrait_mua, b):\n   return b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.7068183422088623
+      },
+      {
+        "id": "test-subtract-0-2",
+        "family": "subtract",
+        "output": "desqualrain_stal_8(va      return a, b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.912633180618286
+      },
+      {
+        "id": "test-multiply-0-2",
+        "family": "multiply",
+        "output": "def tin_m(x):\n   return b):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 2.564404010772705
+      },
+      {
+        "id": "test-square-0-2",
+        "family": "square",
+        "output": "def train_sub):\n    b):\n     rerereturn -x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.042072772979736
+      },
+      {
+        "id": "test-negate-0-2",
+        "family": "negate",
+        "output": "def train_posef tef ):\n r_8(x):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.6063232421875
+      },
+      {
+        "id": "test-absolute-0-2",
+        "family": "absolute",
+        "output": "devain_sotut_8(x):\n    return x *  bsm(va x(vx)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 2.81823992729187
+      },
+      {
+        "id": "test-length-0-2",
+        "family": "length",
+        "output": "def tracth_length_8(x):\n    return a, bs):\n  b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.3208818435668945
+      },
+      {
+        "id": "test-total-0-2",
+        "family": "total",
+        "output": "def totrain_tef  ten_smacta, b):\n    return alurn b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 2.768749952316284
+      },
+      {
+        "id": "test-largest-0-2",
+        "family": "largest",
+        "output": "  b):\n    ref tureturn_1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.4491004943847656
+      },
+      {
+        "id": "test-smallest-0-2",
+        "family": "smallest",
+        "output": "def train_larges):\n    return lengtures):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 2.0256760120391846
+      },
+      {
+        "id": "test-reverse-0-2",
+        "family": "reverse",
+        "output": "def traitef  tratetritext):\n    tetext.urn r()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.344234943389893
+      },
+      {
+        "id": "test-lower-0-2",
+        "family": "lower",
+        "output": "def train_lengte_8(ven     return x > 0(va > > + 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.477063179016113
+      },
+      {
+        "id": "test-upper-0-2",
+        "family": "upper",
+        "output": "def tratrain_squre_8(x):\n    returet[:\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.694712162017822
+      },
+      {
+        "id": "test-strip-0-2",
+        "family": "strip",
+        "output": "de_smure_8(xtext):\n    rn xt[:\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.174468517303467
+      },
+      {
+        "id": "test-even-0-2",
+        "family": "even",
+        "output": "def train_reveneveve_8(tex):\n    return > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.412717580795288
+      },
+      {
+        "id": "test-positive-0-2",
+        "family": "positive",
+        "output": "def train_te_setext):\n    reteturn text.urn text.ipper()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.915370464324951
+      },
+      {
+        "id": "test-sort-0-0",
+        "family": "sort",
+        "output": "def train_lengevaln  tes):\n     returetues):-1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.6769142150878906
+      },
+      {
+        "id": "test-sort-1-1",
+        "family": "sort",
+        "output": "def train_lengte_8(x):\n  return texturn turn()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.522398948669434
+      },
+      {
+        "id": "test-sort-2-2",
+        "family": "sort",
+        "output": "devef train_8(values):\n    return letup(va * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.3898961544036865
+      },
+      {
+        "id": "test-unique-0-0",
+        "family": "unique",
+        "output": " tef tef tural_1(valures(values):\n  retues):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.463683605194092
+      },
+      {
+        "id": "test-unique-1-1",
+        "family": "unique",
+        "output": "",
+        "nonempty": false,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 4.667140960693359
+      },
+      {
+        "id": "test-unique-2-2",
+        "family": "unique",
+        "output": "de_1(alalues):\n    return -1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.229578495025635
+      },
+      {
+        "id": "test-join-0-0",
+        "family": "join",
+        "output": "desvalalallues):\n   rn t_10(valuetuen b\n rn 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.7263476848602295
+      },
+      {
+        "id": "test-join-1-1",
+        "family": "join",
+        "output": "def tr_2(valuestues)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 5.06306266784668
+      },
+      {
+        "id": "test-join-2-2",
+        "family": "join",
+        "output": "degatotraralth_8(values):\n    returen aletrip(ves)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 3.955197334289551
+      },
+      {
+        "id": "test-clamp-0-0",
+        "family": "clamp",
+        "output": "def tr_lef tin_10(a,  retes)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 6.41156530380249
+      },
+      {
+        "id": "test-clamp-1-1",
+        "family": "clamp",
+        "output": "de_8(valarges):\n  retuplowen_0(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 7.292416095733643
+      },
+      {
+        "id": "test-clamp-2-2",
+        "family": "clamp",
+        "output": "def trarara, rares):\n a  bs):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "exact_match": false,
+        "response_loss": 6.096972465515137
+      }
+    ]
+  },
+  "limitations": "Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. One fixed-budget experiment; test results are not used to tune training."
+}

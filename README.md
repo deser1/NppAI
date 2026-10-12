@@ -191,6 +191,10 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [frozen broader dataset experiment](docs/broader-instruction-experiment.md)
+uses 576 synthetic training records and 28 unseen test tasks. Its actual failures
+and held-out loss are recorded alongside the dataset hashes.
+
 The [instruction-training experiment](docs/instruction-training-experiment.md)
 records an actual 2000-step comparison: nonempty responses improved, but held-out
 syntax remained 0/3. Training-example reconstruction is reported separately.
