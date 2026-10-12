@@ -191,6 +191,10 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [identifier-distribution experiment](docs/instruction-identifier-ablation.md)
+improves synthetic test syntax to 15/28 locally, but requested identifiers remain
+wrong. These outputs are not counted as successfully completed tasks.
+
 The [frozen broader dataset experiment](docs/broader-instruction-experiment.md)
 uses 576 synthetic training records and 28 unseen test tasks. Its actual failures
 and held-out loss are recorded alongside the dataset hashes.

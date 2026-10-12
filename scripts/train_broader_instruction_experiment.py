@@ -38,18 +38,32 @@ def evaluate(model, records, context):
         for record in records:
             text = generate(model, record["prompt"], context)
             syntax = False
+            any_function = False
+            body_match = False
             try:
                 tree = ast.parse(text)
+                any_function = any(isinstance(n,ast.FunctionDef) for n in tree.body)
                 syntax = any(isinstance(n, ast.FunctionDef) and n.name == record["function"] for n in tree.body)
+                reference = ast.parse(record["answer"])
+                if len(tree.body)==1 and isinstance(tree.body[0],ast.FunctionDef):
+                    # Diagnostic only: ignore the function name in both ASTs.
+                    # This does not count as passing the requested task.
+                    tree.body[0].name = "__function__"
+                    reference.body[0].name = "__function__"
+                    body_match = ast.dump(tree)==ast.dump(reference)
             except SyntaxError:
                 pass
             x, y = sample(record, context)
             loss = F.cross_entropy(model(x.unsqueeze(0)).reshape(-1,256), y, ignore_index=-100)
             cases.append({"id":record["id"], "family":record["family"], "output":text,
                 "nonempty":bool(text.strip()), "syntax_requested_function":syntax,
+                "syntax_any_function":any_function,
+                "ast_match_ignoring_function_name":body_match,
                 "exact_match":text == record["answer"], "response_loss":float(loss)})
     return {"total":len(cases), "nonempty":sum(c["nonempty"] for c in cases),
         "syntax_requested_function":sum(c["syntax_requested_function"] for c in cases),
+        "syntax_any_function":sum(c["syntax_any_function"] for c in cases),
+        "ast_match_ignoring_function_name":sum(c["ast_match_ignoring_function_name"] for c in cases),
         "exact_match":sum(c["exact_match"] for c in cases),
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 

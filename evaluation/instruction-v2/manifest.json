@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "source": "project-authored synthetic templates",
+  "limitations": "Template variations are correlated; sample count is not independent task diversity.",
+  "unseen_test_families": [
+    "clamp",
+    "join",
+    "sort",
+    "unique"
+  ],
+  "splits": {
+    "train": {
+      "count": 576,
+      "sha256": "cb9a1b49326370b607e6a640eea73d09c9b03eea44970b2602c528fb2813f98d"
+    },
+    "validation": {
+      "count": 16,
+      "sha256": "9c9a33523795b77362eadb4beb7508b63b6edeee36dfc092397880533366c7b0"
+    },
+    "test": {
+      "count": 28,
+      "sha256": "ff07d4db74c4c7d702f22bc65201c5b869db4dd8b9444d91112315a4f10476f4"
+    }
+  }
+}

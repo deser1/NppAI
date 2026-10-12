@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add frozen instruction dataset v2 with a shared identifier format across splits; compare v1/v2 and report function-name copying failures separately from syntax and reference AST matching.
+
 - Freeze synthetic instruction dataset v1 (576 train, 16 validation, 28 test), verify split isolation, and add a 3000-step experiment with held-out loss and raw generation reports.
 
 - Add bounded response-only instruction training with task-level holdout and explicit baseline comparison; publish measured memorization and held-out failures.

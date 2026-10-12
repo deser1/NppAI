@@ -33,9 +33,9 @@ UNSEEN = {
 }
 
 
-def record(family, spec, index, style, split):
+def record(family, spec, index, style, split, version=1):
     args, body, description = spec
-    name = f"{split}_{family}_{index}"
+    name = f"{split}_{family}_{index}" if version == 1 else f"fn_{family}_{index:02d}"
     signature = name + "(" + args + ")"
     prompts = [f"Implement {signature} returning {description}.",
                f"Write Python function {signature}. It must return {description}.",
@@ -45,17 +45,19 @@ def record(family, spec, index, style, split):
             "answer": f"def {signature}:\n    {body}\n"}
 
 
-def build():
+def build(version=1):
+    if version not in (1,2):
+        raise ValueError("dataset version must be 1 or 2")
     train, validation, test = [], [], []
     for family, spec in FAMILIES.items():
         for index in range(12):
             for style in range(3):
-                train.append(record(family, spec, index, style, "train"))
-        validation.append(record(family, spec, 0, 1, "validation"))
-        test.append(record(family, spec, 0, 2, "test"))
+                train.append(record(family, spec, index, style, "train",version))
+        validation.append(record(family, spec, 0 if version==1 else 12, 1, "validation",version))
+        test.append(record(family, spec, 0 if version==1 else 13, 2, "test",version))
     for family, spec in UNSEEN.items():
         for index in range(3):
-            test.append(record(family, spec, index, index, "test"))
+            test.append(record(family, spec, index, index, "test",version))
     # Exact prompts, function identifiers and responses may not cross splits.
     for field in ("prompt", "function", "answer"):
         sets = [{item[field] for item in records} for records in (train, validation, test)]
@@ -64,13 +66,13 @@ def build():
     return {"train": train, "validation": validation, "test": test}
 
 
-def save(directory):
+def save(directory, version=1):
     root = Path(directory)
     root.mkdir(parents=True, exist_ok=True)
-    manifest = {"version": 1, "source": "project-authored synthetic templates",
+    manifest = {"version": version, "source": "project-authored synthetic templates",
                 "limitations": "Template variations are correlated; sample count is not independent task diversity.",
                 "unseen_test_families": sorted(UNSEEN), "splits": {}}
-    for split, records in build().items():
+    for split, records in build(version).items():
         raw = json.dumps(records, indent=2, ensure_ascii=False)+"\n"
         (root/f"{split}.json").write_text(raw, encoding="utf-8")
         manifest["splits"][split] = {"count": len(records),
@@ -82,4 +84,6 @@ def save(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True)
-    save(parser.parse_args().output)
+    parser.add_argument("--version",type=int,choices=(1,2),default=1)
+    args=parser.parse_args()
+    save(args.output,args.version)

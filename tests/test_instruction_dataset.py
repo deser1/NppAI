@@ -21,6 +21,15 @@ class DatasetIsolationTests(unittest.TestCase):
                 tree=ast.parse(record["answer"])
                 self.assertEqual(tree.body[0].name,record["function"])
 
+    def test_v2_uses_same_identifier_shape_in_all_splits(self):
+        import re
+        data=build(2)
+        for records in data.values():
+            for record in records:
+                self.assertRegex(record["function"],r"^fn_[a-z]+_[0-9]{2}$")
+        ids=[{r["function"] for r in data[k]} for k in ("train","validation","test")]
+        self.assertFalse(ids[0]&ids[1] or ids[0]&ids[2] or ids[1]&ids[2])
+
 
 if __name__=="__main__":
     unittest.main()
