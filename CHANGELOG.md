@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Add bounded response-only instruction training with task-level holdout and explicit baseline comparison; publish measured memorization and held-out failures.
+
+- Compare dense checkpoint logits across PyTorch FP32, NumPy FP32/INT8 references and native INT8 inference with checkpoint hash evidence.
+
 - Optimized incremental RAG source replacement by removing only invalidated document keys instead of rebuilding the complete key set; added regression coverage for source replacement and deletion. Indexing performance awaits CI benchmark validation.
 
 - Documented RAG quality/performance tradeoffs using validated CI indexing latency, process peak RSS, retrieval median/p95, and ranking quality; production ranking weights remain unchanged.
@@ -16,6 +20,14 @@
 - Added a deterministic CI benchmark comparing 8-expert dense combination with top-2 MoE routing; initial windows-2022 x64 baseline measured 20.962 us/op dense versus 21.1726 us/op MoE (0.990x dense/MoE ratio), documenting that the current routing path is not yet a speedup.
 
 # Changelog
+
+## Unreleased
+
+- Add smoke checks for published release ZIPs and the production x64 DLL exports.
+- Validate newly packaged release ZIPs before uploading them to GitHub Releases.
+- Print checkpoint provenance and generation diagnostics in native evaluation logs.
+- Fail native evaluation on failed or whitespace-only completions after preserving diagnostics.
+- Document the measured empty-completion baseline and reproducible demo procedure.
 
 All notable changes to NppAI are documented in this file.
 

@@ -46,10 +46,20 @@ jobs:
           Compress-Archive -Path "release\\${{ matrix.package }}" -DestinationPath "release\\${{ matrix.package }}.zip"
 
       - name: Upload package artifact
+        # Test the actual ZIP before publishing it.
+        # ARM64/x86 packages receive structural checks; only x64 can load here.
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.package }}
           path: release/${{ matrix.package }}.zip
+
+      - name: Smoke test packaged ZIP
+        shell: pwsh
+        run: |
+          $load = @()
+          if ('${{ matrix.platform }}' -eq 'x64') { $load = @('--load-dll') }
+          python scripts/smoke_release_package.py "release/${{ matrix.package }}.zip" @load
+          if ($LASTEXITCODE -ne 0) { throw 'Release ZIP smoke test failed' }
 
       - name: Attach package to GitHub release
         shell: pwsh

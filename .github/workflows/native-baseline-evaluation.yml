@@ -15,6 +15,8 @@ on:
       - 'scripts/run_model_code_evaluation.py'
       - 'test_engine.cpp'
       - 'src/NppAIEngine.cpp'
+      - 'scripts/check_dense_runtime_parity.py'
+      - 'tests/dump_native_logits.cpp'
 
 jobs:
   evaluate:
@@ -54,7 +56,17 @@ jobs:
       - name: Configure native TestEngine
         run: cmake -S . -B build-eval -A x64
       - name: Build native TestEngine
-        run: cmake --build build-eval --config Release --target TestEngine
+        run: cmake --build build-eval --config Release --target TestEngine DumpNativeLogits
+      - name: Install CPU reference runtime
+        run: |
+          python -m pip install numpy
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Compare native and Python logits
+        run: >-
+          python scripts/check_dense_runtime_parity.py
+          --model model-baseline/NppAI-repository-baseline.nppai
+          --native build-eval/Release/DumpNativeLogits.exe --torch
+          --output runtime-parity.json
       - name: Capture real native model generations
         run: >-
           python scripts/capture_model_code_outputs.py
@@ -80,8 +92,28 @@ jobs:
             recorded-outputs.json
             generation-metadata.json
             syntax-score.json
+            runtime-parity.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Report generation diagnostics
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path generation-metadata.json) { Get-Content generation-metadata.json }
+          if (Test-Path syntax-score.json) { Get-Content syntax-score.json }
+      - name: Require usable native generations
+        shell: pwsh
+        run: |
+          $metadata = Get-Content generation-metadata.json -Raw | ConvertFrom-Json
+          foreach ($case in $metadata.diagnostics) {
+            if ($case.returncode -ne 0 -or -not $case.output_file_exists) {
+              throw "Native generation failed for $($case.id), exit=$($case.returncode). See diagnostics artifact."
+            }
+          }
+          $outputs = Get-Content recorded-outputs.json -Raw | ConvertFrom-Json
+          foreach ($case in $outputs) {
+            if ([string]::IsNullOrWhiteSpace($case.output)) { throw "Empty completion: $($case.id)" }
+          }
       # Generated code is untrusted. Do not run it on a normal CI runner.
       # Inspect recorded-outputs.json and evaluate candidates only in an
       # isolated environment without secrets, network or writable host mounts.

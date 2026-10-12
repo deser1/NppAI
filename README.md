@@ -191,6 +191,13 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [instruction-training experiment](docs/instruction-training-experiment.md)
+records an actual 2000-step comparison: nonempty responses improved, but held-out
+syntax remained 0/3. Training-example reconstruction is reported separately.
+
+See [reproducible demo and measured generation evidence](docs/demo-evidence.md)
+for the current baseline, exact-run reproduction, and package smoke-test scope.
+
 An experimental [offline evaluation harness](docs/code-quality-evaluation.md) scores submitted Python code against unit-test fixtures. It does not yet invoke NppAI or measure the actual model's coding quality; the included fixture tests the harness only.
 
 ## Testing
