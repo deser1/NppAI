@@ -82,6 +82,12 @@ jobs:
             syntax-score.json
           if-no-files-found: warn
           retention-days: 14
+      - name: Report generation diagnostics
+        if: always()
+        shell: pwsh
+        run: |
+          if (Test-Path generation-metadata.json) { Get-Content generation-metadata.json }
+          if (Test-Path syntax-score.json) { Get-Content syntax-score.json }
       # Generated code is untrusted. Do not run it on a normal CI runner.
       # Inspect recorded-outputs.json and evaluate candidates only in an
       # isolated environment without secrets, network or writable host mounts.

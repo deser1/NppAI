@@ -17,6 +17,13 @@
 
 # Changelog
 
+## Unreleased
+
+- Add smoke checks for published release ZIPs and the production x64 DLL exports.
+- Validate newly packaged release ZIPs before uploading them to GitHub Releases.
+- Print checkpoint provenance and generation diagnostics in native evaluation logs.
+- Document the measured empty-completion baseline and reproducible demo procedure.
+
 All notable changes to NppAI are documented in this file.
 
 ## [0.4.0] - 2026-10-05
