@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a fixed-budget eight-versus-512-name memorization probe with training-only deterministic selection, provenance and separate seen-data reconstruction metrics.
+
 - Diagnose identifier copying with per-byte teacher-forced predictions, autonomous and def-only headers on reloaded paired experiment checkpoints; keep these diagnostic metrics separate from syntax and code correctness.
 
 - Add a frozen random-identifier dataset and paired response-name loss experiment; preserve raw free-generation evidence without replacing the failed 300-step checkpoint.

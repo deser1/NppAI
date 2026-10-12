@@ -12,6 +12,7 @@ import torch
 import torch.nn.functional as F
 from train_nppai import NppAIModel, export_to_bin
 from scripts.train_instruction_experiment import generate, prompt
+from scripts.identifier_subset import select_training_records, selection_metadata
 
 
 def read_split(root, split, manifest):
@@ -93,7 +94,7 @@ def evaluate(model, records, context):
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000, identifier_weight=1.0):
+def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     if not 1.0 <= identifier_weight <= 8.0:
@@ -103,7 +104,7 @@ def run(dataset, output, steps=3000, identifier_weight=1.0):
     torch.set_num_threads(2)
     root = Path(dataset)
     manifest = json.loads((root/"manifest.json").read_text())
-    training = read_split(root, "train", manifest)
+    training = select_training_records(read_split(root, "train", manifest), training_names)
     context = 256
     samples = [identifier_weights(record, context, identifier_weight) for record in training]
     model = NppAIModel(256,64,128,2,context)
@@ -149,6 +150,12 @@ def run(dataset, output, steps=3000, identifier_weight=1.0):
         "initial_training_loss":losses[0],"final_training_loss":losses[-1],
         "validation":validation,"test":test,
         "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark."}
+    if training_names is not None:
+        report["training_selection"] = selection_metadata(training, training_names)
+        report["training_probe_first24"] = evaluate(model, training[:24], context)
+        print(json.dumps({"training_selection_names": report["training_selection"]["names"],
+                          "training_selection_records": len(training),
+                          "training_probe_first24": {k: v for k, v in report["training_probe_first24"].items() if k != "cases"}}, indent=2), flush=True)
     (destination/"broader-report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({"validation":{k:v for k,v in validation.items() if k!="cases"},
                       "test":{k:v for k,v in test.items() if k!="cases"}},indent=2))
@@ -161,5 +168,6 @@ if __name__=="__main__":
     parser.add_argument("--output",required=True)
     parser.add_argument("--steps",type=int,default=3000)
     parser.add_argument("--identifier-weight",type=float,default=1.0)
+    parser.add_argument("--training-names", type=int, help="use first N distinct training names; all styles retained")
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps,args.identifier_weight)
+    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names)
