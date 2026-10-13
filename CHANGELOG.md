@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add inference-only learned-header/body composition with verified frozen source checkpoints, uncorrected generated prefixes and separate whole-function versus header metrics.
+
 - Add a paired original-prompt header-only versus full-code learning probe with unchanged frozen name splits, separate partial-output metrics and checkpoint reload evidence.
 
 - Add fixed copying-to-code curriculum schedules, compatible full-checkpoint initialization and an equal-step direct-code control without promoting a model.
