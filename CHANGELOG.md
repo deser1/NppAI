@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add training-only whitespace position offsets with an independent seed, unchanged source-batch sampling, ordered-view hashes and matched-budget staged wording replay.
+
 - Add paired fixed-budget training-only prompt augmentation and staged replay on four trained forms plus two novel wording probes, preserving frozen name splits and defaults.
 
 - Add frozen two-stage prompt-robustness replay with paired original/prefix/suffix outcomes and unchanged requested names and reference answers.
