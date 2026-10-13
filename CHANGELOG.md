@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a paired original-prompt header-only versus full-code learning probe with unchanged frozen name splits, separate partial-output metrics and checkpoint reload evidence.
+
 - Add fixed copying-to-code curriculum schedules, compatible full-checkpoint initialization and an equal-step direct-code control without promoting a model.
 
 - Add a bounded fixed-format identifier echo sanity experiment with frozen name splits, separate autonomous/teacher-forced metrics and exported-checkpoint reload verification.
