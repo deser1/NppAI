@@ -94,7 +94,7 @@ def evaluate(model, records, context):
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None):
+def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None, augment_prompts=False):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     if not 1.0 <= identifier_weight <= 8.0:
@@ -105,6 +105,10 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None,
     root = Path(dataset)
     manifest = json.loads((root/"manifest.json").read_text())
     training = select_training_records(read_split(root, "train", manifest), training_names)
+    source_count = len(training)
+    if augment_prompts:
+        from scripts.prompt_robustness import augment_training_records, prompt_variants
+        training = augment_training_records(training)
     context = 256
     samples = [identifier_weights(record, context, identifier_weight) for record in training]
     model = NppAIModel(256,64,128,2,context)
@@ -170,6 +174,10 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None,
         print(json.dumps({"training_selection_names": report["training_selection"]["names"],
                           "training_selection_records": len(training),
                           "training_probe_first24": {k: v for k, v in report["training_probe_first24"].items() if k != "cases"}}, indent=2), flush=True)
+    if augment_prompts:
+        report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
+                                         "variants": list(prompt_variants(training[0])),
+                                         "derived_training_sha256": hashlib.sha256(json.dumps(training, sort_keys=True).encode("utf-8")).hexdigest()}
     (destination/"broader-report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({"validation":{k:v for k,v in validation.items() if k!="cases"},
                       "test":{k:v for k,v in test.items() if k!="cases"}},indent=2))
@@ -184,5 +192,6 @@ if __name__=="__main__":
     parser.add_argument("--identifier-weight",type=float,default=1.0)
     parser.add_argument("--training-names", type=int, help="use first N distinct training names; all styles retained")
     parser.add_argument("--initial-model", help="initialize from a compatible dense FP32 checkpoint; optimizer resets")
+    parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model)
+    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model,args.augment_prompts)

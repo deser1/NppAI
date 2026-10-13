@@ -9,6 +9,22 @@ def prompt_variants(record):
             "code_only_suffix": {**record, "prompt": task + " Return only Python code."}}
 
 
+def evaluation_variants(record, include_novel=False):
+    variants = prompt_variants(record)
+    if include_novel:
+        variants["novel_polite_python"] = {**record, "prompt": "Please write Python code. " + record["prompt"]}
+        variants["novel_implementation"] = {**record, "prompt": "Provide a Python implementation: " + record["prompt"]}
+    return variants
+
+
+def augment_training_records(records):
+    if not records or len({r["id"] for r in records}) != len(records):
+        raise ValueError("augmentation requires nonempty records with unique source IDs")
+    return [{**item, "id": str(record["id"]) + "::" + variant,
+             "source_id": record["id"], "prompt_variant": variant}
+            for record in records for variant, item in prompt_variants(record).items()]
+
+
 def paired_outcomes(original, changed, arm):
     def outcomes(cases):
         result = {case["id"]: bool(case[arm]["exact_response"]) for case in cases}
