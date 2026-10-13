@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record PR #155 architecture results and artifact provenance: original staged reference matching 13/28 (single head), 14/28 (four absolute heads), 0/28 (four rotary heads); both novel wording probes fail in all arms. No checkpoint promotion.
+
 - Add isolated PyTorch-only legacy/split-head/RoPE architecture probes with strict checkpoint configuration, causal/rotation tests and matched-budget staged wording evaluation.
 
 - Add training-only whitespace position offsets with an independent seed, unchanged source-batch sampling, ordered-view hashes and matched-budget staged wording replay.
