@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add frozen two-stage prompt-robustness replay with paired original/prefix/suffix outcomes and unchanged requested names and reference answers.
+
 - Add inference-only learned-header/body composition with verified frozen source checkpoints, uncorrected generated prefixes and separate whole-function versus header metrics.
 
 - Add a paired original-prompt header-only versus full-code learning probe with unchanged frozen name splits, separate partial-output metrics and checkpoint reload evidence.
