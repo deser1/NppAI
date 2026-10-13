@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add isolated PyTorch-only legacy/split-head/RoPE architecture probes with strict checkpoint configuration, causal/rotation tests and matched-budget staged wording evaluation.
+
 - Add training-only whitespace position offsets with an independent seed, unchanged source-batch sampling, ordered-view hashes and matched-budget staged wording replay.
 
 - Add paired fixed-budget training-only prompt augmentation and staged replay on four trained forms plus two novel wording probes, preserving frozen name splits and defaults.
