@@ -131,6 +131,12 @@ Experimental evidence from PR #155 (measured 13 October 2026):
 - [ ] Demonstrate robustness to unseen instruction wording before checkpoint promotion
 - [ ] Validate native FP32/INT8 compatibility for any proposed architecture change; current multi-head/RoPE checkpoints are PyTorch-only
 
+The subsequent [four-versus-eight-form wording experiment](docs/diverse-wording-experiment.md)
+(PR #159, measured 14 October 2026) scores 13/28 versus 0/28 original test exact
+responses and 0/28 on both novel forms in both arms. Both actual-output wording
+smoke audits failed; eight-form training is not promoted. Successful experiment
+and post-merge CI do not resolve the wording robustness milestone above.
+
 These measurements use exposed synthetic tasks and one seed. They do not complete
 the broader quality and held-out evaluation milestones below.
 

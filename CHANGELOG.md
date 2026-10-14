@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record measured four-versus-eight-form wording results: original test exact matching 13/28 versus 0/28, both novel wording probes 0/28 in both arms, and both raw-output smoke audits failed despite successful CI. No checkpoint promotion.
+
 - Fix header-training CLI import initialization before augmentation-policy validation; add isolated direct-script regression coverage.
 
 - Add a fixed four-versus-eight-form training wording experiment with frozen targets, strict source-policy replay checks and actual-output wording audits; defaults retain four-form augmentation.
