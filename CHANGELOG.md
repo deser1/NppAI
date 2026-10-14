@@ -1,5 +1,11 @@
 ## Unreleased
 
+- Record repeat-training variation for the header-length experiment: renamed test80/336 versus198/336 on rerun, with unchanged zero original-name exact matches; distinguish deterministic data and within-run reload checks from bit-identical retraining.
+
+- Record matched header-length results: renamed test exact signatures81/336(short) versus206/336(mixed), but both original test groups fall21/28 to0/28; evidence audits pass and neither checkpoint is promoted.
+
+- Add a matched header-only name-length continuation experiment: fixed four-form starting checkpoint, short-name control versus balanced9/12/15 lengths, development-only remapping, full source/reload verification and paired raw-output audits; no fresh-probe access or model promotion.
+
 - Record first fresh-probe results: both frozen continuation pairs have 0/144 reference AST/exact matches; staged syntax 40/144 versus 67/144 and requested signatures 2/144 versus 3/144. Evidence audits pass, quality flags fail; no checkpoint promotion.
 
 - Add inference-only fresh-probe evaluation for the two preselected continuation pairs, source/hash verification, signature metrics, raw-output audit and paired wording/family/name-length summaries; no training or checkpoint promotion.
