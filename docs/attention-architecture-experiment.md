@@ -98,3 +98,31 @@ staged/free outputs, paired metrics and verified source checkpoints/reports:
 
 GitHub lists these archives as expiring on 27 October 2026. This committed summary
 preserves the reported measurements and provenance, not the artifact contents.
+
+## Raw-output wording audit
+
+`scripts/audit_wording_report.py` reads either a six-form `attention-replay.json`
+or `staged-report.json`, verifies the frozen validation/test hashes and manifest,
+requires all six forms with exactly the frozen case IDs, and checks the prompts
+and references against the dataset. It recalculates syntax, requested-name, AST
+and exact-response metrics from the raw staged/free output strings; mismatching
+saved per-case flags or aggregate counts reject the evidence. It records the
+source report SHA-256. Source checkpoint verification remains the replay's job.
+
+The minimal wording smoke check requires at least one staged exact response in
+each of the two novel forms on both validation and test. The measured 0/28
+results therefore fail this check. Even a pass is not general competence or
+production readiness; the correlated tasks are already exposed. No checkpoint
+is automatically promoted.
+
+The attention workflow saves `wording-audit.json` alongside actual replay
+outputs. By default a valid negative experiment completes successfully and
+records `wording_smoke_passed: false`. A separate strict check can require
+nonzero wording success, preserving the audit before exiting with status 2:
+
+```sh
+python scripts/audit_wording_report.py --report attention-evaluation/attention-replay.json --output attention-evaluation/wording-audit.json --require-wording-success
+```
+
+Invalid evidence exits with status 1. The wording infrastructure workflow tests
+fixtures and audit behavior; its green status is not a measured model pass.
