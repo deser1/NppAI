@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure full staged replies for frozen pretrained/no-replay/half-original headers with a shared body, and retain the argument-drift diagnosis (diagnostic pending CI).
+
 - [x] Measure fixed50% original-example replay: original test retains19/21 baseline hits with2 lost/2 gained; renamed exact159/336 versus198/336 control. See [header-original-replay](docs/header-original-replay.md); no checkpoint promotion.
 - [ ] Diagnose lost original baseline header cases and validate retention together with variable-length signatures before complete-body or fresh-probe quality claims.
 
