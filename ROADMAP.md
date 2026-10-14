@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure fixed50% original-example replay against mixed-name-only header training, retaining baseline case identities and long-name development metrics (experiment pending CI).
+
 - [x] Measure matched header-length continuation: renamed test81/336 versus206/336 exact signatures, both original test21/28 to0/28; evidence documented in [header-name-length](docs/header-name-length.md), no checkpoint promotion.
 - [ ] Evaluate a preselected training replay mix that retains original names while teaching varied lengths; require original and remapped development metrics together before any model-quality claim.
 

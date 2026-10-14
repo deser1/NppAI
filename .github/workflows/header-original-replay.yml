@@ -1,0 +1,42 @@
+name: Matched original example header replay
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/header_original_replay.py'
+      - 'tests/test_header_original_replay.py'
+      - '.github/workflows/header-original-replay.yml'
+jobs:
+  experiment:
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [no_replay, half_original]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify training-only replay, balanced sampling and paired retention
+        run: python -m unittest tests.test_header_original_replay tests.test_header_name_length tests.test_wording_continuation -v
+      - name: Download fixed four-form continuation and its initial pair
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 38618406741 --repo '${{ github.repository }}' --name nppai-continuation-evaluation-four_forms --dir source
+          gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
+      - name: Measure original retention and renamed headers before and after
+        run: python scripts/header_original_replay.py --source source --initial initial --dataset evaluation/instruction-v3 --output header-replay --policy ${{ matrix.policy }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-header-replay-${{ matrix.policy }}
+          path: header-replay/
+          retention-days: 14

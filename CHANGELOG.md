@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a preselected header original-example replay experiment: matched6000-update control versus two original/two renamed samples per batch, training-only pools, actual draw counts, paired retention audits and export/reload checks; no fresh-probe access or model promotion.
+
 - Record repeat-training variation for the header-length experiment: renamed test80/336 versus198/336 on rerun, with unchanged zero original-name exact matches; distinguish deterministic data and within-run reload checks from bit-identical retraining.
 
 - Record matched header-length results: renamed test exact signatures81/336(short) versus206/336(mixed), but both original test groups fall21/28 to0/28; evidence audits pass and neither checkpoint is promoted.
