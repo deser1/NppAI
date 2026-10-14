@@ -15,14 +15,15 @@ its body model receives that exact prefix with LF bytes preserved. Reference
 names/parameters are never inserted or corrected. Compare free body generation
 alongside staged generation and pair exact successes by source case ID.
 
-TestEngine accepts an optional token budget after the prefix-file argument,
-bounded to 1–256. Its existing default remains 256; this replay uses 160 to
-match FP32. Native EOS and conversation-marker handling, RMSNorm epsilon and
+The dedicated `StagedNativeRunner` accepts an optional token budget after the
+prefix-file argument, bounded to 1–256 and defaulting to 160 to match FP32.
+Existing TestEngine and its 256-token default remain unchanged.
+Native EOS and conversation-marker handling, RMSNorm epsilon and
 quantization/numerics differ from PyTorch; this is a runtime comparison, not
 a quantization-only causal ablation. The production engine is unchanged.
 
 Both report audits recompute raw-output metrics against frozen cases. Valid
-empty generation (TestEngine exit 5) is a quality failure in the denominator;
+empty generation (runner exit 5) is a quality failure in the denominator;
 load errors, missing output on exit 0 and timeouts are infrastructure failures,
 recorded before the job fails. Preserve raw headers/outputs, acceptance decisions,
 per-call diagnostics, source/engine/report hashes, both audits and paired counts.
@@ -32,3 +33,10 @@ Successful execution is not model quality. Minimal wording smoke checks can
 remain false. Exposed correlated synthetic tasks, one seed and two-model
 inference remain limitations. No promotion or generated-code execution.
 Measured results await CI.
+
+Frozen instruction JSON files use `eol=lf` in `.gitattributes` to preserve
+manifest hashes on Windows checkouts. Regression coverage checks each manifest
+against raw file bytes and exercises Git checkout with `core.autocrlf=true`.
+Do not normalize bytes in the hash verifier or rewrite manifest hashes to accept
+platform changes. The older native baseline quality gate remains unchanged;
+its whitespace-only model output is still a failed generation, not a loader fix.

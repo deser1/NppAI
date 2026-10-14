@@ -1,6 +1,8 @@
 ## Unreleased
 
-- Add inference-only frozen staged FP32/native INT8 comparison with matched token limits, raw-output audits and explicit native infrastructure diagnostics; TestEngine's existing default token budget is unchanged.
+- Add inference-only frozen staged FP32/native INT8 comparison with a dedicated evaluation runner, matched token limits, raw-output audits and explicit native infrastructure diagnostics; existing TestEngine remains unchanged.
+
+- Preserve frozen instruction dataset LF bytes on Windows checkouts and verify Git autocrlf behavior against dataset manifest hashes.
 
 - Record measured four-versus-eight-form wording results: original test exact matching 13/28 versus 0/28, both novel wording probes 0/28 in both arms, and both raw-output smoke audits failed despite successful CI. No checkpoint promotion.
 

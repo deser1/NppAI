@@ -6,17 +6,6 @@
 #include <iterator>
 
 int main(int argc, char** argv) {
-    // Optional evaluation-only token budget; keep legacy defaults unchanged.
-    int generationLimit = 256;
-    if (argc > 5) {
-        char* end = nullptr;
-        const long parsed = std::strtol(argv[5], &end, 10);
-        if (argv[5][0] == '\0' || *end != '\0' || parsed < 1 || parsed > 256) {
-            std::cerr << "ERROR: generation token budget must be 1..256\n";
-            return 7;
-        }
-        generationLimit = static_cast<int>(parsed);
-    }
     const std::string modelPath =
         argc > 1 ? argv[1] : "models/NppAI-model-v1.nppai";
 
@@ -45,7 +34,7 @@ int main(int argc, char** argv) {
     const std::string generationPrompt = prompt + assistantPrefix;
     const std::string result = engine.generate(
         generationPrompt,
-        generationLimit,
+        256,
         [](char, bool) {},
         [](int) {}
     );

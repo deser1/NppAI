@@ -5,7 +5,10 @@ on:
     paths:
       - 'scripts/evaluate_native_staged.py'
       - 'tests/test_native_staged.py'
-      - 'test_engine.cpp'
+      - 'tests/native_staged_runner.cpp'
+      - 'tests/test_frozen_dataset_bytes.py'
+      - '.gitattributes'
+      - 'CMakeLists.txt'
       - '.github/workflows/native-staged-evaluation.yml'
 jobs:
   evaluate:
@@ -20,7 +23,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check subprocess diagnostics and wording audits
-        run: python -m unittest tests.test_native_staged tests.test_wording_report_audit tests.test_staged_generation tests.test_diverse_wording
+        run: python -m unittest tests.test_frozen_dataset_bytes tests.test_native_staged tests.test_wording_report_audit tests.test_staged_generation tests.test_diverse_wording
       - name: Install measured CPU reference runtime
         run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
       - name: Download fixed four-form control pair
@@ -30,12 +33,12 @@ jobs:
       - name: Build native evaluation runner
         run: |
           cmake -S . -B build-native-staged -A x64
-          cmake --build build-native-staged --config Release --target TestEngine
+          cmake --build build-native-staged --config Release --target StagedNativeRunner
       - name: Check token-budget CLI bounds before model loading
         shell: pwsh
         run: |
           foreach ($budget in @('0', '257', 'invalid')) {
-            & build-native-staged/Release/TestEngine.exe missing-model prompt unused-output missing-prefix $budget
+            & build-native-staged/Release/StagedNativeRunner.exe missing-model prompt unused-output missing-prefix $budget
             if ($LASTEXITCODE -ne 7) { throw "Invalid token budget was not rejected: $budget" }
           }
           exit 0
@@ -45,7 +48,7 @@ jobs:
           --headers frozen-source/header-source
           --bodies frozen-source/body-source
           --dataset evaluation/instruction-v3
-          --engine build-native-staged/Release/TestEngine.exe
+          --engine build-native-staged/Release/StagedNativeRunner.exe
           --output native-staged-evaluation
       - uses: actions/upload-artifact@v4
         if: always()
