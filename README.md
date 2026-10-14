@@ -191,6 +191,16 @@ Similarly, the correction dataset is closer to supervised fine-tuning / human-co
 
 ## Code-generation quality evaluation
 
+The [attention/position comparison](docs/attention-architecture-experiment.md)
+and experiments #145–155 are integrated into `main` (14 October 2026).
+In the recorded single-seed comparison, two-model staged generation exactly
+matched 13/28 original test references with single-head attention, 14/28 with
+four absolute-position heads, and 0/28 with four rotary heads. All three arms
+matched 0/28 on both novel wording probes. These are exposed synthetic tasks;
+multi-head/RoPE checkpoints remain PyTorch-only and no checkpoint is promoted.
+See the [roadmap](ROADMAP.md#5-model-quality-and-training) for remaining wording
+robustness and native FP32/INT8 validation work.
+
 The [identifier copying experiment](docs/identifier-copy-training.md) compares
 two loss weights on the same frozen random-name dataset. Complete reference AST
 matches remain separate from syntax and from signature-guided generation.

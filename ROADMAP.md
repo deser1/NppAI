@@ -116,7 +116,15 @@ Read -> Patch -> Build -> Test
 
 ### 5. Model quality and training
 
-Experimental evidence on the PR #155 branch (13 October 2026; integration pending):
+Experiments #145–155 are integrated into `main` through
+[PR #145](https://github.com/deser1/NppAI/pull/145), merge commit
+`45f6a81372a2258228a9b251db0f8b810afabd18` (14 October 2026).
+All 13 PR workflows passed before integration; the separate
+[post-merge CI_build](https://github.com/deser1/NppAI/actions/runs/38576031974)
+also passed. This integrates experimental tooling and reports, without promoting
+a checkpoint or changing the production architecture.
+
+Experimental evidence from PR #155 (measured 13 October 2026):
 
 - [x] Record the fixed three-arm attention/position comparison and artifact provenance in [the experiment report](docs/attention-architecture-experiment.md)
 - Original staged exact reference matching: single head 13/28, four absolute heads 14/28, four rotary heads 0/28; all arms score 0/28 on both novel wording probes
