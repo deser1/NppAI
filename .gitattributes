@@ -1,0 +1,2 @@
+# Frozen dataset manifests hash canonical bytes on every platform.
+evaluation/instruction-v*/** text eol=lf

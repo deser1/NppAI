@@ -1,5 +1,11 @@
 ## Unreleased
 
+- Record frozen staged native INT8 replay: original test exact matching remains 13/28 like FP32; both novel forms remain 0/28, and two validation forms each lose one exact response. Zero native infrastructure errors; no checkpoint promotion.
+
+- Add inference-only frozen staged FP32/native INT8 comparison with a dedicated evaluation runner, matched token limits, raw-output audits and explicit native infrastructure diagnostics; existing TestEngine remains unchanged.
+
+- Preserve frozen instruction dataset LF bytes on Windows checkouts and verify Git autocrlf behavior against dataset manifest hashes.
+
 - Record measured four-versus-eight-form wording results: original test exact matching 13/28 versus 0/28, both novel wording probes 0/28 in both arms, and both raw-output smoke audits failed despite successful CI. No checkpoint promotion.
 
 - Fix header-training CLI import initialization before augmentation-policy validation; add isolated direct-script regression coverage.
