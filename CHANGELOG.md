@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add fixed four-versus-eight-form continuation from the same verified pretrained pair, full header checkpoint initialization, source/total-budget provenance and body checkpoint reload checks; no checkpoint promotion.
+
 - Record task-signature diagnostic: assisted original exact matching 15/28 versus cached learned-header 13/28; novel exact matching stays 0/28, with 2/28 polite/Python reference AST matches. Both assisted smoke checks fail; no checkpoint promotion.
 
 - Add a frozen inference-only task-signature wording diagnostic, separating assisted body generation in FP32/native INT8 from cached learned-header and free-body controls; no checkpoint promotion.

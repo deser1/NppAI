@@ -1,0 +1,80 @@
+name: Frozen four versus eight wording continuation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/run_wording_continuation.py'
+      - 'scripts/train_identifier_headers.py'
+      - 'tests/test_wording_continuation.py'
+      - '.github/workflows/wording-continuation-experiment.yml'
+jobs:
+  train:
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [four_forms, eight_forms]
+        task: [headers, bodies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install measured CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify full weight initialization, continuation provenance and wording isolation
+        run: python -m unittest tests.test_wording_continuation tests.test_identifier_curriculum tests.test_diverse_wording tests.test_staged_generation tests.test_wording_report_audit tests.test_instruction_dataset
+      - name: Download fixed four-form starting pair
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial-source
+      - name: Continue fixed task and wording policy
+        run: python scripts/run_wording_continuation.py train --source initial-source --dataset evaluation/instruction-v3 --output continuation-training --task ${{ matrix.task }} --policy ${{ matrix.policy }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-continuation-${{ matrix.policy }}-${{ matrix.task }}
+          path: continuation-training/
+          retention-days: 14
+  evaluate:
+    needs: train
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [four_forms, eight_forms]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install measured CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Download fixed initial pair for independent provenance checks
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial-source
+      - uses: actions/download-artifact@v4
+        with:
+          name: nppai-continuation-${{ matrix.policy }}-headers
+          path: continued-headers
+      - uses: actions/download-artifact@v4
+        with:
+          name: nppai-continuation-${{ matrix.policy }}-bodies
+          path: continued-bodies
+      - name: Verify continuation and evaluate six fixed wording forms
+        run: python scripts/run_wording_continuation.py replay --source initial-source --dataset evaluation/instruction-v3 --headers continued-headers --bodies continued-bodies --output continuation-evaluation --policy ${{ matrix.policy }} --source-run ${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-continuation-evaluation-${{ matrix.policy }}
+          path: continuation-evaluation/
+          retention-days: 14
