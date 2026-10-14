@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add inference-only frozen staged FP32/native INT8 comparison with matched token limits, raw-output audits and explicit native infrastructure diagnostics; TestEngine's existing default token budget is unchanged.
+
 - Record measured four-versus-eight-form wording results: original test exact matching 13/28 versus 0/28, both novel wording probes 0/28 in both arms, and both raw-output smoke audits failed despite successful CI. No checkpoint promotion.
 
 - Fix header-training CLI import initialization before augmentation-policy validation; add isolated direct-script regression coverage.

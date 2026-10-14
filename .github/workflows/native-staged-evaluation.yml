@@ -1,0 +1,55 @@
+name: Frozen staged FP32 versus native INT8
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/evaluate_native_staged.py'
+      - 'tests/test_native_staged.py'
+      - 'test_engine.cpp'
+      - '.github/workflows/native-staged-evaluation.yml'
+jobs:
+  evaluate:
+    runs-on: windows-2022
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check subprocess diagnostics and wording audits
+        run: python -m unittest tests.test_native_staged tests.test_wording_report_audit tests.test_staged_generation tests.test_diverse_wording
+      - name: Install measured CPU reference runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Download fixed four-form control pair
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir frozen-source
+      - name: Build native evaluation runner
+        run: |
+          cmake -S . -B build-native-staged -A x64
+          cmake --build build-native-staged --config Release --target TestEngine
+      - name: Check token-budget CLI bounds before model loading
+        shell: pwsh
+        run: |
+          foreach ($budget in @('0', '257', 'invalid')) {
+            & build-native-staged/Release/TestEngine.exe missing-model prompt unused-output missing-prefix $budget
+            if ($LASTEXITCODE -ne 7) { throw "Invalid token budget was not rejected: $budget" }
+          }
+          exit 0
+      - name: Replay frozen FP32 and native INT8 models on six forms
+        run: >-
+          python scripts/evaluate_native_staged.py
+          --headers frozen-source/header-source
+          --bodies frozen-source/body-source
+          --dataset evaluation/instruction-v3
+          --engine build-native-staged/Release/TestEngine.exe
+          --output native-staged-evaluation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-native-staged-comparison
+          path: native-staged-evaluation/
+          retention-days: 14
