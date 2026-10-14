@@ -52,4 +52,41 @@ quality; there is no automatic model promotion.
 
 Implementation: `scripts/header_name_length.py`, tests
 `tests/test_header_name_length.py`, workflow `.github/workflows/header-name-length.yml`.
-Measured results are pending the experiment workflow.
+Measured results and limits are recorded below.
+
+## Measured results (2026-10-14)
+
+Measured workflow [38631515174](https://github.com/deser1/NppAI/actions/runs/38631515174), evaluator commit `ed165fdb06cd71826097cc72a09669a5dbb86c9a`. Both jobs passed all9 tests with the fixed CPU runtime, source verification, export/reload comparisons and evidence audits. Source header checkpoint SHA-256 `c68c7908afb65f13ff113e15b6dfa97f73a066da97ec6c1ff40c1a24c16139bd`. Baseline summary counts agree across arms.
+
+| Development group | Before: exact header | Short control: after | Mixed lengths: after |
+| --- | ---: | ---: | ---: |
+| Original validation | 14/16 | 0/16 | 0/16 |
+| Renamed validation | 0/192 | 60/192 | 118/192 |
+| Original test | 21/28 | 0/28 | 0/28 |
+| Renamed test | 0/336 | 81/336 | 206/336 |
+
+Exact header and full signature counts agree in this measurement. Requested-name matches on renamed test are92/336(short) versus241/336(mixed), so correct names alone overstate full signature success. Valid headers are219/336 versus302/336; validity does not establish the requested name or arguments.
+
+| Renamed test name length | Views | Short exact/signature | Mixed exact/signature |
+| --- | ---: | ---: | ---: |
+| 9 | 112 | 81 | 87 |
+| 12 | 112 | 0 | 70 |
+| 15 | 112 | 0 | 49 |
+
+| Renamed validation name length | Views | Short exact/signature | Mixed exact/signature |
+| --- | ---: | ---: | ---: |
+| 9 | 64 | 60 | 58 |
+| 12 | 64 | 0 | 39 |
+| 15 | 64 | 0 | 21 |
+
+Paired before/after comparison finds206 new exact hits on renamed test in the mixed arm and81 in the short arm, from a zero baseline. Both arms lose all21 original test exact hits and14 original validation exact hits. This is a strong observed regression on the original namespace. The mixed policy improves these development-copying counts but does not preserve prior behavior; neither checkpoint is promoted. Both arms replace all original training names with cp_ names, which changes namespace exposure. The observed loss is consistent with specialization/forgetting, but this experiment does not isolate its mechanism.
+
+There is no new evidence here about complete-function bodies, native INT8 or fresh-probe-v1 quality. Further development should preselect a matched replay mix retaining original training examples, measure original and renamed cases together, and keep the exposed fresh probe separate. No next experiment or parameter tuning was included in this run.
+
+| Arm | Artifact | Archive SHA-256 | Report SHA-256 |
+| --- | --- | --- | --- |
+| short_control | [11926128967](https://github.com/deser1/NppAI/actions/runs/38631515174/artifacts/11926128967) | `db7c3c139b9d5ae67038eeaebbb260a04ed4696d12362b2c193da2df540821c5` | `b46820751f18a722d89eb285d4a01e9d8bc66e51dda43edee019e4a52b0e83b0` |
+| mixed_lengths | [11926256819](https://github.com/deser1/NppAI/actions/runs/38631515174/artifacts/11926256819) | `9fbcf2e8e4cfa06a71221cdb90a16d75faf4cbbd7c0ec2be4620566cbe6a3930` | `8d68a9a38bc95d59f793591de761d70805546b0562746b84c3465fa5587cd769` |
+
+Development dataset SHA-256: `2170a0e857629bb3f8f1caac3e6920750333ec72e577fa18c58f62478a039d23`.
+Training SHA-256: short `ddcc0c16a81aa6fa89b9190cd5d992ec0597cc61c69903d42b91787c7651d648`; mixed `71c7ded47937f1c7c483fa9bc74c8dfefd7d5dd7f79e66a6204973123adb720e`.
