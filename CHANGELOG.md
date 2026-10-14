@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Audit actual six-form replay outputs against frozen cases and recomputed metrics, preserve explicit failed wording-smoke results, and distinguish infrastructure CI from model-quality checks.
+
 - Synchronize README and roadmap with the completed integration of experiments #145–155 into main and successful post-merge CI; retain the unseen-wording and native FP32/INT8 blockers.
 
 - Record PR #155 architecture results and artifact provenance: original staged reference matching 13/28 (single head), 14/28 (four absolute heads), 0/28 (four rotary heads); both novel wording probes fail in all arms. No checkpoint promotion.

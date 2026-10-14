@@ -6,6 +6,8 @@ on:
       - 'scripts/attention_probe.py'
       - 'scripts/run_attention_probe.py'
       - 'tests/test_attention_probe.py'
+      - 'scripts/audit_wording_report.py'
+      - 'tests/test_wording_report_audit.py'
       - '.github/workflows/attention-architecture-experiment.yml'
 jobs:
   train:
@@ -62,6 +64,8 @@ jobs:
           path: body-source
       - name: Compare staged and free outputs on six wording forms
         run: python scripts/run_attention_probe.py replay --dataset evaluation/instruction-v3 --headers header-source --bodies body-source --output attention-evaluation --source-run ${{ github.run_id }}
+      - name: Audit raw replay evidence and record wording smoke outcome
+        run: python scripts/audit_wording_report.py --report attention-evaluation/attention-replay.json --dataset evaluation/instruction-v3 --output attention-evaluation/wording-audit.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
