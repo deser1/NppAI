@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Record first fresh-probe results: both frozen continuation pairs have 0/144 reference AST/exact matches; staged syntax 40/144 versus 67/144 and requested signatures 2/144 versus 3/144. Evidence audits pass, quality flags fail; no checkpoint promotion.
+
+- Add inference-only fresh-probe evaluation for the two preselected continuation pairs, source/hash verification, signature metrics, raw-output audit and paired wording/family/name-length summaries; no training or checkpoint promotion.
+
 - Freeze an evaluation-only fresh Python probe with 12 task families, 36 new name/argument instances and 144 correlated wording views; verify isolation, context bounds, canonical bytes and trusted reference edge cases on Linux/Windows.
 - Record continuation results: original exact matching 13/28 versus 14/28, mixed known-form changes and both novel forms 0/28; no checkpoint promotion.
 
