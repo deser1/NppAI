@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Record frozen replay pipeline results: half-original exact original replies15/28 versus13/28 pretrained (all13 retained), renamed AST60/336 and exact59/336; zero cached-header deviations. Confirm sort argument regression had a nonmatching body already before replay; no model promotion.
+
+- Diagnose the remaining replay header regression as argument drift (`test-sort-2-2`: values→x), and add frozen pretrained/no-replay/half-original complete-body comparison with pinned sources, cache-deviation counts, raw-output audits and no training or promotion.
+
 - Record original-example replay results: retains19/21 original test baseline hits (2 lost,2 gained; total21/28), retains14/14 validation hits, and reaches159/336 renamed exact signatures versus198/336 without replay. Full-retention diagnostics remain false; no checkpoint promotion.
 
 - Add a preselected header original-example replay experiment: matched6000-update control versus two original/two renamed samples per batch, training-only pools, actual draw counts, paired retention audits and export/reload checks; no fresh-probe access or model promotion.
