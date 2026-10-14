@@ -90,3 +90,9 @@ There is no new evidence here about complete-function bodies, native INT8 or fre
 
 Development dataset SHA-256: `2170a0e857629bb3f8f1caac3e6920750333ec72e577fa18c58f62478a039d23`.
 Training SHA-256: short `ddcc0c16a81aa6fa89b9190cd5d992ec0597cc61c69903d42b91787c7651d648`; mixed `71c7ded47937f1c7c483fa9bc74c8dfefd7d5dd7f79e66a6204973123adb720e`.
+
+### Repeat-training variation
+
+The unchanged experiment code was trained again in [38632091438](https://github.com/deser1/NppAI/actions/runs/38632091438), commit `5ee1492a35ab7db2c086e7a316cf8b0f142476bf`. Renamed test exact/signature counts were80/336(short) and198/336(mixed); validation62/192 and125/192. Mixed test per-length counts were83/112,73/112,42/112. Original exact headers remained0/16 and0/28 in both arms. Before-training original test counts remained21/28. Both audits and reload checks passed.
+
+Fixed seed/runtime and reproducible data do not provide bit-identical retraining evidence here. The cause of the numerical variation has not been isolated. The first-run table above describes that specific measurement, not guaranteed repeat scores. Both observed runs support the same limited development conclusion and original-name regression. Export/reload identity is verified within each run; it is not an assertion that separately trained checkpoints are identical. Cross-seed/statistical confidence and reproducible training kernels remain unverified.
