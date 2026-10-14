@@ -144,6 +144,7 @@ the broader quality and held-out evaluation milestones below.
 - [x] Add an offline Python candidate syntax/unit-test evaluation harness (infrastructure only; see docs/code-quality-evaluation.md)
 - [ ] Add generation-quality evaluation metrics on actual model outputs and held-out tasks
 - [ ] Compare FP32 and INT8 end-to-end generation quality
+- Narrow measurement completed in [PR #161's frozen staged replay](docs/native-staged-evaluation.md): original test exact matching 13/28 for both runtimes, novel forms 0/28 for both, with validation/output differences. Broader repository-task evaluation and native multi-head/RoPE compatibility remain open.
 - [ ] Validate correction-data retraining on held-out examples
 - [ ] Publish reproducible model-quality reports
 
