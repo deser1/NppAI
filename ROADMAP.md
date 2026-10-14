@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure fixed versus varied argument aliases with unchanged original replay and independent argument-alias development records (experiment pending CI).
+
 - [x] Measure frozen replay complete replies: original exact15/28 versus13/28 with all13 retained; renamed AST60/336, exact59/336; sort case shows values→x argument drift and nonmatching bodies in both stages. See [header-replay-pipeline](docs/header-replay-pipeline.md); no promotion.
 
 - [x] Measure fixed50% original-example replay: original test retains19/21 baseline hits with2 lost/2 gained; renamed exact159/336 versus198/336 control. See [header-original-replay](docs/header-original-replay.md); no checkpoint promotion.
