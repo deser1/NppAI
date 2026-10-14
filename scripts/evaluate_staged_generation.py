@@ -37,22 +37,25 @@ def score_output(record, output):
             "reference_ast": reference_match, "exact_response": output == record["answer"]}
 
 
-def check_source(report, model_bytes, manifest, manifest_key):
+def check_source(report, model_bytes, manifest, manifest_key, expected_steps=6000):
     if report.get("model_sha256") != hashlib.sha256(model_bytes).hexdigest():
         raise ValueError("source model hash mismatch")
     if report.get(manifest_key) != manifest:
         raise ValueError("source dataset manifest mismatch")
-    if (report.get("steps"), report.get("seed"), report.get("context")) != (6000, 42, 256):
-        raise ValueError("requires the preselected 6000-step context-256 source arms")
+    if (report.get("steps"), report.get("seed"), report.get("context")) != (expected_steps, 42, 256):
+        raise ValueError("source configuration differs from the preselected step budget, seed42 or context256")
 
 
-def run(headers, bodies, dataset, output, source_run):
+def run(headers, bodies, dataset, output, source_run, perturb_prompts=False, source_steps=6000, novel_variants=False):
+    if novel_variants and not perturb_prompts:
+        raise ValueError("novel variants require prompt-variant evaluation")
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     import torch
     from scripts.check_dense_runtime_parity import load_weights, torch_model
     from scripts.identifier_curriculum import validate_initial_weights
     from scripts.train_broader_instruction_experiment import read_split
     from scripts.train_instruction_experiment import generate
+    from scripts.prompt_robustness import paired_outcomes, evaluation_variants
 
     header_root, body_root, root = Path(headers), Path(bodies), Path(dataset)
     header_path = header_root / "NppAI-identifier-headers.nppai"
@@ -60,8 +63,8 @@ def run(headers, bodies, dataset, output, source_run):
     header_report = json.loads((header_root / "header-report.json").read_text(encoding="utf-8"))
     body_report = json.loads((body_root / "broader-report.json").read_text(encoding="utf-8"))
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
-    check_source(header_report, header_path.read_bytes(), manifest, "source_manifest")
-    check_source(body_report, body_path.read_bytes(), manifest, "dataset_manifest")
+    check_source(header_report, header_path.read_bytes(), manifest, "source_manifest", source_steps)
+    check_source(body_report, body_path.read_bytes(), manifest, "dataset_manifest", source_steps)
     torch.set_num_threads(2)
     hw, bw = load_weights(header_path), load_weights(body_path)
     validate_initial_weights(hw)
@@ -73,11 +76,24 @@ def run(headers, bodies, dataset, output, source_run):
               "policy": "Use the header model's raw single-line output verbatim as the body model's assistant prefix. Reject malformed or context-overflowing headers; no reference-name correction or fallback. Greedy FP32, no optimization.",
               "limits": "Two frozen models, extra inference and memory relative to a single-model control. The body model receives a machine-generated prefix. Final whole-pipeline metrics are separate from header-only accuracy. Previously exposed synthetic tasks, one seed, no execution, INT8 or production promotion.",
               "splits": {}}
+    groups = {}
+    for split in ("validation", "test"):
+        records = read_split(root, split, manifest)
+        if perturb_prompts:
+            for variant in evaluation_variants(records[0], novel_variants):
+                groups[split + "/" + variant] = [evaluation_variants(record, novel_variants)[variant] for record in records]
+        else:
+            groups[split] = records
+    if perturb_prompts:
+        report["prompt_robustness"] = {"variants": list(evaluation_variants(next(iter(groups.values()))[0], novel_variants)),
+            "novel_variants": novel_variants,
+            "derived_groups_sha256": hashlib.sha256(json.dumps(groups, sort_keys=True).encode("utf-8")).hexdigest(),
+            "limits": "Same held-out tasks repeated across wording variants, not independent new programming tasks. Added text changes token positions and formatting; results do not isolate one cause. No training, checkpoint selection or name/reference change."}
     keys = ("nonempty", "syntax_any_function", "requested_function", "reference_ast", "exact_response")
     with torch.no_grad():
-        for split in ("validation", "test"):
+        for split, records in groups.items():
             cases = []
-            for record in read_split(root, split, manifest):
+            for record in records:
                 header = generate(header_model, record["prompt"], 256)
                 accepted = header_fits(record["prompt"], header, 256)
                 # Acceptance does not inspect the reference function name or answer.
@@ -95,6 +111,15 @@ def run(headers, bodies, dataset, output, source_run):
                           for arm in ("staged", "single_model")}}
             print(json.dumps({"split": split, **summary}), flush=True)
             report["splits"][split] = {**summary, "cases": cases}
+    if perturb_prompts:
+        for split in ("validation", "test"):
+            original = report["splits"][split + "/original"]["cases"]
+            for variant in report["prompt_robustness"]["variants"]:
+                group = report["splits"][split + "/" + variant]
+                group["paired_to_original"] = {arm: paired_outcomes(original, group["cases"], arm)
+                    for arm in ("staged", "single_model")}
+                print(json.dumps({"paired_split": split + "/" + variant,
+                                  "paired_to_original": group["paired_to_original"]}), flush=True)
     destination = Path(output)
     destination.mkdir(parents=True, exist_ok=True)
     # Keep reproducible source checkpoints/reports with the new measurement.
@@ -115,5 +140,9 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--source-run", type=int, required=True)
+    parser.add_argument("--prompt-variants", action="store_true", help="evaluate preselected prefixes/suffix on unchanged tasks")
+    parser.add_argument("--source-steps", type=int, default=6000, help="preselected source checkpoint step count")
+    parser.add_argument("--novel-variants", action="store_true", help="also evaluate two wordings excluded from augmentation")
     args = parser.parse_args()
-    run(args.headers, args.bodies, args.dataset, args.output, args.source_run)
+    run(args.headers, args.bodies, args.dataset, args.output, args.source_run, args.prompt_variants,
+        args.source_steps, args.novel_variants)

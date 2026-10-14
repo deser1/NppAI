@@ -1,5 +1,15 @@
 ## Unreleased
 
+- Record PR #155 architecture results and artifact provenance: original staged reference matching 13/28 (single head), 14/28 (four absolute heads), 0/28 (four rotary heads); both novel wording probes fail in all arms. No checkpoint promotion.
+
+- Add isolated PyTorch-only legacy/split-head/RoPE architecture probes with strict checkpoint configuration, causal/rotation tests and matched-budget staged wording evaluation.
+
+- Add training-only whitespace position offsets with an independent seed, unchanged source-batch sampling, ordered-view hashes and matched-budget staged wording replay.
+
+- Add paired fixed-budget training-only prompt augmentation and staged replay on four trained forms plus two novel wording probes, preserving frozen name splits and defaults.
+
+- Add frozen two-stage prompt-robustness replay with paired original/prefix/suffix outcomes and unchanged requested names and reference answers.
+
 - Add inference-only learned-header/body composition with verified frozen source checkpoints, uncorrected generated prefixes and separate whole-function versus header metrics.
 
 - Add a paired original-prompt header-only versus full-code learning probe with unchanged frozen name splits, separate partial-output metrics and checkpoint reload evidence.
