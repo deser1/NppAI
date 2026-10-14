@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure matched short versus mixed-length header continuation on instruction-v3 development remaps; retain before/after raw metrics and leave complete-code quality milestones open (experiment pending CI).
+
 - [x] Measure both frozen continuation pairs on fresh-probe-v1 and retain raw/audited paired results: both 0/144 AST/exact, signatures 2/144 versus 3/144; this is completed measurement, not a quality milestone. See [fresh-probe-v1](docs/fresh-probe-v1.md).
 - [ ] Improve new-task signature copying and body/reference correctness on training-only development data; retain exposed fresh-probe-v1 for regression and reserve a later independent holdout.
 

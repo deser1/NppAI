@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a matched header-only name-length continuation experiment: fixed four-form starting checkpoint, short-name control versus balanced9/12/15 lengths, development-only remapping, full source/reload verification and paired raw-output audits; no fresh-probe access or model promotion.
+
 - Record first fresh-probe results: both frozen continuation pairs have 0/144 reference AST/exact matches; staged syntax 40/144 versus 67/144 and requested signatures 2/144 versus 3/144. Evidence audits pass, quality flags fail; no checkpoint promotion.
 
 - Add inference-only fresh-probe evaluation for the two preselected continuation pairs, source/hash verification, signature metrics, raw-output audit and paired wording/family/name-length summaries; no training or checkpoint promotion.
