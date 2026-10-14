@@ -33,7 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
-- [ ] Measure the two frozen continuation pairs on fresh-probe-v1, retain raw/audited outputs and report paired wording results (evaluation PR pending CI).
+- [x] Measure both frozen continuation pairs on fresh-probe-v1 and retain raw/audited paired results: both 0/144 AST/exact, signatures 2/144 versus 3/144; this is completed measurement, not a quality milestone. See [fresh-probe-v1](docs/fresh-probe-v1.md).
+- [ ] Improve new-task signature copying and body/reference correctness on training-only development data; retain exposed fresh-probe-v1 for regression and reserve a later independent holdout.
 
 ### 1. Public API hardening (implementation checklist; deployment review still required)
 
