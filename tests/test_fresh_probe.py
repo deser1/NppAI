@@ -1,9 +1,13 @@
 """Fresh evaluation views, source isolation and trusted reference correctness."""
 import ast
 from collections import defaultdict
+from contextlib import redirect_stdout
 import hashlib
+import io
 import json
 from pathlib import Path
+import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -61,8 +65,9 @@ class FreshProbeTests(unittest.TestCase):
 
     def test_saved_fixture_is_eval_only_and_tampering_fails(self):
         with tempfile.TemporaryDirectory() as folder:
-            save(folder)
-            save(folder, check=True)
+            with redirect_stdout(io.StringIO()):
+                save(folder)
+                save(folder, check=True)
             self.assertFalse((Path(folder) / 'train.json').exists())
             (Path(folder) / 'tasks.json').write_bytes(b'[]\n')
             with self.assertRaises(ValueError):
@@ -73,3 +78,21 @@ class FreshProbeTests(unittest.TestCase):
         raw, manifest = build()
         self.assertEqual((directory / 'tasks.json').read_bytes(), raw)
         self.assertEqual((directory / 'manifest.json').read_bytes(), manifest)
+
+    @unittest.skipUnless(shutil.which('git'), 'Git required for checkout regression')
+    def test_autocrlf_preserves_every_frozen_probe_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            repository, exported = Path(temporary) / 'repository', Path(temporary) / 'checkout'
+            relative = Path('evaluation/fresh-probe-v1')
+            with redirect_stdout(io.StringIO()):
+                save(repository / relative)
+            def git(*args):
+                subprocess.run(['git', '-C', str(repository), *args], check=True,
+                               capture_output=True, timeout=15)
+            git('init')
+            git('config', 'core.autocrlf', 'true')
+            git('add', relative.as_posix())
+            git('checkout-index', '--all', '--prefix=' + exported.as_posix() + '/')
+            for name in ('tasks.json', 'manifest.json', '.gitattributes'):
+                self.assertEqual((exported / relative / name).read_bytes(),
+                                 (repository / relative / name).read_bytes())

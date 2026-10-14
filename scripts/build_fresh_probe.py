@@ -90,7 +90,8 @@ def build(root=ROOT):
 def save(output, check=False):
     directory = Path(output)
     tasks, manifest = build()
-    files = {'tasks.json': tasks, 'manifest.json': manifest, '.gitattributes': b'*.json text eol=lf\n'}
+    files = {'tasks.json': tasks, 'manifest.json': manifest,
+             '.gitattributes': b'*.json text eol=lf\n.gitattributes text eol=lf\n'}
     if check:
         for name, expected in files.items():
             if (directory / name).read_bytes() != expected:
