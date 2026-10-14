@@ -36,7 +36,7 @@ def score_header(record, output, predicted_bytes):
             "teacher_forced_total_bytes": len(expected)}
 
 
-def run(dataset, output, steps=6000):
+def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -47,6 +47,7 @@ def run(dataset, output, steps=6000):
     from scripts.train_instruction_experiment import generate
     from scripts.diagnose_identifier_copy import identifier_span
     from scripts.check_dense_runtime_parity import load_weights, torch_model
+    from scripts.prompt_robustness import augment_training_records, prompt_variants
 
     torch.manual_seed(42)
     random.seed(42)
@@ -54,16 +55,23 @@ def run(dataset, output, steps=6000):
     root = Path(dataset)
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     training = header_records(read_split(root, "train", manifest))
+    source_count = len(training)
+    if augment_prompts:
+        training = augment_training_records(training)
     if len(training) < 4:
         raise ValueError("requires at least four training records")
     context = 256
     samples = [sample(record, context) for record in training]
+    jitter = None
+    if position_jitter:
+        from scripts.position_jitter import PositionJitter
+        jitter = PositionJitter()
     model = NppAIModel(256, 64, 128, 2, context)
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
     first_loss = None
     model.train()
     for step in range(steps):
-        batch = random.sample(samples, 4)
+        batch = [sample(jitter.apply(record), context) for record in random.sample(training, 4)] if jitter else random.sample(samples, 4)
         x = torch.nn.utils.rnn.pad_sequence([b[0] for b in batch], batch_first=True)
         y = torch.nn.utils.rnn.pad_sequence([b[1] for b in batch], batch_first=True, padding_value=-100)
         loss = F.cross_entropy(model(x).reshape(-1, 256), y.reshape(-1), ignore_index=-100)
@@ -92,8 +100,13 @@ def run(dataset, output, steps=6000):
               "derived_training_sha256": hashlib.sha256(json.dumps(training, sort_keys=True).encode("utf-8")).hexdigest(),
               "model_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
               "initial_loss": first_loss, "final_loss": float(loss.detach()), "reload_outputs_identical": True,
-              "limits": "Partial header task, not valid complete functions or bodies. Prompts, name splits and styles unchanged from frozen V3. Header responses shorten training sequences and change supervised targets/token budget relative to full code. Teacher forcing supplies preceding reference bytes. Seen first24 sample, single seed, previously exposed synthetic families. No native INT8 or production-model promotion.",
+              "limits": "Partial header task, not valid complete functions or bodies. Frozen source names and splits unchanged; optional training-only prompt augmentation is recorded separately. Header responses shorten training sequences and change supervised targets/token budget relative to full code. Teacher forcing supplies preceding reference bytes. Seen first24 sample, single seed, previously exposed synthetic families. No native INT8 or production-model promotion.",
               "splits": {}}
+    if augment_prompts:
+        report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
+                                         "variants": list(prompt_variants(training[0]))}
+    if jitter:
+        report["position_jitter"] = jitter.metadata()
     with torch.no_grad():
         for split, records in splits.items():
             cases = []
@@ -118,5 +131,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--steps", type=int, default=6000)
+    parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
+    parser.add_argument("--position-jitter", action="store_true", help="random training-only whitespace offsets; independent seed")
     args = parser.parse_args()
-    run(args.dataset, args.output, args.steps)
+    run(args.dataset, args.output, args.steps, args.augment_prompts, args.position_jitter)

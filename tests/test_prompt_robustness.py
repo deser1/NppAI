@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.prompt_robustness import paired_outcomes, prompt_variants
+from scripts.prompt_robustness import augment_training_records, evaluation_variants, paired_outcomes, prompt_variants
 
 
 class PromptRobustnessTests(unittest.TestCase):
@@ -30,6 +30,25 @@ class PromptRobustnessTests(unittest.TestCase):
         for original, changed in (([case], []), ([case, case], [case])):
             with self.assertRaises(ValueError):
                 paired_outcomes(original, changed, "staged")
+
+
+class AugmentationTests(unittest.TestCase):
+    def test_training_excludes_novel_forms_and_preserves_references(self):
+        record = {"id": "source", "function": "fn_a1b2c3", "prompt": "Implement fn_a1b2c3(x).", "answer": "reference"}
+        expanded = augment_training_records([record])
+        self.assertEqual(len(expanded), 4)
+        self.assertEqual(len({r["id"] for r in expanded}), 4)
+        self.assertTrue(all(r["source_id"] == "source" and r["function"] == record["function"] and r["answer"] == "reference" for r in expanded))
+        self.assertEqual([r["prompt_variant"] for r in expanded], list(prompt_variants(record)))
+        novel = evaluation_variants(record, True)
+        self.assertEqual(len(novel), 6)
+        trained = {r["prompt"] for r in expanded}
+        self.assertNotIn(novel["novel_polite_python"]["prompt"], trained)
+        self.assertNotIn(novel["novel_implementation"]["prompt"], trained)
+        with self.assertRaises(ValueError):
+            augment_training_records([record, record])
+        with self.assertRaises(ValueError):
+            augment_training_records([])
 
 
 if __name__ == "__main__":

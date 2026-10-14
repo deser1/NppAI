@@ -35,6 +35,7 @@ class StagedGenerationTests(unittest.TestCase):
         report = {"model_sha256": hashlib.sha256(raw).hexdigest(), "source_manifest": manifest,
                   "steps": 6000, "seed": 42, "context": 256}
         check_source(report, raw, manifest, "source_manifest")
+        check_source({**report, "steps": 10000}, raw, manifest, "source_manifest", expected_steps=10000)
         for field, value in (("model_sha256", "wrong"), ("source_manifest", {}), ("steps", 3000), ("context", 96)):
             with self.subTest(field=field), self.assertRaises(ValueError):
                 check_source({**report, field: value}, raw, manifest, "source_manifest")
