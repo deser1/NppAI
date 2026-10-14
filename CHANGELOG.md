@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Record negative argument-alias results: both policies0/336 exact new-argument signatures; varied training retains15/21 prior test hits versus20/21 control and worsens the sort argument/arity case. Audits pass; no checkpoint promotion.
+
+- Add a matched argument-copying header experiment: fixed versus varied training argument aliases with unchanged50% original replay, disjoint development aliases, source/byte-budget verification, raw metrics and paired retention audits; no fresh-probe use or model promotion.
+
 - Record frozen replay pipeline results: half-original exact original replies15/28 versus13/28 pretrained (all13 retained), renamed AST60/336 and exact59/336; zero cached-header deviations. Confirm sort argument regression had a nonmatching body already before replay; no model promotion.
 
 - Diagnose the remaining replay header regression as argument drift (`test-sort-2-2`: values→x), and add frozen pretrained/no-replay/half-original complete-body comparison with pinned sources, cache-deviation counts, raw-output audits and no training or promotion.
