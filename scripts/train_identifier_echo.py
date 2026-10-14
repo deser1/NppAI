@@ -49,9 +49,11 @@ def score_echo(record, output, predicted_name_bytes):
             "teacher_forced_complete_name": expected == predicted_name_bytes}
 
 
-def run(dataset, output, steps=3000):
+def run(dataset, output, steps=3000, context=96, training_only=False):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
+    if context not in (96, 256):
+        raise ValueError("context must be 96 or 256")
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     import torch
     import torch.nn.functional as F
@@ -68,7 +70,6 @@ def run(dataset, output, steps=3000):
     training = echo_records(read_split(root, "train", manifest))
     if len(training) < 4:
         raise ValueError("requires at least four training names")
-    context = 96
     samples = [encode_echo(record, context) for record in training]
     model = NppAIModel(256, 64, 128, 2, context)
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
@@ -94,9 +95,10 @@ def run(dataset, output, steps=3000):
     export_to_bin(model, str(checkpoint))
     reloaded = torch_model(load_weights(checkpoint))
     # Held-out names are first read after the final optimizer update.
-    splits = {"train_first16": training[:16],
-              "validation": echo_records(read_split(root, "validation", manifest)),
-              "test": echo_records(read_split(root, "test", manifest))}
+    splits = {"train_first16": training[:16]}
+    if not training_only:
+        splits.update(validation=echo_records(read_split(root, "validation", manifest)),
+                      test=echo_records(read_split(root, "test", manifest)))
     report = {"seed": 42, "steps": steps, "batch_size": 4, "context": context,
               "architecture": {"vocabulary": 256, "dimension": 64, "hidden_dimension": 128, "layers": 2},
               "optimizer": {"name": "AdamW", "learning_rate": 0.001, "gradient_clip_norm": 1.0},
@@ -105,6 +107,7 @@ def run(dataset, output, steps=3000):
               "echo_training_sha256": hashlib.sha256(json.dumps(training, sort_keys=True).encode("utf-8")).hexdigest(),
               "model_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
               "initial_loss": first_loss, "final_loss": float(loss.detach()), "reload_outputs_identical": True,
+              "training_only": training_only,
               "limitations": "Fixed nine-byte names at a fixed prompt position; a synthetic copying sanity check only. No variable-length, shifted-position, code-generation or native INT8 claim. Training first16 is seen data. Teacher-forced predictions supply preceding true bytes and are not autonomous outputs. One seed; no held-out tuning or checkpoint promotion.",
               "splits": {}}
     with torch.no_grad():
@@ -133,5 +136,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--steps", type=int, default=3000)
+    parser.add_argument("--context", type=int, choices=(96, 256), default=96)
+    parser.add_argument("--training-only", action="store_true", help="do not read or evaluate held-out splits")
     args = parser.parse_args()
-    run(args.dataset, args.output, args.steps)
+    run(args.dataset, args.output, args.steps, args.context, args.training_only)
