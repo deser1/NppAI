@@ -37,11 +37,11 @@ def score_header(record, output, predicted_bytes):
 
 
 def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False, augmentation_policy="four_forms"):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     from scripts.prompt_robustness import validate_training_policy
     validate_training_policy(augment_prompts, augmentation_policy)
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     import torch
     import torch.nn.functional as F
     from train_nppai import NppAIModel, export_to_bin

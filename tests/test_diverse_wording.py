@@ -1,6 +1,8 @@
 """Training-only eight-form policy, frozen targets and replay policy checks."""
 import json
 from pathlib import Path
+import subprocess
+import sys
 import unittest
 
 from scripts.prompt_robustness import (augment_training_records, training_variants,
@@ -10,6 +12,17 @@ ROOT = Path(__file__).resolve().parents[1] / "evaluation/instruction-v3"
 
 
 class DiverseWordingTests(unittest.TestCase):
+    def test_header_cli_imports_from_script_path_without_pythonpath(self):
+        script = ROOT.parents[1] / "scripts/train_identifier_headers.py"
+        for extra, expected in ((["--steps", "0"], "steps must be 1..10000"),
+                                (["--augmentation-policy", "eight_forms"], "requires --augment-prompts")):
+            result = subprocess.run([sys.executable, "-I", str(script),
+                                     "--dataset", str(ROOT), "--output", ".", *extra],
+                                    cwd=ROOT, capture_output=True, text=True, timeout=15)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn(expected, result.stderr)
+            self.assertNotIn("ModuleNotFoundError", result.stderr)
+
     def test_eight_forms_preserve_targets_and_exclude_both_probe_forms(self):
         records = json.loads((ROOT / "train.json").read_text())
         expanded = augment_training_records(records, "eight_forms")
