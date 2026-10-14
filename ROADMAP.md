@@ -129,6 +129,7 @@ Experimental evidence from PR #155 (measured 13 October 2026):
 - [x] Record the fixed three-arm attention/position comparison and artifact provenance in [the experiment report](docs/attention-architecture-experiment.md)
 - Original staged exact reference matching: single head 13/28, four absolute heads 14/28, four rotary heads 0/28; all arms score 0/28 on both novel wording probes
 - [ ] Demonstrate robustness to unseen instruction wording before checkpoint promotion
+- [Task-signature diagnosis](docs/task-signature-wording-diagnostic.md) (PR #162) improves assisted original exact matching to 15/28, but novel exact scores stay 0/28; polite/Python reference AST matching reaches only 2/28. Failures persist with an explicit correct header, so header learning alone does not explain this blocker.
 - [ ] Validate native FP32/INT8 compatibility for any proposed architecture change; current multi-head/RoPE checkpoints are PyTorch-only
 
 The subsequent [four-versus-eight-form wording experiment](docs/diverse-wording-experiment.md)
