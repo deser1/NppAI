@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record task-signature diagnostic: assisted original exact matching 15/28 versus cached learned-header 13/28; novel exact matching stays 0/28, with 2/28 polite/Python reference AST matches. Both assisted smoke checks fail; no checkpoint promotion.
+
 - Add a frozen inference-only task-signature wording diagnostic, separating assisted body generation in FP32/native INT8 from cached learned-header and free-body controls; no checkpoint promotion.
 
 - Record frozen staged native INT8 replay: original test exact matching remains 13/28 like FP32; both novel forms remain 0/28, and two validation forms each lose one exact response. Zero native infrastructure errors; no checkpoint promotion.
