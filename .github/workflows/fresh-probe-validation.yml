@@ -1,0 +1,24 @@
+name: Fresh evaluation probe reference validation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/build_fresh_probe.py'
+      - 'tests/test_fresh_probe.py'
+      - 'evaluation/fresh-probe-v1/**'
+      - '.github/workflows/fresh-probe-validation.yml'
+jobs:
+  validate:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-2022]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen evaluation bytes and trusted reference examples
+        run: python -m unittest tests.test_fresh_probe -v
+      - name: Require exact generator reproduction without rewriting files
+        run: python scripts/build_fresh_probe.py --check
