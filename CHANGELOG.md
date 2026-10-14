@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record original-example replay results: retains19/21 original test baseline hits (2 lost,2 gained; total21/28), retains14/14 validation hits, and reaches159/336 renamed exact signatures versus198/336 without replay. Full-retention diagnostics remain false; no checkpoint promotion.
+
 - Add a preselected header original-example replay experiment: matched6000-update control versus two original/two renamed samples per batch, training-only pools, actual draw counts, paired retention audits and export/reload checks; no fresh-probe access or model promotion.
 
 - Record repeat-training variation for the header-length experiment: renamed test80/336 versus198/336 on rerun, with unchanged zero original-name exact matches; distinguish deterministic data and within-run reload checks from bit-identical retraining.

@@ -33,10 +33,11 @@ Recent RAG regression work:
 
 ## Next
 
-- [ ] Measure fixed50% original-example replay against mixed-name-only header training, retaining baseline case identities and long-name development metrics (experiment pending CI).
+- [x] Measure fixed50% original-example replay: original test retains19/21 baseline hits with2 lost/2 gained; renamed exact159/336 versus198/336 control. See [header-original-replay](docs/header-original-replay.md); no checkpoint promotion.
+- [ ] Diagnose lost original baseline header cases and validate retention together with variable-length signatures before complete-body or fresh-probe quality claims.
 
 - [x] Measure matched header-length continuation: renamed test81/336 versus206/336 exact signatures, both original test21/28 to0/28; evidence documented in [header-name-length](docs/header-name-length.md), no checkpoint promotion.
-- [ ] Evaluate a preselected training replay mix that retains original names while teaching varied lengths; require original and remapped development metrics together before any model-quality claim.
+- [x] Evaluate a preselected original-example replay mix and report original/remapped development outcomes together; full retention remains unresolved (see header replay evidence).
 
 - [x] Measure both frozen continuation pairs on fresh-probe-v1 and retain raw/audited paired results: both 0/144 AST/exact, signatures 2/144 versus 3/144; this is completed measurement, not a quality milestone. See [fresh-probe-v1](docs/fresh-probe-v1.md).
 - [ ] Improve new-task signature copying and body/reference correctness on training-only development data; retain exposed fresh-probe-v1 for regression and reserve a later independent holdout.

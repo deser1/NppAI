@@ -53,4 +53,49 @@ and initial-source evidence. No model selection is performed from these scores.
 
 Implementation: `scripts/header_original_replay.py`, regression tests
 `tests/test_header_original_replay.py`, workflow `.github/workflows/header-original-replay.yml`.
-Measured results are pending Actions.
+First measured results are recorded below.
+
+## First measured results (2026-10-14)
+
+Measured workflow [38634434415](https://github.com/deser1/NppAI/actions/runs/38634434415), implementation commit `b090bff66e3a61117347cc469fe5db4aaf9ec779`. Both jobs passed all14 tests with the fixed CPU runtime, source/draw verification, every within-run development export/reload comparison and raw-output audits. The source header SHA-256 is `c68c7908afb65f13ff113e15b6dfa97f73a066da97ec6c1ff40c1a24c16139bd`. Baseline summaries agree across policies. Counts below describe this specific training measurement; later retraining can vary.
+
+| Development group | Before exact header | No replay after | Half-original after |
+| --- | ---: | ---: | ---: |
+| Original validation | 14/16 | 0/16 | 16/16 |
+| Original test | 21/28 | 0/28 | 21/28 |
+| Renamed validation | 0/192 | 125/192 | 97/192 |
+| Renamed test | 0/336 | 198/336 | 159/336 |
+
+| Original group | Policy | Baseline hits retained | Lost | Newly correct |
+| --- | --- | ---: | ---: | ---: |
+| Validation | No replay | 0/14 | 14 | 0 |
+| Validation | Half-original | 14/14 | 0 | 2 |
+| Test | No replay | 0/21 | 21 | 0 |
+| Test | Half-original | 19/21 | 2 | 2 |
+
+The half-original test total remains21/28, but two earlier correct cases are lost and two formerly incorrect cases become correct. Aggregate equality is not full retention. Validation retains all14 baseline hits and gains2. The no-replay policy loses all baseline hits in both splits. Both `all_baseline_exact_retained` diagnostics are false; neither checkpoint is promoted. Both have long-name exact matches in each development split, but that partial diagnostic does not override regression or prove complete-code quality.
+
+| Renamed test length | Views | No replay exact/signature | Half-original exact/signature |
+| --- | ---: | ---: | ---: |
+| 9 | 112 | 83 | 87 |
+| 12 | 112 | 73 | 52 |
+| 15 | 112 | 42 | 20 |
+
+| Renamed validation length | Views | No replay exact/signature | Half-original exact/signature |
+| --- | ---: | ---: | ---: |
+| 9 | 64 | 61 | 62 |
+| 12 | 64 | 37 | 23 |
+| 15 | 64 | 27 | 12 |
+
+On renamed test the half-original arm has313/336 valid headers,188/336 requested-name hits and159/336 exact/full signatures. Control counts are306/336,232/336 and198/336. Validity/name-only metrics do not substitute for correct signatures. Actual sampled draws are12000 original plus12000 renamed in replay, versus0/24000 in control; reduced renamed exposure is part of this comparison.
+
+This measurement supports using original training replay to reduce the observed namespace regression while retaining some variable-length copying. It also shows a tradeoff in renamed development accuracy and two remaining lost baseline test cases. It does not isolate a general causal mechanism or establish statistically reliable gains across seeds. No ratio was selected or tuned after looking at these scores, and no new fresh-probe/body/native measurement was made. Investigate the lost baseline cases using saved raw evidence before another preselected development experiment.
+
+| Policy | Artifact | Archive SHA-256 | Report SHA-256 |
+| --- | --- | --- | --- |
+| no_replay | [11926764460](https://github.com/deser1/NppAI/actions/runs/38634434415/artifacts/11926764460) | `5a4f30d3f829eab4af1834f19866f2630f95c4f99b8b2e9b4e168dc46a6f0b8e` | `1e3e486f8fb804fabec9702e4152b84b43c3ff393c025f58651defb9de908673` |
+| half_original | [11926414603](https://github.com/deser1/NppAI/actions/runs/38634434415/artifacts/11926414603) | `677c9d27721b9bd186a31fc95cdacf1d4bf37826afff780d2ca0fe14ba175828` | `b4ae689777c5c674fbf86e2719d22720d1b781c3be8470a61acead903403c1ba` |
+
+Original pool SHA-256: `401e79702ad33dc867954e906e351296f2a73e53fb8130ac92d1ebe43c396bec`.
+Renamed pool: `71c7ded47937f1c7c483fa9bc74c8dfefd7d5dd7f79e66a6204973123adb720e`.
+Development: `2170a0e857629bb3f8f1caac3e6920750333ec72e577fa18c58f62478a039d23`.
