@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a frozen inference-only task-signature wording diagnostic, separating assisted body generation in FP32/native INT8 from cached learned-header and free-body controls; no checkpoint promotion.
+
 - Record frozen staged native INT8 replay: original test exact matching remains 13/28 like FP32; both novel forms remain 0/28, and two validation forms each lose one exact response. Zero native infrastructure errors; no checkpoint promotion.
 
 - Add inference-only frozen staged FP32/native INT8 comparison with a dedicated evaluation runner, matched token limits, raw-output audits and explicit native infrastructure diagnostics; existing TestEngine remains unchanged.
