@@ -36,7 +36,17 @@ def score_header(record, output, predicted_bytes):
             "teacher_forced_total_bytes": len(expected)}
 
 
-def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False, augmentation_policy="four_forms"):
+def initialize_header_weights(model, checkpoint):
+    from scripts.check_dense_runtime_parity import load_weights, torch_model
+    from scripts.identifier_curriculum import validate_initial_weights
+    weights = load_weights(checkpoint)
+    validate_initial_weights(weights)
+    model.load_state_dict(torch_model(weights).state_dict())
+    return {"checkpoint_sha256": hashlib.sha256(Path(checkpoint).read_bytes()).hexdigest(),
+            "method": "all dense FP32 weights; fresh AdamW optimizer"}
+
+
+def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False, augmentation_policy="four_forms", initial_model=None):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     from scripts.prompt_robustness import validate_training_policy
     validate_training_policy(augment_prompts, augmentation_policy)
@@ -69,6 +79,7 @@ def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=Fals
         from scripts.position_jitter import PositionJitter
         jitter = PositionJitter()
     model = NppAIModel(256, 64, 128, 2, context)
+    initialization = initialize_header_weights(model, initial_model) if initial_model is not None else None
     optimizer = torch.optim.AdamW(model.parameters(), lr=0.001)
     first_loss = None
     model.train()
@@ -104,6 +115,8 @@ def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=Fals
               "initial_loss": first_loss, "final_loss": float(loss.detach()), "reload_outputs_identical": True,
               "limits": "Partial header task, not valid complete functions or bodies. Frozen source names and splits unchanged; optional training-only prompt augmentation is recorded separately. Header responses shorten training sequences and change supervised targets/token budget relative to full code. Teacher forcing supplies preceding reference bytes. Seen first24 sample, single seed, previously exposed synthetic families. No native INT8 or production-model promotion.",
               "splits": {}}
+    if initialization:
+        report["initialization"] = initialization
     if augment_prompts:
         report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
                                          "policy": augmentation_policy,
@@ -137,5 +150,6 @@ if __name__ == "__main__":
     parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
     parser.add_argument("--position-jitter", action="store_true", help="random training-only whitespace offsets; independent seed")
     parser.add_argument("--augmentation-policy", choices=("four_forms", "eight_forms"), default="four_forms")
+    parser.add_argument("--initial-model", help="initialize all compatible dense FP32 weights; optimizer resets")
     args = parser.parse_args()
-    run(args.dataset, args.output, args.steps, args.augment_prompts, args.position_jitter, args.augmentation_policy)
+    run(args.dataset, args.output, args.steps, args.augment_prompts, args.position_jitter, args.augmentation_policy, args.initial_model)
