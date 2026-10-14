@@ -116,6 +116,16 @@ Read -> Patch -> Build -> Test
 
 ### 5. Model quality and training
 
+Experimental evidence on the PR #155 branch (13 October 2026; integration pending):
+
+- [x] Record the fixed three-arm attention/position comparison and artifact provenance in [the experiment report](docs/attention-architecture-experiment.md)
+- Original staged exact reference matching: single head 13/28, four absolute heads 14/28, four rotary heads 0/28; all arms score 0/28 on both novel wording probes
+- [ ] Demonstrate robustness to unseen instruction wording before checkpoint promotion
+- [ ] Validate native FP32/INT8 compatibility for any proposed architecture change; current multi-head/RoPE checkpoints are PyTorch-only
+
+These measurements use exposed synthetic tasks and one seed. They do not complete
+the broader quality and held-out evaluation milestones below.
+
 - [ ] Establish reproducible training/evaluation datasets
 - [x] Add an offline Python candidate syntax/unit-test evaluation harness (infrastructure only; see docs/code-quality-evaluation.md)
 - [ ] Add generation-quality evaluation metrics on actual model outputs and held-out tasks

@@ -1,0 +1,621 @@
+{
+  "seed": 42,
+  "steps": 3000,
+  "batch_size": 4,
+  "context": 256,
+  "identifier_weight": 1.0,
+  "training_loss_kind": "weighted response cross-entropy; reported evaluation loss is unweighted",
+  "dataset_manifest": {
+    "version": 3,
+    "source": "project-authored synthetic templates",
+    "limitations": "Template variations are correlated; sample count is not independent task diversity.",
+    "unseen_test_families": [
+      "clamp",
+      "join",
+      "sort",
+      "unique"
+    ],
+    "splits": {
+      "train": {
+        "count": 1536,
+        "sha256": "7d729ccac90a001853663a661398cee21e66f7c2a57e749b6a855db3d673f3c6"
+      },
+      "validation": {
+        "count": 16,
+        "sha256": "c4963e993c9ebcd1c34f89597bb3a4b06ea4ed9baa62354198e3042fe991b445"
+      },
+      "test": {
+        "count": 28,
+        "sha256": "b174bf1f980c8a11415e8174f9d6eaac91faf8abd38ceee0610d910e278fa56d"
+      }
+    }
+  },
+  "model_sha256": "4da4689a9341743e26355737772f3c4f600cf9878460619bf58b1ffbcf61d881",
+  "initial_training_loss": 5.834696292877197,
+  "final_training_loss": 0.4159304201602936,
+  "validation": {
+    "total": 16,
+    "nonempty": 16,
+    "syntax_requested_function": 0,
+    "syntax_any_function": 14,
+    "ast_match_ignoring_function_name": 14,
+    "reference_ast": 0,
+    "exact_match": 0,
+    "mean_response_loss": 0.6717487871646881,
+    "cases": [
+      {
+        "id": "validation-add-12-1",
+        "family": "add",
+        "output": "def fn_05qugv(a, b):\n    return a + b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.8116910457611084
+      },
+      {
+        "id": "validation-subtract-12-1",
+        "family": "subtract",
+        "output": "def fn_3zhopj(a, b):\n    return a - b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5183023810386658
+      },
+      {
+        "id": "validation-multiply-12-1",
+        "family": "multiply",
+        "output": "def fn_hgmpjr(a, b):\n    return a * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6297604441642761
+      },
+      {
+        "id": "validation-square-12-1",
+        "family": "square",
+        "output": "def fn_dz5w6d(x):\n    return x * x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5679446458816528
+      },
+      {
+        "id": "validation-negate-12-1",
+        "family": "negate",
+        "output": "def fn_1luawe(x):\n    return -x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.7231271266937256
+      },
+      {
+        "id": "validation-absolute-12-1",
+        "family": "absolute",
+        "output": "def fn_90scns(x):\n    return abs(x)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.7045875191688538
+      },
+      {
+        "id": "validation-length-12-1",
+        "family": "length",
+        "output": "def fn_rg(vu(values):\n    return m(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.7708364725112915
+      },
+      {
+        "id": "validation-total-12-1",
+        "family": "total",
+        "output": "def fn_alds5x(values):\n    return sum(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.7183990478515625
+      },
+      {
+        "id": "validation-largest-12-1",
+        "family": "largest",
+        "output": "def fn_if1xup(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5534217357635498
+      },
+      {
+        "id": "validation-smallest-12-1",
+        "family": "smallest",
+        "output": "def fn_if1xfa(values):\n    return min(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6490837335586548
+      },
+      {
+        "id": "validation-reverse-12-1",
+        "family": "reverse",
+        "output": "def fn_jbbl(tue(xt):\n    return text[::-1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5995877981185913
+      },
+      {
+        "id": "validation-lower-12-1",
+        "family": "lower",
+        "output": "def fn_ajbekd(text):\n    return text.lower()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.7187525629997253
+      },
+      {
+        "id": "validation-upper-12-1",
+        "family": "upper",
+        "output": "def fn_ajbwor(text):\n    return text.upper()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.4757545590400696
+      },
+      {
+        "id": "validation-strip-12-1",
+        "family": "strip",
+        "output": "def fn_alfgt0(text):\n    return text.strip()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.9833859205245972
+      },
+      {
+        "id": "validation-even-12-1",
+        "family": "even",
+        "output": "def fn_jjxfph(x):\n    return x % 2 == 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6487336754798889
+      },
+      {
+        "id": "validation-positive-12-1",
+        "family": "positive",
+        "output": "def fn_xh6rgt(x):\n    return x > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6746119260787964
+      }
+    ]
+  },
+  "test": {
+    "total": 28,
+    "nonempty": 28,
+    "syntax_requested_function": 0,
+    "syntax_any_function": 17,
+    "ast_match_ignoring_function_name": 13,
+    "reference_ast": 0,
+    "exact_match": 0,
+    "mean_response_loss": 2.103645253394331,
+    "cases": [
+      {
+        "id": "test-add-13-2",
+        "family": "add",
+        "output": "def fn_i6ndmf(a, b):\n    return a + b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.4356514811515808
+      },
+      {
+        "id": "test-subtract-13-2",
+        "family": "subtract",
+        "output": "def fn_j3dvn3(a, b):\n    return a - b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.9009988307952881
+      },
+      {
+        "id": "test-multiply-13-2",
+        "family": "multiply",
+        "output": "def fn_63qph3(a, b):\n    return a * b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.49578768014907837
+      },
+      {
+        "id": "test-square-13-2",
+        "family": "square",
+        "output": "def fn_a1(a, b):\n     return x * x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.9052662253379822
+      },
+      {
+        "id": "test-negate-13-2",
+        "family": "negate",
+        "output": "def fn_jj5ogs(x):\n    return -x\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.8758176565170288
+      },
+      {
+        "id": "test-absolute-13-2",
+        "family": "absolute",
+        "output": "def fn_3zsxfc(x):\n    return abs(x)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6837603449821472
+      },
+      {
+        "id": "test-length-13-2",
+        "family": "length",
+        "output": "def fn_hoh2s8(values):\n    return len(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.4377947747707367
+      },
+      {
+        "id": "test-total-13-2",
+        "family": "total",
+        "output": "def fn_ip03f(aluetues):\n    return - % b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5498619675636292
+      },
+      {
+        "id": "test-largest-13-2",
+        "family": "largest",
+        "output": "def fn_0s55g1(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5644788146018982
+      },
+      {
+        "id": "test-smallest-13-2",
+        "family": "smallest",
+        "output": "def fn_0s55g1(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.4559112787246704
+      },
+      {
+        "id": "test-reverse-13-2",
+        "family": "reverse",
+        "output": "def fn_h6hxfp(text):\n    return text[::-1]\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5879191160202026
+      },
+      {
+        "id": "test-lower-13-2",
+        "family": "lower",
+        "output": "def fn_dyjefa(text):\n    return text.lower()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5634109377861023
+      },
+      {
+        "id": "test-upper-13-2",
+        "family": "upper",
+        "output": "def fn_dyjbj2(text):\n    return text.upper()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5408674478530884
+      },
+      {
+        "id": "test-strip-13-2",
+        "family": "strip",
+        "output": "def fn_i6rgpz(text):\n    return text.strip()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.5081984996795654
+      },
+      {
+        "id": "test-even-13-2",
+        "family": "even",
+        "output": "def fn_jrxbr7(x):\n    return x % 2 == 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.6327646970748901
+      },
+      {
+        "id": "test-positive-13-2",
+        "family": "positive",
+        "output": "def fn_hx3zxt(x):\n    return x > 0\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": true,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 0.8790956735610962
+      },
+      {
+        "id": "test-sort-0-0",
+        "family": "sort",
+        "output": "def fn_hrg(values):\n    return letuetupen(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 2.5283470153808594
+      },
+      {
+        "id": "test-sort-1-1",
+        "family": "sort",
+        "output": "def fn_i3uvrn(values)\n  f\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 3.4927966594696045
+      },
+      {
+        "id": "test-sort-2-2",
+        "family": "sort",
+        "output": "def fn_vghq5o(values):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": true,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 2.4204912185668945
+      },
+      {
+        "id": "test-unique-0-0",
+        "family": "unique",
+        "output": "  f fn_ifhg(values):\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 3.881066083908081
+      },
+      {
+        "id": "test-unique-1-1",
+        "family": "unique",
+        "output": "     ref b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 5.408944606781006
+      },
+      {
+        "id": "test-unique-2-2",
+        "family": "unique",
+        "output": "    retrefn x:\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 5.0
+      },
+      {
+        "id": "test-join-0-0",
+        "family": "join",
+        "output": "def fn_0sxbsp(x)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 2.385056734085083
+      },
+      {
+        "id": "test-join-1-1",
+        "family": "join",
+        "output": "   rn (values):\n rer(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 3.6402251720428467
+      },
+      {
+        "id": "test-join-2-2",
+        "family": "join",
+        "output": "dettef  fn bs):\n    return max(values)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 3.6273887157440186
+      },
+      {
+        "id": "test-clamp-0-0",
+        "family": "clamp",
+        "output": "def fn_3upw(alues)\n  a - b\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 5.130175590515137
+      },
+      {
+        "id": "test-clamp-1-1",
+        "family": "clamp",
+        "output": "     return_a(x    * return   rnn b)\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 5.556240558624268
+      },
+      {
+        "id": "test-clamp-2-2",
+        "family": "clamp",
+        "output": " f  return abx\n -x\n r()\n",
+        "nonempty": true,
+        "syntax_requested_function": false,
+        "syntax_any_function": false,
+        "ast_match_ignoring_function_name": false,
+        "reference_ast": false,
+        "exact_match": false,
+        "response_loss": 5.813749313354492
+      }
+    ],
+    "by_family_exposure": {
+      "seen_family_new_task": {
+        "total": 16,
+        "syntax_requested_function": 0,
+        "exact_match": 0,
+        "reference_ast": 0
+      },
+      "unseen_family": {
+        "total": 12,
+        "syntax_requested_function": 0,
+        "exact_match": 0,
+        "reference_ast": 0
+      }
+    }
+  },
+  "limitations": "Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark.",
+  "architecture": {
+    "vocabulary": 256,
+    "dimension": 64,
+    "hidden_dimension": 128,
+    "layers": 2
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "torch": "2.14.1+cpu",
+    "device": "cpu",
+    "threads": 2
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.001,
+    "gradient_clip_norm": 1.0
+  },
+  "verification": "Re-evaluated exported checkpoint; all raw validation/test outputs exactly match outputs recorded immediately after training."
+}

@@ -1,0 +1,84 @@
+name: Prompt augmentation and staged generalization experiment
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/prompt_robustness.py'
+      - 'scripts/train_identifier_headers.py'
+      - 'scripts/train_broader_instruction_experiment.py'
+      - 'scripts/evaluate_staged_generation.py'
+      - 'tests/test_prompt_robustness.py'
+      - '.github/workflows/prompt-augmentation-experiment.yml'
+jobs:
+  train:
+    strategy:
+      fail-fast: false
+      matrix:
+        augmentation: [plain, augmented]
+        kind: [headers, bodies]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install measured CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Check augmentation isolation and response metrics
+        run: python -m unittest tests.test_prompt_robustness tests.test_staged_generation tests.test_identifier_headers tests.test_identifier_training tests.test_instruction_dataset
+      - name: Train fixed-budget header arm
+        if: matrix.kind == 'headers'
+        shell: bash
+        run: |
+          extra=()
+          if [ '${{ matrix.augmentation }}' = 'augmented' ]; then extra+=(--augment-prompts); fi
+          python scripts/train_identifier_headers.py --dataset evaluation/instruction-v3 --output style-training --steps 10000 "${extra[@]}"
+      - name: Train fixed-budget body arm
+        if: matrix.kind == 'bodies'
+        shell: bash
+        run: |
+          extra=()
+          if [ '${{ matrix.augmentation }}' = 'augmented' ]; then extra+=(--augment-prompts); fi
+          python scripts/train_broader_instruction_experiment.py --dataset evaluation/instruction-v3 --output style-training --steps 10000 --identifier-weight 1 --training-names 512 "${extra[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nppai-style-${{ matrix.augmentation }}-${{ matrix.kind }}
+          path: style-training/
+          retention-days: 14
+  evaluate:
+    needs: train
+    strategy:
+      fail-fast: false
+      matrix:
+        augmentation: [plain, augmented]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install measured CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - uses: actions/download-artifact@v4
+        with:
+          name: nppai-style-${{ matrix.augmentation }}-headers
+          path: header-source
+      - uses: actions/download-artifact@v4
+        with:
+          name: nppai-style-${{ matrix.augmentation }}-bodies
+          path: body-source
+      - name: Evaluate trained forms and two novel wordings
+        run: python scripts/evaluate_staged_generation.py --headers header-source --bodies body-source --dataset evaluation/instruction-v3 --output style-evaluation --source-run ${{ github.run_id }} --source-steps 10000 --prompt-variants --novel-variants
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-style-evaluation-${{ matrix.augmentation }}
+          path: style-evaluation/
+          retention-days: 14

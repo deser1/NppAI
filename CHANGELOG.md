@@ -1,5 +1,29 @@
 ## Unreleased
 
+- Record PR #155 architecture results and artifact provenance: original staged reference matching 13/28 (single head), 14/28 (four absolute heads), 0/28 (four rotary heads); both novel wording probes fail in all arms. No checkpoint promotion.
+
+- Add isolated PyTorch-only legacy/split-head/RoPE architecture probes with strict checkpoint configuration, causal/rotation tests and matched-budget staged wording evaluation.
+
+- Add training-only whitespace position offsets with an independent seed, unchanged source-batch sampling, ordered-view hashes and matched-budget staged wording replay.
+
+- Add paired fixed-budget training-only prompt augmentation and staged replay on four trained forms plus two novel wording probes, preserving frozen name splits and defaults.
+
+- Add frozen two-stage prompt-robustness replay with paired original/prefix/suffix outcomes and unchanged requested names and reference answers.
+
+- Add inference-only learned-header/body composition with verified frozen source checkpoints, uncorrected generated prefixes and separate whole-function versus header metrics.
+
+- Add a paired original-prompt header-only versus full-code learning probe with unchanged frozen name splits, separate partial-output metrics and checkpoint reload evidence.
+
+- Add fixed copying-to-code curriculum schedules, compatible full-checkpoint initialization and an equal-step direct-code control without promoting a model.
+
+- Add a bounded fixed-format identifier echo sanity experiment with frozen name splits, separate autonomous/teacher-forced metrics and exported-checkpoint reload verification.
+
+- Add a fixed-budget eight-versus-512-name memorization probe with training-only deterministic selection, provenance and separate seen-data reconstruction metrics.
+
+- Diagnose identifier copying with per-byte teacher-forced predictions, autonomous and def-only headers on reloaded paired experiment checkpoints; keep these diagnostic metrics separate from syntax and code correctness.
+
+- Add a frozen random-identifier dataset and paired response-name loss experiment; preserve raw free-generation evidence without replacing the failed 300-step checkpoint.
+
 - Integrate explicit Python signature mode into the Notepad++ panel and AIManager, including input validation, visible help/status, synchronized prefix streaming and complete correction tracking.
 
 - Exclude EOS from detokenized generated source and streaming callbacks; add deterministic generation regression coverage.

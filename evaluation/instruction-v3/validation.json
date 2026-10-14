@@ -1,0 +1,114 @@
+[
+  {
+    "id": "validation-add-12-1",
+    "family": "add",
+    "function": "fn_pxamnx",
+    "prompt": "Write Python function fn_pxamnx(a, b). It must return the sum of a and b.",
+    "answer": "def fn_pxamnx(a, b):\n    return a + b\n"
+  },
+  {
+    "id": "validation-subtract-12-1",
+    "family": "subtract",
+    "function": "fn_ryeomq",
+    "prompt": "Write Python function fn_ryeomq(a, b). It must return a minus b.",
+    "answer": "def fn_ryeomq(a, b):\n    return a - b\n"
+  },
+  {
+    "id": "validation-multiply-12-1",
+    "family": "multiply",
+    "function": "fn_ho7vpy",
+    "prompt": "Write Python function fn_ho7vpy(a, b). It must return the product of a and b.",
+    "answer": "def fn_ho7vpy(a, b):\n    return a * b\n"
+  },
+  {
+    "id": "validation-square-12-1",
+    "family": "square",
+    "function": "fn_ge2q78",
+    "prompt": "Write Python function fn_ge2q78(x). It must return x squared.",
+    "answer": "def fn_ge2q78(x):\n    return x * x\n"
+  },
+  {
+    "id": "validation-negate-12-1",
+    "family": "negate",
+    "function": "fn_zlgmxl",
+    "prompt": "Write Python function fn_zlgmxl(x). It must return the negation of x.",
+    "answer": "def fn_zlgmxl(x):\n    return -x\n"
+  },
+  {
+    "id": "validation-absolute-12-1",
+    "family": "absolute",
+    "function": "fn_2idxf6",
+    "prompt": "Write Python function fn_2idxf6(x). It must return the absolute value of x.",
+    "answer": "def fn_2idxf6(x):\n    return abs(x)\n"
+  },
+  {
+    "id": "validation-length-12-1",
+    "family": "length",
+    "function": "fn_4xmzng",
+    "prompt": "Write Python function fn_4xmzng(values). It must return the number of values.",
+    "answer": "def fn_4xmzng(values):\n    return len(values)\n"
+  },
+  {
+    "id": "validation-total-12-1",
+    "family": "total",
+    "function": "fn_qx0aeh",
+    "prompt": "Write Python function fn_qx0aeh(values). It must return the sum of values.",
+    "answer": "def fn_qx0aeh(values):\n    return sum(values)\n"
+  },
+  {
+    "id": "validation-largest-12-1",
+    "family": "largest",
+    "function": "fn_w29e4q",
+    "prompt": "Write Python function fn_w29e4q(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_w29e4q(values):\n    return max(values)\n"
+  },
+  {
+    "id": "validation-smallest-12-1",
+    "family": "smallest",
+    "function": "fn_lf0k6e",
+    "prompt": "Write Python function fn_lf0k6e(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_lf0k6e(values):\n    return min(values)\n"
+  },
+  {
+    "id": "validation-reverse-12-1",
+    "family": "reverse",
+    "function": "fn_guuheo",
+    "prompt": "Write Python function fn_guuheo(text). It must return text reversed.",
+    "answer": "def fn_guuheo(text):\n    return text[::-1]\n"
+  },
+  {
+    "id": "validation-lower-12-1",
+    "family": "lower",
+    "function": "fn_p4xbit",
+    "prompt": "Write Python function fn_p4xbit(text). It must return text in lowercase.",
+    "answer": "def fn_p4xbit(text):\n    return text.lower()\n"
+  },
+  {
+    "id": "validation-upper-12-1",
+    "family": "upper",
+    "function": "fn_wphgkl",
+    "prompt": "Write Python function fn_wphgkl(text). It must return text in uppercase.",
+    "answer": "def fn_wphgkl(text):\n    return text.upper()\n"
+  },
+  {
+    "id": "validation-strip-12-1",
+    "family": "strip",
+    "function": "fn_54nmsf",
+    "prompt": "Write Python function fn_54nmsf(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_54nmsf(text):\n    return text.strip()\n"
+  },
+  {
+    "id": "validation-even-12-1",
+    "family": "even",
+    "function": "fn_i9ngrg",
+    "prompt": "Write Python function fn_i9ngrg(x). It must return whether x is even.",
+    "answer": "def fn_i9ngrg(x):\n    return x % 2 == 0\n"
+  },
+  {
+    "id": "validation-positive-12-1",
+    "family": "positive",
+    "function": "fn_g54382",
+    "prompt": "Write Python function fn_g54382(x). It must return whether x is positive.",
+    "answer": "def fn_g54382(x):\n    return x > 0\n"
+  }
+]

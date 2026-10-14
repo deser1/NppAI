@@ -1,9 +1,23 @@
 import ast
+import hashlib
+import json
+from pathlib import Path
 import unittest
 from scripts.build_instruction_dataset import build, UNSEEN
 
 
 class DatasetIsolationTests(unittest.TestCase):
+    def test_all_committed_splits_match_generator_and_frozen_hashes(self):
+        root = Path(__file__).resolve().parent.parent / "evaluation"
+        for version in (1, 2, 3):
+            folder = root / f"instruction-v{version}"
+            manifest = json.loads((folder / "manifest.json").read_text())
+            for split, records in build(version).items():
+                # Git may check text out with CRLF; frozen hashes use LF bytes.
+                text = (folder / f"{split}.json").read_text(encoding="utf-8")
+                self.assertEqual(json.loads(text), records)
+                self.assertEqual(hashlib.sha256(text.encode()).hexdigest(), manifest["splits"][split]["sha256"])
+
     def test_frozen_task_and_family_separation(self):
         data=build()
         self.assertEqual(data,build())
@@ -29,6 +43,20 @@ class DatasetIsolationTests(unittest.TestCase):
                 self.assertRegex(record["function"],r"^fn_[a-z]+_[0-9]{2}$")
         ids=[{r["function"] for r in data[k]} for k in ("train","validation","test")]
         self.assertFalse(ids[0]&ids[1] or ids[0]&ids[2] or ids[1]&ids[2])
+
+    def test_v3_random_identifiers_are_isolated_and_cover_test_characters(self):
+        data = build(3)
+        self.assertEqual(data, build(3))
+        self.assertEqual([len(data[k]) for k in ("train", "validation", "test")], [1536, 16, 28])
+        ids = [{r["function"] for r in data[k]} for k in ("train", "validation", "test")]
+        self.assertFalse(ids[0]&ids[1] or ids[0]&ids[2] or ids[1]&ids[2])
+        alphabet = set("".join(ids[0]))
+        self.assertTrue(set("".join(ids[1] | ids[2])) <= alphabet)
+        for records in data.values():
+            for r in records:
+                self.assertRegex(r["function"], r"^fn_[a-z0-9]{6}$")
+                self.assertEqual(ast.parse(r["answer"]).body[0].name, r["function"])
+        self.assertFalse({r["family"] for r in data["train"]}&set(UNSEEN))
 
 
 if __name__=="__main__":
