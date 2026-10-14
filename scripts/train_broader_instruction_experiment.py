@@ -94,7 +94,7 @@ def evaluate(model, records, context):
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None):
+def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None, augment_prompts=False, position_jitter=False):
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     if not 1.0 <= identifier_weight <= 8.0:
@@ -105,14 +105,28 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
     root = Path(dataset)
     manifest = json.loads((root/"manifest.json").read_text())
     training = select_training_records(read_split(root, "train", manifest), training_names)
+    source_count = len(training)
+    if augment_prompts:
+        from scripts.prompt_robustness import augment_training_records, prompt_variants
+        training = augment_training_records(training)
     context = 256
     samples = [identifier_weights(record, context, identifier_weight) for record in training]
+    jitter = None
+    if position_jitter:
+        from scripts.position_jitter import PositionJitter
+        jitter = PositionJitter()
     model = NppAIModel(256,64,128,2,context)
+    if initial_model is not None:
+        from scripts.check_dense_runtime_parity import load_weights, torch_model
+        from scripts.identifier_curriculum import validate_initial_weights
+        initial_weights = load_weights(initial_model)
+        validate_initial_weights(initial_weights)
+        model.load_state_dict(torch_model(initial_weights).state_dict())
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
     losses=[]
     model.train()
     for step in range(steps):
-        batch = random.sample(samples,4)
+        batch = [identifier_weights(jitter.apply(record), context, identifier_weight) for record in random.sample(training, 4)] if jitter else random.sample(samples,4)
         x = torch.nn.utils.rnn.pad_sequence([b[0] for b in batch], batch_first=True)
         y = torch.nn.utils.rnn.pad_sequence([b[1] for b in batch], batch_first=True, padding_value=-100)
         weights = torch.nn.utils.rnn.pad_sequence([b[2] for b in batch], batch_first=True, padding_value=0)
@@ -153,6 +167,9 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
         "initial_training_loss":losses[0],"final_training_loss":losses[-1],
         "validation":validation,"test":test,
         "limitations":"Synthetic templates only, 16 training families, 4 unseen families. No generated code execution or correctness claim. Fixed budget and weight chosen before evaluation; test results are not used to tune training. Operation families were exposed by earlier v1/v2 experiments; v3 holds out new identifiers, not a pristine task benchmark."}
+    if initial_model is not None:
+        report["initialization"] = {"checkpoint_sha256": hashlib.sha256(Path(initial_model).read_bytes()).hexdigest(),
+                                    "method": "all dense FP32 weights; fresh AdamW optimizer"}
     if training_names is not None:
         report["training_selection"] = selection_metadata(training, training_names)
         report["training_selection"]["families"] = sorted(actual_families)
@@ -161,6 +178,12 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None)
         print(json.dumps({"training_selection_names": report["training_selection"]["names"],
                           "training_selection_records": len(training),
                           "training_probe_first24": {k: v for k, v in report["training_probe_first24"].items() if k != "cases"}}, indent=2), flush=True)
+    if augment_prompts:
+        report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
+                                         "variants": list(prompt_variants(training[0])),
+                                         "derived_training_sha256": hashlib.sha256(json.dumps(training, sort_keys=True).encode("utf-8")).hexdigest()}
+    if jitter:
+        report["position_jitter"] = jitter.metadata()
     (destination/"broader-report.json").write_text(json.dumps(report,indent=2)+"\n")
     print(json.dumps({"validation":{k:v for k,v in validation.items() if k!="cases"},
                       "test":{k:v for k,v in test.items() if k!="cases"}},indent=2))
@@ -174,5 +197,8 @@ if __name__=="__main__":
     parser.add_argument("--steps",type=int,default=3000)
     parser.add_argument("--identifier-weight",type=float,default=1.0)
     parser.add_argument("--training-names", type=int, help="use first N distinct training names; all styles retained")
+    parser.add_argument("--initial-model", help="initialize from a compatible dense FP32 checkpoint; optimizer resets")
+    parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
+    parser.add_argument("--position-jitter", action="store_true", help="random training-only whitespace offsets; independent seed")
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names)
+    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model,args.augment_prompts,args.position_jitter)
