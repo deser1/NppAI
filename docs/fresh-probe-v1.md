@@ -48,3 +48,28 @@ readiness or model-quality gain is claimed by the dataset/reference CI.
 python scripts/build_fresh_probe.py --check
 python -m unittest tests.test_fresh_probe -v
 ```
+
+## Frozen model evaluation
+
+`scripts/evaluate_fresh_probe.py` evaluates both preselected policies from training run
+38618406741. The workflow downloads their final evaluation artifacts and the fixed
+initial pair from 38582420228. Before inference it verifies checkpoint hashes, old
+training manifests, continuation initialization, 10k additional/20k total update
+provenance, reload checks and preserved initial copies. Dense architecture checks
+reject incompatible weights. There is no training or checkpoint selection.
+
+Each of the 144 views receives greedy FP32 learned-header generation, staged body
+generation only for accepted raw headers, and free-body generation as a control.
+Each call uses context256 and up to160 new byte tokens. No reference correction or
+fallback is applied. Model outputs are parsed, never executed. Metrics distinguish
+requested function name from the full name/argument signature and from whole
+reference AST/exact response matching. These are structural/reference metrics,
+not semantic correctness or real repository performance.
+
+Artifacts retain all raw outputs, sources, report hashes, and an audit that
+recomputes case/group metrics and rejects changed metadata or missing/duplicate
+cases. Summaries group by wording, family and name length; wording changes are
+paired within the same36 task instances. An all-zero quality result remains valid
+evidence and does not fail the infrastructure workflow. CI success is not model
+quality success. After this first measurement the public probe is exposed; further
+runs are regression measurements, not a fresh holdout. The default model is unchanged.

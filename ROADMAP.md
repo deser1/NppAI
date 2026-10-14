@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure the two frozen continuation pairs on fresh-probe-v1, retain raw/audited outputs and report paired wording results (evaluation PR pending CI).
+
 ### 1. Public API hardening (implementation checklist; deployment review still required)
 
 - [x] Define authentication and authorization policy
