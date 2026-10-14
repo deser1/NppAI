@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Fix header-training CLI import initialization before augmentation-policy validation; add isolated direct-script regression coverage.
+
+- Add a fixed four-versus-eight-form training wording experiment with frozen targets, strict source-policy replay checks and actual-output wording audits; defaults retain four-form augmentation.
+
 - Audit actual six-form replay outputs against frozen cases and recomputed metrics, preserve explicit failed wording-smoke results, and distinguish infrastructure CI from model-quality checks.
 
 - Synchronize README and roadmap with the completed integration of experiments #145–155 into main and successful post-merge CI; retain the unseen-wording and native FP32/INT8 blockers.

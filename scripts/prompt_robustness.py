@@ -17,12 +17,42 @@ def evaluation_variants(record, include_novel=False):
     return variants
 
 
-def augment_training_records(records):
+def training_variants(record, policy="four_forms"):
+    if policy not in ("four_forms", "eight_forms"):
+        raise ValueError("unknown augmentation policy")
+    variants = prompt_variants(record)
+    if policy == "eight_forms":
+        task = record["prompt"]
+        variants.update({
+            "python_task_prefix": {**record, "prompt": "Python task: " + task},
+            "implement_function_prefix": {**record, "prompt": "Implement this function in Python: " + task},
+            "please_produce_prefix": {**record, "prompt": "Please produce code: " + task},
+            "implementation_suffix": {**record, "prompt": task + " Provide an implementation."},
+        })
+    return variants
+
+
+def validate_training_policy(enabled, policy):
+    training_variants({"prompt": ""}, policy)
+    if not enabled and policy != "four_forms":
+        raise ValueError("nondefault augmentation policy requires --augment-prompts")
+
+
+def check_augmentation_source(report, policy):
+    metadata = report.get("prompt_augmentation", {})
+    expected = list(training_variants({"prompt": ""}, policy))
+    if metadata.get("policy", "four_forms") != policy or metadata.get("variants") != expected:
+        raise ValueError("source augmentation policy/forms differ")
+    if metadata.get("source_records") != 1536 or metadata.get("derived_records") != 1536 * len(expected):
+        raise ValueError("source augmentation counts differ")
+
+
+def augment_training_records(records, policy="four_forms"):
     if not records or len({r["id"] for r in records}) != len(records):
         raise ValueError("augmentation requires nonempty records with unique source IDs")
     return [{**item, "id": str(record["id"]) + "::" + variant,
              "source_id": record["id"], "prompt_variant": variant}
-            for record in records for variant, item in prompt_variants(record).items()]
+            for record in records for variant, item in training_variants(record, policy).items()]
 
 
 def paired_outcomes(original, changed, arm):

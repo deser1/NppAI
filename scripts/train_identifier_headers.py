@@ -36,10 +36,12 @@ def score_header(record, output, predicted_bytes):
             "teacher_forced_total_bytes": len(expected)}
 
 
-def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False):
+def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=False, augmentation_policy="four_forms"):
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from scripts.prompt_robustness import validate_training_policy
+    validate_training_policy(augment_prompts, augmentation_policy)
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
     import torch
     import torch.nn.functional as F
     from train_nppai import NppAIModel, export_to_bin
@@ -47,7 +49,7 @@ def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=Fals
     from scripts.train_instruction_experiment import generate
     from scripts.diagnose_identifier_copy import identifier_span
     from scripts.check_dense_runtime_parity import load_weights, torch_model
-    from scripts.prompt_robustness import augment_training_records, prompt_variants
+    from scripts.prompt_robustness import augment_training_records, training_variants
 
     torch.manual_seed(42)
     random.seed(42)
@@ -57,7 +59,7 @@ def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=Fals
     training = header_records(read_split(root, "train", manifest))
     source_count = len(training)
     if augment_prompts:
-        training = augment_training_records(training)
+        training = augment_training_records(training, augmentation_policy)
     if len(training) < 4:
         raise ValueError("requires at least four training records")
     context = 256
@@ -104,7 +106,8 @@ def run(dataset, output, steps=6000, augment_prompts=False, position_jitter=Fals
               "splits": {}}
     if augment_prompts:
         report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
-                                         "variants": list(prompt_variants(training[0]))}
+                                         "policy": augmentation_policy,
+                                         "variants": list(training_variants(training[0], augmentation_policy))}
     if jitter:
         report["position_jitter"] = jitter.metadata()
     with torch.no_grad():
@@ -133,5 +136,6 @@ if __name__ == "__main__":
     parser.add_argument("--steps", type=int, default=6000)
     parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
     parser.add_argument("--position-jitter", action="store_true", help="random training-only whitespace offsets; independent seed")
+    parser.add_argument("--augmentation-policy", choices=("four_forms", "eight_forms"), default="four_forms")
     args = parser.parse_args()
-    run(args.dataset, args.output, args.steps, args.augment_prompts, args.position_jitter)
+    run(args.dataset, args.output, args.steps, args.augment_prompts, args.position_jitter, args.augmentation_policy)

@@ -94,7 +94,9 @@ def evaluate(model, records, context):
         "mean_response_loss":sum(c["response_loss"] for c in cases)/len(cases), "cases":cases}
 
 
-def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None, augment_prompts=False, position_jitter=False):
+def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None, initial_model=None, augment_prompts=False, position_jitter=False, augmentation_policy="four_forms"):
+    from scripts.prompt_robustness import validate_training_policy, augment_training_records, training_variants
+    validate_training_policy(augment_prompts, augmentation_policy)
     if not 1 <= steps <= 10000:
         raise ValueError("steps must be 1..10000")
     if not 1.0 <= identifier_weight <= 8.0:
@@ -107,8 +109,7 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None,
     training = select_training_records(read_split(root, "train", manifest), training_names)
     source_count = len(training)
     if augment_prompts:
-        from scripts.prompt_robustness import augment_training_records, prompt_variants
-        training = augment_training_records(training)
+        training = augment_training_records(training, augmentation_policy)
     context = 256
     samples = [identifier_weights(record, context, identifier_weight) for record in training]
     jitter = None
@@ -180,7 +181,8 @@ def run(dataset, output, steps=3000, identifier_weight=1.0, training_names=None,
                           "training_probe_first24": {k: v for k, v in report["training_probe_first24"].items() if k != "cases"}}, indent=2), flush=True)
     if augment_prompts:
         report["prompt_augmentation"] = {"source_records": source_count, "derived_records": len(training),
-                                         "variants": list(prompt_variants(training[0])),
+                                         "policy": augmentation_policy,
+                                         "variants": list(training_variants(training[0], augmentation_policy)),
                                          "derived_training_sha256": hashlib.sha256(json.dumps(training, sort_keys=True).encode("utf-8")).hexdigest()}
     if jitter:
         report["position_jitter"] = jitter.metadata()
@@ -200,5 +202,6 @@ if __name__=="__main__":
     parser.add_argument("--initial-model", help="initialize from a compatible dense FP32 checkpoint; optimizer resets")
     parser.add_argument("--augment-prompts", action="store_true", help="expand training only with four fixed wording variants")
     parser.add_argument("--position-jitter", action="store_true", help="random training-only whitespace offsets; independent seed")
+    parser.add_argument("--augmentation-policy", choices=("four_forms", "eight_forms"), default="four_forms")
     args=parser.parse_args()
-    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model,args.augment_prompts,args.position_jitter)
+    run(args.dataset,args.output,args.steps,args.identifier_weight,args.training_names,args.initial_model,args.augment_prompts,args.position_jitter,args.augmentation_policy)
