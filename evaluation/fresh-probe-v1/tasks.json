@@ -1,0 +1,1442 @@
+[
+  {
+    "id": "count_equal-0::known_format",
+    "task_id": "count_equal-0",
+    "family": "count_equal",
+    "function": "fn_0g13vl",
+    "wording": "known_format",
+    "prompt": "Define fn_0g13vl(values, x) in Python to return the number of items equal to x in list values.",
+    "answer": "def fn_0g13vl(values, x):\n    return values.count(x)\n",
+    "full_sequence_bytes": 163
+  },
+  {
+    "id": "count_equal-0::request",
+    "task_id": "count_equal-0",
+    "family": "count_equal",
+    "function": "fn_0g13vl",
+    "wording": "request",
+    "prompt": "Create fn_0g13vl(values, x); result: the number of items equal to x in list values. Use Python.",
+    "answer": "def fn_0g13vl(values, x):\n    return values.count(x)\n",
+    "full_sequence_bytes": 164
+  },
+  {
+    "id": "count_equal-0::contract",
+    "task_id": "count_equal-0",
+    "family": "count_equal",
+    "function": "fn_0g13vl",
+    "wording": "contract",
+    "prompt": "fn_0g13vl(values, x) -> the number of items equal to x in list values. Python code only.",
+    "answer": "def fn_0g13vl(values, x):\n    return values.count(x)\n",
+    "full_sequence_bytes": 157
+  },
+  {
+    "id": "count_equal-0::brief",
+    "task_id": "count_equal-0",
+    "family": "count_equal",
+    "function": "fn_0g13vl",
+    "wording": "brief",
+    "prompt": "Code request for fn_0g13vl(values, x): the number of items equal to x in list values.",
+    "answer": "def fn_0g13vl(values, x):\n    return values.count(x)\n",
+    "full_sequence_bytes": 154
+  },
+  {
+    "id": "count_equal-1::known_format",
+    "task_id": "count_equal-1",
+    "family": "count_equal",
+    "function": "fn_ms27plpjc",
+    "wording": "known_format",
+    "prompt": "Define fn_ms27plpjc(items, target) in Python to return the number of items equal to target in list items.",
+    "answer": "def fn_ms27plpjc(items, target):\n    return items.count(target)\n",
+    "full_sequence_bytes": 185
+  },
+  {
+    "id": "count_equal-1::request",
+    "task_id": "count_equal-1",
+    "family": "count_equal",
+    "function": "fn_ms27plpjc",
+    "wording": "request",
+    "prompt": "Create fn_ms27plpjc(items, target); result: the number of items equal to target in list items. Use Python.",
+    "answer": "def fn_ms27plpjc(items, target):\n    return items.count(target)\n",
+    "full_sequence_bytes": 186
+  },
+  {
+    "id": "count_equal-1::contract",
+    "task_id": "count_equal-1",
+    "family": "count_equal",
+    "function": "fn_ms27plpjc",
+    "wording": "contract",
+    "prompt": "fn_ms27plpjc(items, target) -> the number of items equal to target in list items. Python code only.",
+    "answer": "def fn_ms27plpjc(items, target):\n    return items.count(target)\n",
+    "full_sequence_bytes": 179
+  },
+  {
+    "id": "count_equal-1::brief",
+    "task_id": "count_equal-1",
+    "family": "count_equal",
+    "function": "fn_ms27plpjc",
+    "wording": "brief",
+    "prompt": "Code request for fn_ms27plpjc(items, target): the number of items equal to target in list items.",
+    "answer": "def fn_ms27plpjc(items, target):\n    return items.count(target)\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "count_equal-2::known_format",
+    "task_id": "count_equal-2",
+    "family": "count_equal",
+    "function": "fn_4z9swwljphcm",
+    "wording": "known_format",
+    "prompt": "Define fn_4z9swwljphcm(seq, needle) in Python to return the number of items equal to needle in list seq.",
+    "answer": "def fn_4z9swwljphcm(seq, needle):\n    return seq.count(needle)\n",
+    "full_sequence_bytes": 183
+  },
+  {
+    "id": "count_equal-2::request",
+    "task_id": "count_equal-2",
+    "family": "count_equal",
+    "function": "fn_4z9swwljphcm",
+    "wording": "request",
+    "prompt": "Create fn_4z9swwljphcm(seq, needle); result: the number of items equal to needle in list seq. Use Python.",
+    "answer": "def fn_4z9swwljphcm(seq, needle):\n    return seq.count(needle)\n",
+    "full_sequence_bytes": 184
+  },
+  {
+    "id": "count_equal-2::contract",
+    "task_id": "count_equal-2",
+    "family": "count_equal",
+    "function": "fn_4z9swwljphcm",
+    "wording": "contract",
+    "prompt": "fn_4z9swwljphcm(seq, needle) -> the number of items equal to needle in list seq. Python code only.",
+    "answer": "def fn_4z9swwljphcm(seq, needle):\n    return seq.count(needle)\n",
+    "full_sequence_bytes": 177
+  },
+  {
+    "id": "count_equal-2::brief",
+    "task_id": "count_equal-2",
+    "family": "count_equal",
+    "function": "fn_4z9swwljphcm",
+    "wording": "brief",
+    "prompt": "Code request for fn_4z9swwljphcm(seq, needle): the number of items equal to needle in list seq.",
+    "answer": "def fn_4z9swwljphcm(seq, needle):\n    return seq.count(needle)\n",
+    "full_sequence_bytes": 174
+  },
+  {
+    "id": "membership-0::known_format",
+    "task_id": "membership-0",
+    "family": "membership",
+    "function": "fn_dd4bj7",
+    "wording": "known_format",
+    "prompt": "Define fn_dd4bj7(values, x) in Python to return whether x is an element of list values.",
+    "answer": "def fn_dd4bj7(values, x):\n    return x in values\n",
+    "full_sequence_bytes": 152
+  },
+  {
+    "id": "membership-0::request",
+    "task_id": "membership-0",
+    "family": "membership",
+    "function": "fn_dd4bj7",
+    "wording": "request",
+    "prompt": "Create fn_dd4bj7(values, x); result: whether x is an element of list values. Use Python.",
+    "answer": "def fn_dd4bj7(values, x):\n    return x in values\n",
+    "full_sequence_bytes": 153
+  },
+  {
+    "id": "membership-0::contract",
+    "task_id": "membership-0",
+    "family": "membership",
+    "function": "fn_dd4bj7",
+    "wording": "contract",
+    "prompt": "fn_dd4bj7(values, x) -> whether x is an element of list values. Python code only.",
+    "answer": "def fn_dd4bj7(values, x):\n    return x in values\n",
+    "full_sequence_bytes": 146
+  },
+  {
+    "id": "membership-0::brief",
+    "task_id": "membership-0",
+    "family": "membership",
+    "function": "fn_dd4bj7",
+    "wording": "brief",
+    "prompt": "Code request for fn_dd4bj7(values, x): whether x is an element of list values.",
+    "answer": "def fn_dd4bj7(values, x):\n    return x in values\n",
+    "full_sequence_bytes": 143
+  },
+  {
+    "id": "membership-1::known_format",
+    "task_id": "membership-1",
+    "family": "membership",
+    "function": "fn_68d8f3903",
+    "wording": "known_format",
+    "prompt": "Define fn_68d8f3903(items, target) in Python to return whether target is an element of list items.",
+    "answer": "def fn_68d8f3903(items, target):\n    return target in items\n",
+    "full_sequence_bytes": 174
+  },
+  {
+    "id": "membership-1::request",
+    "task_id": "membership-1",
+    "family": "membership",
+    "function": "fn_68d8f3903",
+    "wording": "request",
+    "prompt": "Create fn_68d8f3903(items, target); result: whether target is an element of list items. Use Python.",
+    "answer": "def fn_68d8f3903(items, target):\n    return target in items\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "membership-1::contract",
+    "task_id": "membership-1",
+    "family": "membership",
+    "function": "fn_68d8f3903",
+    "wording": "contract",
+    "prompt": "fn_68d8f3903(items, target) -> whether target is an element of list items. Python code only.",
+    "answer": "def fn_68d8f3903(items, target):\n    return target in items\n",
+    "full_sequence_bytes": 168
+  },
+  {
+    "id": "membership-1::brief",
+    "task_id": "membership-1",
+    "family": "membership",
+    "function": "fn_68d8f3903",
+    "wording": "brief",
+    "prompt": "Code request for fn_68d8f3903(items, target): whether target is an element of list items.",
+    "answer": "def fn_68d8f3903(items, target):\n    return target in items\n",
+    "full_sequence_bytes": 165
+  },
+  {
+    "id": "membership-2::known_format",
+    "task_id": "membership-2",
+    "family": "membership",
+    "function": "fn_nnyeh8sa9jdt",
+    "wording": "known_format",
+    "prompt": "Define fn_nnyeh8sa9jdt(seq, needle) in Python to return whether needle is an element of list seq.",
+    "answer": "def fn_nnyeh8sa9jdt(seq, needle):\n    return needle in seq\n",
+    "full_sequence_bytes": 172
+  },
+  {
+    "id": "membership-2::request",
+    "task_id": "membership-2",
+    "family": "membership",
+    "function": "fn_nnyeh8sa9jdt",
+    "wording": "request",
+    "prompt": "Create fn_nnyeh8sa9jdt(seq, needle); result: whether needle is an element of list seq. Use Python.",
+    "answer": "def fn_nnyeh8sa9jdt(seq, needle):\n    return needle in seq\n",
+    "full_sequence_bytes": 173
+  },
+  {
+    "id": "membership-2::contract",
+    "task_id": "membership-2",
+    "family": "membership",
+    "function": "fn_nnyeh8sa9jdt",
+    "wording": "contract",
+    "prompt": "fn_nnyeh8sa9jdt(seq, needle) -> whether needle is an element of list seq. Python code only.",
+    "answer": "def fn_nnyeh8sa9jdt(seq, needle):\n    return needle in seq\n",
+    "full_sequence_bytes": 166
+  },
+  {
+    "id": "membership-2::brief",
+    "task_id": "membership-2",
+    "family": "membership",
+    "function": "fn_nnyeh8sa9jdt",
+    "wording": "brief",
+    "prompt": "Code request for fn_nnyeh8sa9jdt(seq, needle): whether needle is an element of list seq.",
+    "answer": "def fn_nnyeh8sa9jdt(seq, needle):\n    return needle in seq\n",
+    "full_sequence_bytes": 163
+  },
+  {
+    "id": "filter_nonzero-0::known_format",
+    "task_id": "filter_nonzero-0",
+    "family": "filter_nonzero",
+    "function": "fn_1rdmje",
+    "wording": "known_format",
+    "prompt": "Define fn_1rdmje(values) in Python to return nonzero numbers from values, keeping their order.",
+    "answer": "def fn_1rdmje(values):\n    return [v for v in values if v != 0]\n",
+    "full_sequence_bytes": 174
+  },
+  {
+    "id": "filter_nonzero-0::request",
+    "task_id": "filter_nonzero-0",
+    "family": "filter_nonzero",
+    "function": "fn_1rdmje",
+    "wording": "request",
+    "prompt": "Create fn_1rdmje(values); result: nonzero numbers from values, keeping their order. Use Python.",
+    "answer": "def fn_1rdmje(values):\n    return [v for v in values if v != 0]\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "filter_nonzero-0::contract",
+    "task_id": "filter_nonzero-0",
+    "family": "filter_nonzero",
+    "function": "fn_1rdmje",
+    "wording": "contract",
+    "prompt": "fn_1rdmje(values) -> nonzero numbers from values, keeping their order. Python code only.",
+    "answer": "def fn_1rdmje(values):\n    return [v for v in values if v != 0]\n",
+    "full_sequence_bytes": 168
+  },
+  {
+    "id": "filter_nonzero-0::brief",
+    "task_id": "filter_nonzero-0",
+    "family": "filter_nonzero",
+    "function": "fn_1rdmje",
+    "wording": "brief",
+    "prompt": "Code request for fn_1rdmje(values): nonzero numbers from values, keeping their order.",
+    "answer": "def fn_1rdmje(values):\n    return [v for v in values if v != 0]\n",
+    "full_sequence_bytes": 165
+  },
+  {
+    "id": "filter_nonzero-1::known_format",
+    "task_id": "filter_nonzero-1",
+    "family": "filter_nonzero",
+    "function": "fn_u8aa0hli9",
+    "wording": "known_format",
+    "prompt": "Define fn_u8aa0hli9(items) in Python to return nonzero numbers from items, keeping their order.",
+    "answer": "def fn_u8aa0hli9(items):\n    return [v for v in items if v != 0]\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "filter_nonzero-1::request",
+    "task_id": "filter_nonzero-1",
+    "family": "filter_nonzero",
+    "function": "fn_u8aa0hli9",
+    "wording": "request",
+    "prompt": "Create fn_u8aa0hli9(items); result: nonzero numbers from items, keeping their order. Use Python.",
+    "answer": "def fn_u8aa0hli9(items):\n    return [v for v in items if v != 0]\n",
+    "full_sequence_bytes": 177
+  },
+  {
+    "id": "filter_nonzero-1::contract",
+    "task_id": "filter_nonzero-1",
+    "family": "filter_nonzero",
+    "function": "fn_u8aa0hli9",
+    "wording": "contract",
+    "prompt": "fn_u8aa0hli9(items) -> nonzero numbers from items, keeping their order. Python code only.",
+    "answer": "def fn_u8aa0hli9(items):\n    return [v for v in items if v != 0]\n",
+    "full_sequence_bytes": 170
+  },
+  {
+    "id": "filter_nonzero-1::brief",
+    "task_id": "filter_nonzero-1",
+    "family": "filter_nonzero",
+    "function": "fn_u8aa0hli9",
+    "wording": "brief",
+    "prompt": "Code request for fn_u8aa0hli9(items): nonzero numbers from items, keeping their order.",
+    "answer": "def fn_u8aa0hli9(items):\n    return [v for v in items if v != 0]\n",
+    "full_sequence_bytes": 167
+  },
+  {
+    "id": "filter_nonzero-2::known_format",
+    "task_id": "filter_nonzero-2",
+    "family": "filter_nonzero",
+    "function": "fn_khd0vizntjf2",
+    "wording": "known_format",
+    "prompt": "Define fn_khd0vizntjf2(numbers) in Python to return nonzero numbers from numbers, keeping their order.",
+    "answer": "def fn_khd0vizntjf2(numbers):\n    return [v for v in numbers if v != 0]\n",
+    "full_sequence_bytes": 190
+  },
+  {
+    "id": "filter_nonzero-2::request",
+    "task_id": "filter_nonzero-2",
+    "family": "filter_nonzero",
+    "function": "fn_khd0vizntjf2",
+    "wording": "request",
+    "prompt": "Create fn_khd0vizntjf2(numbers); result: nonzero numbers from numbers, keeping their order. Use Python.",
+    "answer": "def fn_khd0vizntjf2(numbers):\n    return [v for v in numbers if v != 0]\n",
+    "full_sequence_bytes": 191
+  },
+  {
+    "id": "filter_nonzero-2::contract",
+    "task_id": "filter_nonzero-2",
+    "family": "filter_nonzero",
+    "function": "fn_khd0vizntjf2",
+    "wording": "contract",
+    "prompt": "fn_khd0vizntjf2(numbers) -> nonzero numbers from numbers, keeping their order. Python code only.",
+    "answer": "def fn_khd0vizntjf2(numbers):\n    return [v for v in numbers if v != 0]\n",
+    "full_sequence_bytes": 184
+  },
+  {
+    "id": "filter_nonzero-2::brief",
+    "task_id": "filter_nonzero-2",
+    "family": "filter_nonzero",
+    "function": "fn_khd0vizntjf2",
+    "wording": "brief",
+    "prompt": "Code request for fn_khd0vizntjf2(numbers): nonzero numbers from numbers, keeping their order.",
+    "answer": "def fn_khd0vizntjf2(numbers):\n    return [v for v in numbers if v != 0]\n",
+    "full_sequence_bytes": 181
+  },
+  {
+    "id": "sum_squares-0::known_format",
+    "task_id": "sum_squares-0",
+    "family": "sum_squares",
+    "function": "fn_haqvqw",
+    "wording": "known_format",
+    "prompt": "Define fn_haqvqw(values) in Python to return the sum of squared numbers in values.",
+    "answer": "def fn_haqvqw(values):\n    return sum(v * v for v in values)\n",
+    "full_sequence_bytes": 159
+  },
+  {
+    "id": "sum_squares-0::request",
+    "task_id": "sum_squares-0",
+    "family": "sum_squares",
+    "function": "fn_haqvqw",
+    "wording": "request",
+    "prompt": "Create fn_haqvqw(values); result: the sum of squared numbers in values. Use Python.",
+    "answer": "def fn_haqvqw(values):\n    return sum(v * v for v in values)\n",
+    "full_sequence_bytes": 160
+  },
+  {
+    "id": "sum_squares-0::contract",
+    "task_id": "sum_squares-0",
+    "family": "sum_squares",
+    "function": "fn_haqvqw",
+    "wording": "contract",
+    "prompt": "fn_haqvqw(values) -> the sum of squared numbers in values. Python code only.",
+    "answer": "def fn_haqvqw(values):\n    return sum(v * v for v in values)\n",
+    "full_sequence_bytes": 153
+  },
+  {
+    "id": "sum_squares-0::brief",
+    "task_id": "sum_squares-0",
+    "family": "sum_squares",
+    "function": "fn_haqvqw",
+    "wording": "brief",
+    "prompt": "Code request for fn_haqvqw(values): the sum of squared numbers in values.",
+    "answer": "def fn_haqvqw(values):\n    return sum(v * v for v in values)\n",
+    "full_sequence_bytes": 150
+  },
+  {
+    "id": "sum_squares-1::known_format",
+    "task_id": "sum_squares-1",
+    "family": "sum_squares",
+    "function": "fn_xza592j42",
+    "wording": "known_format",
+    "prompt": "Define fn_xza592j42(items) in Python to return the sum of squared numbers in items.",
+    "answer": "def fn_xza592j42(items):\n    return sum(v * v for v in items)\n",
+    "full_sequence_bytes": 161
+  },
+  {
+    "id": "sum_squares-1::request",
+    "task_id": "sum_squares-1",
+    "family": "sum_squares",
+    "function": "fn_xza592j42",
+    "wording": "request",
+    "prompt": "Create fn_xza592j42(items); result: the sum of squared numbers in items. Use Python.",
+    "answer": "def fn_xza592j42(items):\n    return sum(v * v for v in items)\n",
+    "full_sequence_bytes": 162
+  },
+  {
+    "id": "sum_squares-1::contract",
+    "task_id": "sum_squares-1",
+    "family": "sum_squares",
+    "function": "fn_xza592j42",
+    "wording": "contract",
+    "prompt": "fn_xza592j42(items) -> the sum of squared numbers in items. Python code only.",
+    "answer": "def fn_xza592j42(items):\n    return sum(v * v for v in items)\n",
+    "full_sequence_bytes": 155
+  },
+  {
+    "id": "sum_squares-1::brief",
+    "task_id": "sum_squares-1",
+    "family": "sum_squares",
+    "function": "fn_xza592j42",
+    "wording": "brief",
+    "prompt": "Code request for fn_xza592j42(items): the sum of squared numbers in items.",
+    "answer": "def fn_xza592j42(items):\n    return sum(v * v for v in items)\n",
+    "full_sequence_bytes": 152
+  },
+  {
+    "id": "sum_squares-2::known_format",
+    "task_id": "sum_squares-2",
+    "family": "sum_squares",
+    "function": "fn_c2rnv9pkroi8",
+    "wording": "known_format",
+    "prompt": "Define fn_c2rnv9pkroi8(numbers) in Python to return the sum of squared numbers in numbers.",
+    "answer": "def fn_c2rnv9pkroi8(numbers):\n    return sum(v * v for v in numbers)\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "sum_squares-2::request",
+    "task_id": "sum_squares-2",
+    "family": "sum_squares",
+    "function": "fn_c2rnv9pkroi8",
+    "wording": "request",
+    "prompt": "Create fn_c2rnv9pkroi8(numbers); result: the sum of squared numbers in numbers. Use Python.",
+    "answer": "def fn_c2rnv9pkroi8(numbers):\n    return sum(v * v for v in numbers)\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "sum_squares-2::contract",
+    "task_id": "sum_squares-2",
+    "family": "sum_squares",
+    "function": "fn_c2rnv9pkroi8",
+    "wording": "contract",
+    "prompt": "fn_c2rnv9pkroi8(numbers) -> the sum of squared numbers in numbers. Python code only.",
+    "answer": "def fn_c2rnv9pkroi8(numbers):\n    return sum(v * v for v in numbers)\n",
+    "full_sequence_bytes": 169
+  },
+  {
+    "id": "sum_squares-2::brief",
+    "task_id": "sum_squares-2",
+    "family": "sum_squares",
+    "function": "fn_c2rnv9pkroi8",
+    "wording": "brief",
+    "prompt": "Code request for fn_c2rnv9pkroi8(numbers): the sum of squared numbers in numbers.",
+    "answer": "def fn_c2rnv9pkroi8(numbers):\n    return sum(v * v for v in numbers)\n",
+    "full_sequence_bytes": 166
+  },
+  {
+    "id": "first_or_none-0::known_format",
+    "task_id": "first_or_none-0",
+    "family": "first_or_none",
+    "function": "fn_lodiu3",
+    "wording": "known_format",
+    "prompt": "Define fn_lodiu3(values) in Python to return the first element of values, or None when empty.",
+    "answer": "def fn_lodiu3(values):\n    return values[0] if values else None\n",
+    "full_sequence_bytes": 173
+  },
+  {
+    "id": "first_or_none-0::request",
+    "task_id": "first_or_none-0",
+    "family": "first_or_none",
+    "function": "fn_lodiu3",
+    "wording": "request",
+    "prompt": "Create fn_lodiu3(values); result: the first element of values, or None when empty. Use Python.",
+    "answer": "def fn_lodiu3(values):\n    return values[0] if values else None\n",
+    "full_sequence_bytes": 174
+  },
+  {
+    "id": "first_or_none-0::contract",
+    "task_id": "first_or_none-0",
+    "family": "first_or_none",
+    "function": "fn_lodiu3",
+    "wording": "contract",
+    "prompt": "fn_lodiu3(values) -> the first element of values, or None when empty. Python code only.",
+    "answer": "def fn_lodiu3(values):\n    return values[0] if values else None\n",
+    "full_sequence_bytes": 167
+  },
+  {
+    "id": "first_or_none-0::brief",
+    "task_id": "first_or_none-0",
+    "family": "first_or_none",
+    "function": "fn_lodiu3",
+    "wording": "brief",
+    "prompt": "Code request for fn_lodiu3(values): the first element of values, or None when empty.",
+    "answer": "def fn_lodiu3(values):\n    return values[0] if values else None\n",
+    "full_sequence_bytes": 164
+  },
+  {
+    "id": "first_or_none-1::known_format",
+    "task_id": "first_or_none-1",
+    "family": "first_or_none",
+    "function": "fn_g1n94ljip",
+    "wording": "known_format",
+    "prompt": "Define fn_g1n94ljip(items) in Python to return the first element of items, or None when empty.",
+    "answer": "def fn_g1n94ljip(items):\n    return items[0] if items else None\n",
+    "full_sequence_bytes": 174
+  },
+  {
+    "id": "first_or_none-1::request",
+    "task_id": "first_or_none-1",
+    "family": "first_or_none",
+    "function": "fn_g1n94ljip",
+    "wording": "request",
+    "prompt": "Create fn_g1n94ljip(items); result: the first element of items, or None when empty. Use Python.",
+    "answer": "def fn_g1n94ljip(items):\n    return items[0] if items else None\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "first_or_none-1::contract",
+    "task_id": "first_or_none-1",
+    "family": "first_or_none",
+    "function": "fn_g1n94ljip",
+    "wording": "contract",
+    "prompt": "fn_g1n94ljip(items) -> the first element of items, or None when empty. Python code only.",
+    "answer": "def fn_g1n94ljip(items):\n    return items[0] if items else None\n",
+    "full_sequence_bytes": 168
+  },
+  {
+    "id": "first_or_none-1::brief",
+    "task_id": "first_or_none-1",
+    "family": "first_or_none",
+    "function": "fn_g1n94ljip",
+    "wording": "brief",
+    "prompt": "Code request for fn_g1n94ljip(items): the first element of items, or None when empty.",
+    "answer": "def fn_g1n94ljip(items):\n    return items[0] if items else None\n",
+    "full_sequence_bytes": 165
+  },
+  {
+    "id": "first_or_none-2::known_format",
+    "task_id": "first_or_none-2",
+    "family": "first_or_none",
+    "function": "fn_ctnb2gp6khl4",
+    "wording": "known_format",
+    "prompt": "Define fn_ctnb2gp6khl4(seq) in Python to return the first element of seq, or None when empty.",
+    "answer": "def fn_ctnb2gp6khl4(seq):\n    return seq[0] if seq else None\n",
+    "full_sequence_bytes": 170
+  },
+  {
+    "id": "first_or_none-2::request",
+    "task_id": "first_or_none-2",
+    "family": "first_or_none",
+    "function": "fn_ctnb2gp6khl4",
+    "wording": "request",
+    "prompt": "Create fn_ctnb2gp6khl4(seq); result: the first element of seq, or None when empty. Use Python.",
+    "answer": "def fn_ctnb2gp6khl4(seq):\n    return seq[0] if seq else None\n",
+    "full_sequence_bytes": 171
+  },
+  {
+    "id": "first_or_none-2::contract",
+    "task_id": "first_or_none-2",
+    "family": "first_or_none",
+    "function": "fn_ctnb2gp6khl4",
+    "wording": "contract",
+    "prompt": "fn_ctnb2gp6khl4(seq) -> the first element of seq, or None when empty. Python code only.",
+    "answer": "def fn_ctnb2gp6khl4(seq):\n    return seq[0] if seq else None\n",
+    "full_sequence_bytes": 164
+  },
+  {
+    "id": "first_or_none-2::brief",
+    "task_id": "first_or_none-2",
+    "family": "first_or_none",
+    "function": "fn_ctnb2gp6khl4",
+    "wording": "brief",
+    "prompt": "Code request for fn_ctnb2gp6khl4(seq): the first element of seq, or None when empty.",
+    "answer": "def fn_ctnb2gp6khl4(seq):\n    return seq[0] if seq else None\n",
+    "full_sequence_bytes": 161
+  },
+  {
+    "id": "lookup_default-0::known_format",
+    "task_id": "lookup_default-0",
+    "family": "lookup_default",
+    "function": "fn_diqg7u",
+    "wording": "known_format",
+    "prompt": "Define fn_diqg7u(values, x, default) in Python to return the value for key x in mapping values, or default if missing.",
+    "answer": "def fn_diqg7u(values, x, default):\n    return values.get(x, default)\n",
+    "full_sequence_bytes": 203
+  },
+  {
+    "id": "lookup_default-0::request",
+    "task_id": "lookup_default-0",
+    "family": "lookup_default",
+    "function": "fn_diqg7u",
+    "wording": "request",
+    "prompt": "Create fn_diqg7u(values, x, default); result: the value for key x in mapping values, or default if missing. Use Python.",
+    "answer": "def fn_diqg7u(values, x, default):\n    return values.get(x, default)\n",
+    "full_sequence_bytes": 204
+  },
+  {
+    "id": "lookup_default-0::contract",
+    "task_id": "lookup_default-0",
+    "family": "lookup_default",
+    "function": "fn_diqg7u",
+    "wording": "contract",
+    "prompt": "fn_diqg7u(values, x, default) -> the value for key x in mapping values, or default if missing. Python code only.",
+    "answer": "def fn_diqg7u(values, x, default):\n    return values.get(x, default)\n",
+    "full_sequence_bytes": 197
+  },
+  {
+    "id": "lookup_default-0::brief",
+    "task_id": "lookup_default-0",
+    "family": "lookup_default",
+    "function": "fn_diqg7u",
+    "wording": "brief",
+    "prompt": "Code request for fn_diqg7u(values, x, default): the value for key x in mapping values, or default if missing.",
+    "answer": "def fn_diqg7u(values, x, default):\n    return values.get(x, default)\n",
+    "full_sequence_bytes": 194
+  },
+  {
+    "id": "lookup_default-1::known_format",
+    "task_id": "lookup_default-1",
+    "family": "lookup_default",
+    "function": "fn_heuw4yqv0",
+    "wording": "known_format",
+    "prompt": "Define fn_heuw4yqv0(data, key, fallback) in Python to return the value for key key in mapping data, or fallback if missing.",
+    "answer": "def fn_heuw4yqv0(data, key, fallback):\n    return data.get(key, fallback)\n",
+    "full_sequence_bytes": 213
+  },
+  {
+    "id": "lookup_default-1::request",
+    "task_id": "lookup_default-1",
+    "family": "lookup_default",
+    "function": "fn_heuw4yqv0",
+    "wording": "request",
+    "prompt": "Create fn_heuw4yqv0(data, key, fallback); result: the value for key key in mapping data, or fallback if missing. Use Python.",
+    "answer": "def fn_heuw4yqv0(data, key, fallback):\n    return data.get(key, fallback)\n",
+    "full_sequence_bytes": 214
+  },
+  {
+    "id": "lookup_default-1::contract",
+    "task_id": "lookup_default-1",
+    "family": "lookup_default",
+    "function": "fn_heuw4yqv0",
+    "wording": "contract",
+    "prompt": "fn_heuw4yqv0(data, key, fallback) -> the value for key key in mapping data, or fallback if missing. Python code only.",
+    "answer": "def fn_heuw4yqv0(data, key, fallback):\n    return data.get(key, fallback)\n",
+    "full_sequence_bytes": 207
+  },
+  {
+    "id": "lookup_default-1::brief",
+    "task_id": "lookup_default-1",
+    "family": "lookup_default",
+    "function": "fn_heuw4yqv0",
+    "wording": "brief",
+    "prompt": "Code request for fn_heuw4yqv0(data, key, fallback): the value for key key in mapping data, or fallback if missing.",
+    "answer": "def fn_heuw4yqv0(data, key, fallback):\n    return data.get(key, fallback)\n",
+    "full_sequence_bytes": 204
+  },
+  {
+    "id": "lookup_default-2::known_format",
+    "task_id": "lookup_default-2",
+    "family": "lookup_default",
+    "function": "fn_7dmuglwhwefl",
+    "wording": "known_format",
+    "prompt": "Define fn_7dmuglwhwefl(mapping, name, backup) in Python to return the value for key name in mapping mapping, or backup if missing.",
+    "answer": "def fn_7dmuglwhwefl(mapping, name, backup):\n    return mapping.get(name, backup)\n",
+    "full_sequence_bytes": 227
+  },
+  {
+    "id": "lookup_default-2::request",
+    "task_id": "lookup_default-2",
+    "family": "lookup_default",
+    "function": "fn_7dmuglwhwefl",
+    "wording": "request",
+    "prompt": "Create fn_7dmuglwhwefl(mapping, name, backup); result: the value for key name in mapping mapping, or backup if missing. Use Python.",
+    "answer": "def fn_7dmuglwhwefl(mapping, name, backup):\n    return mapping.get(name, backup)\n",
+    "full_sequence_bytes": 228
+  },
+  {
+    "id": "lookup_default-2::contract",
+    "task_id": "lookup_default-2",
+    "family": "lookup_default",
+    "function": "fn_7dmuglwhwefl",
+    "wording": "contract",
+    "prompt": "fn_7dmuglwhwefl(mapping, name, backup) -> the value for key name in mapping mapping, or backup if missing. Python code only.",
+    "answer": "def fn_7dmuglwhwefl(mapping, name, backup):\n    return mapping.get(name, backup)\n",
+    "full_sequence_bytes": 221
+  },
+  {
+    "id": "lookup_default-2::brief",
+    "task_id": "lookup_default-2",
+    "family": "lookup_default",
+    "function": "fn_7dmuglwhwefl",
+    "wording": "brief",
+    "prompt": "Code request for fn_7dmuglwhwefl(mapping, name, backup): the value for key name in mapping mapping, or backup if missing.",
+    "answer": "def fn_7dmuglwhwefl(mapping, name, backup):\n    return mapping.get(name, backup)\n",
+    "full_sequence_bytes": 218
+  },
+  {
+    "id": "invert_mapping-0::known_format",
+    "task_id": "invert_mapping-0",
+    "family": "invert_mapping",
+    "function": "fn_tdk0y1",
+    "wording": "known_format",
+    "prompt": "Define fn_tdk0y1(values) in Python to return values with keys and unique hashable values swapped.",
+    "answer": "def fn_tdk0y1(values):\n    return {v: k for k, v in values.items()}\n",
+    "full_sequence_bytes": 181
+  },
+  {
+    "id": "invert_mapping-0::request",
+    "task_id": "invert_mapping-0",
+    "family": "invert_mapping",
+    "function": "fn_tdk0y1",
+    "wording": "request",
+    "prompt": "Create fn_tdk0y1(values); result: values with keys and unique hashable values swapped. Use Python.",
+    "answer": "def fn_tdk0y1(values):\n    return {v: k for k, v in values.items()}\n",
+    "full_sequence_bytes": 182
+  },
+  {
+    "id": "invert_mapping-0::contract",
+    "task_id": "invert_mapping-0",
+    "family": "invert_mapping",
+    "function": "fn_tdk0y1",
+    "wording": "contract",
+    "prompt": "fn_tdk0y1(values) -> values with keys and unique hashable values swapped. Python code only.",
+    "answer": "def fn_tdk0y1(values):\n    return {v: k for k, v in values.items()}\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "invert_mapping-0::brief",
+    "task_id": "invert_mapping-0",
+    "family": "invert_mapping",
+    "function": "fn_tdk0y1",
+    "wording": "brief",
+    "prompt": "Code request for fn_tdk0y1(values): values with keys and unique hashable values swapped.",
+    "answer": "def fn_tdk0y1(values):\n    return {v: k for k, v in values.items()}\n",
+    "full_sequence_bytes": 172
+  },
+  {
+    "id": "invert_mapping-1::known_format",
+    "task_id": "invert_mapping-1",
+    "family": "invert_mapping",
+    "function": "fn_tbpso9wgw",
+    "wording": "known_format",
+    "prompt": "Define fn_tbpso9wgw(data) in Python to return data with keys and unique hashable values swapped.",
+    "answer": "def fn_tbpso9wgw(data):\n    return {v: k for k, v in data.items()}\n",
+    "full_sequence_bytes": 179
+  },
+  {
+    "id": "invert_mapping-1::request",
+    "task_id": "invert_mapping-1",
+    "family": "invert_mapping",
+    "function": "fn_tbpso9wgw",
+    "wording": "request",
+    "prompt": "Create fn_tbpso9wgw(data); result: data with keys and unique hashable values swapped. Use Python.",
+    "answer": "def fn_tbpso9wgw(data):\n    return {v: k for k, v in data.items()}\n",
+    "full_sequence_bytes": 180
+  },
+  {
+    "id": "invert_mapping-1::contract",
+    "task_id": "invert_mapping-1",
+    "family": "invert_mapping",
+    "function": "fn_tbpso9wgw",
+    "wording": "contract",
+    "prompt": "fn_tbpso9wgw(data) -> data with keys and unique hashable values swapped. Python code only.",
+    "answer": "def fn_tbpso9wgw(data):\n    return {v: k for k, v in data.items()}\n",
+    "full_sequence_bytes": 173
+  },
+  {
+    "id": "invert_mapping-1::brief",
+    "task_id": "invert_mapping-1",
+    "family": "invert_mapping",
+    "function": "fn_tbpso9wgw",
+    "wording": "brief",
+    "prompt": "Code request for fn_tbpso9wgw(data): data with keys and unique hashable values swapped.",
+    "answer": "def fn_tbpso9wgw(data):\n    return {v: k for k, v in data.items()}\n",
+    "full_sequence_bytes": 170
+  },
+  {
+    "id": "invert_mapping-2::known_format",
+    "task_id": "invert_mapping-2",
+    "family": "invert_mapping",
+    "function": "fn_sowqkjgssd9v",
+    "wording": "known_format",
+    "prompt": "Define fn_sowqkjgssd9v(mapping) in Python to return mapping with keys and unique hashable values swapped.",
+    "answer": "def fn_sowqkjgssd9v(mapping):\n    return {v: k for k, v in mapping.items()}\n",
+    "full_sequence_bytes": 197
+  },
+  {
+    "id": "invert_mapping-2::request",
+    "task_id": "invert_mapping-2",
+    "family": "invert_mapping",
+    "function": "fn_sowqkjgssd9v",
+    "wording": "request",
+    "prompt": "Create fn_sowqkjgssd9v(mapping); result: mapping with keys and unique hashable values swapped. Use Python.",
+    "answer": "def fn_sowqkjgssd9v(mapping):\n    return {v: k for k, v in mapping.items()}\n",
+    "full_sequence_bytes": 198
+  },
+  {
+    "id": "invert_mapping-2::contract",
+    "task_id": "invert_mapping-2",
+    "family": "invert_mapping",
+    "function": "fn_sowqkjgssd9v",
+    "wording": "contract",
+    "prompt": "fn_sowqkjgssd9v(mapping) -> mapping with keys and unique hashable values swapped. Python code only.",
+    "answer": "def fn_sowqkjgssd9v(mapping):\n    return {v: k for k, v in mapping.items()}\n",
+    "full_sequence_bytes": 191
+  },
+  {
+    "id": "invert_mapping-2::brief",
+    "task_id": "invert_mapping-2",
+    "family": "invert_mapping",
+    "function": "fn_sowqkjgssd9v",
+    "wording": "brief",
+    "prompt": "Code request for fn_sowqkjgssd9v(mapping): mapping with keys and unique hashable values swapped.",
+    "answer": "def fn_sowqkjgssd9v(mapping):\n    return {v: k for k, v in mapping.items()}\n",
+    "full_sequence_bytes": 188
+  },
+  {
+    "id": "starts_prefix-0::known_format",
+    "task_id": "starts_prefix-0",
+    "family": "starts_prefix",
+    "function": "fn_wm7ol7",
+    "wording": "known_format",
+    "prompt": "Define fn_wm7ol7(text, x) in Python to return whether text starts with x, case sensitive.",
+    "answer": "def fn_wm7ol7(text, x):\n    return text.startswith(x)\n",
+    "full_sequence_bytes": 159
+  },
+  {
+    "id": "starts_prefix-0::request",
+    "task_id": "starts_prefix-0",
+    "family": "starts_prefix",
+    "function": "fn_wm7ol7",
+    "wording": "request",
+    "prompt": "Create fn_wm7ol7(text, x); result: whether text starts with x, case sensitive. Use Python.",
+    "answer": "def fn_wm7ol7(text, x):\n    return text.startswith(x)\n",
+    "full_sequence_bytes": 160
+  },
+  {
+    "id": "starts_prefix-0::contract",
+    "task_id": "starts_prefix-0",
+    "family": "starts_prefix",
+    "function": "fn_wm7ol7",
+    "wording": "contract",
+    "prompt": "fn_wm7ol7(text, x) -> whether text starts with x, case sensitive. Python code only.",
+    "answer": "def fn_wm7ol7(text, x):\n    return text.startswith(x)\n",
+    "full_sequence_bytes": 153
+  },
+  {
+    "id": "starts_prefix-0::brief",
+    "task_id": "starts_prefix-0",
+    "family": "starts_prefix",
+    "function": "fn_wm7ol7",
+    "wording": "brief",
+    "prompt": "Code request for fn_wm7ol7(text, x): whether text starts with x, case sensitive.",
+    "answer": "def fn_wm7ol7(text, x):\n    return text.startswith(x)\n",
+    "full_sequence_bytes": 150
+  },
+  {
+    "id": "starts_prefix-1::known_format",
+    "task_id": "starts_prefix-1",
+    "family": "starts_prefix",
+    "function": "fn_y98a3h3zx",
+    "wording": "known_format",
+    "prompt": "Define fn_y98a3h3zx(value, prefix) in Python to return whether value starts with prefix, case sensitive.",
+    "answer": "def fn_y98a3h3zx(value, prefix):\n    return value.startswith(prefix)\n",
+    "full_sequence_bytes": 189
+  },
+  {
+    "id": "starts_prefix-1::request",
+    "task_id": "starts_prefix-1",
+    "family": "starts_prefix",
+    "function": "fn_y98a3h3zx",
+    "wording": "request",
+    "prompt": "Create fn_y98a3h3zx(value, prefix); result: whether value starts with prefix, case sensitive. Use Python.",
+    "answer": "def fn_y98a3h3zx(value, prefix):\n    return value.startswith(prefix)\n",
+    "full_sequence_bytes": 190
+  },
+  {
+    "id": "starts_prefix-1::contract",
+    "task_id": "starts_prefix-1",
+    "family": "starts_prefix",
+    "function": "fn_y98a3h3zx",
+    "wording": "contract",
+    "prompt": "fn_y98a3h3zx(value, prefix) -> whether value starts with prefix, case sensitive. Python code only.",
+    "answer": "def fn_y98a3h3zx(value, prefix):\n    return value.startswith(prefix)\n",
+    "full_sequence_bytes": 183
+  },
+  {
+    "id": "starts_prefix-1::brief",
+    "task_id": "starts_prefix-1",
+    "family": "starts_prefix",
+    "function": "fn_y98a3h3zx",
+    "wording": "brief",
+    "prompt": "Code request for fn_y98a3h3zx(value, prefix): whether value starts with prefix, case sensitive.",
+    "answer": "def fn_y98a3h3zx(value, prefix):\n    return value.startswith(prefix)\n",
+    "full_sequence_bytes": 180
+  },
+  {
+    "id": "starts_prefix-2::known_format",
+    "task_id": "starts_prefix-2",
+    "family": "starts_prefix",
+    "function": "fn_x6os977bxqfs",
+    "wording": "known_format",
+    "prompt": "Define fn_x6os977bxqfs(s, start) in Python to return whether s starts with start, case sensitive.",
+    "answer": "def fn_x6os977bxqfs(s, start):\n    return s.startswith(start)\n",
+    "full_sequence_bytes": 175
+  },
+  {
+    "id": "starts_prefix-2::request",
+    "task_id": "starts_prefix-2",
+    "family": "starts_prefix",
+    "function": "fn_x6os977bxqfs",
+    "wording": "request",
+    "prompt": "Create fn_x6os977bxqfs(s, start); result: whether s starts with start, case sensitive. Use Python.",
+    "answer": "def fn_x6os977bxqfs(s, start):\n    return s.startswith(start)\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "starts_prefix-2::contract",
+    "task_id": "starts_prefix-2",
+    "family": "starts_prefix",
+    "function": "fn_x6os977bxqfs",
+    "wording": "contract",
+    "prompt": "fn_x6os977bxqfs(s, start) -> whether s starts with start, case sensitive. Python code only.",
+    "answer": "def fn_x6os977bxqfs(s, start):\n    return s.startswith(start)\n",
+    "full_sequence_bytes": 169
+  },
+  {
+    "id": "starts_prefix-2::brief",
+    "task_id": "starts_prefix-2",
+    "family": "starts_prefix",
+    "function": "fn_x6os977bxqfs",
+    "wording": "brief",
+    "prompt": "Code request for fn_x6os977bxqfs(s, start): whether s starts with start, case sensitive.",
+    "answer": "def fn_x6os977bxqfs(s, start):\n    return s.startswith(start)\n",
+    "full_sequence_bytes": 166
+  },
+  {
+    "id": "ends_suffix-0::known_format",
+    "task_id": "ends_suffix-0",
+    "family": "ends_suffix",
+    "function": "fn_feyue5",
+    "wording": "known_format",
+    "prompt": "Define fn_feyue5(text, x) in Python to return whether text ends with x, case sensitive.",
+    "answer": "def fn_feyue5(text, x):\n    return text.endswith(x)\n",
+    "full_sequence_bytes": 155
+  },
+  {
+    "id": "ends_suffix-0::request",
+    "task_id": "ends_suffix-0",
+    "family": "ends_suffix",
+    "function": "fn_feyue5",
+    "wording": "request",
+    "prompt": "Create fn_feyue5(text, x); result: whether text ends with x, case sensitive. Use Python.",
+    "answer": "def fn_feyue5(text, x):\n    return text.endswith(x)\n",
+    "full_sequence_bytes": 156
+  },
+  {
+    "id": "ends_suffix-0::contract",
+    "task_id": "ends_suffix-0",
+    "family": "ends_suffix",
+    "function": "fn_feyue5",
+    "wording": "contract",
+    "prompt": "fn_feyue5(text, x) -> whether text ends with x, case sensitive. Python code only.",
+    "answer": "def fn_feyue5(text, x):\n    return text.endswith(x)\n",
+    "full_sequence_bytes": 149
+  },
+  {
+    "id": "ends_suffix-0::brief",
+    "task_id": "ends_suffix-0",
+    "family": "ends_suffix",
+    "function": "fn_feyue5",
+    "wording": "brief",
+    "prompt": "Code request for fn_feyue5(text, x): whether text ends with x, case sensitive.",
+    "answer": "def fn_feyue5(text, x):\n    return text.endswith(x)\n",
+    "full_sequence_bytes": 146
+  },
+  {
+    "id": "ends_suffix-1::known_format",
+    "task_id": "ends_suffix-1",
+    "family": "ends_suffix",
+    "function": "fn_etggqc700",
+    "wording": "known_format",
+    "prompt": "Define fn_etggqc700(value, suffix) in Python to return whether value ends with suffix, case sensitive.",
+    "answer": "def fn_etggqc700(value, suffix):\n    return value.endswith(suffix)\n",
+    "full_sequence_bytes": 185
+  },
+  {
+    "id": "ends_suffix-1::request",
+    "task_id": "ends_suffix-1",
+    "family": "ends_suffix",
+    "function": "fn_etggqc700",
+    "wording": "request",
+    "prompt": "Create fn_etggqc700(value, suffix); result: whether value ends with suffix, case sensitive. Use Python.",
+    "answer": "def fn_etggqc700(value, suffix):\n    return value.endswith(suffix)\n",
+    "full_sequence_bytes": 186
+  },
+  {
+    "id": "ends_suffix-1::contract",
+    "task_id": "ends_suffix-1",
+    "family": "ends_suffix",
+    "function": "fn_etggqc700",
+    "wording": "contract",
+    "prompt": "fn_etggqc700(value, suffix) -> whether value ends with suffix, case sensitive. Python code only.",
+    "answer": "def fn_etggqc700(value, suffix):\n    return value.endswith(suffix)\n",
+    "full_sequence_bytes": 179
+  },
+  {
+    "id": "ends_suffix-1::brief",
+    "task_id": "ends_suffix-1",
+    "family": "ends_suffix",
+    "function": "fn_etggqc700",
+    "wording": "brief",
+    "prompt": "Code request for fn_etggqc700(value, suffix): whether value ends with suffix, case sensitive.",
+    "answer": "def fn_etggqc700(value, suffix):\n    return value.endswith(suffix)\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "ends_suffix-2::known_format",
+    "task_id": "ends_suffix-2",
+    "family": "ends_suffix",
+    "function": "fn_n72rd4cynjlu",
+    "wording": "known_format",
+    "prompt": "Define fn_n72rd4cynjlu(s, end) in Python to return whether s ends with end, case sensitive.",
+    "answer": "def fn_n72rd4cynjlu(s, end):\n    return s.endswith(end)\n",
+    "full_sequence_bytes": 163
+  },
+  {
+    "id": "ends_suffix-2::request",
+    "task_id": "ends_suffix-2",
+    "family": "ends_suffix",
+    "function": "fn_n72rd4cynjlu",
+    "wording": "request",
+    "prompt": "Create fn_n72rd4cynjlu(s, end); result: whether s ends with end, case sensitive. Use Python.",
+    "answer": "def fn_n72rd4cynjlu(s, end):\n    return s.endswith(end)\n",
+    "full_sequence_bytes": 164
+  },
+  {
+    "id": "ends_suffix-2::contract",
+    "task_id": "ends_suffix-2",
+    "family": "ends_suffix",
+    "function": "fn_n72rd4cynjlu",
+    "wording": "contract",
+    "prompt": "fn_n72rd4cynjlu(s, end) -> whether s ends with end, case sensitive. Python code only.",
+    "answer": "def fn_n72rd4cynjlu(s, end):\n    return s.endswith(end)\n",
+    "full_sequence_bytes": 157
+  },
+  {
+    "id": "ends_suffix-2::brief",
+    "task_id": "ends_suffix-2",
+    "family": "ends_suffix",
+    "function": "fn_n72rd4cynjlu",
+    "wording": "brief",
+    "prompt": "Code request for fn_n72rd4cynjlu(s, end): whether s ends with end, case sensitive.",
+    "answer": "def fn_n72rd4cynjlu(s, end):\n    return s.endswith(end)\n",
+    "full_sequence_bytes": 154
+  },
+  {
+    "id": "replace_literal-0::known_format",
+    "task_id": "replace_literal-0",
+    "family": "replace_literal",
+    "function": "fn_qblybw",
+    "wording": "known_format",
+    "prompt": "Define fn_qblybw(text, old, new) in Python to return text with every literal substring old replaced by new.",
+    "answer": "def fn_qblybw(text, old, new):\n    return text.replace(old, new)\n",
+    "full_sequence_bytes": 188
+  },
+  {
+    "id": "replace_literal-0::request",
+    "task_id": "replace_literal-0",
+    "family": "replace_literal",
+    "function": "fn_qblybw",
+    "wording": "request",
+    "prompt": "Create fn_qblybw(text, old, new); result: text with every literal substring old replaced by new. Use Python.",
+    "answer": "def fn_qblybw(text, old, new):\n    return text.replace(old, new)\n",
+    "full_sequence_bytes": 189
+  },
+  {
+    "id": "replace_literal-0::contract",
+    "task_id": "replace_literal-0",
+    "family": "replace_literal",
+    "function": "fn_qblybw",
+    "wording": "contract",
+    "prompt": "fn_qblybw(text, old, new) -> text with every literal substring old replaced by new. Python code only.",
+    "answer": "def fn_qblybw(text, old, new):\n    return text.replace(old, new)\n",
+    "full_sequence_bytes": 182
+  },
+  {
+    "id": "replace_literal-0::brief",
+    "task_id": "replace_literal-0",
+    "family": "replace_literal",
+    "function": "fn_qblybw",
+    "wording": "brief",
+    "prompt": "Code request for fn_qblybw(text, old, new): text with every literal substring old replaced by new.",
+    "answer": "def fn_qblybw(text, old, new):\n    return text.replace(old, new)\n",
+    "full_sequence_bytes": 179
+  },
+  {
+    "id": "replace_literal-1::known_format",
+    "task_id": "replace_literal-1",
+    "family": "replace_literal",
+    "function": "fn_mjdr46l2a",
+    "wording": "known_format",
+    "prompt": "Define fn_mjdr46l2a(value, before, after) in Python to return value with every literal substring before replaced by after.",
+    "answer": "def fn_mjdr46l2a(value, before, after):\n    return value.replace(before, after)\n",
+    "full_sequence_bytes": 218
+  },
+  {
+    "id": "replace_literal-1::request",
+    "task_id": "replace_literal-1",
+    "family": "replace_literal",
+    "function": "fn_mjdr46l2a",
+    "wording": "request",
+    "prompt": "Create fn_mjdr46l2a(value, before, after); result: value with every literal substring before replaced by after. Use Python.",
+    "answer": "def fn_mjdr46l2a(value, before, after):\n    return value.replace(before, after)\n",
+    "full_sequence_bytes": 219
+  },
+  {
+    "id": "replace_literal-1::contract",
+    "task_id": "replace_literal-1",
+    "family": "replace_literal",
+    "function": "fn_mjdr46l2a",
+    "wording": "contract",
+    "prompt": "fn_mjdr46l2a(value, before, after) -> value with every literal substring before replaced by after. Python code only.",
+    "answer": "def fn_mjdr46l2a(value, before, after):\n    return value.replace(before, after)\n",
+    "full_sequence_bytes": 212
+  },
+  {
+    "id": "replace_literal-1::brief",
+    "task_id": "replace_literal-1",
+    "family": "replace_literal",
+    "function": "fn_mjdr46l2a",
+    "wording": "brief",
+    "prompt": "Code request for fn_mjdr46l2a(value, before, after): value with every literal substring before replaced by after.",
+    "answer": "def fn_mjdr46l2a(value, before, after):\n    return value.replace(before, after)\n",
+    "full_sequence_bytes": 209
+  },
+  {
+    "id": "replace_literal-2::known_format",
+    "task_id": "replace_literal-2",
+    "family": "replace_literal",
+    "function": "fn_woezuf9ba1lk",
+    "wording": "known_format",
+    "prompt": "Define fn_woezuf9ba1lk(s, needle, replacement) in Python to return s with every literal substring needle replaced by replacement.",
+    "answer": "def fn_woezuf9ba1lk(s, needle, replacement):\n    return s.replace(needle, replacement)\n",
+    "full_sequence_bytes": 232
+  },
+  {
+    "id": "replace_literal-2::request",
+    "task_id": "replace_literal-2",
+    "family": "replace_literal",
+    "function": "fn_woezuf9ba1lk",
+    "wording": "request",
+    "prompt": "Create fn_woezuf9ba1lk(s, needle, replacement); result: s with every literal substring needle replaced by replacement. Use Python.",
+    "answer": "def fn_woezuf9ba1lk(s, needle, replacement):\n    return s.replace(needle, replacement)\n",
+    "full_sequence_bytes": 233
+  },
+  {
+    "id": "replace_literal-2::contract",
+    "task_id": "replace_literal-2",
+    "family": "replace_literal",
+    "function": "fn_woezuf9ba1lk",
+    "wording": "contract",
+    "prompt": "fn_woezuf9ba1lk(s, needle, replacement) -> s with every literal substring needle replaced by replacement. Python code only.",
+    "answer": "def fn_woezuf9ba1lk(s, needle, replacement):\n    return s.replace(needle, replacement)\n",
+    "full_sequence_bytes": 226
+  },
+  {
+    "id": "replace_literal-2::brief",
+    "task_id": "replace_literal-2",
+    "family": "replace_literal",
+    "function": "fn_woezuf9ba1lk",
+    "wording": "brief",
+    "prompt": "Code request for fn_woezuf9ba1lk(s, needle, replacement): s with every literal substring needle replaced by replacement.",
+    "answer": "def fn_woezuf9ba1lk(s, needle, replacement):\n    return s.replace(needle, replacement)\n",
+    "full_sequence_bytes": 223
+  },
+  {
+    "id": "split_separator-0::known_format",
+    "task_id": "split_separator-0",
+    "family": "split_separator",
+    "function": "fn_ca3usd",
+    "wording": "known_format",
+    "prompt": "Define fn_ca3usd(text, sep) in Python to return pieces of text split on nonempty sep, keeping empty pieces.",
+    "answer": "def fn_ca3usd(text, sep):\n    return text.split(sep)\n",
+    "full_sequence_bytes": 176
+  },
+  {
+    "id": "split_separator-0::request",
+    "task_id": "split_separator-0",
+    "family": "split_separator",
+    "function": "fn_ca3usd",
+    "wording": "request",
+    "prompt": "Create fn_ca3usd(text, sep); result: pieces of text split on nonempty sep, keeping empty pieces. Use Python.",
+    "answer": "def fn_ca3usd(text, sep):\n    return text.split(sep)\n",
+    "full_sequence_bytes": 177
+  },
+  {
+    "id": "split_separator-0::contract",
+    "task_id": "split_separator-0",
+    "family": "split_separator",
+    "function": "fn_ca3usd",
+    "wording": "contract",
+    "prompt": "fn_ca3usd(text, sep) -> pieces of text split on nonempty sep, keeping empty pieces. Python code only.",
+    "answer": "def fn_ca3usd(text, sep):\n    return text.split(sep)\n",
+    "full_sequence_bytes": 170
+  },
+  {
+    "id": "split_separator-0::brief",
+    "task_id": "split_separator-0",
+    "family": "split_separator",
+    "function": "fn_ca3usd",
+    "wording": "brief",
+    "prompt": "Code request for fn_ca3usd(text, sep): pieces of text split on nonempty sep, keeping empty pieces.",
+    "answer": "def fn_ca3usd(text, sep):\n    return text.split(sep)\n",
+    "full_sequence_bytes": 167
+  },
+  {
+    "id": "split_separator-1::known_format",
+    "task_id": "split_separator-1",
+    "family": "split_separator",
+    "function": "fn_6c8534om0",
+    "wording": "known_format",
+    "prompt": "Define fn_6c8534om0(value, delimiter) in Python to return pieces of value split on nonempty delimiter, keeping empty pieces.",
+    "answer": "def fn_6c8534om0(value, delimiter):\n    return value.split(delimiter)\n",
+    "full_sequence_bytes": 210
+  },
+  {
+    "id": "split_separator-1::request",
+    "task_id": "split_separator-1",
+    "family": "split_separator",
+    "function": "fn_6c8534om0",
+    "wording": "request",
+    "prompt": "Create fn_6c8534om0(value, delimiter); result: pieces of value split on nonempty delimiter, keeping empty pieces. Use Python.",
+    "answer": "def fn_6c8534om0(value, delimiter):\n    return value.split(delimiter)\n",
+    "full_sequence_bytes": 211
+  },
+  {
+    "id": "split_separator-1::contract",
+    "task_id": "split_separator-1",
+    "family": "split_separator",
+    "function": "fn_6c8534om0",
+    "wording": "contract",
+    "prompt": "fn_6c8534om0(value, delimiter) -> pieces of value split on nonempty delimiter, keeping empty pieces. Python code only.",
+    "answer": "def fn_6c8534om0(value, delimiter):\n    return value.split(delimiter)\n",
+    "full_sequence_bytes": 204
+  },
+  {
+    "id": "split_separator-1::brief",
+    "task_id": "split_separator-1",
+    "family": "split_separator",
+    "function": "fn_6c8534om0",
+    "wording": "brief",
+    "prompt": "Code request for fn_6c8534om0(value, delimiter): pieces of value split on nonempty delimiter, keeping empty pieces.",
+    "answer": "def fn_6c8534om0(value, delimiter):\n    return value.split(delimiter)\n",
+    "full_sequence_bytes": 201
+  },
+  {
+    "id": "split_separator-2::known_format",
+    "task_id": "split_separator-2",
+    "family": "split_separator",
+    "function": "fn_chqypoltjlaz",
+    "wording": "known_format",
+    "prompt": "Define fn_chqypoltjlaz(s, separator) in Python to return pieces of s split on nonempty separator, keeping empty pieces.",
+    "answer": "def fn_chqypoltjlaz(s, separator):\n    return s.split(separator)\n",
+    "full_sequence_bytes": 200
+  },
+  {
+    "id": "split_separator-2::request",
+    "task_id": "split_separator-2",
+    "family": "split_separator",
+    "function": "fn_chqypoltjlaz",
+    "wording": "request",
+    "prompt": "Create fn_chqypoltjlaz(s, separator); result: pieces of s split on nonempty separator, keeping empty pieces. Use Python.",
+    "answer": "def fn_chqypoltjlaz(s, separator):\n    return s.split(separator)\n",
+    "full_sequence_bytes": 201
+  },
+  {
+    "id": "split_separator-2::contract",
+    "task_id": "split_separator-2",
+    "family": "split_separator",
+    "function": "fn_chqypoltjlaz",
+    "wording": "contract",
+    "prompt": "fn_chqypoltjlaz(s, separator) -> pieces of s split on nonempty separator, keeping empty pieces. Python code only.",
+    "answer": "def fn_chqypoltjlaz(s, separator):\n    return s.split(separator)\n",
+    "full_sequence_bytes": 194
+  },
+  {
+    "id": "split_separator-2::brief",
+    "task_id": "split_separator-2",
+    "family": "split_separator",
+    "function": "fn_chqypoltjlaz",
+    "wording": "brief",
+    "prompt": "Code request for fn_chqypoltjlaz(s, separator): pieces of s split on nonempty separator, keeping empty pieces.",
+    "answer": "def fn_chqypoltjlaz(s, separator):\n    return s.split(separator)\n",
+    "full_sequence_bytes": 191
+  },
+  {
+    "id": "zip_pairs-0::known_format",
+    "task_id": "zip_pairs-0",
+    "family": "zip_pairs",
+    "function": "fn_fghnyn",
+    "wording": "known_format",
+    "prompt": "Define fn_fghnyn(values, other) in Python to return pairs from values and other, stopping at the shorter input.",
+    "answer": "def fn_fghnyn(values, other):\n    return list(zip(values, other))\n",
+    "full_sequence_bytes": 193
+  },
+  {
+    "id": "zip_pairs-0::request",
+    "task_id": "zip_pairs-0",
+    "family": "zip_pairs",
+    "function": "fn_fghnyn",
+    "wording": "request",
+    "prompt": "Create fn_fghnyn(values, other); result: pairs from values and other, stopping at the shorter input. Use Python.",
+    "answer": "def fn_fghnyn(values, other):\n    return list(zip(values, other))\n",
+    "full_sequence_bytes": 194
+  },
+  {
+    "id": "zip_pairs-0::contract",
+    "task_id": "zip_pairs-0",
+    "family": "zip_pairs",
+    "function": "fn_fghnyn",
+    "wording": "contract",
+    "prompt": "fn_fghnyn(values, other) -> pairs from values and other, stopping at the shorter input. Python code only.",
+    "answer": "def fn_fghnyn(values, other):\n    return list(zip(values, other))\n",
+    "full_sequence_bytes": 187
+  },
+  {
+    "id": "zip_pairs-0::brief",
+    "task_id": "zip_pairs-0",
+    "family": "zip_pairs",
+    "function": "fn_fghnyn",
+    "wording": "brief",
+    "prompt": "Code request for fn_fghnyn(values, other): pairs from values and other, stopping at the shorter input.",
+    "answer": "def fn_fghnyn(values, other):\n    return list(zip(values, other))\n",
+    "full_sequence_bytes": 184
+  },
+  {
+    "id": "zip_pairs-1::known_format",
+    "task_id": "zip_pairs-1",
+    "family": "zip_pairs",
+    "function": "fn_ghhudp8yt",
+    "wording": "known_format",
+    "prompt": "Define fn_ghhudp8yt(left, right) in Python to return pairs from left and right, stopping at the shorter input.",
+    "answer": "def fn_ghhudp8yt(left, right):\n    return list(zip(left, right))\n",
+    "full_sequence_bytes": 191
+  },
+  {
+    "id": "zip_pairs-1::request",
+    "task_id": "zip_pairs-1",
+    "family": "zip_pairs",
+    "function": "fn_ghhudp8yt",
+    "wording": "request",
+    "prompt": "Create fn_ghhudp8yt(left, right); result: pairs from left and right, stopping at the shorter input. Use Python.",
+    "answer": "def fn_ghhudp8yt(left, right):\n    return list(zip(left, right))\n",
+    "full_sequence_bytes": 192
+  },
+  {
+    "id": "zip_pairs-1::contract",
+    "task_id": "zip_pairs-1",
+    "family": "zip_pairs",
+    "function": "fn_ghhudp8yt",
+    "wording": "contract",
+    "prompt": "fn_ghhudp8yt(left, right) -> pairs from left and right, stopping at the shorter input. Python code only.",
+    "answer": "def fn_ghhudp8yt(left, right):\n    return list(zip(left, right))\n",
+    "full_sequence_bytes": 185
+  },
+  {
+    "id": "zip_pairs-1::brief",
+    "task_id": "zip_pairs-1",
+    "family": "zip_pairs",
+    "function": "fn_ghhudp8yt",
+    "wording": "brief",
+    "prompt": "Code request for fn_ghhudp8yt(left, right): pairs from left and right, stopping at the shorter input.",
+    "answer": "def fn_ghhudp8yt(left, right):\n    return list(zip(left, right))\n",
+    "full_sequence_bytes": 182
+  },
+  {
+    "id": "zip_pairs-2::known_format",
+    "task_id": "zip_pairs-2",
+    "family": "zip_pairs",
+    "function": "fn_1gr4a5la4tww",
+    "wording": "known_format",
+    "prompt": "Define fn_1gr4a5la4tww(first, second) in Python to return pairs from first and second, stopping at the shorter input.",
+    "answer": "def fn_1gr4a5la4tww(first, second):\n    return list(zip(first, second))\n",
+    "full_sequence_bytes": 205
+  },
+  {
+    "id": "zip_pairs-2::request",
+    "task_id": "zip_pairs-2",
+    "family": "zip_pairs",
+    "function": "fn_1gr4a5la4tww",
+    "wording": "request",
+    "prompt": "Create fn_1gr4a5la4tww(first, second); result: pairs from first and second, stopping at the shorter input. Use Python.",
+    "answer": "def fn_1gr4a5la4tww(first, second):\n    return list(zip(first, second))\n",
+    "full_sequence_bytes": 206
+  },
+  {
+    "id": "zip_pairs-2::contract",
+    "task_id": "zip_pairs-2",
+    "family": "zip_pairs",
+    "function": "fn_1gr4a5la4tww",
+    "wording": "contract",
+    "prompt": "fn_1gr4a5la4tww(first, second) -> pairs from first and second, stopping at the shorter input. Python code only.",
+    "answer": "def fn_1gr4a5la4tww(first, second):\n    return list(zip(first, second))\n",
+    "full_sequence_bytes": 199
+  },
+  {
+    "id": "zip_pairs-2::brief",
+    "task_id": "zip_pairs-2",
+    "family": "zip_pairs",
+    "function": "fn_1gr4a5la4tww",
+    "wording": "brief",
+    "prompt": "Code request for fn_1gr4a5la4tww(first, second): pairs from first and second, stopping at the shorter input.",
+    "answer": "def fn_1gr4a5la4tww(first, second):\n    return list(zip(first, second))\n",
+    "full_sequence_bytes": 196
+  }
+]

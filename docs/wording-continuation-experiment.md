@@ -35,4 +35,44 @@ Optimizer updates match, not tokens, compute, sampled batches or per-record
 exposure. A warm-start versus previous cold-start comparison is not a matched
 ablation because cumulative budgets differ. Previously exposed correlated
 synthetic tasks and one seed remain limits. Report all arms and distinguish
-successful experiment execution from model quality. Results await CI.
+successful experiment execution from model quality.
+
+## Measured results (14 October 2026)
+
+[PR #163](https://github.com/deser1/NppAI/pull/163), commit
+`a09ee261154b8182f28867fe99b46aa831d1876d`, completed
+[run 38618406741](https://github.com/deser1/NppAI/actions/runs/38618406741).
+All four trainings and both replays passed, including the real PyTorch full-weight
+initialization test and checkpoint reload checks. All six PR workflows passed.
+
+Complete staged exact/reference AST test matches on the same 28 tasks:
+
+| Form | Four-form continuation | Eight-form continuation |
+| --- | ---: | ---: |
+| Original | 13/28 | 14/28 |
+| Please prefix | 12/28 | 13/28 |
+| Write Python code prefix | 13/28 | 11/28 |
+| Code-only suffix | 13/28 | 15/28 |
+| Novel polite/Python prefix | 0/28 | 0/28 |
+| Novel implementation prefix | 0/28 | 0/28 |
+
+Known-form validation exact counts are 12/16, 15/16, 13/16, 14/16 for four-form
+versus 11/16, 13/16, 11/16, 10/16 for eight-form. Both novel validation forms
+score zero in both arms. Free-body exact scores remain zero throughout. Original
+test header exactness is 21/28 versus 22/28; novel headers are zero except 1/28
+for eight-form implementation, with no complete-code success.
+
+Both actual wording smoke audits fail. Eight-form continuation retains known-form
+matching unlike the earlier cold-start run, but cumulative budgets differ and
+do not isolate warm starting. It does not repair novel wording; validation favors
+the simultaneous four-form control and test changes are mixed. No promotion.
+
+Raw reports, audits, preserved starting checkpoints and paired cases are in
+[four-form artifact 11921870012](https://github.com/deser1/NppAI/actions/runs/38618406741/artifacts/11921870012)
+and [eight-form artifact 11921600155](https://github.com/deser1/NppAI/actions/runs/38618406741/artifacts/11921600155).
+GitHub archive SHA-256 values are respectively
+`81bdd1d4e1e5afbbd7fa430ff3a9f58c4dd657a4afae68a9048bc7a58c64a560`
+and `4ee858805ef6f3da0bcd378ae9c82d12c3e7ce1563c8943f7f55ef987370a65b`.
+Retention is 14 days; this committed summary preserves counts/provenance, not
+the raw archive contents. The [fresh evaluation probe](fresh-probe-v1.md) creates
+new task instances for subsequent measurements instead of reusing only these 28.

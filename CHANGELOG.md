@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Freeze an evaluation-only fresh Python probe with 12 task families, 36 new name/argument instances and 144 correlated wording views; verify isolation, context bounds, canonical bytes and trusted reference edge cases on Linux/Windows.
+- Record continuation results: original exact matching 13/28 versus 14/28, mixed known-form changes and both novel forms 0/28; no checkpoint promotion.
+
 - Add fixed four-versus-eight-form continuation from the same verified pretrained pair, full header checkpoint initialization, source/total-budget provenance and body checkpoint reload checks; no checkpoint promotion.
 
 - Record task-signature diagnostic: assisted original exact matching 15/28 versus cached learned-header 13/28; novel exact matching stays 0/28, with 2/28 polite/Python reference AST matches. Both assisted smoke checks fail; no checkpoint promotion.

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "evaluation_only": true,
+  "seed": 20261014,
+  "model_cutoff_training_run": 38618406741,
+  "source": "new project-authored synthetic reference tasks",
+  "families": [
+    "count_equal",
+    "ends_suffix",
+    "filter_nonzero",
+    "first_or_none",
+    "invert_mapping",
+    "lookup_default",
+    "membership",
+    "replace_literal",
+    "split_separator",
+    "starts_prefix",
+    "sum_squares",
+    "zip_pairs"
+  ],
+  "task_instances": 36,
+  "wording_views": 144,
+  "wording_forms": [
+    "known_format",
+    "request",
+    "contract",
+    "brief"
+  ],
+  "name_lengths": [
+    9,
+    12,
+    15
+  ],
+  "context": 256,
+  "generation_budget": 160,
+  "max_full_sequence_bytes": 233,
+  "tasks_sha256": "5d4e423f7a2bbe5528698bc4bbcaffea581d5463a0a1ed73781b5b605d66a304",
+  "legacy_snapshot_sha256": {
+    "instruction-v1/train.json": "9c3104f0e63fc8be24efa22c9d9bea6aa19ff91a1d27fc53493afb30ee06eb69",
+    "instruction-v1/validation.json": "68376771012a8f80f7a4a0bb1203fc07ef3459c2a05788719de044dcb2a4326a",
+    "instruction-v1/test.json": "943bf3edc8d27b5b71a5770bd3244ec4881b1ee31b419775e5959293e43fd9dd",
+    "instruction-v2/train.json": "cb9a1b49326370b607e6a640eea73d09c9b03eea44970b2602c528fb2813f98d",
+    "instruction-v2/validation.json": "9c9a33523795b77362eadb4beb7508b63b6edeee36dfc092397880533366c7b0",
+    "instruction-v2/test.json": "ff07d4db74c4c7d702f22bc65201c5b869db4dd8b9444d91112315a4f10476f4",
+    "instruction-v3/train.json": "7d729ccac90a001853663a661398cee21e66f7c2a57e749b6a855db3d673f3c6",
+    "instruction-v3/validation.json": "c4963e993c9ebcd1c34f89597bb3a4b06ea4ed9baa62354198e3042fe991b445",
+    "instruction-v3/test.json": "b174bf1f980c8a11415e8174f9d6eaac91faf8abd38ceee0610d910e278fa56d"
+  },
+  "limits": "12 authored task families, 36 name/argument instances, 144 correlated wording views; not 144 independent programming problems. New for the pinned prior checkpoints, public and exposed after evaluation. Family labels do not prove every primitive is unseen. No training split or automatic promotion; exact/AST matching alone is not functional correctness."
+}
