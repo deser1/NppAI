@@ -46,7 +46,7 @@ def check_source(report, model_bytes, manifest, manifest_key, expected_steps=600
         raise ValueError("source configuration differs from the preselected step budget, seed42 or context256")
 
 
-def run(headers, bodies, dataset, output, source_run, perturb_prompts=False, source_steps=6000, novel_variants=False):
+def run(headers, bodies, dataset, output, source_run, perturb_prompts=False, source_steps=6000, novel_variants=False, source_augmentation_policy=None):
     if novel_variants and not perturb_prompts:
         raise ValueError("novel variants require prompt-variant evaluation")
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -65,6 +65,10 @@ def run(headers, bodies, dataset, output, source_run, perturb_prompts=False, sou
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     check_source(header_report, header_path.read_bytes(), manifest, "source_manifest", source_steps)
     check_source(body_report, body_path.read_bytes(), manifest, "dataset_manifest", source_steps)
+    if source_augmentation_policy is not None:
+        from scripts.prompt_robustness import check_augmentation_source
+        check_augmentation_source(header_report, source_augmentation_policy)
+        check_augmentation_source(body_report, source_augmentation_policy)
     torch.set_num_threads(2)
     hw, bw = load_weights(header_path), load_weights(body_path)
     validate_initial_weights(hw)
@@ -143,6 +147,7 @@ if __name__ == "__main__":
     parser.add_argument("--prompt-variants", action="store_true", help="evaluate preselected prefixes/suffix on unchanged tasks")
     parser.add_argument("--source-steps", type=int, default=6000, help="preselected source checkpoint step count")
     parser.add_argument("--novel-variants", action="store_true", help="also evaluate two wordings excluded from augmentation")
+    parser.add_argument("--source-augmentation-policy", choices=("four_forms", "eight_forms"))
     args = parser.parse_args()
     run(args.headers, args.bodies, args.dataset, args.output, args.source_run, args.prompt_variants,
-        args.source_steps, args.novel_variants)
+        args.source_steps, args.novel_variants, args.source_augmentation_policy)
