@@ -1,4 +1,6 @@
 ## Unreleased
+- Add CLI for collecting real first-attempt local/online model outputs, collector tests in CI, and reproducible replay instructions.
+
 - Add real-model candidate replay evaluator, unit tests wired into CI, and Docker-backed evaluation protocol; real-model quality results are not yet collected.
 
 
