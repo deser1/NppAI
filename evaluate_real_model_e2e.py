@@ -30,7 +30,11 @@ def evaluate(records, image):
             raise ValueError(f'line {line_number}: attempts must be consecutive, maximum 3')
         if previous and previous[-1]['passed']:
             raise ValueError(f'line {line_number}: attempt after successful candidate')
+        if not isinstance(item['source'], str) or not item['source']:
+            raise ValueError(f'line {line_number}: source must be nonempty Python text')
         cases, digest = sandbox_validate.load_cases(Path(item['cases_file']))
+        if previous and previous[0]['suite_sha256'] != digest:
+            raise ValueError(f'line {line_number}: test suite changed between attempts')
         status, detail = sandbox_validate.validate(item['source'], 'syntax', cases, image)
         if status == 0:
             status, detail = sandbox_validate.validate(item['source'], 'tests', cases, image)
@@ -44,7 +48,17 @@ def evaluate(records, image):
     passed = sum(any(a['passed'] for a in attempts) for attempts in tasks.values())
     first = sum(attempts[0]['passed'] for attempts in tasks.values())
     repaired = sum(len(a) > 1 and a[-1]['passed'] for a in tasks.values())
-    return {'tasks': len(tasks), 'first_attempt_pass': first,
+    by_backend = {}
+    for backend in ('local', 'online'):
+        subset = [a for a in tasks.values() if a[0]['backend'] == backend]
+        if subset:
+            by_backend[backend] = {
+                'tasks': len(subset),
+                'first_attempt_pass': sum(a[0]['passed'] for a in subset),
+                'pass_within_three': sum(any(x['passed'] for x in a) for a in subset),
+                'repaired_after_failure': sum(len(a) > 1 and a[-1]['passed'] for a in subset),
+            }
+    return {'by_initial_backend': by_backend, 'tasks': len(tasks), 'first_attempt_pass': first,
             'pass_within_three': passed, 'repaired_after_failure': repaired,
             'task_results': tasks}
 
