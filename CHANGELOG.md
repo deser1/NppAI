@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Record frozen binding results: assisted argument-alias exact0→85/77/73 of336 under fixed x/values/text policies, but original test16→8/7/7 of28 and renamed165→85/77/73 of336. All1100 cached outputs reproduce; reject default normalization/promotion because retention fails.
+
+- Add frozen prompt-only argument normalization diagnostics with three fixed naming policies, AST/token-based restoration, capture/scope rejection, cached-output reproduction and raw paired audits; assisted evaluation only, no training or promotion.
+
 - Record full-response continuation: fixed arguments improve assisted function-renamed exact72→150/336 and retain15/15 prior original test hits; varied reaches71/336 and loses3/15. New-argument AST/exact remains0/336 in both, autonomous full matches remain zero; no promotion.
 
 - Add a matched full-response body continuation with fixed/varied argument aliases, unchanged50% original replay, frozen20k body initialization, separate assisted/autonomous raw metrics, paired retention audits and complete export/reload checks; no fresh-probe use or model promotion.
