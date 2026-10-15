@@ -13,6 +13,8 @@ from model_backends import BackendRouter, DenseLocalBackend, GenerationRequest, 
 
 
 def collect(tasks, router, max_new_tokens=512):
+    if router.mode == "hybrid":
+        raise ValueError("hybrid collection requires backend provenance; use local or online")
     seen = set()
     records = []
     for task in tasks:
@@ -26,9 +28,6 @@ def collect(tasks, router, max_new_tokens=512):
         seen.add(task_id)
         response = router.generate(GenerationRequest(prompt=prompt, max_new_tokens=max_new_tokens))
         backend = "online" if router.mode == "online" else "local"
-        # Hybrid fallback is not observable via the router response; do not mislabel it.
-        if router.mode == "hybrid":
-            raise ValueError("hybrid collection requires backend provenance; use local or online")
         records.append({"task_id": task_id, "attempt": 1, "backend": backend,
                         "source": response.output, "cases_file": cases_file})
     if not records:
