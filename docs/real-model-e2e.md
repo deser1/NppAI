@@ -61,3 +61,25 @@ repair attempts separately before claiming pass-within-three performance.
 Local dense byte models may have limited context and output budgets. If a model
 is not configured, no real model metrics can be reported. Do not commit model
 outputs containing private source or prompts.
+
+## Bounded model repair collection
+
+To record up to three **actual model-generated** attempts per task, run with an
+immutable locally available Docker image ID. The collector checks syntax and
+independently authored functional tests after each attempt, stops after success,
+and passes bounded failure diagnostics and the prior source to the model for
+repair. Docker failures abort the collection rather than being treated as model
+failures.
+
+```bash
+IMAGE="$(docker image inspect python:3.12-slim --format '{{.Id}}')"
+python collect_real_model_candidates.py tasks.json --mode local --model path/to/checkpoint --max-attempts 3 --image "$IMAGE" --output attempts.jsonl
+python evaluate_real_model_e2e.py attempts.jsonl --image "$IMAGE" --output results.json
+```
+
+The same `--max-attempts 3 --image "$IMAGE"` options work with the explicitly
+authorized online mode. The output file is written only after the full
+collection completes. A single-task generation failure aborts the batch.
+Test cases are never included in model prompts, but validator diagnostics
+can disclose expected values: use only trusted, non-sensitive task suites.
+This is a CLI evaluation loop, **not** autonomous Notepad++ editing.
