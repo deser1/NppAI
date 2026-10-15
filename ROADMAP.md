@@ -197,3 +197,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Provide CLI collection of actual first-attempt local/online model outputs for replay evaluation.
 - [ ] Execute held-out model runs with configured checkpoints/endpoints and publish measured first-pass rates; add bounded repair-attempt collection later.
+
+- [x] Add bounded (up to 3) real-model candidate repair collection with Docker syntax/functional validation and feedback.
+- [ ] Run held-out local/online experiments, measure repair success, and integrate validated repair into the Notepad++ UI with explicit apply approval.
