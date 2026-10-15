@@ -1,2 +1,4 @@
 # Frozen dataset manifests hash canonical bytes on every platform.
 evaluation/instruction-v*/** text eol=lf
+# Recorded evidence hashes refer to exact LF bytes, including Windows checkouts.
+docs/evidence/** text eol=lf

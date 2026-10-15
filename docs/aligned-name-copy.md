@@ -126,3 +126,5 @@ No native/INT8 quality or functional-execution result is claimed for it. Before
 another training scale-up, compare a dedicated source-byte copy readout or other
 explicit copying mechanism against this baseline on training-only diagnostics,
 then require separate complete-code and independent functional evidence.
+
+Recorded evidence uses enforced LF checkout bytes so SHA-256 checks remain exact on Windows as well as Linux.
