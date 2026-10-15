@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Diagnose argument binding using frozen prompt-only normalization and explicitly assisted restoration; see [canonical-argument-binding](docs/canonical-argument-binding.md).
+
 - [x] Measure full-response continuation: fixed assisted function-renamed exact72→150/336, varied71/336; both new-argument0/336 and autonomous full matches zero. See [body-argument-aliases](docs/body-argument-aliases.md); original validation retention and variable binding remain open, no promotion.
 
 - [x] Measure prompt-derived signature assistance: function-renamed exact63→72/336, but new argument AST/exact0/336 despite all correct prefixes. See [argument-signature-assistance](docs/argument-signature-assistance.md); assistance is separate from learned copying, no promotion.
