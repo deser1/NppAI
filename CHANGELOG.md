@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add matched full-response versus body-only loss continuation on identical varied-argument data with50% original replay, exact draw-order/target-exposure audits, real gradient-mask tests and separate assisted/autonomous evidence; no canonical repair or model promotion.
+
 - Record frozen binding results: assisted argument-alias exact0→85/77/73 of336 under fixed x/values/text policies, but original test16→8/7/7 of28 and renamed165→85/77/73 of336. All1100 cached outputs reproduce; reject default normalization/promotion because retention fails.
 
 - Add frozen prompt-only argument normalization diagnostics with three fixed naming policies, AST/token-based restoration, capture/scope rejection, cached-output reproduction and raw paired audits; assisted evaluation only, no training or promotion.
