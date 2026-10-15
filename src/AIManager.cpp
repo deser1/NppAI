@@ -1,5 +1,9 @@
 ﻿#include "AIManager.h"
 #include "AIPromptPipeline.h"
+#include "AutomaticModelRouting.h"
+#include "RemoteModelClient.h"
+#include <algorithm>
+#include <stdexcept>
 #include "PluginDefinition.h"
 #include "RAGManager.h"
 #include "Scintilla.h"
@@ -81,28 +85,90 @@ void AIManager::loadModel(const std::string &modelPath) {
   if (modelPath.find(":") == std::string::npos) { // Jeśli to ścieżka względna
     fullPath = getPluginDllDirectory() + "\\" + modelPath;
   }
-  engine.loadModel(fullPath);
+  std::lock_guard<std::mutex> lock(generationMutex);
+  localReady = engine.loadModel(fullPath);
+}
+
+namespace {
+std::string environment(const char* name) {
+  DWORD size = GetEnvironmentVariableA(name, nullptr, 0);
+  if (!size) return "";
+  std::string value(size, '\0');
+  DWORD copied = GetEnvironmentVariableA(name, &value[0], size);
+  if (!copied || copied >= size) return "";
+  value.resize(copied);
+  return value;
+}
+bool hasCode(const std::string& text) {
+  return text.find_first_not_of(" \t\n\r\v\f") != std::string::npos;
+}
 }
 
 std::string AIManager::generateCode(const std::string &prompt,
                                     const std::string &currentContext,
                                     std::function<void(char, bool)> onToken,
-                                    std::function<void(int)> onRemove) {
-  // Build the model-facing prompt through a pure helper so this plugin
-  // boundary can be covered deterministically without a Notepad++ process.
+                                    std::function<void(int)> onRemove,
+                                    std::function<void(const std::string&)> onStatus) {
+  std::lock_guard<std::mutex> lock(generationMutex);
+  generationCancelled = false;
   const auto request = AIPromptPipeline::prepare(prompt, currentContext);
-  if (!request.error.empty()) return request.error;
-  AIPromptPipeline::streamPrefix(request, onToken);
-
-  // Generowanie kodu za pomocą naszego własnego silnika Transformera
-  // Zwiększamy limit tokenów do 4096, by model mógł wypisać dłuższą odpowiedź
-  // HTML/Vue
-  std::string generatedCode =
-      engine.generate(request.inferencePrompt, 4096, onToken, onRemove);
-
-  // Usunięcie wpisanego promptu (z tagami), aby do edytora trafiła sama
-  // wygenerowana odpowiedź AI
-  return AIPromptPipeline::extractResponse(generatedCode, request.basePrompt);
+  if (!request.error.empty()) throw std::runtime_error(request.error);
+  const auto mode = AutomaticModelRouting::parseMode(environment("NPPAI_PLUGIN_MODE"));
+  const auto endpoint = environment("NPPAI_GENERATION_URL");
+  const auto key = environment("NPPAI_API_KEY");
+  const bool remote = environment("NPPAI_ALLOW_REMOTE") == "1" && !endpoint.empty() && !key.empty();
+  const auto decision = AutomaticModelRouting::select(mode, localReady,
+      request.inferencePrompt.size(), localReady ? engine.contextCapacity() : 0, remote);
+  if (onStatus) onStatus(decision.reason);
+  if (decision.backend == AutomaticModelRouting::Backend::Unavailable)
+    throw std::runtime_error(decision.reason);
+  const int budget = 512;
+  auto online = [&]() {
+    const auto json = AutomaticModelRouting::encodeRequest(request.task, currentContext,
+                                                          request.assistantPrefix, budget);
+    const auto result = RemoteModelClient::generate(endpoint, key, json, budget, generationCancelled);
+    if (!request.assistantPrefix.empty() && result.compare(0, request.assistantPrefix.size(), request.assistantPrefix) != 0)
+      throw std::runtime_error("Online model did not preserve requested function prefix");
+    if (!hasCode(result.substr(request.assistantPrefix.size())))
+      throw std::runtime_error("Online model returned an empty completion");
+    if (generationCancelled) throw std::runtime_error("Generation cancelled");
+    if (onToken) for (char c : result) {
+      if (generationCancelled) throw std::runtime_error("Generation cancelled");
+      onToken(c, false);
+    }
+    return result;
+  };
+  if (decision.backend == AutomaticModelRouting::Backend::Online) return online();
+  // Hold only the prefix and initial whitespace. Once visible code starts,
+  // preserve native streaming; never retry remotely after publishing code.
+  std::string pending = request.assistantPrefix;
+  bool published = false;
+  const auto generated = engine.generate(request.inferencePrompt, budget,
+      [&](char c, bool thought) {
+        if (generationCancelled) return;
+        if (published) { if (onToken) onToken(c, thought); }
+        else if (!thought) {
+          pending += c;
+          if (hasCode(std::string(1, c))) {
+            if (onToken) for (char byte : pending) onToken(byte, false);
+            pending.clear(); published = true;
+          }
+        }
+      }, [&](int count) {
+        if (generationCancelled) return;
+        if (published) { if (onRemove) onRemove(count); }
+        else if (count > 0) pending.erase(pending.size() - (std::min)(pending.size(), std::size_t(count)));
+      });
+  if (generationCancelled) throw std::runtime_error("Generation cancelled");
+  const auto output = AIPromptPipeline::extractResponse(generated, request.basePrompt);
+  if (!hasCode(output.substr((std::min)(output.size(), request.assistantPrefix.size())))) {
+    if (!published && mode == AutomaticModelRouting::Mode::Automatic && remote) {
+      if (onStatus) onStatus("Online: local model returned an empty completion");
+      return online();
+    }
+    throw std::runtime_error("Local model returned an empty completion");
+  }
+  return output;
 }
 
 void AIManager::startTracking(const std::string &prompt,

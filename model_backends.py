@@ -17,6 +17,7 @@ class GenerationRequest(BaseModel):
     protocol_version: Literal[1] = 1
     prompt: str = Field(min_length=1, max_length=100_000)
     context: str = Field(default="", max_length=100_000)
+    assistant_prefix: str = Field(default="", max_length=1024)
     max_new_tokens: int = Field(default=128, ge=1, le=512)
 
 
@@ -69,10 +70,10 @@ class DenseLocalBackend:
         import numpy as np
         from scripts.check_dense_runtime_parity import numpy_logits
         # Do not silently drop the user's task to fit a tiny context window.
-        tokens = list(format_prompt(payload).encode("utf-8"))
+        tokens = list((format_prompt(payload) + payload.assistant_prefix).encode("utf-8"))
         if len(tokens) > self.weights["context"]:
             raise ValueError("Formatted prompt exceeds this model's byte context")
-        output = bytearray()
+        output = bytearray(payload.assistant_prefix.encode("utf-8"))
         reason = "length"
         count = 0
         for _ in range(payload.max_new_tokens):

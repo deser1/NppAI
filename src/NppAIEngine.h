@@ -92,6 +92,10 @@ public:
         std::function<void(int)> onRemove = nullptr);
 
     void stopGeneration() { cancelRequested = true; }
+    int contextCapacity() {
+        std::lock_guard<std::mutex> lock(engineMutex);
+        return max_seq_len;
+    }
 
 private:
     std::atomic<bool> cancelRequested{false};

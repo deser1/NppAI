@@ -92,9 +92,7 @@ void ExecuteAIGeneration() {
   if (isGenerating) {
     // Jeśli generujemy, przerwijmy to!
     AIManager::getInstance().stopGeneration();
-    SetWindowTextW(g_hBtn,
-                   Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
-    isGenerating = false;
+    SetWindowTextW(g_hBtn, Loc(L"Zatrzymywanie...", L"Stopping...").c_str());
     return;
   }
 
@@ -161,6 +159,7 @@ void ExecuteAIGeneration() {
   // Wygenerowanie kodu w osobnym wątku, by nie blokować interfejsu (Notepad++
   // brak odpowiedzi)
   std::thread([prompt, currentFilePath, curScintilla, startLine]() {
+    try {
     // Odczytanie kontekstu pamięci z pliku w tle (Asynchroniczny RAG)
     std::string currentContext = "";
     if (!currentFilePath.empty()) {
@@ -214,16 +213,21 @@ void ExecuteAIGeneration() {
                                 ? Loc("Generowanie odpowiedzi...", "Generating response...")
                                 : Loc("Generowanie funkcji Python...", "Generating Python function..."));
 
+    std::string backendStatus;
     std::string generated = AIManager::getInstance().generateCode(
         prompt, currentContext,
         [&streamRouter](char c, bool isThought) {
           streamRouter.onToken(c, isThought);
         },
-        [&streamRouter](int count) { streamRouter.onRemove(count); });
+        [&streamRouter](int count) { streamRouter.onRemove(count); },
+        [&streamRouter, &backendStatus](const std::string& status) {
+          backendStatus = status;
+          streamRouter.onProgress(GenerationProgressEvent::Type::ContextReady, status);
+        });
 
     streamRouter.onProgress(
         GenerationProgressEvent::Type::GenerationCompleted,
-        Loc("Odpowiedź gotowa", "Response ready"));
+        Loc("Odpowiedź gotowa", "Response ready") + " | " + backendStatus);
     // Flush the final visible response even when its length is not a multiple
     // of the incremental update cadence.
     const std::wstring finalResponse =
@@ -239,6 +243,12 @@ void ExecuteAIGeneration() {
     AIManager::getInstance().startTracking(
         tracking.prompt, tracking.generated, tracking.startLine,
         tracking.endLine, tracking.filePath);
+
+    } catch (const std::exception& error) {
+      const auto status = Utf8ToUtf16(error.what());
+      ::SetWindowTextW(g_hStatusLabel, status.c_str());
+      ::SetWindowTextW(g_hHistory, status.c_str());
+    }
 
     // Przywrócenie przycisku do stanu pierwotnego
     isGenerating = false;

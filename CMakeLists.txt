@@ -24,6 +24,8 @@ add_library(NppAI SHARED
     src/GenerationStreamRouter.cpp
     src/GenerationTracking.cpp
     src/PluginPromptActions.cpp
+    src/AutomaticModelRouting.cpp
+    src/RemoteModelClient.cpp
     src/AIManager.cpp
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
@@ -243,4 +245,14 @@ if(NPPAI_BUILD_BENCHMARKS)
     if(OpenMP_CXX_FOUND)
         target_link_libraries(BenchmarkMoE PRIVATE OpenMP::OpenMP_CXX)
     endif()
+endif()
+
+add_executable(TestAutomaticModelRouting tests/test_automatic_model_routing.cpp src/AutomaticModelRouting.cpp src/RemoteModelClient.cpp)
+target_include_directories(TestAutomaticModelRouting PRIVATE src)
+target_link_libraries(TestAutomaticModelRouting PRIVATE winhttp)
+add_test(NAME TestAutomaticModelRouting COMMAND TestAutomaticModelRouting)
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_Interpreter_FOUND AND NPPAI_TEST_HOST_SEAM)
+    add_test(NAME TestPluginRemoteTransport COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_plugin_remote_transport.py $<TARGET_FILE:TestAutomaticModelRouting> $<TARGET_FILE:NppAI>)
+    set_tests_properties(TestPluginRemoteTransport PROPERTIES TIMEOUT 120)
 endif()

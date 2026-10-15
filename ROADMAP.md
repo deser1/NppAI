@@ -34,7 +34,8 @@ Recent RAG regression work:
 ## Next
 
 - [x] Add executable standalone local/online/hybrid generation backends and an authenticated inference service using the same dense v2 runtime. See [model-backends](docs/model-backends.md).
-- [ ] Integrate backend selection with the plugin UI and existing bounded repair/patch-review workflow; evaluate complete tasks before calling the agent autonomous.
+- [x] Integrate automatic local/online selection with plugin generation, context checks, empty-local fallback and visible decision reasons. See [automatic-plugin-mode](docs/automatic-plugin-mode.md).
+- [ ] Connect the existing bounded repair/patch-review workflow to generated tasks and evaluate complete tasks before calling the agent autonomous.
 
 - [x] Diagnose frozen body argument bytes: body-only conditional initials38/456 and suffixes141/1512; all models0/456 complete alias occurrences despite gold prefixes. See [body-byte-diagnostic](docs/body-byte-diagnostic.md); arbitrary-name copying remains open, no model promotion.
 
