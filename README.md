@@ -329,3 +329,5 @@ cmake -S . -B build-bench -A x64 -DNPPAI_BUILD_BENCHMARKS=ON
 cmake --build build-bench --config Release --target BenchmarkTensor
 .\build-bench\Release\BenchmarkTensor.exe
 ```
+
+Real-model candidate replay and pass/repair metrics: [evaluation protocol](docs/real-model-e2e.md). These metrics require recorded actual model outputs; fixture CI alone does not measure model competence.
