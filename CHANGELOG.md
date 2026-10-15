@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add an inference-only prompt-derived signature diagnostic against pinned fixed/varied learned headers with the same frozen body, complete token-renamed references, paired raw-output audits and explicit assisted labeling; no training or model promotion.
+
 - Record negative argument-alias results: both policies0/336 exact new-argument signatures; varied training retains15/21 prior test hits versus20/21 control and worsens the sort argument/arity case. Audits pass; no checkpoint promotion.
 
 - Add a matched argument-copying header experiment: fixed versus varied training argument aliases with unchanged50% original replay, disjoint development aliases, source/byte-budget verification, raw metrics and paired retention audits; no fresh-probe use or model promotion.
