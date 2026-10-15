@@ -1,5 +1,9 @@
 ## Unreleased
 
+- Record frozen body-byte results: new-argument body-only conditional initials38/456 and suffixes141/1512, but complete argument occurrences0/456 in all three models; all4350 causal-prefix checks and raw audits pass. Difficulties include initial and later bytes; teacher forcing is not autonomous improvement.
+
+- Add a frozen body-byte teacher-forcing diagnostic for source/full-response/body-only models with argument initial/suffix categories, UTF-8 target spans, per-occurrence truncated-prefix causal checks, pinned generation caches and raw prediction audits; no training or promotion.
+
 - Record matched body-only loss: assisted renamed test exact84/336 versus65/336 control, new-argument AST/exact remains0/336 in both; body-only loses2 prior original test hits and autonomous valid-function syntax falls to0/1100. Actual schedules/body target exposure match; reject promotion.
 
 - Add matched full-response versus body-only loss continuation on identical varied-argument data with50% original replay, exact draw-order/target-exposure audits, real gradient-mask tests and separate assisted/autonomous evidence; no canonical repair or model promotion.

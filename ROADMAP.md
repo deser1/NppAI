@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [x] Diagnose frozen body argument bytes: body-only conditional initials38/456 and suffixes141/1512; all models0/456 complete alias occurrences despite gold prefixes. See [body-byte-diagnostic](docs/body-byte-diagnostic.md); arbitrary-name copying remains open, no model promotion.
+
 - [x] Measure matched body-only loss: assisted renamed test84/336 versus65/336 control, new-argument0/336 in both and body-only autonomous valid-function syntax0/1100. See [body-loss-masking](docs/body-loss-masking.md); binding and original-test retention remain open, no promotion.
 
 - [x] Diagnose frozen argument normalization: assisted alias exact85/77/73 of336 versus0, but original test16→8/7/7 of28. See [canonical-argument-binding](docs/canonical-argument-binding.md); fixed normalization fails retention and is not promoted.
