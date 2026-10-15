@@ -94,6 +94,9 @@ jobs:
     - name: Run function name byte diagnostic contract tests
       run: python -m unittest discover -s tests -p "test_name_byte_diagnostic.py" -v
 
+    - name: Run aligned copy data and evidence tests
+      run: python -m unittest discover -s tests -p "test_aligned_name_copy.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 
