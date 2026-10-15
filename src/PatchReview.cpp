@@ -49,3 +49,12 @@ PatchApplyResult PatchReview::apply() const {
     if (!output) return {false, "Failed while writing the accepted patch."};
     return {true, {}};
 }
+
+PatchApplyResult PatchReview::checkBuffer(const std::string& currentText) const {
+    if (decision_ != PatchReviewDecision::Accepted)
+        return {false, "Patch requires explicit acceptance before apply."};
+    if (patch_.empty()) return {false, "Patch has no applicable changes."};
+    if (currentText != patch_.originalText)
+        return {false, "Editor changed after validation; regenerate and revalidate."};
+    return {true, {}};
+}

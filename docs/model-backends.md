@@ -92,9 +92,10 @@ explicit opt-in, authentication, limits, corrupt checkpoints, EOS, model identit
 busy responses and cancellation admission. These are engineering tests, not
 measurements of model intelligence or useful coding quality.
 
-The plugin is connected through its automatic selector. Next: connect existing
-bounded repair/patch review abstractions, define an explicit repository/tool policy, then
-measure complete tasks with retained model-quality gates. No checkpoint is
+The plugin is connected through its automatic selector and the initial
+[Python validation/repair/review workflow](validated-generation.md). Multi-file
+repository tool policies and complete-task measurements with retained
+model-quality gates remain open. No checkpoint is
 promoted or trained by this change; the observed arbitrary-name copying limitation
 remains open. Larger server models and more architectures need separate runtime
 adapters and evaluations.

@@ -18,6 +18,13 @@
 #include "PluginDefinition.h"
 #include "AIManager.h"
 #include "GenerationContext.h"
+#include "ValidatedGeneration.h"
+#include "PythonValidationProcess.h"
+#include <algorithm>
+#include <filesystem>
+#include <memory>
+#include <mutex>
+#include <stdexcept>
 #include "GenerationStreamRouter.h"
 #include "AIPromptPipeline.h"
 #include "GenerationTracking.h"
@@ -84,186 +91,228 @@ std::string Loc(const std::string &pl, const std::string &en) {
   return IsPolishLanguage() ? pl : en;
 }
 
-// Funkcja odpowiedzialna za wykonanie akcji generowania po wpisaniu tekstu
-void ExecuteAIGeneration() {
-  if (!g_hEdit)
-    return;
+namespace {
+constexpr UINT ValidationStatusMessage = WM_APP + 61;
+constexpr UINT ValidationReadyMessage = WM_APP + 62;
+struct PendingGeneration {
+  ValidatedGenerationRequest request;
+  ValidatedGenerationResult result;
+  HWND editor = nullptr;
+  LPARAM document = 0;
+  UINT_PTR buffer = 0;
+  unsigned int epoch = 0;
+};
+HWND g_hApply = nullptr, g_hReject = nullptr;
+std::atomic<unsigned int> generationEpoch{0};
+std::mutex generationMailbox;
+std::unique_ptr<PendingGeneration> completedGeneration, pendingGeneration;
+std::string latestGenerationStatus;
+unsigned int latestStatusEpoch = 0;
 
+void postGenerationStatus(HWND panel, unsigned int epoch, const std::string& status) {
+  std::lock_guard<std::mutex> lock(generationMailbox);
+  if (generationEpoch != epoch) return;
+  latestGenerationStatus = status; latestStatusEpoch = epoch;
+  PostMessageW(panel, ValidationStatusMessage, 0, 0);
+}
+std::string editorText(HWND editor) {
+  const auto length = SendMessage(editor, SCI_GETLENGTH, 0, 0);
+  if (length < 0 || length > 131072) throw std::runtime_error("Review supports documents up to 128 KiB");
+  std::vector<char> bytes(static_cast<std::size_t>(length) + 1);
+  SendMessage(editor, SCI_GETTEXT, bytes.size(), reinterpret_cast<LPARAM>(bytes.data()));
+  return std::string(bytes.data(), static_cast<std::size_t>(length));
+}
+std::string currentFilePath() {
+  wchar_t path[MAX_PATH]{};
+  SendMessage(nppData._nppHandle, NPPM_GETFULLCURRENTPATH, MAX_PATH, reinterpret_cast<LPARAM>(path));
+  int size = WideCharToMultiByte(CP_UTF8, 0, path, -1, nullptr, 0, nullptr, nullptr);
+  if (size <= 1) return {};
+  std::string result(size, '\0');
+  WideCharToMultiByte(CP_UTF8, 0, path, -1, &result[0], size, nullptr, nullptr);
+  result.resize(size - 1); return result;
+}
+void applyPendingGeneration() {
+  if (!pendingGeneration || isGenerating || !pendingGeneration->result.ready()) return;
+  try {
+    auto& pending = *pendingGeneration;
+    int view = -1;
+    SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&view));
+    HWND editor = view == 0 ? nppData._scintillaMainHandle : view == 1 ? nppData._scintillaSecondHandle : nullptr;
+    if (editor != pending.editor ||
+        static_cast<UINT_PTR>(SendMessage(nppData._nppHandle, NPPM_GETCURRENTBUFFERID, 0, 0)) != pending.buffer ||
+        SendMessage(editor, SCI_GETDOCPOINTER, 0, 0) != pending.document ||
+        SendMessage(editor, SCI_GETREADONLY, 0, 0))
+      throw std::runtime_error("Activate the original writable document before applying this proposal");
+    PatchReview review(std::filesystem::current_path(), pending.result.patch);
+    review.accept();
+    const auto check = review.checkBuffer(editorText(editor));
+    if (!check.applied) { EnableWindow(g_hApply, FALSE); throw std::runtime_error(check.error); }
+    EnableWindow(g_hApply, FALSE);
+    const auto& patch = pending.result.patch;
+    SendMessage(editor, SCI_BEGINUNDOACTION, 0, 0);
+    SendMessage(editor, SCI_SETTARGETRANGE, 0, patch.originalText.size());
+    const auto inserted = SendMessage(editor, SCI_REPLACETARGET, patch.proposedText.size(),
+                                      reinterpret_cast<LPARAM>(patch.proposedText.data()));
+    SendMessage(editor, SCI_ENDUNDOACTION, 0, 0);
+    if (inserted != static_cast<LRESULT>(patch.proposedText.size()))
+      throw std::runtime_error("Editor could not apply the accepted proposal; use Undo to inspect the change");
+    const auto replacementSize = patch.proposedText.size() -
+        (patch.originalText.size() - (pending.request.selectionEnd - pending.request.selectionStart));
+    const auto startLine = SendMessage(editor, SCI_LINEFROMPOSITION, pending.request.selectionStart, 0);
+    const auto endLine = SendMessage(editor, SCI_LINEFROMPOSITION, pending.request.selectionStart + replacementSize, 0);
+    if (!pending.request.path.empty())
+      AIManager::getInstance().startTracking(pending.request.task,
+          patch.proposedText.substr(pending.request.selectionStart, replacementSize),
+          int(startLine), int(endLine), pending.request.path);
+    SetWindowTextW(g_hStatusLabel, Loc(L"Zastosowano. Możesz cofnąć zmianę.", L"Applied. The change can be undone.").c_str());
+    pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
+  } catch (const std::exception& error) {
+    SetWindowTextW(g_hStatusLabel, Utf8ToUtf16(error.what()).c_str());
+  }
+}
+}
+
+void ExecuteAIGeneration() {
+  if (!g_hEdit) return;
   if (isGenerating) {
-    // Jeśli generujemy, przerwijmy to!
     AIManager::getInstance().stopGeneration();
     SetWindowTextW(g_hBtn, Loc(L"Zatrzymywanie...", L"Stopping...").c_str());
     return;
   }
-
-  char buf[4096] = {0};
-  GetWindowTextA(g_hEdit, buf, sizeof(buf));
-  std::string prompt = buf;
-  if (prompt.empty())
-    return;
-
-  const auto checkedRequest = AIPromptPipeline::prepare(prompt, "");
-  if (!checkedRequest.error.empty()) {
-    const std::wstring error = Loc(
-        L"W pierwszej linii wpisz @python-signature nazwa(arg1, arg2), a w kolejnej opis funkcji. Użyj prostych, różnych nazw argumentów.",
-        L"Enter @python-signature name(arg1, arg2) on the first line, then describe the function. Use plain, distinct parameter names.");
-    MessageBoxW(g_hEdit, error.c_str(), L"NppAI", MB_OK | MB_ICONINFORMATION);
-    return;
-  }
-
-  // Wyczyść pole po pobraniu tekstu
-  SetWindowTextW(g_hEdit, L"");
-
-  // Panel pokazuje wyłącznie jawną odpowiedź i status pracy agenta.
-  // Prywatny strumień reasoning nie jest renderowany w UI.
-  SetWindowTextW(g_hHistory, Loc(L"Przygotowuję odpowiedź...\r\n",
-                                 L"Preparing response...\r\n")
-                                 .c_str());
-
-  // Pobranie uchwytu Scintilli
-  int which = -1;
-  ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0,
-                (LPARAM)&which);
-  if (which == -1)
-    return;
-  HWND curScintilla = (which == 0) ? nppData._scintillaMainHandle
-                                   : nppData._scintillaSecondHandle;
-
-  // Uruchomienie trackera
-  int startLine = (int)::SendMessage(
-      curScintilla, SCI_LINEFROMPOSITION,
-      (WPARAM)::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0), 0);
-
-  // Zmień przycisk na "Zatrzymaj"
-  isGenerating = true;
-  AIManager::getInstance().beginGeneration();
-  SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
-
-  // Pobranie ścieżki pliku (dla pamięci RAG)
-  TCHAR currentPath[MAX_PATH] = {0};
-  ::SendMessage(nppData._nppHandle, NPPM_GETFULLCURRENTPATH, MAX_PATH,
-                (LPARAM)currentPath);
-  std::string currentFilePath = "";
-#ifdef UNICODE
-  int len =
-      WideCharToMultiByte(CP_UTF8, 0, currentPath, -1, NULL, 0, NULL, NULL);
-  if (len > 0) {
-    std::vector<char> buf(len);
-    WideCharToMultiByte(CP_UTF8, 0, currentPath, -1, buf.data(), len, NULL,
-                        NULL);
-    currentFilePath = buf.data();
-  }
-#else
-  currentFilePath = currentPath;
-#endif
-
-  // Wygenerowanie kodu w osobnym wątku, by nie blokować interfejsu (Notepad++
-  // brak odpowiedzi)
-  std::thread([prompt, currentFilePath, curScintilla, startLine]() {
-    try {
-    // Odczytanie kontekstu pamięci z pliku w tle (Asynchroniczny RAG)
-    std::string currentContext = "";
-    if (!currentFilePath.empty()) {
-      // Nowy mechanizm RAG (Retrieval-Augmented Generation) oparty na lokalnej
-      // wektorowej bazie
-      RAGManager::getInstance().loadDatabase(currentFilePath + ".rag_db");
-      const std::string retrievedContext =
-          RAGManager::getInstance().retrieveContext(
-              RepositoryContext::buildQuery(prompt, currentFilePath), 5);
-
-      // Fallback: jeśli wektorowa baza jest pusta, używamy starego mechanizmu tekstowego.
-      std::string legacyContext;
-      if (retrievedContext.empty()) {
-        std::string memPath = currentFilePath + ".nppai_mem";
-        std::ifstream memFile(memPath);
-        if (memFile.is_open()) {
-          std::string line;
-          while (std::getline(memFile, line)) {
-            legacyContext += line + "\n";
-          }
+  try {
+    wchar_t buffer[4096]{}; GetWindowTextW(g_hEdit, buffer, 4096);
+    const int utf8Size = WideCharToMultiByte(CP_UTF8, 0, buffer, -1, nullptr, 0, nullptr, nullptr);
+    if (utf8Size <= 1) return;
+    std::string task(utf8Size, '\0');
+    WideCharToMultiByte(CP_UTF8, 0, buffer, -1, &task[0], utf8Size, nullptr, nullptr);
+    task.resize(utf8Size - 1);
+    if (task.empty()) return;
+    pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
+    const auto parsed = AIPromptPipeline::prepare(task, "");
+    if (!parsed.error.empty()) throw std::runtime_error(parsed.error);
+    int view = -1;
+    SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&view));
+    if (view != 0 && view != 1) throw std::runtime_error("No active editor");
+    const HWND editor = view == 0 ? nppData._scintillaMainHandle : nppData._scintillaSecondHandle;
+    if (SendMessage(editor, SCI_GETCODEPAGE, 0, 0) != SC_CP_UTF8)
+      throw std::runtime_error("Validated generation currently requires a UTF-8 Python document");
+    auto pending = std::make_unique<PendingGeneration>();
+    pending->editor = editor;
+    pending->document = SendMessage(editor, SCI_GETDOCPOINTER, 0, 0);
+    pending->buffer = static_cast<UINT_PTR>(SendMessage(nppData._nppHandle, NPPM_GETCURRENTBUFFERID, 0, 0));
+    pending->request.task = task;
+    pending->request.path = currentFilePath();
+    std::string extension = std::filesystem::u8path(pending->request.path).extension().u8string();
+    std::transform(extension.begin(), extension.end(), extension.begin(), [](unsigned char c) { return char(std::tolower(c)); });
+    if (extension != ".py" && parsed.assistantPrefix.empty())
+      throw std::runtime_error("This validation profile supports Python (.py or @python-signature)");
+    pending->request.original = editorText(editor);
+    pending->request.selectionStart = static_cast<std::size_t>(SendMessage(editor, SCI_GETSELECTIONSTART, 0, 0));
+    pending->request.selectionEnd = static_cast<std::size_t>(SendMessage(editor, SCI_GETSELECTIONEND, 0, 0));
+    if (pending->request.selectionStart > pending->request.selectionEnd || pending->request.selectionEnd > pending->request.original.size())
+      throw std::runtime_error("Selection changed while capturing the document");
+    pending->request.allowOnlineEscalation = AIManager::getInstance().mayEscalateOnline();
+    auto validator = std::make_shared<PythonValidationProcess>(
+        std::filesystem::path(getPluginDllDirectory()) / "sandbox_validate.py");
+    pending->epoch = ++generationEpoch;
+    const auto epoch = pending->epoch;
+    const HWND panel = g_hAIPanel;
+    pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
+    isGenerating = true; AIManager::getInstance().beginGeneration();
+    SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
+    SetWindowTextW(g_hHistory, Loc(L"Generowanie propozycji; dokument pozostaje bez zmian.",
+                                 L"Generating a proposal; the document remains unchanged.").c_str());
+    std::thread([pending = std::move(pending), validator, panel, epoch]() mutable {
+      try {
+        if (!pending->request.path.empty()) {
+          RAGManager::getInstance().loadDatabase(pending->request.path + ".rag_db");
+          pending->request.context = RepositoryContext::limit(RAGManager::getInstance().retrieveContext(
+              RepositoryContext::buildQuery(pending->request.task, pending->request.path), 5));
         }
+        const auto start = pending->request.selectionStart;
+        const auto count = pending->request.selectionEnd - start;
+        if (!pending->request.original.empty())
+          pending->request.context += "\n[Captured Python document excerpt around the original selection]\n" +
+              pending->request.original.substr(start > 2048 ? start - 2048 : 0, (std::min)(count + 4096, std::size_t(12288)));
+        GenerationStreamRouter progress(nullptr, nullptr, nullptr,
+            [panel, epoch](const GenerationProgressEvent& event) { postGenerationStatus(panel, epoch, event.message); });
+        auto cancelled = [epoch] { return generationEpoch != epoch || AIManager::getInstance().isGenerationCancelled(); };
+        pending->result = ValidatedGeneration::run(pending->request,
+            [panel, epoch](const std::string& task, const std::string& context, bool forceOnline) {
+              bool online = false; std::string reason;
+              const auto code = AIManager::getInstance().generateCode(task, context, nullptr, nullptr,
+                  [panel, epoch, &online, &reason](const std::string& status) {
+                    reason = status; online = status.find("Online:") == 0; postGenerationStatus(panel, epoch, status);
+                  }, forceOnline);
+              return GeneratedCandidate{code, online, reason};
+            }, [validator, cancelled](const std::string& code, bool tests) { return validator->run(code, tests, cancelled); },
+            cancelled, &progress);
+      } catch (const std::exception& error) {
+        pending->result.blocked = true; pending->result.error = error.what();
       }
-      currentContext =
-          GenerationContext::select(
-              RepositoryContext::limit(retrievedContext), legacyContext);
-    }
-
-    GenerationStreamRouter streamRouter(
-        nullptr,
-        [curScintilla](char c) {
-          std::string s(1, c);
-          ::SendMessage(curScintilla, SCI_REPLACESEL, 0, (LPARAM)s.c_str());
-        },
-        [curScintilla](int count) {
-          for (int i = 0; i < count; i++)
-            ::SendMessage(curScintilla, SCI_DELETEBACK, 0, 0);
-        },
-        [](const GenerationProgressEvent& event) {
-          if (!event.message.empty()) {
-            const std::wstring status = Utf8ToUtf16(event.message);
-            ::SetWindowTextW(g_hStatusLabel, status.c_str());
-          }
-        },
-        [](const std::string& assistant) {
-          const std::wstring visible = Utf8ToUtf16(assistant);
-          ::SetWindowTextW(g_hHistory, visible.c_str());
-        });
-
-    streamRouter.onProgress(GenerationProgressEvent::Type::GenerationStarted,
-                            AIPromptPipeline::prepare(prompt, "").assistantPrefix.empty()
-                                ? Loc("Generowanie odpowiedzi...", "Generating response...")
-                                : Loc("Generowanie funkcji Python...", "Generating Python function..."));
-
-    std::string backendStatus;
-    std::string generated = AIManager::getInstance().generateCode(
-        prompt, currentContext,
-        [&streamRouter](char c, bool isThought) {
-          streamRouter.onToken(c, isThought);
-        },
-        [&streamRouter](int count) { streamRouter.onRemove(count); },
-        [&streamRouter, &backendStatus](const std::string& status) {
-          backendStatus = status;
-          streamRouter.onProgress(GenerationProgressEvent::Type::ContextReady, status);
-        });
-
-    streamRouter.onProgress(
-        GenerationProgressEvent::Type::GenerationCompleted,
-        Loc("Odpowiedź gotowa", "Response ready") + " | " + backendStatus);
-    // Flush the final visible response even when its length is not a multiple
-    // of the incremental update cadence.
-    const std::wstring finalResponse =
-        Utf8ToUtf16(streamRouter.assistantBuffer());
-    ::SetWindowTextW(g_hHistory, finalResponse.c_str());
-
-    // Uruchomienie trackera na podstawie zaktualizowanych linii
-    auto currentPos = ::SendMessage(curScintilla, SCI_GETCURRENTPOS, 0, 0);
-    int endLine = (int)::SendMessage(curScintilla, SCI_LINEFROMPOSITION,
-                                     (WPARAM)currentPos, 0);
-    const auto tracking = GenerationTracking::build(
-        prompt, generated, startLine, endLine, currentFilePath);
-    AIManager::getInstance().startTracking(
-        tracking.prompt, tracking.generated, tracking.startLine,
-        tracking.endLine, tracking.filePath);
-
-    } catch (const std::exception& error) {
-      const auto status = Utf8ToUtf16(error.what());
-      ::SetWindowTextW(g_hStatusLabel, status.c_str());
-      ::SetWindowTextW(g_hHistory, status.c_str());
-    }
-
-    // Przywrócenie przycisku do stanu pierwotnego
+      std::lock_guard<std::mutex> lock(generationMailbox);
+      if (generationEpoch != epoch) { isGenerating = false; return; }
+      completedGeneration = std::move(pending);
+      if (!PostMessageW(panel, ValidationReadyMessage, 0, 0)) { completedGeneration.reset(); isGenerating = false; }
+    }).detach();
+  } catch (const std::exception& error) {
     isGenerating = false;
-    SetWindowTextW(g_hBtn,
-                   Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
-
-    // Ustaw focus z powrotem na edytor
-    SetFocus(curScintilla);
-  }).detach();
+    SetWindowTextW(g_hBtn, Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
+    SetWindowTextW(g_hStatusLabel, Utf8ToUtf16(error.what()).c_str());
+    SetWindowTextW(g_hHistory, Utf8ToUtf16(error.what()).c_str());
+  }
 }
+
+#ifdef NPPAI_TESTING
+extern "C" __declspec(dllexport) void stageBufferReviewForTesting(HWND editor, const char* replacement) {
+  pendingGeneration = std::make_unique<PendingGeneration>();
+  auto& pending = *pendingGeneration;
+  pending.editor = editor;
+  pending.document = SendMessage(editor, SCI_GETDOCPOINTER, 0, 0);
+  pending.buffer = static_cast<UINT_PTR>(SendMessage(nppData._nppHandle, NPPM_GETCURRENTBUFFERID, 0, 0));
+  pending.request.original = editorText(editor);
+  pending.request.selectionEnd = pending.request.original.size();
+  pending.result.patch = StructuredPatchBuilder::build("fixture.py", pending.request.original, replacement);
+  pending.result.repair.succeeded = true;
+}
+extern "C" __declspec(dllexport) void applyBufferReviewForTesting() { applyPendingGeneration(); }
+extern "C" __declspec(dllexport) void rejectBufferReviewForTesting() { pendingGeneration.reset(); }
+#endif
 
 LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
                              LPARAM lParam) {
   switch (msg) {
+  case ValidationStatusMessage: {
+    std::lock_guard<std::mutex> lock(generationMailbox);
+    if (latestStatusEpoch == generationEpoch && isGenerating)
+      SetWindowTextW(g_hStatusLabel, Utf8ToUtf16(latestGenerationStatus).c_str());
+    return 0;
+  }
+  case ValidationReadyMessage: {
+    {
+      std::lock_guard<std::mutex> lock(generationMailbox);
+      if (!completedGeneration || completedGeneration->epoch != generationEpoch) return 0;
+      pendingGeneration = std::move(completedGeneration);
+    }
+    isGenerating = false;
+    SetWindowTextW(g_hBtn, Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
+    const auto& result = pendingGeneration->result;
+    std::string report = result.ready() ? "Validation passed. Review the diff before Apply.\r\n" :
+        result.cancelled ? "Cancelled. Original document unchanged.\r\n" : "Validation failed/blocked. Apply disabled.\r\n";
+    report += "Candidates validated: " + std::to_string(result.repair.attempts) + "/3\r\n";
+    for (std::size_t i = 0; i < result.candidateBackends.size(); ++i)
+      report += "Candidate " + std::to_string(i + 1) + ": " + result.candidateBackends[i] + "\r\n";
+    if (!result.error.empty()) report += result.error + "\r\n";
+    for (const auto& attempt : result.repair.history)
+      report += "Attempt " + std::to_string(attempt.attempt) + ": " + attempt.diagnostics + "\r\n";
+    report += result.repair.validation.build.diagnostics + "\r\n" + result.repair.validation.tests.diagnostics + "\r\n";
+    report += result.patch.unifiedDiff();
+    SetWindowTextW(g_hHistory, Utf8ToUtf16(report).c_str());
+    SetWindowTextW(g_hStatusLabel, Loc(result.ready() ? L"Sprawdź różnice i zastosuj lub odrzuć." : L"Walidacja niepotwierdzona. Dokument bez zmian.",
+                                      result.ready() ? L"Review, then apply or reject." : L"Validation not confirmed. Document unchanged.").c_str());
+    EnableWindow(g_hApply, result.ready()); EnableWindow(g_hReject, TRUE);
+    return 0;
+  }
   case WM_CREATE: {
     // Pole jawnej odpowiedzi AI na samej górze
     g_hHistory = CreateWindowExW(
@@ -274,6 +323,8 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOVSCROLL | ES_MULTILINE |
             ES_READONLY,
         0, 0, 100, 50, hwnd, (HMENU)3, NULL, NULL);
+
+    SendMessage(g_hHistory, EM_SETLIMITTEXT, 1024 * 1024, 0);
 
     // Główne pole zapytania użytkownika
     g_hEdit = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "",
@@ -291,10 +342,18 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
         NULL, NULL);
     SendMessage(g_hBtn, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
+    g_hApply = CreateWindowExW(0, L"BUTTON", Loc(L"Zastosuj", L"Apply").c_str(), WS_CHILD | WS_VISIBLE,
+        0, 0, 100, 30, hwnd, (HMENU)5, nullptr, nullptr);
+    g_hReject = CreateWindowExW(0, L"BUTTON", Loc(L"Odrzuć", L"Reject").c_str(), WS_CHILD | WS_VISIBLE,
+        0, 0, 100, 30, hwnd, (HMENU)6, nullptr, nullptr);
+    SendMessage(g_hApply, WM_SETFONT, (WPARAM)hFont, TRUE);
+    SendMessage(g_hReject, WM_SETFONT, (WPARAM)hFont, TRUE);
+    EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
+
     // Etykieta statusu trenowania
     g_hStatusLabel = CreateWindowExW(
         0, L"STATIC",
-        Loc(L"AI połączone z chmurą...", L"AI connected to cloud...").c_str(),
+        Loc(L"Podgląd i walidacja przed zastosowaniem", L"Review and validate before applying").c_str(),
         WS_CHILD | WS_VISIBLE, 0, 0, 100, 30, hwnd, (HMENU)4, NULL, NULL);
     SendMessage(g_hStatusLabel, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
 
@@ -314,28 +373,41 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     int width = LOWORD(lParam);
     int height = HIWORD(lParam);
     int btnHeight = 30;
-    int historyHeight = 120; // Więcej miejsca na strumieniowaną odpowiedź
+    int historyHeight = (std::max)(40, (height - 95) * 2 / 3); // Więcej miejsca na strumieniowaną odpowiedź
 
     // Okno odpowiedzi AI na samej górze
     MoveWindow(g_hHistory, 5, 5, width - 10, historyHeight, TRUE);
     // Pole tekstowe zajmuje przestrzeń pod oknem myślenia
     MoveWindow(g_hEdit, 5, historyHeight + 10, width - 10,
-               height - historyHeight - btnHeight - 20, TRUE);
+               (std::max)(30, height - historyHeight - btnHeight * 2 - 25), TRUE);
     // Etykieta statusu po lewej na dole
-    MoveWindow(g_hStatusLabel, 5, height - btnHeight - 5, width - 140,
+    MoveWindow(g_hStatusLabel, 5, height - btnHeight * 2 - 10, (std::max)(20, width - 140),
                btnHeight, TRUE);
     // Przycisk po prawej na dole
-    MoveWindow(g_hBtn, width - 130, height - btnHeight - 5, 120, btnHeight,
+    MoveWindow(g_hBtn, width - 130, height - btnHeight * 2 - 10, 120, btnHeight,
                TRUE);
+    MoveWindow(g_hApply, 5, height - btnHeight - 5, (width - 15) / 2, btnHeight, TRUE);
+    MoveWindow(g_hReject, 10 + (width - 15) / 2, height - btnHeight - 5, (width - 15) / 2, btnHeight, TRUE);
     return 0;
   }
   case WM_COMMAND: {
+    if (LOWORD(wParam) == 5) applyPendingGeneration();
+    if (LOWORD(wParam) == 6 && !isGenerating) {
+      pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
+      SetWindowTextW(g_hHistory, Loc(L"Odrzucono. Dokument bez zmian.", L"Rejected. Document unchanged.").c_str());
+    }
     if (LOWORD(wParam) == 2) {
       ExecuteAIGeneration();
     }
     return 0;
   }
   case WM_DESTROY: {
+    AIManager::getInstance().stopGeneration(); ++generationEpoch;
+    { std::lock_guard<std::mutex> lock(generationMailbox);
+      if (completedGeneration) isGenerating = false;
+      completedGeneration.reset();
+    }
+    pendingGeneration.reset();
     KillTimer(hwnd, 2);
     g_hAIPanel = NULL;
     return 0;

@@ -19,6 +19,7 @@ public:
     void accept();
     void reject();
     PatchApplyResult apply() const;
+    PatchApplyResult checkBuffer(const std::string& currentText) const;
 
 private:
     std::filesystem::path workspaceRoot_;
