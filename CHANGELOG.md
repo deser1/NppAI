@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a matched full-response body continuation with fixed/varied argument aliases, unchanged50% original replay, frozen20k body initialization, separate assisted/autonomous raw metrics, paired retention audits and complete export/reload checks; no fresh-probe use or model promotion.
+
 - Record assisted signature results:1100/1100 prompt-derived headers, function-renamed exact63→72/336, but new argument full AST/exact remains0/336 despite correct prefixes. Raw bodies still use unrelated names/operations; assistance is not learned copying or model promotion.
 
 - Add an inference-only prompt-derived signature diagnostic against pinned fixed/varied learned headers with the same frozen body, complete token-renamed references, paired raw-output audits and explicit assisted labeling; no training or model promotion.

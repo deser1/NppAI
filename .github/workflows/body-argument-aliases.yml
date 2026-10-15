@@ -1,0 +1,42 @@
+name: Matched full-response argument alias continuation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'scripts/body_argument_aliases.py'
+      - 'tests/test_body_argument_aliases.py'
+      - '.github/workflows/body-argument-aliases.yml'
+jobs:
+  experiment:
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [fixed_arguments, varied_arguments]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed CPU runtime
+        run: python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify full-reference isolation, response masks and evidence audits
+        run: python -m unittest tests.test_body_argument_aliases tests.test_argument_assistance tests.test_argument_aliases tests.test_wording_continuation -v
+      - name: Download fixed original four-form continuation and initialization
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 38618406741 --repo '${{ github.repository }}' --name nppai-continuation-evaluation-four_forms --dir source
+          gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
+      - name: Continue complete responses with unchanged original replay
+        run: python scripts/body_argument_aliases.py --source source --initial initial --dataset evaluation/instruction-v3 --output body-arguments --policy ${{ matrix.policy }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-body-arguments-${{ matrix.policy }}
+          path: body-arguments/
+          retention-days: 14

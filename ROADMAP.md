@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [ ] Measure fixed/varied argument training on full body responses with original replay and separate assisted/autonomous inference; see [body-argument-aliases](docs/body-argument-aliases.md).
+
 - [x] Measure prompt-derived signature assistance: function-renamed exact63→72/336, but new argument AST/exact0/336 despite all correct prefixes. See [argument-signature-assistance](docs/argument-signature-assistance.md); assistance is separate from learned copying, no promotion.
 - [ ] Improve or explicitly diagnose body variable binding/operation choice for argument-alias development tasks; header assistance alone does not resolve complete-reference failures.
 
