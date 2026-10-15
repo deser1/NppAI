@@ -1,0 +1,45 @@
+name: Matched resampled function-name training
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/resampled-name-training.yml'
+      - 'scripts/resampled_name_training.py'
+      - 'tests/test_resampled_name_training.py'
+jobs:
+  experiment:
+    strategy:
+      fail-fast: false
+      matrix:
+        policy: [fixed, resampled]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      actions: read
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed CPU training runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'pydantic>=2.7,<3'
+      - name: Verify transformations, masks, matched draws and evidence audit
+        run: python -m unittest discover -s tests -p 'test_resampled_name_training.py' -v
+      - name: Download pinned initialization
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
+      - name: Train and measure autonomous complete outputs
+        run: python scripts/resampled_name_training.py --source source --output measured --policy '${{ matrix.policy }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-name-training-${{ matrix.policy }}
+          path: measured/
+          retention-days: 14

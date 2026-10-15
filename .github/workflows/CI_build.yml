@@ -88,6 +88,9 @@ jobs:
     - name: Run local model smoke orchestration tests
       run: python -m unittest discover -s tests -p "test_local_model_smoke.py" -v
 
+    - name: Run resampled name data and evidence tests
+      run: python -m unittest discover -s tests -p "test_resampled_name_training.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 
