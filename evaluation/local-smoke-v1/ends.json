@@ -1,0 +1,26 @@
+[
+  {
+    "function": "ends",
+    "args": [
+      "abc"
+    ],
+    "kwargs": {},
+    "expected": "ac"
+  },
+  {
+    "function": "ends",
+    "args": [
+      "x"
+    ],
+    "kwargs": {},
+    "expected": "xx"
+  },
+  {
+    "function": "ends",
+    "args": [
+      ""
+    ],
+    "kwargs": {},
+    "expected": ""
+  }
+]

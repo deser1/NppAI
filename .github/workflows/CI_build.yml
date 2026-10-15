@@ -85,6 +85,9 @@ jobs:
     - name: Run real-model candidate collector unit tests
       run: python -m unittest discover -s tests -p "test_collect_real_model_candidates.py" -v
 
+    - name: Run local model smoke orchestration tests
+      run: python -m unittest discover -s tests -p "test_local_model_smoke.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 

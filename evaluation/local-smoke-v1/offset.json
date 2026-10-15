@@ -1,0 +1,26 @@
+[
+  {
+    "function": "offset",
+    "args": [
+      0
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "offset",
+    "args": [
+      -7
+    ],
+    "kwargs": {},
+    "expected": 0
+  },
+  {
+    "function": "offset",
+    "args": [
+      11
+    ],
+    "kwargs": {},
+    "expected": 18
+  }
+]

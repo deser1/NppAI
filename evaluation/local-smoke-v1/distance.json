@@ -1,0 +1,29 @@
+[
+  {
+    "function": "distance",
+    "args": [
+      2,
+      9
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "distance",
+    "args": [
+      9,
+      2
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "distance",
+    "args": [
+      -2,
+      -2
+    ],
+    "kwargs": {},
+    "expected": 0
+  }
+]

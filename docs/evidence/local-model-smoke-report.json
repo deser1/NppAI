@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "backend": "local",
+  "model_id": "sha256:161d6303c7e77f005cbabba5a1790b9d6a6dfc1812c121bfbb3f1cb6820e5b1a",
+  "runtime": "DenseLocalBackend NumPy FP32 greedy",
+  "context_bytes": 256,
+  "max_new_tokens": 256,
+  "attempts_per_task": 1,
+  "docker_image": "sha256:df18428df8a0f9189c84e7424d214b4c50092af1f9dca5842a00c41c39bda316",
+  "manifest_sha256": "e7ee80bce05fe5a27d9ab70cdc68bee7726e4a4f9dc52cb3c25e73413601f8c6",
+  "tasks": 6,
+  "counts": {
+    "passed": 0,
+    "empty_output": 0,
+    "syntax_failure": 2,
+    "functional_failure": 4
+  },
+  "task_results": [
+    {
+      "task_id": "offset",
+      "prompt": "Write Python function offset(number): return number plus 7. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/offset.json",
+      "suite_sha256": "8376df4a83a8877ae94af85316ab8bb0327228d1b31d854f6b2fae3b082a8ea9",
+      "source": "def fn_syrsnb(values):\n    return mbs(values)\n",
+      "generated_tokens": 47,
+      "finish_reason": "eos",
+      "generation_seconds": 0.0455879609999954,
+      "category": "functional_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 12, in <module>\nAssertionError: case 1: candidate failed: Traceback (most recent call last):\n  File \"<string>\", line 6, in <module>\nKeyError: 'offset'\n\n"
+    },
+    {
+      "task_id": "distance",
+      "prompt": "Write Python function distance(left,right): return their absolute difference. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/distance.json",
+      "suite_sha256": "cce6a5634bf82043d74318fd404c2f6d9aae0d5a4dc153d4027e56e3f55bfab7",
+      "source": "def fn_thvcbe(lut, , nlutenialuten(al):\n    return - vaxn\n",
+      "generated_tokens": 59,
+      "finish_reason": "eos",
+      "generation_seconds": 0.06943125800000871,
+      "category": "syntax_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    def fn_thvcbe(lut, , nlutenialuten(al):\n                       ^\nSyntaxError: invalid syntax\n"
+    },
+    {
+      "task_id": "first_even",
+      "prompt": "Write Python function first_even(values): return first even integer or None. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/first_even.json",
+      "suite_sha256": "d194dc3bde859586e8bc6483587c929e82344fe3353fec2039052846ef3b6971",
+      "source": "def fn_s14l8s(values):\n    return min(values)\n",
+      "generated_tokens": 47,
+      "finish_reason": "eos",
+      "generation_seconds": 0.05182315999999787,
+      "category": "functional_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 12, in <module>\nAssertionError: case 1: candidate failed: Traceback (most recent call last):\n  File \"<string>\", line 6, in <module>\nKeyError: 'first_even'\n\n"
+    },
+    {
+      "task_id": "ends",
+      "prompt": "Write Python function ends(text): return first plus last character, or empty for empty text. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/ends.json",
+      "suite_sha256": "22471158ec2277b7b5202b1e59e5f618324d657ef88bc791db814ad53165e202",
+      "source": "def fn2 c(xtex, wextexteca):\n    rete.strip()\n",
+      "generated_tokens": 47,
+      "finish_reason": "eos",
+      "generation_seconds": 0.05915759800001297,
+      "category": "syntax_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    def fn2 c(xtex, wextexteca):\n            ^\nSyntaxError: expected '('\n"
+    },
+    {
+      "task_id": "bounded",
+      "prompt": "Write Python function bounded(value,low,high): clamp value between low and high. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/bounded.json",
+      "suite_sha256": "dbb35d3d6fc49f563b5b1c27626d061882e3697b8517c8ed2481c025cae4f45c",
+      "source": "def c4vq(a, s, qsuqgvas):\n    return a * - q\n",
+      "generated_tokens": 46,
+      "finish_reason": "eos",
+      "generation_seconds": 0.053297595999993064,
+      "category": "functional_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 12, in <module>\nAssertionError: case 1: candidate failed: Traceback (most recent call last):\n  File \"<string>\", line 6, in <module>\nKeyError: 'bounded'\n\n"
+    },
+    {
+      "task_id": "count_negative",
+      "prompt": "Write Python function count_negative(values): count numbers below zero. Code only.",
+      "cases_file": "evaluation/local-smoke-v1/count_negative.json",
+      "suite_sha256": "3e611ac97d0cc950655f87165c50e82d33874bd241a0570cfc068c63fcbfd5bf",
+      "source": "def fn_nugc4g(values):\n    return sum(values)\n",
+      "generated_tokens": 47,
+      "finish_reason": "eos",
+      "generation_seconds": 0.05035438499999145,
+      "category": "functional_failure",
+      "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 12, in <module>\nAssertionError: case 1: candidate failed: Traceback (most recent call last):\n  File \"<string>\", line 6, in <module>\nKeyError: 'count_negative'\n\n"
+    }
+  ],
+  "limits": "Six newly authored smoke probes; not an unbiased broad holdout. No repair, online comparison, UI test, training or checkpoint promotion.",
+  "source_run_id": 38702282716,
+  "source_report_sha256": "bdac050d83b2efd9b3ad1bd12d6b991142120d4e0e2ffdc2994fb78b4bba4296",
+  "python_version": "3.12.15",
+  "numpy_version": "2.3.5",
+  "evaluator_commit": "08ff5441e9cc0860594c97d495cc4a3901a32fc8",
+  "workflow_run_id": "38802296124"
+}
