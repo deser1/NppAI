@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record assisted signature results:1100/1100 prompt-derived headers, function-renamed exact63→72/336, but new argument full AST/exact remains0/336 despite correct prefixes. Raw bodies still use unrelated names/operations; assistance is not learned copying or model promotion.
+
 - Add an inference-only prompt-derived signature diagnostic against pinned fixed/varied learned headers with the same frozen body, complete token-renamed references, paired raw-output audits and explicit assisted labeling; no training or model promotion.
 
 - Record negative argument-alias results: both policies0/336 exact new-argument signatures; varied training retains15/21 prior test hits versus20/21 control and worsens the sort argument/arity case. Audits pass; no checkpoint promotion.

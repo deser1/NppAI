@@ -33,7 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
-- [ ] Measure prompt-derived signature assistance versus cached learned argument headers with a common frozen body; keep supplied signature correctness separate from learned-model/body quality (diagnostic pending CI).
+- [x] Measure prompt-derived signature assistance: function-renamed exact63→72/336, but new argument AST/exact0/336 despite all correct prefixes. See [argument-signature-assistance](docs/argument-signature-assistance.md); assistance is separate from learned copying, no promotion.
+- [ ] Improve or explicitly diagnose body variable binding/operation choice for argument-alias development tasks; header assistance alone does not resolve complete-reference failures.
 
 - [x] Measure fixed/varied argument aliases with unchanged replay: both0/336 new-argument exact signatures, original hits retained20/21 versus15/21. See [header-argument-aliases](docs/header-argument-aliases.md); reject promotion of the varied policy.
 - [ ] Resolve autonomous argument-name/arity copying on development diagnostics; keep assisted prompt-derived signatures explicitly separate from learned-model quality.
