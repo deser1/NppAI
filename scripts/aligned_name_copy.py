@@ -62,6 +62,19 @@ def attention_loss(captured,pairs,lengths):
     return F.cross_entropy(torch.stack(selected),torch.tensor(labels,device=q.device))
 
 
+def training_losses(model,x,y,records,lengths,aligned):
+    import torch.nn.functional as F
+    if aligned:
+        with capture_qk(model) as captured:logits=model(x)
+        auxiliary=attention_loss(captured,[alignment(r) for r in records],lengths)
+    else:
+        # Keep the control's forward/backward graph identical to the old recipe.
+        logits=model(x)
+        auxiliary=None
+    ce=F.cross_entropy(logits.reshape(-1,256),y.reshape(-1),ignore_index=-100)
+    return ce,auxiliary
+
+
 def development(dataset):
     groups=base.development_data(dataset)
     for split in ('validation','test'):
@@ -148,7 +161,9 @@ def audit(report,dataset):
                         raise ValueError('prefix check differs')
         if report['summary'][stage]!=summaries(report[stage]):raise ValueError('summary differs')
     if report['retention']!=base.retention(report['before'],report['after']):raise ValueError('retention differs')
-    if len(report['loss_endpoints'])!=2 or any(not math.isfinite(v) for point in report['loss_endpoints'] for v in point.values()):
+    endpoint_keys={'response_ce'} if report['arm']=='control' else {'response_ce','alignment_ce'}
+    if (len(report['loss_endpoints'])!=2 or any(set(point)!=endpoint_keys for point in report['loss_endpoints']) or
+            any(not math.isfinite(v) for point in report['loss_endpoints'] for v in point.values())):
         raise ValueError('invalid loss endpoints')
     check_reproduction(report,control_report())
     return {'valid':True,'cases':sum(map(len,groups.values())),
@@ -173,14 +188,15 @@ def run(source,dataset,output,arm):
         records=[r for _,r in selected];samples=[base.sample(r) for r in records]
         x=torch.nn.utils.rnn.pad_sequence([s[0] for s in samples],batch_first=True)
         y=torch.nn.utils.rnn.pad_sequence([s[1] for s in samples],batch_first=True,padding_value=-100)
-        with capture_qk(model) as captured:logits=model(x)
-        ce=F.cross_entropy(logits.reshape(-1,256),y.reshape(-1),ignore_index=-100)
-        auxiliary=attention_loss(captured,[alignment(r) for r in records],[len(s[0]) for s in samples])
+        ce,auxiliary=training_losses(model,x,y,records,[len(s[0]) for s in samples],arm=='aligned')
         loss=ce if arm=='control' else ce+coefficient*auxiliary
         optimizer.zero_grad(set_to_none=True);loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(),1.0);optimizer.step()
-        if step==0 or step==STEPS-1:endpoints.append({'response_ce':float(ce.detach()),'alignment_ce':float(auxiliary.detach())})
-        if step%128==0 or step==STEPS-1:print(f'{arm} step={step+1} response={float(ce.detach()):.6f} alignment={float(auxiliary.detach()):.6f}',flush=True)
+        if step==0 or step==STEPS-1:
+            point={'response_ce':float(ce.detach())}
+            if auxiliary is not None:point['alignment_ce']=float(auxiliary.detach())
+            endpoints.append(point)
+        if step%128==0 or step==STEPS-1:print(f'{arm} step={step+1} response={float(ce.detach()):.6f}',flush=True)
     output.mkdir(parents=True,exist_ok=True);checkpoint=output/'experimental.nppai'
     model.eval();export_to_bin(model,str(checkpoint));loaded=torch_model(load_weights(checkpoint));loaded.eval()
     if any(not torch.equal(a,b) for a,b in zip(model.parameters(),loaded.parameters())):raise RuntimeError('exported tensors differ')

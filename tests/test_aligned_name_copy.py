@@ -2,6 +2,7 @@ import copy
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from scripts import aligned_name_copy as experiment
 
@@ -62,6 +63,21 @@ class AlignedCopyTests(unittest.TestCase):
         self.assertFalse(model.layers[-1].wq._forward_hooks)
         self.assertFalse(model.layers[-1].wk._forward_hooks)
 
+    @unittest.skipUnless(HAS_TORCH,'PyTorch required for exact control gradient equality')
+    def test_control_has_the_original_graph_and_identical_gradients(self):
+        import torch
+        import torch.nn.functional as F
+        from train_nppai import NppAIModel
+        torch.manual_seed(42);plain=NppAIModel(256,8,16,1,256);control=copy.deepcopy(plain)
+        x,y=experiment.base.sample(self.record());x=x[None,:];y=y[None,:]
+        expected=F.cross_entropy(plain(x).reshape(-1,256),y.reshape(-1),ignore_index=-100)
+        expected.backward()
+        with patch.object(experiment,'capture_qk',side_effect=AssertionError('control must not capture')):
+            actual,aux=experiment.training_losses(control,x,y,[self.record()],[x.shape[1]],False)
+        actual.backward();self.assertIsNone(aux)
+        self.assertTrue(torch.equal(expected,actual))
+        self.assertTrue(all(torch.equal(a.grad,b.grad) for a,b in zip(plain.parameters(),control.parameters())))
+
     def fixture(self):
         base=experiment.base;groups=experiment.development(DATASET);old=experiment.control_report()
         phases={}
@@ -88,7 +104,7 @@ class AlignedCopyTests(unittest.TestCase):
                 'schedule':base.schedule_evidence(base.training_data(DATASET),'resampled'),
                 'summary':{s:experiment.summaries(d) for s,d in phases.items()},
                 'retention':base.retention(phases['before'],phases['after']),
-                'loss_endpoints':[{'response_ce':1.0,'alignment_ce':4.0}]*2}
+                'loss_endpoints':[{'response_ce':1.0}]*2}
 
     def test_evidence_audit_rejects_alignment_budget_and_raw_output_tampering(self):
         report=self.fixture();self.assertTrue(experiment.audit(report,DATASET)['valid'])

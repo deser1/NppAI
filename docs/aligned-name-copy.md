@@ -25,8 +25,9 @@ failure. The existing forward method, parameter set, inference architecture and
 `.nppai` export remain unchanged. There is no new pointer head or hard copying
 rule at inference. Attention alignment can improve its own objective without
 producing correct byte logits or useful programs; evaluate both independently.
-The control computes the alignment loss for logging but backpropagates only the
-original response loss. The aligned arm backpropagates the combined objective.
+The control runs the original forward/backward graph without attention hooks or
+auxiliary computation and records response loss only. The aligned arm records both
+losses and backpropagates the combined objective.
 No coefficient search or best-of-seeds selection is performed.
 
 The control must reproduce the previous resampled checkpoint digest
