@@ -32,3 +32,32 @@ test the Notepad++ UI or prove the full autonomous agent loop; compare results
 against held-out tasks and report model/version, seed and inference settings.
 
 Do not merge or promote a model based on green evaluator unit tests alone.
+
+## Collect first attempts from an actual model
+
+Prepare `tasks.json` with independently authored prompts and hidden test suite
+paths, for example:
+
+```json
+[{"task_id":"add-01","prompt":"Write a complete Python module defining add(a,b). Return only Python source.","cases_file":"examples/python-validation-cases.json"}]
+```
+
+Collect from a local dense checkpoint:
+
+```bash
+python collect_real_model_candidates.py tasks.json --mode local --model path/to/checkpoint --output local-candidates.jsonl
+```
+
+Or from an explicitly authorized online endpoint (do not commit credentials):
+
+```bash
+NPPAI_API_KEY=... python collect_real_model_candidates.py tasks.json --mode online --endpoint https://your-host/api/v1/generate --allow-remote --output online-candidates.jsonl
+```
+
+Then replay each JSONL with `evaluate_real_model_e2e.py` and an immutable
+Docker image ID as described above. This collector records **only first
+attempts**. It does not perform repair loops or measure repair quality; collect
+repair attempts separately before claiming pass-within-three performance.
+Local dense byte models may have limited context and output budgets. If a model
+is not configured, no real model metrics can be reported. Do not commit model
+outputs containing private source or prompts.

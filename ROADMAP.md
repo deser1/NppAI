@@ -194,3 +194,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Add real-model candidate replay evaluator with Docker syntax/function validation and first-pass/repair metrics; see [evaluation protocol](docs/real-model-e2e.md).
 - [ ] Collect held-out real model outputs and report complete-task success, repair rates and local/online comparisons; do not infer model quality from fixture tests.
+
+- [x] Provide CLI collection of actual first-attempt local/online model outputs for replay evaluation.
+- [ ] Execute held-out model runs with configured checkpoints/endpoints and publish measured first-pass rates; add bounded repair-attempt collection later.

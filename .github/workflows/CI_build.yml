@@ -82,6 +82,9 @@ jobs:
     - name: Run real-model replay evaluator unit tests
       run: python -m unittest discover -s tests -p "test_real_model_e2e.py" -v
 
+    - name: Run real-model candidate collector unit tests
+      run: python -m unittest discover -s tests -p "test_collect_real_model_candidates.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 
