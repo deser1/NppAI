@@ -10,7 +10,6 @@ import os
 from pathlib import Path
 import re
 import secrets
-import shutil
 import subprocess
 import sys
 import threading
@@ -97,6 +96,7 @@ def validate(source, phase, cases, image, cancel_file=None, timeout=20):
     output = bytearray()
     overflow = threading.Event()
     process = None
+    reader = writer = None
     def read(stream):
         while True:
             chunk = stream.read(4096)
@@ -152,6 +152,13 @@ def validate(source, phase, cases, image, cancel_file=None, timeout=20):
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
                 process.kill()
+            if reader is not None:
+                reader.join(2)
+            if writer is not None:
+                writer.join(2)
+            process.stdout.close()
+            if not process.stdin.closed:
+                process.stdin.close()
 
 
 def main():
