@@ -1,4 +1,6 @@
 ## Unreleased
+- Record name-byte diagnostic results: 5580 causal checks passed; all three frozen models remain 0/132 complete development names under gold-prefix or def-scaffold assistance. Preserve raw evidence chunks; namespace gains do not establish copying or justify promotion.
+- Add frozen function-name byte diagnostics with causal-prefix checks, training/development namespace controls and independently audited raw evidence; no model changes.
 - Record matched name-training results: fixed and per-draw aliases both remain 0/88 requested names/signatures and full reference matches; preserve raw reports and reject promotion based on syntax-only changes.
 - Add matched fixed versus per-draw function-alias training, raw-output/retention scoring and an independently reconstructed evidence audit; production checkpoints remain unchanged.
 - Record actual frozen local smoke results: 0/6 passed, 2 syntax failures, 4 missing requested callables; retain unmodified raw evidence and runner latency (52.6 ms median), without model promotion.
