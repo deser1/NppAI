@@ -1,4 +1,5 @@
 ## Unreleased
+- Record actual frozen local smoke results: 0/6 passed, 2 syntax failures, 4 missing requested callables; retain unmodified raw evidence and runner latency (52.6 ms median), without model promotion.
 - Add real local-model first-pass functional smoke measurement with pinned checkpoint provenance, six authored probes, Docker isolation, latency and explicit failure categories.
 - Report real-model replay metrics by initial backend and reject changed test suites between attempts.
 

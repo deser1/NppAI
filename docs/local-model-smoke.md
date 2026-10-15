@@ -50,6 +50,32 @@ the runtime context without retraining is not a valid workaround.
 
 ## Observed outcome
 
-Pending the first actual workflow run. Do not infer results from orchestration
-unit tests. Broader task quality and an independently configured online model
-remain open work.
+Actual inference and Docker validation completed in [run 38802296124](https://github.com/deser1/NppAI/actions/runs/38802296124)
+on 2026-10-15. **0/6 tasks passed**, with no empty responses, two syntax failures
+and four functional failures. All four syntactically valid responses defined a
+different function name, so the requested callable was missing at the first
+functional case. Their body semantics were therefore not established. Cases stop
+at the first failure; the run did not execute all 18 authored functional cases.
+
+| Task | Outcome | Generation time |
+|---|---|---:|
+| offset | Requested callable missing | 45.6 ms |
+| distance | Syntax failure | 69.4 ms |
+| first_even | Requested callable missing | 51.8 ms |
+| ends | Syntax failure | 59.2 ms |
+| bounded | Requested callable missing | 53.3 ms |
+| count_negative | Requested callable missing | 50.4 ms |
+
+Median generation latency was **52.6 ms** on that runner; this is not a portable
+performance guarantee. Checkpoint SHA-256:
+`161d6303c7e77f005cbabba5a1790b9d6a6dfc1812c121bfbb3f1cb6820e5b1a`.
+The exact unmodified [raw report](evidence/local-model-smoke-report.json) is retained
+in git (SHA-256 `39b77422945cf2ac4aa840f4a657a825bf4897981ff6cd943d0c3d0d4786f22c`).
+Its evaluator commit is GitHub's temporary PR merge commit, not the branch head.
+The downloaded artifact ZIP was verified against GitHub's digest
+`73562623ef38e4f22b467c142ca05862718c3b67714ad5bb026d505dcaa11a41`.
+
+This checkpoint failed the requested function contract on this small probe set.
+It is not promoted. Improve signature copying and complete-function correctness
+on training/development data before a separate broader evaluation. An online
+comparison and bounded repair quality measurement remain open.

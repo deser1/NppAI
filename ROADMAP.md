@@ -205,4 +205,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Collect held-out actual model outputs with identical task sets and publish observed quality, latency and failure breakdowns.
 
 - [x] Add a pinned-checkpoint, six-task local first-pass functional smoke workflow with raw outputs, latency and failure categories. See [protocol](docs/local-model-smoke.md).
-- [ ] Record the first observed smoke outcome; extend to a genuinely independent broader task set and configured online comparison without tuning on these probes.
+- [x] Record actual frozen local smoke: 0/6 passed, 2 syntax failures and 4 missing requested callables; raw report retained, no promotion.
+- [ ] Improve requested function-name/signature copying and complete bodies on training/development data, then evaluate a genuinely independent broader task set and configured online comparison.

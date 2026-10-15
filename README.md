@@ -339,3 +339,5 @@ Bounded actual-model repair experiments (up to three Docker-validated attempts) 
 Replay evaluation now reports separate first-attempt local/online metrics and rejects changing test suites between retries; see [evaluation guide](docs/real-model-e2e.md).
 
 Frozen local-model functional smoke probes (actual inference, Docker-only execution and raw provenance): [protocol](docs/local-model-smoke.md). This is a six-task first-pass diagnostic, not evidence of broad coding competence.
+
+Observed frozen local smoke result: **0/6 tasks passed** (2 syntax failures, 4 missing requested callables), with 52.6 ms median generation time on the CI runner. See [raw evidence and limits](docs/local-model-smoke.md#observed-outcome). No checkpoint promotion.
