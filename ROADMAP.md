@@ -191,3 +191,6 @@ the broader quality and held-out evaluation milestones below.
 ## Guiding principles
 
 NppAI prioritizes local inference, measurable correctness, reproducible benchmarks, explicit fallbacks, privacy-aware data handling, and technical claims backed by tests rather than feature labels alone.
+
+- [x] Add real-model candidate replay evaluator with Docker syntax/function validation and first-pass/repair metrics; see [evaluation protocol](docs/real-model-e2e.md).
+- [ ] Collect held-out real model outputs and report complete-task success, repair rates and local/online comparisons; do not infer model quality from fixture tests.

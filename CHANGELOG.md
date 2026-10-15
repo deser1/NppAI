@@ -1,4 +1,6 @@
 ## Unreleased
+- Add real-model candidate replay evaluator, unit tests wired into CI, and Docker-backed evaluation protocol; real-model quality results are not yet collected.
+
 
 - Stage plugin proposals for Python syntax/tests in a restricted local Docker profile; connect existing feedback, bounded repair, structured diff, review and outcome components. Limit work to three candidates, permit configured online escalation after two local failures, and require validated unchanged-buffer review before one-undo Apply. Add authored test-suite configuration, container/process/editor-boundary tests and bundled validator setup documentation. Other language profiles and real-model task success remain open.
 
