@@ -60,5 +60,58 @@ Implementation: `scripts/diagnose_name_bytes.py`; tests:
 
 ## Observed outcome
 
-Pending the frozen inference run. Neither a conditional-byte gain nor a
-scaffolded-name hit alone establishes autonomous signature/body correctness.
+Measured run [38807119553](https://github.com/deser1/NppAI/actions/runs/38807119553)
+completed on 2026-10-15. All six tests passed with actual PyTorch inference,
+including rejection of future-dependent logits. All **5580 per-byte causal-prefix
+checks** passed. The artifact ZIP digest was verified and raw evidence audited
+again locally; the preserved chunks reconstruct the original report byte-for-byte.
+
+For all three models, both the complete conditional-name count and scaffolded
+exact-name count are **0/132 development views**, including original, `ev_` and
+matched `nc_` views. The result is not explained solely by syntax/body failure
+in a complete reply or by the unseen `ev_` namespace.
+
+Conditional test-byte counts below supply each correct preceding name byte.
+Namespace means the first three bytes; suffix excludes those bytes.
+
+| Test condition | Model | Namespace correct | Suffix correct |
+|---|---|---:|---:|
+| `ev_` | Initial | 0/84 | 43/224 |
+| `ev_` | Fixed | 3/84 | 68/224 |
+| `ev_` | Resampled | 2/84 | 67/224 |
+| Matched `nc_` | Initial | 0/84 | 47/224 |
+| Matched `nc_` | Fixed | 83/84 | 75/224 |
+| Matched `nc_` | Resampled | 84/84 | 82/224 |
+
+The trained models predict the familiar namespace substantially more often under
+this matched-prefix condition, while most suffix bytes are still wrong. Neither
+trained arm produces a complete correct development name even with gold preceding
+name bytes. Thus namespace familiarity is one observed sensitivity; changing the
+prefix alone does not resolve complete-name failure. This does not identify an
+internal attention defect or prove a unique causal mechanism.
+
+| Training-draw group | Views | Initial scaffolded names | Fixed | Resampled |
+|---|---:|---:|---:|---:|
+| Original | 16 | 3 | 3 | 5 |
+| Fixed-alias | 16 | 0 | 0 | 0 |
+| Resampled-alias | 16 | 0 | 0 | 0 |
+
+The complete conditional-name counts are the same in these training groups.
+These are the first 16 draws per pool, potentially correlated/repeated views,
+not exhaustive training-set accuracy. The few original-training hits do not
+generalize to the exposed development names. Cached complete replies from #183
+remain unchanged and continue to have zero requested-name/signature matches.
+
+The [evidence manifest](evidence/name-byte-diagnostic/manifest.json) retains
+summaries, checkpoint/report identities and 24 raw case chunks with individual
+SHA-256 values. Reassembling its report metadata and ordered group chunks with
+the shared `encoded` serializer reproduces the original report SHA-256
+`a0ea3c09fbe71f061b530bf148f6dca74bc6da3afc6166f6ad4df8459302a1c2`.
+Verified artifact 12006767931 ZIP SHA-256:
+`2b4039c1c9ad29048ced8e564c4cd6f427c2e561497194c1b746ca6e77a252a0`.
+
+No model is promoted. Before scaling continuation, design a training-only
+identifier-copy objective with explicit source/target byte alignment and compare
+unseen suffixes under matched namespaces. Keep assisted copying, full signature,
+complete-body and functional evaluations separate; reserve an independent later
+holdout instead of tuning on these exposed diagnostics.

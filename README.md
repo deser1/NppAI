@@ -347,3 +347,5 @@ Matched function-name learning experiment: [fixed versus per-draw aliases](docs/
 Measured fixed/per-draw name continuation: both remain **0/88 requested names/signatures and complete reference matches** after 1024 updates. Syntax changes do not establish copying. [Raw reports and limits](docs/resampled-name-training.md#observed-outcome); no model promotion.
 
 Frozen name-copy diagnosis separates conditional next-byte prediction, `def `-scaffolded name decoding and cached complete replies: [protocol](docs/name-byte-diagnostic.md). Assisted scores are not autonomous coding accuracy.
+
+Observed name-byte diagnosis: all three frozen models score **0/132 complete development names**, even with gold preceding name bytes or a `def ` scaffold. Familiar `nc_` prefix prediction improves, but suffix copying remains weak. [Measured results and raw evidence](docs/name-byte-diagnostic.md#observed-outcome); no promotion.
