@@ -217,4 +217,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Design a training-only identifier-copy objective with source/target byte alignment and matched-namespace unseen suffix evaluation before scaling continuation; retain separate full-code and functional checks.
 
 - [x] Implement a source-position aligned attention loss for function-name bytes with an exact prior-recipe control, unchanged inference architecture and full-response/assisted evaluation. See [experiment](docs/aligned-name-copy.md).
-- [ ] Record matched objective results and full-response retention before deciding whether the copying intervention merits further work.
+- [x] Measure source-aligned attention objective with exact control replay: both arms remain 0/132 development names/signatures and complete matches; retain losses, raw reports and original-training regressions, no promotion.
+- [ ] Evaluate an explicit source-byte copy readout or other copying mechanism on training-only diagnostics before scaling; require complete-code and independent functional evidence.

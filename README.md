@@ -351,3 +351,5 @@ Frozen name-copy diagnosis separates conditional next-byte prediction, `def `-sc
 Observed name-byte diagnosis: all three frozen models score **0/132 complete development names**, even with gold preceding name bytes or a `def ` scaffold. Familiar `nc_` prefix prediction improves, but suffix copying remains weak. [Measured results and raw evidence](docs/name-byte-diagnostic.md#observed-outcome); no promotion.
 
 Training-only source-aligned name-copy objective with a matched replay control: [protocol](docs/aligned-name-copy.md). Architecture and inference stay unchanged; improvement requires observed full-response results.
+
+Measured aligned-copy objective: despite lower logged attention alignment loss, both arms remain **0/132 complete development names/signatures**. The exact control reproduced; no checkpoint is promoted. [Results and raw evidence](docs/aligned-name-copy.md#observed-outcome).
