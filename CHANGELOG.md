@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record full-response continuation: fixed arguments improve assisted function-renamed exact72→150/336 and retain15/15 prior original test hits; varied reaches71/336 and loses3/15. New-argument AST/exact remains0/336 in both, autonomous full matches remain zero; no promotion.
+
 - Add a matched full-response body continuation with fixed/varied argument aliases, unchanged50% original replay, frozen20k body initialization, separate assisted/autonomous raw metrics, paired retention audits and complete export/reload checks; no fresh-probe use or model promotion.
 
 - Record assisted signature results:1100/1100 prompt-derived headers, function-renamed exact63→72/336, but new argument full AST/exact remains0/336 despite correct prefixes. Raw bodies still use unrelated names/operations; assistance is not learned copying or model promotion.
