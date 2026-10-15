@@ -68,6 +68,17 @@ class RuntimeTests(unittest.TestCase):
             result = DenseLocalBackend(str(path)).generate(GenerationRequest(prompt='hello'))
             self.assertEqual((result.output, result.generated_tokens, result.finish_reason), ('', 1, 'eos'))
 
+    def test_assistant_prefix_is_included_once_and_counted_in_context(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'fixture.nppai'
+            checkpoint(path)
+            model = DenseLocalBackend(str(path))
+            result = model.generate(GenerationRequest(prompt='task', assistant_prefix='def f():\n    ', max_new_tokens=3))
+            self.assertEqual(result.output, 'def f():\n    AAA')
+            self.assertEqual(result.generated_tokens, 3)
+            with self.assertRaises(ValueError):
+                model.generate(GenerationRequest(prompt='task', assistant_prefix='x' * 128))
+
     def test_bad_checkpoints_are_unavailable(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'fixture.nppai'

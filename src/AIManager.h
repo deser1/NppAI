@@ -17,10 +17,12 @@ public:
     void loadModel(const std::string& modelPath);
 
     // Funkcja wywołująca model AI z obsługą strumieniowania do interfejsu (char, isThought)
-    std::string generateCode(const std::string& prompt, const std::string& currentContext, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr);
+    std::string generateCode(const std::string& prompt, const std::string& currentContext, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr, std::function<void(const std::string&)> onStatus = nullptr);
+
+    void beginGeneration() { generationCancelled = false; }
 
     // Zatrzymuje działanie generatora
-    void stopGeneration() { engine.stopGeneration(); }
+    void stopGeneration() { generationCancelled = true; engine.stopGeneration(); }
 
     // Funkcje śledzące dla Diff Trackera (uczenie z zachowania usera)
     void startTracking(const std::string& prompt, const std::string& generatedCode, int startLine, int endLine, const std::string& filePath = "");
@@ -50,5 +52,8 @@ private:
     bool isDebounceThreadRunning = false;
 
     // Nasz autorski silnik AI
+    std::mutex generationMutex;
+    std::atomic<bool> generationCancelled{false};
+    bool localReady = false;
     NppAIEngine engine;
 };

@@ -57,6 +57,7 @@ GenerationRequest prepare(const std::string& task, const std::string& context) {
         instruction = "Implement " + declaration + ". " + description;
         request.assistantPrefix = "def " + declaration + ":\n    ";
     }
+    request.task = instruction;
     request.basePrompt = buildPrompt(instruction, context);
     request.inferencePrompt = request.basePrompt + request.assistantPrefix;
     return request;

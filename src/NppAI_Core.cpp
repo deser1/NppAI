@@ -66,6 +66,27 @@ extern "C" __declspec(dllexport) void setInfo(NppData notpadPlusData) {
 extern "C" __declspec(dllexport) void setInfoForTesting(NppData notpadPlusData) {
   initializePluginHost(notpadPlusData, false);
 }
+// Only compiled into the CMake test DLL, never release plugin packages.
+extern "C" __declspec(dllexport) const char* generateForTesting(const char* task, const char* context) {
+  static thread_local std::string result;
+  try {
+    result = AIManager::getInstance().generateCode(task, context);
+  } catch (const std::exception& error) {
+    result = std::string("ERROR:") + error.what();
+  }
+  return result.c_str();
+}
+extern "C" __declspec(dllexport) void loadModelForTesting(const char* path) {
+  AIManager::getInstance().loadModel(path);
+}
+extern "C" __declspec(dllexport) void beginGenerationForTesting() {
+  AIManager::getInstance().beginGeneration();
+}
+extern "C" __declspec(dllexport) void stopGenerationForTesting() {
+  AIManager::getInstance().stopGeneration();
+}
+
+
 #endif
 
 extern "C" __declspec(dllexport) const wchar_t *getName() {

@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Make plugin generation select local or configured online inference automatically using model availability and byte-context fit, with empty-local fallback before streaming, visible decision reasons, native WinHTTP transport, cancellation/error handling and signature-prefix parity. Add policy/protocol and real Windows HTTP tests.
+
 - Add a shared local/online/hybrid Python model backend contract, dense v2 CPU generation client and authenticated inference endpoint with explicit remote-transfer opt-in, admission limits and transport/runtime tests. Plugin UI integration and autonomous tool orchestration remain open.
 
 - Record frozen body-byte results: new-argument body-only conditional initials38/456 and suffixes141/1512, but complete argument occurrences0/456 in all three models; all4350 causal-prefix checks and raw audits pass. Difficulties include initial and later bytes; teacher forcing is not autonomous improvement.

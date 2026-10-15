@@ -4,6 +4,7 @@
 
 namespace AIPromptPipeline {
 struct GenerationRequest {
+    std::string task;
     std::string basePrompt;
     std::string inferencePrompt;
     std::string assistantPrefix;

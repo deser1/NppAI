@@ -3,9 +3,9 @@
 The standalone Python generation client and the FastAPI service now share a
 versioned request/response contract and the same dense v2 `.nppai` FP32 reference
 runtime. This is an executable foundation for a common agent, not a completed
-autonomous coding agent. It does not change the Notepad++ panel's native C++
-inference, existing telemetry/knowledge ingestion, or model update behavior.
-Those paths do not yet use this router.
+autonomous coding agent. The Notepad++ panel now has its own automatic selector using the same HTTP
+contract; see [automatic-plugin-mode](automatic-plugin-mode.md). Existing
+telemetry/knowledge ingestion and model updates are separate paths.
 
 ## Run locally
 
@@ -48,7 +48,7 @@ Starting a local server does not deploy a hosted service or provision hardware.
 `POST /api/v1/generate` accepts:
 
 ```json
-{"protocol_version":1,"prompt":"Implement add(a, b).","context":"","max_new_tokens":128}
+{"protocol_version":1,"prompt":"Implement add(a, b).","context":"","assistant_prefix":"","max_new_tokens":128}
 ```
 
 Unknown fields, unsupported versions, invalid types and token budgets are
@@ -92,8 +92,8 @@ explicit opt-in, authentication, limits, corrupt checkpoints, EOS, model identit
 busy responses and cancellation admission. These are engineering tests, not
 measurements of model intelligence or useful coding quality.
 
-Next: connect the shared backend contract to the Notepad++ UI and existing bounded
-repair/patch review abstractions, define an explicit repository/tool policy, then
+The plugin is connected through its automatic selector. Next: connect existing
+bounded repair/patch review abstractions, define an explicit repository/tool policy, then
 measure complete tasks with retained model-quality gates. No checkpoint is
 promoted or trained by this change; the observed arbitrary-name copying limitation
 remains open. Larger server models and more architectures need separate runtime
