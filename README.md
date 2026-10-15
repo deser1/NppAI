@@ -333,3 +333,5 @@ cmake --build build-bench --config Release --target BenchmarkTensor
 Real-model candidate replay and pass/repair metrics: [evaluation protocol](docs/real-model-e2e.md). These metrics require recorded actual model outputs; fixture CI alone does not measure model competence.
 
 First-attempt output collection from configured real local/online models: [real-model evaluation guide](docs/real-model-e2e.md). No model-quality results are claimed without recorded inference.
+
+Bounded actual-model repair experiments (up to three Docker-validated attempts) are documented in [real-model evaluation](docs/real-model-e2e.md). Results require configured real models; CI fixture tests do not establish model quality.

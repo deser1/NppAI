@@ -10,9 +10,14 @@ import os
 from pathlib import Path
 
 from model_backends import BackendRouter, DenseLocalBackend, GenerationRequest, RemoteBackend
+import sandbox_validate
 
 
-def collect(tasks, router, max_new_tokens=512):
+def collect(tasks, router, max_new_tokens=512, *, image=None, max_attempts=1):
+    if not isinstance(max_attempts, int) or isinstance(max_attempts, bool) or not 1 <= max_attempts <= 3:
+        raise ValueError('max_attempts must be 1..3')
+    if max_attempts > 1 and not image:
+        raise ValueError('Docker image required for repair attempts')
     if router.mode == "hybrid":
         raise ValueError("hybrid collection requires backend provenance; use local or online")
     seen = set()
@@ -26,10 +31,29 @@ def collect(tasks, router, max_new_tokens=512):
         if task_id in seen:
             raise ValueError("duplicate task_id")
         seen.add(task_id)
-        response = router.generate(GenerationRequest(prompt=prompt, max_new_tokens=max_new_tokens))
-        backend = "online" if router.mode == "online" else "local"
-        records.append({"task_id": task_id, "attempt": 1, "backend": backend,
-                        "source": response.output, "cases_file": cases_file})
+        cases = None
+        if image:
+            cases, _ = sandbox_validate.load_cases(Path(cases_file))
+        feedback = ""
+        for attempt in range(1, max_attempts + 1):
+            repair_prompt = prompt if attempt == 1 else (
+                prompt + "\\n\\nYour previous complete Python module failed validation. "
+                "Return a corrected complete Python module only.\\n"
+                "Previous candidate:\\n" + source[:8192] +
+                "\\nValidation feedback:\\n" + feedback[:2048])
+            response = router.generate(GenerationRequest(prompt=repair_prompt, max_new_tokens=max_new_tokens))
+            source = response.output
+            backend = "online" if router.mode == "online" else "local"
+            records.append({"task_id": task_id, "attempt": attempt, "backend": backend,
+                            "source": source, "cases_file": cases_file})
+            if image:
+                status, feedback = sandbox_validate.validate(source, "syntax", cases, image)
+                if status == 0:
+                    status, feedback = sandbox_validate.validate(source, "tests", cases, image)
+                if status in (2, 3):
+                    raise RuntimeError("validation unavailable or cancelled: " + feedback[:512])
+                if status == 0:
+                    break
     if not records:
         raise ValueError("no tasks")
     return records
@@ -44,6 +68,8 @@ def main():
     parser.add_argument("--endpoint", help="HTTPS /api/v1/generate endpoint")
     parser.add_argument("--allow-remote", action="store_true")
     parser.add_argument("--max-new-tokens", type=int, default=512)
+    parser.add_argument("--max-attempts", type=int, choices=(1, 2, 3), default=1)
+    parser.add_argument("--image", help="immutable local Docker image ID for validation")
     args = parser.parse_args()
     if args.mode == "local":
         if not args.model:
@@ -58,11 +84,11 @@ def main():
     tasks = json.loads(args.tasks.read_text(encoding="utf-8"))
     if not isinstance(tasks, list):
         parser.error("tasks must be a JSON array")
-    records = collect(tasks, router, args.max_new_tokens)
+    records = collect(tasks, router, args.max_new_tokens, image=args.image, max_attempts=args.max_attempts)
     # Write only after all tasks succeed; do not publish private prompts or outputs.
     args.output.write_text("".join(json.dumps(x, ensure_ascii=False) + "\n" for x in records),
                            encoding="utf-8")
-    print(f"Recorded {len(records)} actual first-attempt model outputs to {args.output}")
+    print(f"Recorded {len(records)} actual model attempts to {args.output}")
 
 
 if __name__ == "__main__":
