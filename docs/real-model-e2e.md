@@ -83,3 +83,15 @@ collection completes. A single-task generation failure aborts the batch.
 Test cases are never included in model prompts, but validator diagnostics
 can disclose expected values: use only trusted, non-sensitive task suites.
 This is a CLI evaluation loop, **not** autonomous Notepad++ editing.
+
+## Backend comparison safeguards
+
+Replay JSON reports `by_initial_backend` with task counts, first-attempt passes,
+passes within three attempts, and recovered tasks for local and online initial
+backends. A task is assigned by its **first** recorded backend; this does not
+measure per-backend contributions when later attempts switch providers.
+The evaluator rejects changes in the authored test-suite SHA-256 between
+attempts of the same task. For a fair comparison, use the same held-out tasks,
+case suites and attempt budget for both backends, and record model/version,
+checkpoint digest and inference settings separately. Counts from different
+sample sizes are not directly comparable without denominators.
