@@ -219,3 +219,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Implement a source-position aligned attention loss for function-name bytes with an exact prior-recipe control, unchanged inference architecture and full-response/assisted evaluation. See [experiment](docs/aligned-name-copy.md).
 - [x] Measure source-aligned attention objective with exact same-host control repeat and historical reply replay: both arms remain 0/132 development names/signatures and complete matches; retain losses, raw reports and original-training regressions, no promotion.
 - [ ] Evaluate an explicit source-byte copy readout or other copying mechanism on training-only diagnostics before scaling; require complete-code and independent functional evidence.
+
+- [x] Specify gated source-byte identifier-copy readout experiment, causal safeguards, paired baseline and promotion gates; see [protocol](docs/explicit-identifier-copy-protocol.md). This is a design only, not a measured improvement.
+- [ ] Implement and run gated source-byte copy experiment, then validate autonomous full-code and independent Docker functional results before any checkpoint promotion.
