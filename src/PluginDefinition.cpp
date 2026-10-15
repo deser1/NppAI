@@ -180,8 +180,12 @@ void ExecuteAIGeneration() {
     return;
   }
   try {
-    char buffer[4096]{}; GetWindowTextA(g_hEdit, buffer, sizeof(buffer));
-    const std::string task = buffer;
+    wchar_t buffer[4096]{}; GetWindowTextW(g_hEdit, buffer, 4096);
+    const int utf8Size = WideCharToMultiByte(CP_UTF8, 0, buffer, -1, nullptr, 0, nullptr, nullptr);
+    if (utf8Size <= 1) return;
+    std::string task(utf8Size, '\0');
+    WideCharToMultiByte(CP_UTF8, 0, buffer, -1, &task[0], utf8Size, nullptr, nullptr);
+    task.resize(utf8Size - 1);
     if (task.empty()) return;
     pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
     const auto parsed = AIPromptPipeline::prepare(task, "");
