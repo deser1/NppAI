@@ -50,6 +50,25 @@ class RealModelEvaluationTests(unittest.TestCase):
         self.assertEqual(result['by_initial_backend']['local']['first_attempt_pass'], 1)
         self.assertEqual(result['by_initial_backend']['online']['first_attempt_pass'], 1)
 
+    @patch.object(evaluation.sandbox_validate, 'validate')
+    def test_empty_and_non_text_sources_never_reach_validator(self, validate):
+        for source in ('', None, 42, []):
+            with self.subTest(source=source), self.assertRaisesRegex(ValueError, 'nonempty Python text'):
+                evaluation.evaluate([record('one', 1, source)], 'sha256:' + 'a' * 64)
+        validate.assert_not_called()
+
+    @patch.object(evaluation.sandbox_validate, 'validate')
+    def test_online_repair_is_counted_under_initial_local_backend(self, validate):
+        validate.side_effect = [(1, 'syntax failed'), (0, 'syntax passed'), (0, 'tests passed')]
+        repair = json.loads(record('one', 2, 'fixed'))
+        repair['backend'] = 'online'
+        result = evaluation.evaluate([record('one', 1, 'bad'), json.dumps(repair)],
+                                     'sha256:' + 'a' * 64)
+        self.assertEqual(result['by_initial_backend'], {'local': {
+            'tasks': 1, 'first_attempt_pass': 0, 'pass_within_three': 1,
+            'repaired_after_failure': 1}})
+        self.assertEqual(result['task_results']['one'][1]['backend'], 'online')
+
 
 if __name__ == '__main__':
     unittest.main()
