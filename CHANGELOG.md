@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Record matched body-only loss: assisted renamed test exact84/336 versus65/336 control, new-argument AST/exact remains0/336 in both; body-only loses2 prior original test hits and autonomous valid-function syntax falls to0/1100. Actual schedules/body target exposure match; reject promotion.
+
 - Add matched full-response versus body-only loss continuation on identical varied-argument data with50% original replay, exact draw-order/target-exposure audits, real gradient-mask tests and separate assisted/autonomous evidence; no canonical repair or model promotion.
 
 - Record frozen binding results: assisted argument-alias exact0→85/77/73 of336 under fixed x/values/text policies, but original test16→8/7/7 of28 and renamed165→85/77/73 of336. All1100 cached outputs reproduce; reject default normalization/promotion because retention fails.
