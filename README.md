@@ -335,3 +335,5 @@ Real-model candidate replay and pass/repair metrics: [evaluation protocol](docs/
 First-attempt output collection from configured real local/online models: [real-model evaluation guide](docs/real-model-e2e.md). No model-quality results are claimed without recorded inference.
 
 Bounded actual-model repair experiments (up to three Docker-validated attempts) are documented in [real-model evaluation](docs/real-model-e2e.md). Results require configured real models; CI fixture tests do not establish model quality.
+
+Replay evaluation now reports separate first-attempt local/online metrics and rejects changing test suites between retries; see [evaluation guide](docs/real-model-e2e.md).
