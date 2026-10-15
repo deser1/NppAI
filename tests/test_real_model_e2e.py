@@ -18,7 +18,8 @@ class RealModelEvaluationTests(unittest.TestCase):
         result = evaluation.evaluate([record('one', 1, 'bad'),
                                       record('one', 2, 'fixed'),
                                       record('two', 1, 'wrong')], 'sha256:' + 'a' * 64)
-        self.assertEqual(result['by_initial_backend']['local']['tasks'], 2)\n        self.assertEqual((result['tasks'], result['first_attempt_pass'],
+        self.assertEqual(result['by_initial_backend']['local']['tasks'], 2)
+        self.assertEqual((result['tasks'], result['first_attempt_pass'],
                           result['pass_within_three'], result['repaired_after_failure']), (2, 0, 1, 1))
 
     @patch.object(evaluation.sandbox_validate, 'validate', return_value=(2, 'Docker unavailable'))
