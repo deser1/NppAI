@@ -113,6 +113,11 @@ class Reader {
         }
         fail(); return {};
     }
+    static std::size_t characters(const std::string& value) {
+        std::size_t count = 0;
+        for (unsigned char c : value) if ((c & 0xc0) != 0x80) ++count;
+        return count;
+    }
     int integer() {
         if (peek() < '0' || peek() > '9') fail();
         int value = text[pos++] - '0';
@@ -145,7 +150,7 @@ public:
         } while (true);
         space();
         if (pos != text.size() || seen.size() != 5 || version != 1 || tokens < 0 ||
-            tokens > budget || model.empty() || model.size() > 128 || output.size() > 8192 ||
+            tokens > budget || model.empty() || characters(model) > 128 || characters(output) > 2048 ||
             (finish != "eos" && finish != "length") || output.find('\0') != std::string::npos) fail();
         return output;
     }

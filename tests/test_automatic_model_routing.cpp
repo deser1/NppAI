@@ -39,7 +39,9 @@ int main(int argc, char** argv) {
             "{\"protocol_version\":1.0}", "{\"unknown\":{}}",
             "{\"output\":\"\\ud800\"}", "{\"output\":\"\\udc00\"}",
             "{\"output\":\"\xc0\x80\"}", "{\"output\":\"\xed\xa0\x80\"}",
-            "{\"output\":\"\n\"}", std::string(16385, ' ')
+            "{\"output\":\"\n\"}", std::string(16385, ' '),
+            "{\"protocol_version\":1,\"model_id\":\"m\",\"output\":\"" + std::string(2049, 'a') +
+                "\",\"generated_tokens\":3,\"finish_reason\":\"length\"}"
         };
         for (const auto& input : bad) {
             bool rejected = false;
