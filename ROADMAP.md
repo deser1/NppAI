@@ -33,6 +33,8 @@ Recent RAG regression work:
 
 ## Next
 
+- [x] Measure matched body-only loss: assisted renamed test84/336 versus65/336 control, new-argument0/336 in both and body-only autonomous valid-function syntax0/1100. See [body-loss-masking](docs/body-loss-masking.md); binding and original-test retention remain open, no promotion.
+
 - [x] Diagnose frozen argument normalization: assisted alias exact85/77/73 of336 versus0, but original test16→8/7/7 of28. See [canonical-argument-binding](docs/canonical-argument-binding.md); fixed normalization fails retention and is not promoted.
 
 - [x] Measure full-response continuation: fixed assisted function-renamed exact72→150/336, varied71/336; both new-argument0/336 and autonomous full matches zero. See [body-argument-aliases](docs/body-argument-aliases.md); original validation retention and variable binding remain open, no promotion.
