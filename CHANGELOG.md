@@ -1,4 +1,5 @@
 ## Unreleased
+- Add a matched training-only function-name source-position attention objective with exact control reproduction, UTF-8/causal index validation and separate complete-response versus assisted-copy evidence.
 - Record name-byte diagnostic results: 5580 causal checks passed; all three frozen models remain 0/132 complete development names under gold-prefix or def-scaffold assistance. Preserve raw evidence chunks; namespace gains do not establish copying or justify promotion.
 - Add frozen function-name byte diagnostics with causal-prefix checks, training/development namespace controls and independently audited raw evidence; no model changes.
 - Record matched name-training results: fixed and per-draw aliases both remain 0/88 requested names/signatures and full reference matches; preserve raw reports and reject promotion based on syntax-only changes.

@@ -215,3 +215,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Implement frozen name-byte inference on actual training draws, exposed development names and a matched namespace control; distinguish teacher forcing from scaffolded and complete generation. See [diagnostic](docs/name-byte-diagnostic.md).
 - [x] Measure frozen name-byte diagnosis: 5580 causal checks passed; all three models remain 0/132 complete development names under both disclosed assistance modes. Familiar namespace helps bytes but does not resolve suffix copying.
 - [ ] Design a training-only identifier-copy objective with source/target byte alignment and matched-namespace unseen suffix evaluation before scaling continuation; retain separate full-code and functional checks.
+
+- [x] Implement a source-position aligned attention loss for function-name bytes with an exact prior-recipe control, unchanged inference architecture and full-response/assisted evaluation. See [experiment](docs/aligned-name-copy.md).
+- [ ] Record matched objective results and full-response retention before deciding whether the copying intervention merits further work.
