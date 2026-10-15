@@ -1,4 +1,6 @@
 ## Unreleased
+- Report real-model replay metrics by initial backend and reject changed test suites between attempts.
+
 - Add bounded model repair candidate collection with Docker validation, feedback-based retry, and tests for success and infrastructure failures.
 
 - Add CLI for collecting real first-attempt local/online model outputs, collector tests in CI, and reproducible replay instructions.
