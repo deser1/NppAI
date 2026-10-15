@@ -30,12 +30,20 @@ auxiliary computation and records response loss only. The aligned arm records bo
 losses and backpropagates the combined objective.
 No coefficient search or best-of-seeds selection is performed.
 
-The control must reproduce the previous resampled checkpoint digest
-`fc059649eacf8840536fecd1619451bac702eb7ce858d94908527aed2344780a`
-and all cached original/renamed development outputs from #183. The common
-initial outputs must also reproduce that cache. Both arms record identical
-source-example order/exposure metadata; exported tensors must equal training
-tensors. A failed control reproduction blocks the comparison.
+The workflow runs control, a fresh control repeat, then aligned training in one
+process on the same host with deterministic PyTorch algorithms. The two complete
+control reports, including weights, losses, generations and byte diagnostics,
+must be byte-identical. Both arms must share initial outputs, runtime and training
+schedule. All cached original/renamed control replies and common initial replies
+from #183 must also reproduce exactly. Exported tensors must equal training tensors.
+A failed same-host repetition or cached-output reproduction blocks the comparison.
+
+Historical control checkpoint `fc059649eacf8840536fecd1619451bac702eb7ce858d94908527aed2344780a`
+identity is recorded explicitly as true/false. Cross-runner repetitions produced
+different weight hashes with identical cached replies, so historical weight identity
+is not a portable gate. The same-host full-report repeat is the strict reproducibility
+requirement; numerical differences are disclosed rather than accepted with a
+post-hoc weight tolerance. These are distinct checks, not interchangeable claims.
 
 Evaluation records 164 correlated exposed views: 16 original training draws,
 16 actual resampled training draws, original and `ev_` validation/test views
@@ -62,6 +70,10 @@ Implementation: `scripts/aligned_name_copy.py`; tests:
 `tests/test_aligned_name_copy.py`.
 
 ## Observed outcome
+
+The same-host paired protocol is now being measured. Results below describe the
+earlier two-job run and will be replaced by the paired evidence before completion.
+
 
 Valid matched run [38809724735](https://github.com/deser1/NppAI/actions/runs/38809724735)
 completed both arms on 2026-10-15. All six tests passed in each PyTorch job. The

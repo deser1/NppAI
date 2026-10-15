@@ -3,6 +3,7 @@ import argparse
 from contextlib import contextmanager
 import json
 import math
+import platform
 from pathlib import Path
 import re
 import sys
@@ -131,8 +132,9 @@ def check_reproduction(report,old):
         for group,cases in old[stage].items():
             if [c['output'] for c in report[stage][group]]!=[c['output'] for c in cases]:
                 raise ValueError('cached control generations differ')
-    if report['arm']=='control' and report['model_sha256']!=CONTROL_MODEL_SHA256:
-        raise ValueError('control checkpoint does not reproduce')
+    expected=(report['model_sha256']==CONTROL_MODEL_SHA256) if report['arm']=='control' else None
+    if report['historical_checkpoint_equal']!=expected:
+        raise ValueError('historical checkpoint identity flag differs')
 
 
 def audit(report,dataset):
@@ -177,7 +179,7 @@ def run(source,dataset,output,arm):
     from scripts.check_dense_runtime_parity import load_weights,torch_model
     backend=pinned_backend(source)
     if backend.model_id!=base.SOURCE_MODEL_ID:raise ValueError('initial model differs')
-    torch.manual_seed(42);torch.set_num_threads(2)
+    torch.manual_seed(42);torch.set_num_threads(2);torch.use_deterministic_algorithms(True)
     model=torch_model(backend.weights);model.eval()
     rows=base.training_data(dataset);groups=development(dataset)
     with torch.no_grad():before=evaluate(model,groups)
@@ -204,10 +206,13 @@ def run(source,dataset,output,arm):
     report={'arm':arm,'steps':STEPS,'coefficient':coefficient,'initial_model_id':backend.model_id,
             'source_run_id':base.SOURCE_RUN,'source_report_sha256':base.REPORT_SHA256,
             'model_sha256':base.digest(checkpoint.read_bytes()),'optimizer':base.OPTIMIZER,
+            'historical_checkpoint_equal':(base.digest(checkpoint.read_bytes())==CONTROL_MODEL_SHA256) if arm=='control' else None,
             'schedule':base.schedule_evidence(rows,'resampled'),'development_sha256':base.digest(base.encoded(groups)),
             'before':before,'after':after,'summary':{'before':summaries(before),'after':summaries(after)},
             'retention':base.retention(before,after),'loss_endpoints':endpoints,'exported_weights_equal':True,
-            'runtime':{'torch':torch.__version__,'threads':2,'context':256,'new_tokens':160},
+            'runtime':{'torch':torch.__version__,'threads':2,'context':256,'new_tokens':160,
+                       'deterministic_algorithms':True,'platform':platform.platform(),
+                       'processor':platform.processor(),'python':platform.python_version()},
             'limits':'One seed; exposed development data. Same native architecture and export, no new inference head. '
                      'Last-layer attention supervision is a training objective, not a guaranteed copying mechanism. '
                      'No generated code execution, smoke/fresh-probe access or automatic checkpoint promotion.'}
@@ -216,10 +221,30 @@ def run(source,dataset,output,arm):
     (output/'audit.json').write_bytes(base.encoded({**evidence,'report_sha256':base.digest(raw)}))
     print(json.dumps({'arm':arm,'summary':report['summary']['after'],'loss_endpoints':endpoints,
                       'model_sha256':report['model_sha256'],'audit':evidence}),flush=True)
+    return report
+
+
+def check_pair(control,repeat,aligned):
+    if base.encoded(control)!=base.encoded(repeat):
+        raise RuntimeError('same-host control repeat differs')
+    if (control['before']!=aligned['before'] or control['schedule']!=aligned['schedule'] or
+            control['initial_model_id']!=aligned['initial_model_id'] or control['runtime']!=aligned['runtime']):
+        raise RuntimeError('paired initialization, runtime or exposure differs')
+    return {'same_host_control_repeat_identical':True,'initial_outputs_identical':True,
+            'schedule_identical':True,'historical_control_checkpoint_equal':control['historical_checkpoint_equal'],
+            'report_sha256':{arm:base.digest(base.encoded(r)) for arm,r in [('control',control),('aligned',aligned)]}}
+
+
+def run_pair(source,dataset,output):
+    control=run(source,dataset,output/'control','control')
+    repeat=run(source,dataset,output/'control-repeat','control')
+    aligned=run(source,dataset,output/'aligned','aligned')
+    evidence=check_pair(control,repeat,aligned)
+    (output/'pair-audit.json').write_bytes(base.encoded(evidence))
+    print(json.dumps({'paired_audit':evidence}),flush=True)
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     for name in ('source','dataset','output'):parser.add_argument('--'+name,type=Path,required=True)
-    parser.add_argument('--arm',choices=ARMS,required=True)
-    args=parser.parse_args();run(args.source,args.dataset,args.output,args.arm)
+    args=parser.parse_args();run_pair(args.source,args.dataset,args.output)

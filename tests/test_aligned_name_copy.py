@@ -100,6 +100,8 @@ class AlignedCopyTests(unittest.TestCase):
                 'initial_model_id':base.SOURCE_MODEL_ID,'source_run_id':base.SOURCE_RUN,
                 'source_report_sha256':base.REPORT_SHA256,'optimizer':base.OPTIMIZER,
                 'model_sha256':experiment.CONTROL_MODEL_SHA256,'exported_weights_equal':True,
+                'historical_checkpoint_equal':True,
+                'runtime':{'fixture':True},
                 'development_sha256':base.digest(base.encoded(groups)),
                 'schedule':base.schedule_evidence(base.training_data(DATASET),'resampled'),
                 'summary':{s:experiment.summaries(d) for s,d in phases.items()},
@@ -116,6 +118,14 @@ class AlignedCopyTests(unittest.TestCase):
             lambda r:r['schedule'].update(response_targets=0)):
             changed=copy.deepcopy(report);mutate(changed)
             with self.assertRaises(ValueError):experiment.audit(changed,DATASET)
+
+    def test_same_host_pair_requires_exact_control_repeat_and_shared_exposure(self):
+        control=self.fixture();repeat=copy.deepcopy(control);aligned=copy.deepcopy(control)
+        self.assertTrue(experiment.check_pair(control,repeat,aligned)['same_host_control_repeat_identical'])
+        repeat['model_sha256']='different'
+        with self.assertRaisesRegex(RuntimeError,'control repeat'):experiment.check_pair(control,repeat,aligned)
+        repeat=copy.deepcopy(control);aligned['schedule']['response_targets']=0
+        with self.assertRaisesRegex(RuntimeError,'exposure'):experiment.check_pair(control,repeat,aligned)
 
 
 if __name__=='__main__':unittest.main()

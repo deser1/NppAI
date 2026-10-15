@@ -8,10 +8,6 @@ on:
       - 'tests/test_aligned_name_copy.py'
 jobs:
   experiment:
-    strategy:
-      fail-fast: false
-      matrix:
-        arm: [control, aligned]
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -35,11 +31,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
-      - name: Train matched objective and evaluate full responses and assisted bytes
-        run: python scripts/aligned_name_copy.py --source source --dataset evaluation/instruction-v3 --output measured --arm '${{ matrix.arm }}'
+      - name: Repeat control and compare objective on the same host
+        run: python scripts/aligned_name_copy.py --source source --dataset evaluation/instruction-v3 --output measured
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: nppai-aligned-copy-${{ matrix.arm }}
+          name: nppai-aligned-copy-paired
           path: measured/
           retention-days: 14
