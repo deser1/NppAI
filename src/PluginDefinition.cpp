@@ -136,6 +136,7 @@ void ExecuteAIGeneration() {
 
   // Zmień przycisk na "Zatrzymaj"
   isGenerating = true;
+  AIManager::getInstance().beginGeneration();
   SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
 
   // Pobranie ścieżki pliku (dla pamięci RAG)

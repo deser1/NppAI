@@ -19,6 +19,8 @@ public:
     // Funkcja wywołująca model AI z obsługą strumieniowania do interfejsu (char, isThought)
     std::string generateCode(const std::string& prompt, const std::string& currentContext, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr, std::function<void(const std::string&)> onStatus = nullptr);
 
+    void beginGeneration() { generationCancelled = false; }
+
     // Zatrzymuje działanie generatora
     void stopGeneration() { generationCancelled = true; engine.stopGeneration(); }
 

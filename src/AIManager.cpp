@@ -110,7 +110,7 @@ std::string AIManager::generateCode(const std::string &prompt,
                                     std::function<void(int)> onRemove,
                                     std::function<void(const std::string&)> onStatus) {
   std::lock_guard<std::mutex> lock(generationMutex);
-  generationCancelled = false;
+  if (generationCancelled) throw std::runtime_error("Generation cancelled");
   const auto request = AIPromptPipeline::prepare(prompt, currentContext);
   if (!request.error.empty()) throw std::runtime_error(request.error);
   const auto mode = AutomaticModelRouting::parseMode(environment("NPPAI_PLUGIN_MODE"));

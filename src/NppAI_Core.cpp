@@ -79,6 +79,13 @@ extern "C" __declspec(dllexport) const char* generateForTesting(const char* task
 extern "C" __declspec(dllexport) void loadModelForTesting(const char* path) {
   AIManager::getInstance().loadModel(path);
 }
+extern "C" __declspec(dllexport) void beginGenerationForTesting() {
+  AIManager::getInstance().beginGeneration();
+}
+extern "C" __declspec(dllexport) void stopGenerationForTesting() {
+  AIManager::getInstance().stopGeneration();
+}
+
 
 #endif
 

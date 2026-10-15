@@ -104,6 +104,13 @@ def main(executable, dll_path):
             before = len(seen)
             assert generate(b'task', b'').startswith(b'ERROR:')
             assert len(seen) == before
+            os.environ['NPPAI_PLUGIN_MODE'] = 'auto'
+            plugin.stopGenerationForTesting()
+            before = len(seen)
+            assert b'cancelled' in generate(b'task', b'')
+            assert len(seen) == before, 'cancelled preparation sent a request'
+            plugin.beginGenerationForTesting()
+            assert generate(b'task', b'') == b'ok'
         print('Native WinHTTP and actual plugin automatic selection tests passed')
     finally:
         server.shutdown()
