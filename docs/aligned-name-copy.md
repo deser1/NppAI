@@ -31,7 +31,7 @@ losses and backpropagates the combined objective.
 No coefficient search or best-of-seeds selection is performed.
 
 The workflow runs control, a fresh control repeat, then aligned training in one
-process on the same host with deterministic PyTorch algorithms. The two complete
+process on the same host with the original PyTorch algorithm settings. The two complete
 control reports, including weights, losses, generations and byte diagnostics,
 must be byte-identical. Both arms must share initial outputs, runtime and training
 schedule. All cached original/renamed control replies and common initial replies

@@ -131,7 +131,7 @@ def check_reproduction(report,old):
         if stage=='after' and report['arm']!='control':continue
         for group,cases in old[stage].items():
             if [c['output'] for c in report[stage][group]]!=[c['output'] for c in cases]:
-                raise ValueError('cached control generations differ')
+                raise ValueError(f'cached control generations differ: {stage}/{group}')
     expected=(report['model_sha256']==CONTROL_MODEL_SHA256) if report['arm']=='control' else None
     if report['historical_checkpoint_equal']!=expected:
         raise ValueError('historical checkpoint identity flag differs')
@@ -179,7 +179,7 @@ def run(source,dataset,output,arm):
     from scripts.check_dense_runtime_parity import load_weights,torch_model
     backend=pinned_backend(source)
     if backend.model_id!=base.SOURCE_MODEL_ID:raise ValueError('initial model differs')
-    torch.manual_seed(42);torch.set_num_threads(2);torch.use_deterministic_algorithms(True)
+    torch.manual_seed(42);torch.set_num_threads(2);torch.use_deterministic_algorithms(False)
     model=torch_model(backend.weights);model.eval()
     rows=base.training_data(dataset);groups=development(dataset)
     with torch.no_grad():before=evaluate(model,groups)
@@ -211,7 +211,7 @@ def run(source,dataset,output,arm):
             'before':before,'after':after,'summary':{'before':summaries(before),'after':summaries(after)},
             'retention':base.retention(before,after),'loss_endpoints':endpoints,'exported_weights_equal':True,
             'runtime':{'torch':torch.__version__,'threads':2,'context':256,'new_tokens':160,
-                       'deterministic_algorithms':True,'platform':platform.platform(),
+                       'deterministic_algorithms':torch.are_deterministic_algorithms_enabled(),'platform':platform.platform(),
                        'processor':platform.processor(),'python':platform.python_version()},
             'limits':'One seed; exposed development data. Same native architecture and export, no new inference head. '
                      'Last-layer attention supervision is a training objective, not a guaranteed copying mechanism. '
