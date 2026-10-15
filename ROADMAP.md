@@ -33,6 +33,9 @@ Recent RAG regression work:
 
 ## Next
 
+- [x] Add executable standalone local/online/hybrid generation backends and an authenticated inference service using the same dense v2 runtime. See [model-backends](docs/model-backends.md).
+- [ ] Integrate backend selection with the plugin UI and existing bounded repair/patch-review workflow; evaluate complete tasks before calling the agent autonomous.
+
 - [x] Diagnose frozen body argument bytes: body-only conditional initials38/456 and suffixes141/1512; all models0/456 complete alias occurrences despite gold prefixes. See [body-byte-diagnostic](docs/body-byte-diagnostic.md); arbitrary-name copying remains open, no model promotion.
 
 - [x] Measure matched body-only loss: assisted renamed test84/336 versus65/336 control, new-argument0/336 in both and body-only autonomous valid-function syntax0/1100. See [body-loss-masking](docs/body-loss-masking.md); binding and original-test retention remain open, no promotion.

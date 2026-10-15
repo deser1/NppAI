@@ -5,6 +5,7 @@ import logging
 import os
 import secrets
 import time
+import threading
 from collections import defaultdict, deque
 from datetime import datetime
 from pathlib import Path
@@ -12,6 +13,8 @@ from pathlib import Path
 from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
+from model_backends import (BackendUnavailable, DenseLocalBackend,
+                            GenerationRequest, GenerationResponse)
 
 DATASET_PATH = Path("datasets/instruct_dataset.txt")
 MODEL_PATH = Path("models/NppAI-model-v1.nppai")
@@ -51,6 +54,22 @@ rate_limit_lock = asyncio.Lock()
 rate_limit_hits: dict[str, deque[float]] = defaultdict(deque)
 model_version_cache_key: tuple[int, int] | None = None
 model_version_cache_value: str | None = None
+inference_lock = threading.Lock()
+inference_backend: DenseLocalBackend | None = None
+
+
+def generate_with_configured_model(payload: GenerationRequest) -> GenerationResponse:
+    """Called with admission held; releases it even after client cancellation."""
+    global inference_backend
+    try:
+        if inference_backend is None:
+            path = os.getenv("NPPAI_INFERENCE_MODEL")
+            if not path:
+                raise BackendUnavailable("Inference model is not configured")
+            inference_backend = DenseLocalBackend(path)
+        return inference_backend.generate(payload)
+    finally:
+        inference_lock.release()
 
 
 class SubmitKnowledgeRequest(BaseModel):
@@ -193,6 +212,32 @@ async def run_training_process():
                 )
 
         training_task = asyncio.create_task(run())
+
+
+@app.post("/api/v1/generate", response_model=GenerationResponse, tags=["Inference"])
+async def generate_code(
+    payload: GenerationRequest,
+    _: None = Depends(require_api_key),
+    __: None = Depends(enforce_rate_limit),
+):
+    if not inference_lock.acquire(blocking=False):
+        raise HTTPException(status_code=503, detail="Inference is busy")
+    try:
+        # Shield keeps the worker's admission slot held after HTTP cancellation.
+        future = asyncio.get_running_loop().run_in_executor(
+            None, generate_with_configured_model, payload)
+    except BaseException:
+        inference_lock.release()
+        raise
+    try:
+        return await asyncio.shield(future)
+    except BackendUnavailable:
+        raise HTTPException(status_code=503, detail="Inference model unavailable") from None
+    except ValueError:
+        raise HTTPException(status_code=422, detail="Request exceeds model capacity") from None
+    except Exception:
+        logger.error("event=inference_failed")
+        raise HTTPException(status_code=500, detail="Inference failed") from None
 
 
 @app.post(

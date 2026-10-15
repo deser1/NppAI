@@ -11,9 +11,9 @@ import tempfile
 import numpy as np
 
 
-def load_weights(path):
-    raw = Path(path).read_bytes()
-    if raw[:8] != b"NPPAI\0\0\0" or struct.unpack_from("<I", raw, 8)[0] != 2:
+def load_weights(path, *, raw=None):
+    raw = Path(path).read_bytes() if raw is None else raw
+    if len(raw) < 72 or raw[:8] != b"NPPAI\0\0\0" or struct.unpack_from("<I", raw, 8)[0] != 2:
         raise ValueError("only dense v2 checkpoints are supported")
     dim, hidden, layers, context, vocab = struct.unpack_from("<5i", raw, 12)
     size = struct.unpack_from("<Q", raw, 32)[0]

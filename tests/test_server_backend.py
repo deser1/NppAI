@@ -9,7 +9,7 @@ import server_backend
 from server_backend import MAX_REQUEST_BYTES, SubmitKnowledgeRequest, submit_knowledge, app
 
 
-async def call_app(body: bytes, content_length: str | None, extra_headers=None, client_host="127.0.0.1"):
+async def call_app(body: bytes, content_length: str | None, extra_headers=None, client_host="127.0.0.1", path="/api/submit_knowledge"):
     messages = [{"type": "http.request", "body": body, "more_body": False}]
     sent = []
 
@@ -36,8 +36,8 @@ async def call_app(body: bytes, content_length: str | None, extra_headers=None, 
         "http_version": "1.1",
         "method": "POST",
         "scheme": "http",
-        "path": "/api/submit_knowledge",
-        "raw_path": b"/api/submit_knowledge",
+        "path": path,
+        "raw_path": path.encode("ascii"),
         "query_string": b"",
         "headers": headers,
         "client": (client_host, 12345),
