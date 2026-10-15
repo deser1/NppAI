@@ -6,6 +6,8 @@
 #include <windows.h>
 #include "NppAIEngine.h"
 
+std::string getPluginDllDirectory();
+
 class AIManager {
 public:
     static AIManager& getInstance() {
@@ -17,8 +19,10 @@ public:
     void loadModel(const std::string& modelPath);
 
     // Funkcja wywołująca model AI z obsługą strumieniowania do interfejsu (char, isThought)
-    std::string generateCode(const std::string& prompt, const std::string& currentContext, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr, std::function<void(const std::string&)> onStatus = nullptr);
+    std::string generateCode(const std::string& prompt, const std::string& currentContext, std::function<void(char, bool)> onToken = nullptr, std::function<void(int)> onRemove = nullptr, std::function<void(const std::string&)> onStatus = nullptr, bool forceOnline = false);
 
+    bool isGenerationCancelled() const { return generationCancelled.load(); }
+    bool mayEscalateOnline() const;
     void beginGeneration() { generationCancelled = false; }
 
     // Zatrzymuje działanie generatora

@@ -13,6 +13,10 @@ struct HostProbe {
 };
 
 struct ScintillaProbe {
+    std::string documentText = "old\n";
+    std::size_t targetStart = 0, targetEnd = 0;
+    int undoBegins = 0, undoEnds = 0;
+    bool readOnly = false;
     int dwellTime = -1;
     int setDwellCalls = 0;
     int selectionStart = 10;
@@ -43,6 +47,22 @@ LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
     }
 
     auto* probe = reinterpret_cast<ScintillaProbe*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+    if (probe && message == SCI_GETDOCPOINTER) return reinterpret_cast<LRESULT>(probe);
+    if (probe && message == SCI_GETLENGTH) return static_cast<LRESULT>(probe->documentText.size());
+    if (probe && message == SCI_GETREADONLY) return probe->readOnly;
+    if (probe && message == SCI_GETTEXT) {
+        std::memcpy(reinterpret_cast<void*>(lParam), probe->documentText.c_str(), probe->documentText.size() + 1);
+        return static_cast<LRESULT>(probe->documentText.size());
+    }
+    if (probe && message == SCI_SETTARGETRANGE) { probe->targetStart = wParam; probe->targetEnd = lParam; return 0; }
+    if (probe && message == SCI_REPLACETARGET) {
+        if (probe->readOnly) return -1;
+        probe->documentText.replace(probe->targetStart, probe->targetEnd - probe->targetStart,
+                                   reinterpret_cast<const char*>(lParam), wParam);
+        return wParam;
+    }
+    if (probe && message == SCI_BEGINUNDOACTION) { ++probe->undoBegins; return 0; }
+    if (probe && message == SCI_ENDUNDOACTION) { ++probe->undoEnds; return 0; }
     if (message == SCI_SETMOUSEDWELLTIME) {
         if (probe) {
             probe->dwellTime = static_cast<int>(wParam);
@@ -281,6 +301,32 @@ int wmain(int argc, wchar_t** argv) {
         shutdown.nmhdr.code = NPPN_SHUTDOWN;
         beNotified(&shutdown);
         ok &= check(true, "ready and shutdown notifications completed");
+    }
+
+    using StageReview = void (__cdecl*)(HWND, const char*);
+    using ReviewAction = void (__cdecl*)();
+    const auto stageReview = reinterpret_cast<StageReview>(GetProcAddress(plugin, "stageBufferReviewForTesting"));
+    const auto applyReview = reinterpret_cast<ReviewAction>(GetProcAddress(plugin, "applyBufferReviewForTesting"));
+    const auto rejectReview = reinterpret_cast<ReviewAction>(GetProcAddress(plugin, "rejectBufferReviewForTesting"));
+    ok &= check(stageReview && applyReview && rejectReview, "buffer review seams available in test DLL");
+    if (stageReview && applyReview && rejectReview) {
+        hostProbe.currentScintilla = 0;
+        mainProbe.documentText = "old\n";
+        stageReview(scintillaMain, "new\n");
+        ok &= check(mainProbe.documentText == "old\n", "proposal leaves editor unchanged before acceptance");
+        rejectReview(); applyReview();
+        ok &= check(mainProbe.documentText == "old\n", "rejected proposal never changes editor");
+        stageReview(scintillaMain, "new\n");
+        mainProbe.documentText = "edited\n"; applyReview();
+        ok &= check(mainProbe.documentText == "edited\n", "stale review refuses to overwrite edits");
+        stageReview(scintillaMain, "new\n");
+        hostProbe.currentScintilla = 1; applyReview();
+        ok &= check(mainProbe.documentText == "edited\n", "inactive original document blocks apply");
+        hostProbe.currentScintilla = 0; mainProbe.readOnly = true; applyReview();
+        ok &= check(mainProbe.documentText == "edited\n", "read-only document blocks apply");
+        mainProbe.readOnly = false; applyReview();
+        ok &= check(mainProbe.documentText == "new\n" && mainProbe.undoBegins == 1 && mainProbe.undoEnds == 1,
+                    "accepted unchanged snapshot applies as one undo action");
     }
 
     if (scintillaSecond) DestroyWindow(scintillaSecond);

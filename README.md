@@ -6,6 +6,23 @@ The project focuses on **local inference, systems-level implementation, model fo
 
 > **Project status:** experimental / active development. Model quality, performance and deployment characteristics are still being validated.
 
+## Validated generation and automatic repair
+
+The plugin stages a proposal, checks Python syntax and authored function tests
+in a restricted **local Docker container**, then repairs failures with a limit
+of **three candidates total**. Automatic mode can escalate failed local
+proposals to the configured online model. The panel shows diagnostics and a
+diff; **Apply** requires successful validation and an unchanged original buffer,
+and creates one undo action. **Reject** leaves the document unchanged.
+
+This first profile supports UTF-8 Python buffers and user-authored JSON function
+cases. Python, a prepared local Docker Linux image and a test suite must be
+configured; missing infrastructure blocks Apply. Passing those cases does not
+establish general coding ability. Other language/build profiles remain open.
+See [setup, limits and test evidence](docs/validated-generation.md), the
+[example suite](examples/python-validation-cases.json), and
+[automatic local/online selection](docs/automatic-plugin-mode.md).
+
 ## Highlights
 
 - **Custom C++ inference engine** implementing Transformer-style building blocks.

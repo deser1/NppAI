@@ -76,6 +76,9 @@ jobs:
     - name: Run model backend contract and transport tests
       run: python -m unittest discover -s tests -p "test_model_backends.py" -v
 
+    - name: Run sandbox contract tests
+      run: python -m unittest discover -s tests -p "test_sandbox_validate.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 
@@ -247,3 +250,25 @@ jobs:
           benchmark-results\*.txt
           benchmark-results\*.json
           benchmark-results\*.jsonl
+
+  sandbox-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Resolve local Python runtime image
+      shell: bash
+      run: |
+        docker pull python:3.12-slim
+        printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+    - name: Test actual isolated validation
+      env:
+        NPPAI_SANDBOX_INTEGRATION: '1'
+      run: python -m unittest discover -s tests -p 'test_sandbox_validate.py' -v
+    - name: Ensure validator containers were removed
+      if: always()
+      shell: bash
+      run: test -z "$(docker ps -aq --filter name=nppai-validate-)"

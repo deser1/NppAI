@@ -26,6 +26,8 @@ add_library(NppAI SHARED
     src/PluginPromptActions.cpp
     src/AutomaticModelRouting.cpp
     src/RemoteModelClient.cpp
+    src/ValidatedGeneration.cpp
+    src/PythonValidationProcess.cpp
     src/AIManager.cpp
     src/AIPromptPipeline.cpp
     src/RAGManager.cpp
@@ -255,4 +257,16 @@ find_package(Python3 COMPONENTS Interpreter)
 if(Python3_Interpreter_FOUND AND NPPAI_TEST_HOST_SEAM)
     add_test(NAME TestPluginRemoteTransport COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_plugin_remote_transport.py $<TARGET_FILE:TestAutomaticModelRouting> $<TARGET_FILE:NppAI>)
     set_tests_properties(TestPluginRemoteTransport PROPERTIES TIMEOUT 120)
+endif()
+
+add_custom_command(TARGET NppAI POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    ${CMAKE_CURRENT_SOURCE_DIR}/sandbox_validate.py $<TARGET_FILE_DIR:NppAI>/sandbox_validate.py)
+add_executable(TestValidatedGeneration tests/test_validated_generation.cpp src/ValidatedGeneration.cpp src/AgentFeedbackLoop.cpp src/BoundedRepairLoop.cpp src/GenerationStreamRouter.cpp src/StructuredPatch.cpp src/AgentTaskOutcome.cpp src/PatchReview.cpp src/WorkspaceFileReader.cpp)
+target_include_directories(TestValidatedGeneration PRIVATE src)
+add_test(NAME ValidatedGeneration COMMAND TestValidatedGeneration)
+add_executable(TestPythonValidationProcess tests/test_python_validation_process.cpp src/PythonValidationProcess.cpp)
+target_include_directories(TestPythonValidationProcess PRIVATE src)
+if(Python3_Interpreter_FOUND)
+    add_test(NAME PythonValidationProcess COMMAND TestPythonValidationProcess ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixture_validator_process.py)
+    set_tests_properties(PythonValidationProcess PROPERTIES TIMEOUT 30)
 endif()

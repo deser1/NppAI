@@ -1,6 +1,7 @@
 # Automatic inference selection in the Notepad++ plugin
 
-The generation button uses `auto` mode by default. The plugin chooses where to
+The generation button uses `auto` mode by default and stages results through
+[validated generation and review](validated-generation.md). The plugin chooses where to
 request a completion; the user does not choose a backend for each question.
 The server is the user's configured NppAI service and model, not a built-in
 subscription to an external model provider.
@@ -22,8 +23,8 @@ native/server architecture and model limits still apply. A server with the same
 tiny context cannot solve a context-overflow request merely by being online.
 
 These are capability checks, not a learned complexity classifier or confidence
-score. Nonempty output may still contain incorrect code. Compilation/tests and a
-bounded repair workflow remain separate work; the existing weak-model quality
+score. Nonempty output may still contain incorrect code. The initial Python compilation/test and bounded repair workflow is described
+in [validated-generation](validated-generation.md); the existing weak-model quality
 results are not improved by routing. Nothing executes generated code.
 
 ## One-time configuration
@@ -52,21 +53,19 @@ configuration, default `auto` operates locally within the available model limit.
 This controls **generation only**, not the existing knowledge-ingestion,
 telemetry or model-update paths.
 
-The status label shows the chosen backend and reason and retains it after a
-successful response. Backend/protocol errors are displayed in the panel rather
+The status label shows the chosen backend and reason during generation; the
+final review report records candidate backend decisions and validation results. Backend/protocol errors are displayed in the panel rather
 than inserted into the source file or reported as success. Failure after partial
 local streaming leaves that partial text available for normal editor undo;
 there is no automatic remote retry after code is published.
 
-Native local streaming starts on the first non-whitespace completion byte and
-preserves the optional signature prefix exactly once. Online output is buffered
-until its HTTP response and schema have been validated, then delivered through
-the same editor callback. Generation has a 512-new-token cap. Responses are
-bounded to 16 KiB, use strict UTF-8/JSON schema checks, and never follow HTTP
-redirects. The client uses no ambient proxy or automatic Windows authentication.
-The API key is sent only to the configured endpoint. The server must accept the
-optional `assistant_prefix` request field introduced with this integration;
-older servers that reject this field need updating.
+The native backend still supports callbacks, but the panel now buffers proposals
+for validation and diff review. Only an explicit Apply changes the editor.
+Python signature prefixes are preserved exactly once. Generation has a
+512-new-token cap. Responses are bounded to 16 KiB and use strict UTF-8/JSON
+schema checks; the HTTP client refuses redirects, ambient proxies and automatic
+Windows authentication. The server must accept the optional `assistant_prefix`
+request field. Older servers that reject it need updating.
 
 Stop requests cancel native inference and discard any outstanding online result.
 For synchronous network operations, stopping can wait for the current bounded

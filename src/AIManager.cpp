@@ -104,11 +104,17 @@ bool hasCode(const std::string& text) {
 }
 }
 
+bool AIManager::mayEscalateOnline() const {
+  return AutomaticModelRouting::parseMode(environment("NPPAI_PLUGIN_MODE")) == AutomaticModelRouting::Mode::Automatic &&
+      environment("NPPAI_ALLOW_REMOTE") == "1" && !environment("NPPAI_GENERATION_URL").empty() &&
+      !environment("NPPAI_API_KEY").empty();
+}
+
 std::string AIManager::generateCode(const std::string &prompt,
                                     const std::string &currentContext,
                                     std::function<void(char, bool)> onToken,
                                     std::function<void(int)> onRemove,
-                                    std::function<void(const std::string&)> onStatus) {
+                                    std::function<void(const std::string&)> onStatus, bool forceOnline) {
   std::lock_guard<std::mutex> lock(generationMutex);
   if (generationCancelled) throw std::runtime_error("Generation cancelled");
   const auto request = AIPromptPipeline::prepare(prompt, currentContext);
@@ -117,7 +123,9 @@ std::string AIManager::generateCode(const std::string &prompt,
   const auto endpoint = environment("NPPAI_GENERATION_URL");
   const auto key = environment("NPPAI_API_KEY");
   const bool remote = environment("NPPAI_ALLOW_REMOTE") == "1" && !endpoint.empty() && !key.empty();
-  const auto decision = AutomaticModelRouting::select(mode, localReady,
+  if (forceOnline && (mode != AutomaticModelRouting::Mode::Automatic || !remote))
+    throw std::runtime_error("Online escalation is not permitted");
+  const auto decision = AutomaticModelRouting::select(forceOnline ? AutomaticModelRouting::Mode::Online : mode, localReady,
       request.inferencePrompt.size(), localReady ? engine.contextCapacity() : 0, remote);
   if (onStatus) onStatus(decision.reason);
   if (decision.backend == AutomaticModelRouting::Backend::Unavailable)

@@ -1,0 +1,5 @@
+[
+  {"function":"add","args":[2,3],"kwargs":{},"expected":5},
+  {"function":"add","args":[-4,4],"kwargs":{},"expected":0},
+  {"function":"add","args":[0,0],"kwargs":{},"expected":0}
+]

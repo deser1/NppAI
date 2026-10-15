@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Stage plugin proposals for Python syntax/tests in a restricted local Docker profile; connect existing feedback, bounded repair, structured diff, review and outcome components. Limit work to three candidates, permit configured online escalation after two local failures, and require validated unchanged-buffer review before one-undo Apply. Add authored test-suite configuration, container/process/editor-boundary tests and bundled validator setup documentation. Other language profiles and real-model task success remain open.
+
 - Make plugin generation select local or configured online inference automatically using model availability and byte-context fit, with empty-local fallback before streaming, visible decision reasons, native WinHTTP transport, cancellation/error handling and signature-prefix parity. Add policy/protocol and real Windows HTTP tests.
 
 - Add a shared local/online/hybrid Python model backend contract, dense v2 CPU generation client and authenticated inference endpoint with explicit remote-transfer opt-in, admission limits and transport/runtime tests. Plugin UI integration and autonomous tool orchestration remain open.

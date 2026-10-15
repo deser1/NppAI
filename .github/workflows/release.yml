@@ -43,6 +43,10 @@ jobs:
           Copy-Item "${{ matrix.output }}\\NppAI.dll" "$packageRoot\\NppAI.dll"
           Copy-Item "README.md" "$packageRoot\\README.md"
           Copy-Item "docs\\model-format.md" "$packageRoot\\model-format.md"
+          Copy-Item "sandbox_validate.py" "$packageRoot\sandbox_validate.py"
+          New-Item -ItemType Directory -Force "$packageRoot\docs", "$packageRoot\examples" | Out-Null
+          Copy-Item "docs\validated-generation.md" "$packageRoot\docs\validated-generation.md"
+          Copy-Item "examples\python-validation-cases.json" "$packageRoot\examples\python-validation-cases.json"
           Compress-Archive -Path "release\\${{ matrix.package }}" -DestinationPath "release\\${{ matrix.package }}.zip"
 
       - name: Upload package artifact
