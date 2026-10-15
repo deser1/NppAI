@@ -1,0 +1,32 @@
+[
+  {
+    "task_id": "offset",
+    "prompt": "Write Python function offset(number): return number plus 7. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/offset.json"
+  },
+  {
+    "task_id": "distance",
+    "prompt": "Write Python function distance(left,right): return their absolute difference. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/distance.json"
+  },
+  {
+    "task_id": "first_even",
+    "prompt": "Write Python function first_even(values): return first even integer or None. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/first_even.json"
+  },
+  {
+    "task_id": "ends",
+    "prompt": "Write Python function ends(text): return first plus last character, or empty for empty text. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/ends.json"
+  },
+  {
+    "task_id": "bounded",
+    "prompt": "Write Python function bounded(value,low,high): clamp value between low and high. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/bounded.json"
+  },
+  {
+    "task_id": "count_negative",
+    "prompt": "Write Python function count_negative(values): count numbers below zero. Code only.",
+    "cases_file": "evaluation/local-smoke-v1/count_negative.json"
+  }
+]

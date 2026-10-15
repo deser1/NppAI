@@ -1,4 +1,5 @@
 ## Unreleased
+- Add real local-model first-pass functional smoke measurement with pinned checkpoint provenance, six authored probes, Docker isolation, latency and explicit failure categories.
 - Report real-model replay metrics by initial backend and reject changed test suites between attempts.
 
 - Add bounded model repair candidate collection with Docker validation, feedback-based retry, and tests for success and infrastructure failures.

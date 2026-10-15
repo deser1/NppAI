@@ -1,0 +1,47 @@
+name: Frozen local model functional smoke
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/local-model-smoke.yml'
+      - 'scripts/run_local_model_smoke.py'
+      - 'evaluation/local-smoke-v1/**'
+      - 'tests/test_local_model_smoke.py'
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install inference runtime
+        run: python -m pip install 'numpy==2.3.5' 'pydantic>=2.7,<3'
+      - name: Verify orchestration
+        run: python -m unittest discover -s tests -p 'test_local_model_smoke.py' -v
+      - name: Download frozen checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir frozen-model
+      - name: Resolve immutable validator image
+        run: |
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Generate and validate actual model outputs
+        run: python scripts/run_local_model_smoke.py --source frozen-model --image "$NPPAI_VALIDATION_IMAGE" --output smoke-results/report.json
+      - name: Require container cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-local-model-functional-smoke
+          path: smoke-results/
+          retention-days: 14

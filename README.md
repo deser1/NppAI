@@ -337,3 +337,5 @@ First-attempt output collection from configured real local/online models: [real-
 Bounded actual-model repair experiments (up to three Docker-validated attempts) are documented in [real-model evaluation](docs/real-model-e2e.md). Results require configured real models; CI fixture tests do not establish model quality.
 
 Replay evaluation now reports separate first-attempt local/online metrics and rejects changing test suites between retries; see [evaluation guide](docs/real-model-e2e.md).
+
+Frozen local-model functional smoke probes (actual inference, Docker-only execution and raw provenance): [protocol](docs/local-model-smoke.md). This is a six-task first-pass diagnostic, not evidence of broad coding competence.
