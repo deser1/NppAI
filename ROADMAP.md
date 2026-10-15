@@ -209,4 +209,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Improve requested function-name/signature copying and complete bodies on training/development data, then evaluate a genuinely independent broader task set and configured online comparison.
 
 - [x] Implement a matched 1024-update fixed/per-draw function-alias continuation with full-response targets and auditable sampling. See [protocol](docs/resampled-name-training.md).
-- [ ] Record both measured copying outcomes and original-task retention; require broader independent evidence before checkpoint promotion.
+- [x] Measure both name-training arms: 0/88 requested names/signatures and complete matches before/after; retain raw reports and explicitly vacuous retention, no promotion.
+- [ ] Diagnose prompt-to-output name-byte prediction on training/development prefixes before allocating a larger copying experiment; retain independent evaluation for later.

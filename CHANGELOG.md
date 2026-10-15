@@ -1,4 +1,5 @@
 ## Unreleased
+- Record matched name-training results: fixed and per-draw aliases both remain 0/88 requested names/signatures and full reference matches; preserve raw reports and reject promotion based on syntax-only changes.
 - Add matched fixed versus per-draw function-alias training, raw-output/retention scoring and an independently reconstructed evidence audit; production checkpoints remain unchanged.
 - Record actual frozen local smoke results: 0/6 passed, 2 syntax failures, 4 missing requested callables; retain unmodified raw evidence and runner latency (52.6 ms median), without model promotion.
 - Add real local-model first-pass functional smoke measurement with pinned checkpoint provenance, six authored probes, Docker isolation, latency and explicit failure categories.
