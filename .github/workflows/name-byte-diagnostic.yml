@@ -1,0 +1,44 @@
+name: Frozen function-name byte diagnostic
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/name-byte-diagnostic.yml'
+      - 'scripts/diagnose_name_bytes.py'
+      - 'tests/test_name_byte_diagnostic.py'
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed inference runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'pydantic>=2.7,<3'
+      - name: Verify byte offsets, causal inference and evidence integrity
+        run: python -m unittest discover -s tests -p 'test_name_byte_diagnostic.py' -v
+      - name: Download frozen checkpoint triple
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir initial
+          gh run download 38804571444 --repo '${{ github.repository }}' --name nppai-name-training-fixed --dir fixed
+          gh run download 38804571444 --repo '${{ github.repository }}' --name nppai-name-training-resampled --dir resampled
+      - name: Measure conditional bytes and independent scaffolded decoding
+        run: python scripts/diagnose_name_bytes.py --initial initial --fixed fixed --resampled resampled --dataset evaluation/instruction-v3 --output name-bytes
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-name-byte-diagnostic
+          path: name-bytes/
+          retention-days: 14

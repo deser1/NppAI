@@ -345,3 +345,5 @@ Observed frozen local smoke result: **0/6 tasks passed** (2 syntax failures, 4 m
 Matched function-name learning experiment: [fixed versus per-draw aliases](docs/resampled-name-training.md), with full-response supervision and explicit original-task retention. Experimental checkpoints are not promoted automatically.
 
 Measured fixed/per-draw name continuation: both remain **0/88 requested names/signatures and complete reference matches** after 1024 updates. Syntax changes do not establish copying. [Raw reports and limits](docs/resampled-name-training.md#observed-outcome); no model promotion.
+
+Frozen name-copy diagnosis separates conditional next-byte prediction, `def `-scaffolded name decoding and cached complete replies: [protocol](docs/name-byte-diagnostic.md). Assisted scores are not autonomous coding accuracy.
