@@ -352,4 +352,4 @@ Observed name-byte diagnosis: all three frozen models score **0/132 complete dev
 
 Training-only source-aligned name-copy objective with a matched replay control: [protocol](docs/aligned-name-copy.md). Architecture and inference stay unchanged; improvement requires observed full-response results.
 
-Measured aligned-copy objective: despite lower logged attention alignment loss, both arms remain **0/132 complete development names/signatures**. The exact control reproduced; no checkpoint is promoted. [Results and raw evidence](docs/aligned-name-copy.md#observed-outcome).
+Measured aligned-copy objective: despite lower logged attention alignment loss, both arms remain **0/132 complete development names/signatures**. Same-host control reports reproduced byte-for-byte; historical reply replay passed. No checkpoint is promoted. [Results and raw evidence](docs/aligned-name-copy.md#observed-outcome).

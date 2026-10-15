@@ -71,72 +71,69 @@ Implementation: `scripts/aligned_name_copy.py`; tests:
 
 ## Observed outcome
 
-The same-host paired protocol is now being measured. Results below describe the
-earlier two-job run and will be replaced by the paired evidence before completion.
-
-
-Valid matched run [38809724735](https://github.com/deser1/NppAI/actions/runs/38809724735)
-completed both arms on 2026-10-15. All six tests passed in each PyTorch job. The
-control reproduced the exact prior checkpoint and all cached full outputs.
-Both arms have identical initial full outputs and complete training schedules.
-Artifact ZIP digests were verified and both raw evidence audits repeated locally.
+Final same-host run [38811231542](https://github.com/deser1/NppAI/actions/runs/38811231542)
+completed on 2026-10-15. All seven tests passed with actual PyTorch gradients.
+Control, fresh control repeat and aligned training ran sequentially on the same
+runner. The two complete control reports are byte-identical, including checkpoint,
+losses, full generations and assisted byte diagnostics. Initial outputs and complete
+training schedules agree across arms. In this run, historical control checkpoint
+identity is also true; this is recorded, not assumed for arbitrary hardware.
 
 **Both arms obtain 0/132 development names, signatures, reference AST matches and
-exact complete responses.** Complete conditional names and scaffolded name hits
-also remain 0/132. The extra attention objective did not demonstrate improved
-complete name copying at this budget. Neither checkpoint is promoted.
+exact full responses.** Complete conditional-name and scaffolded-name counts also
+remain 0/132. The attention objective did not demonstrate complete copying at
+this budget. Neither checkpoint is promoted.
 
 | Logged training minibatch loss | Control initial / final | Aligned initial / final |
 |---|---:|---:|
-| Response cross entropy | 1.2386 / 0.2505 | 1.2386 / 0.2806 |
-| Attention alignment cross entropy | Not computed | 6.5236 / 2.1037 |
+| Response cross entropy | 1.2386 / 0.2505 | 1.2386 / 0.2791 |
+| Attention alignment cross entropy | Not computed | 6.5236 / 2.1081 |
 
-These are the first and last sampled training minibatches, not a held-out mean or
-same-example before/after loss. A smaller auxiliary loss does not establish a
-correct copying mechanism. It also does not offset zero complete-name results.
-CPU floating-point trajectories can differ with instrumentation; this small
-experiment does not identify a unique causal effect or justify coefficient tuning
-on these exposed development cases.
+These are first/last sampled minibatches, not a held-out mean or same-example
+before/after loss. A smaller auxiliary loss does not establish a correct copying
+mechanism. CPU floating-point trajectories can vary between runners, so this
+small experiment does not isolate a unique internal cause.
 
-| Group | Views | Control full signatures / exact responses | Aligned full signatures / exact responses |
+| Group | Views | Control signatures / exact responses | Aligned signatures / exact responses |
 |---|---:|---:|---:|
 | Original training draws | 16 | 5 / 4 | 6 / 5 |
 | Resampled training draws | 16 | 0 / 0 | 0 / 0 |
 | All development groups | 132 | 0 / 0 | 0 / 0 |
 
-The baseline had two exact-response hits in the 16 original training draws.
-Control retained none, lost two and gained four. Aligned retained one, lost one
-and gained four. These small exposed training changes are not generalization.
-Development retention is vacuous because the baseline had zero signature/exact
-hits. Syntax-only changes are mixed: on original test, control/aligned parse as
-functions in 26/28 versus 23/28 cases; on renamed test, 19/28 versus 24/28.
-Correct-function counts remain zero in both cases.
+The initial model had two exact hits in the 16 original training draws. Control
+retained none, lost two and gained four. Aligned retained one, lost one and gained
+four. These exposed training changes do not establish generalization. Development
+retention is vacuous because the initial model had zero signature/exact hits.
+Syntax-only changes are mixed: original test control/aligned functions parse in
+26/28 versus 25/28 cases; renamed test in 19/28 versus 22/28. Requested names
+remain zero. Functional behavior was not executed or established.
 
-A first [attempt](https://github.com/deser1/NppAI/actions/runs/38809328488) failed
-the strict control checkpoint check despite identical cached full replies. The
-control was changed to omit the unused auxiliary graph completely, and an exact
-control-gradient regression test was added. That failed comparison was not used
-for model selection; the coefficient and budget remained fixed. The valid run
-above passes the original checkpoint requirement.
+Earlier two-runner attempts exposed different control weight hashes despite
+matching cached replies; one runner reproduced the historical checkpoint and
+another did not. An attempted deterministic-algorithm override also changed
+cached replies and was reverted to the original algorithm settings. Those attempts
+are not treated as the final paired comparison. The protocol now requires the
+strict same-host report repeat and exact historical reply replay, with historical
+weight identity reported separately. No coefficient, seed or budget search was
+performed. [Earlier run](https://github.com/deser1/NppAI/actions/runs/38809724735).
 
-Raw evidence is retained in two chunk manifests, each with a full before snapshot
-and 22 after-case chunks. Reassembling the metadata and ordered cases with the
-shared `base.encoded` serializer reproduces the original report bytes:
+The paired ZIP was verified against SHA-256
+`4a09e5df01b1eb070a560d708cfa16d56722a4e5f7fe810894cfaf0baf110ac0`
+(artifact 12008593059). Raw metadata, full before snapshots and 22 after chunks
+per arm are retained in git and reconstruct the original report bytes:
 
 - [Control manifest](evidence/aligned-name-copy/control/manifest.json): report
-  SHA-256 `dbd029fb6dfb6239c6b4a73b367aad9520e35cd863ab04abc89a4e1227c3c173`;
-  artifact 12008381667 ZIP SHA-256
-  `6ba38af4476e202f115fcf3e15e5d3309e378ea20a6b3a90f3381212e3d6731a`.
+  SHA-256 `7712e75cbe5f2f873ac918023a5471234bc36bbeee82b8faa84eccf96da719c5`.
+  The fresh repeat has the same digest; both reports are in the original ZIP.
 - [Aligned manifest](evidence/aligned-name-copy/aligned/manifest.json): report
-  SHA-256 `482f18b8974c02f58d6fa380144f5aa147a0df949c575f26c1f3dca9084e27ed`;
-  artifact 12008106938 ZIP SHA-256
-  `a18eb684c6c2256c858c17bdc3291015ace116fb62caef99d9401c23811c3e3f`.
+  SHA-256 `0cd48bff5c59983f2dce5f97cc7b1c20ea0dcd4ae059cca752560a5635a275ac`.
+- [Paired audit](evidence/aligned-name-copy/pair-audit.json): exact control repeat,
+  initial-output and schedule agreement, plus explicit historical identity flag.
 
-The aligned checkpoint SHA-256 is
-`c7df99da89bc14c92d85fead93a70fde6f62645ba1d0814b10a938bc7bb82153`.
-No native/INT8 quality or functional-execution result is claimed for it. Before
-another training scale-up, compare a dedicated source-byte copy readout or other
-explicit copying mechanism against this baseline on training-only diagnostics,
-then require separate complete-code and independent functional evidence.
-
-Recorded evidence uses enforced LF checkout bytes so SHA-256 checks remain exact on Windows as well as Linux.
+Aligned checkpoint SHA-256:
+`8140e457692bada9b6db209b1a45e096c78f5ee06d592d2a846529fe058bea65`.
+No native/INT8 quality result is claimed for these new weights. Before scaling
+training, evaluate an explicit source-byte copy readout or another copying
+mechanism on training-only diagnostics, then require separate complete-code and
+independent functional evidence. Recorded files enforce LF checkout bytes so
+SHA-256 validation remains exact on Windows and Linux.

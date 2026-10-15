@@ -1,7 +1,7 @@
 ## Unreleased
 - Require byte-identical same-host control repeats for aligned-copy comparisons; record cross-runner historical weight identity separately while retaining exact cached-output checks.
 - Preserve recorded model-evidence hashes on Windows with LF checkout rules for docs/evidence.
-- Record source-aligned copy results: exact control replay succeeded, but both arms remain 0/132 development names/signatures despite lower logged auxiliary loss. Retain raw evidence and original-training losses; no checkpoint promotion.
+- Record source-aligned copy results: exact same-host control repeat and historical reply replay succeeded, but both arms remain 0/132 development names/signatures despite lower logged auxiliary loss. Retain raw evidence and original-training losses; no checkpoint promotion.
 - Add a matched training-only function-name source-position attention objective with exact control reproduction, UTF-8/causal index validation and separate complete-response versus assisted-copy evidence.
 - Record name-byte diagnostic results: 5580 causal checks passed; all three frozen models remain 0/132 complete development names under gold-prefix or def-scaffold assistance. Preserve raw evidence chunks; namespace gains do not establish copying or justify promotion.
 - Add frozen function-name byte diagnostics with causal-prefix checks, training/development namespace controls and independently audited raw evidence; no model changes.
