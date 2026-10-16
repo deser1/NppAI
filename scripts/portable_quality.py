@@ -16,6 +16,9 @@ CHECKPOINTS = {
     'native': '75b01f90c184507f63ee8aba4a1a95d30c1c61f780e3fd595fccd71d56c4a743',
     'both64': '1bd024a162d9cbc79929520db6fb6a28d256be98a87a3bcc4b8149670c9e1da7',
 }
+INFERENCE = {'arithmetic': 'native FP32 forward for both exported checkpoints',
+             'profile': PROFILE, 'context_bytes': 256, 'max_new_bytes': 160,
+             'decoding': 'greedy argmax', 'eos': 0, 'assistant_prefix': '', 'repair_attempts': 0}
 
 
 def digest(raw):
@@ -73,6 +76,58 @@ def audit_groups(results, groups):
     return aligned.summaries(results)
 
 
+def audit_report(report, dataset, tasks):
+    protocol_raw = (ROOT / 'evaluation/portable-quality-v1.json').read_bytes()
+    protocol = json.loads(protocol_raw)
+    groups, fingerprints = inputs(dataset, tasks)
+    if (report['protocol_sha256'] != digest(protocol_raw) or
+            report['inputs'] != fingerprints or fingerprints != protocol['inputs'] or
+            report['inference'] != INFERENCE or protocol['inference'] != INFERENCE or
+            report['source_run'] != SOURCE_RUN or report['artifact_id'] != ARTIFACT_ID or
+            report['archive_sha256'] != ARCHIVE_SHA256 or report['checkpoint_sha256'] != CHECKPOINTS or
+            report['promotion'] is not False or report['parameters_unchanged'] is not True or
+            set(report['models']) != set(CHECKPOINTS)):
+        raise ValueError('quality report provenance differs')
+    for model in report['models'].values():
+        if model['summary'] != audit_groups(model['groups'], groups):
+            raise ValueError('quality summary differs')
+    functional = report['functional']
+    if functional['manifest_sha256'] != fingerprints['tasks_sha256'] or set(functional['models']) != set(CHECKPOINTS):
+        raise ValueError('functional provenance differs')
+    import re
+    if not re.fullmatch(r'sha256:[0-9a-f]{64}', functional['image']):
+        raise ValueError('immutable validator image required')
+    expected = json.loads(tasks.read_bytes())
+    for result in functional['models'].values():
+        if result['tasks'] != len(expected) or len(result['cases']) != len(expected):
+            raise ValueError('functional case count differs')
+        for case, task in zip(result['cases'], expected):
+            if (any(case[key] != value for key, value in task.items()) or
+                    case['suite_sha256'] != fingerprints['suites'][task['task_id']] or
+                    case['category'] not in ('empty', 'syntax_failure', 'functional_failure', 'passed') or
+                    not isinstance(case['source'], str) or not isinstance(case['diagnostics'], str)):
+                raise ValueError('functional case differs')
+        if result['passed'] != sum(case['category'] == 'passed' for case in result['cases']):
+            raise ValueError('functional pass count differs')
+    return True
+
+
+def retained_report(directory):
+    manifest = json.loads((directory / 'manifest.json').read_bytes())
+    raw = (directory / 'report.json').read_bytes()
+    if digest(raw) != manifest['metadata_sha256']:
+        raise ValueError('retained metadata differs')
+    report = json.loads(raw)
+    for item in manifest['groups']:
+        raw = (directory / item['file']).read_bytes()
+        if digest(raw) != item['sha256']:
+            raise ValueError('retained group differs')
+        report['models'][item['arm']]['groups'][item['group']] = json.loads(raw)
+    if digest(encoded(report)) != manifest['report_sha256']:
+        raise ValueError('reconstructed quality report differs')
+    return report
+
+
 def run(archive, dataset, tasks, output, image):
     import torch
     from scripts import aligned_name_copy as aligned
@@ -82,7 +137,7 @@ def run(archive, dataset, tasks, output, image):
     protocol_raw = (ROOT / 'evaluation/portable-quality-v1.json').read_bytes()
     protocol = json.loads(protocol_raw)
     groups, fingerprints = inputs(dataset, tasks)
-    if fingerprints != protocol['inputs']:
+    if fingerprints != protocol['inputs'] or protocol['inference'] != INFERENCE:
         raise ValueError('frozen quality inputs differ')
     configure(torch, PROFILE)
     paths = checkpoints(archive, output / 'checkpoints')
@@ -110,6 +165,7 @@ def run(archive, dataset, tasks, output, image):
     report['parameters_unchanged'] = all(state_digest(model) == before[arm] for arm, model in models.items())
     if not report['parameters_unchanged']:
         raise ValueError('evaluation changed parameters')
+    audit_report(report, dataset, tasks)
     (output / 'report.json').write_bytes(encoded(report))
     print(json.dumps({'functional': {arm: r['passed'] for arm, r in functional['models'].items()},
                       'promotion': False}), flush=True)

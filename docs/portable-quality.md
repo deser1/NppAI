@@ -42,4 +42,37 @@ python scripts/portable_quality.py --archive training.zip \
 The workflow pins Python 3.12.15, Torch 2.14.1+cpu and NumPy 2.5.2. It preserves
 partial raw reports on failure, records actual CPU/runtime provenance and checks
 that evaluation left model parameters unchanged. Workflow success means the
-measurement completed, not that the model passed quality gates. Results pending.
+measurement completed, not that the model passed quality gates.
+
+## Measured result: promotion rejected
+
+[Run 38969403072](https://github.com/deser1/NppAI/actions/runs/38969403072)
+completed on AMD EPYC 7763. The original artifact ZIP SHA256/CRC, checkpoint
+digests, every complete-response metric and byte-exact report reconstruction
+were independently checked. Full raw replies, Docker diagnostics and runtime
+provenance are retained in `docs/evidence/portable-quality/`; its manifest binds
+the original artifact and reconstructed report SHA256.
+
+| Fixed readout | Portable native | Portable both64 |
+|---|---:|---:|
+| Development single-function syntax | 111/132 | 111/132 |
+| Development requested name | 0/132 | 0/132 |
+| Development requested signature | 0/132 | 0/132 |
+| Development reference AST / exact reply | 0/132 | 0/132 |
+| Original training requested signature | 5/16 | 5/16 |
+| Original training exact reply | 4/16 | 4/16 |
+| Renamed training signature / exact reply | 0/16 | 0/16 |
+| Separate functional task passes | 0/6 | 0/6 |
+
+Both arms have five functional failures and one empty reply. The six functional
+outputs match exactly between arms. One of 164 development/training replies
+differs (test matched-prefix), without changing any scored result; equal totals
+do not imply identical generations. Parameters were unchanged during evaluation.
+The result does not establish a quality gain or broad non-regression from the
+training arithmetic change. Syntax alone is insufficient for promotion.
+
+The next quality step is a dedicated **training-only** identifier-copy curriculum
+and gate diagnosis, followed by complete-code/regression checks. A genuinely
+fresh, broader functional evaluation is still required after freezing a candidate;
+these exposed tasks must not be relabeled as a fresh holdout. Hardware-specific
+certification remains a separate inconclusive gate.

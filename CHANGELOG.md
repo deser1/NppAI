@@ -1,4 +1,5 @@
 ## Unreleased
+- Measure frozen portable native/both64 exported-checkpoint quality with identical FP32 greedy inference: both remain 0/132 development requested names/signatures/exact replies and 0/6 Docker functional passes. Preserve independently audited raw replies, suite/checkpoint/archive hashes and report reconstruction; reject promotion and retain exposed-task limits.
 - Verify full 1024-update portable both64 trace/checkpoint equality across observed Intel Xeon 8573C and AMD EPYC 7763/9V74; native first differs in parameters at update 1. Retain byte-audited evidence and scope limits, no recipe/weight promotion.
 - Record the separate vendor-qualified allocation as inconclusive: three wrong-vendor slots skip training; one qualified AMD host cannot pass strict certification (exit 2). Preserve all hardware evidence.
 - Add vendor-qualified full-training workflow: actual CPU/OS guards before training, explicit inconclusive coverage, strict certification and existing-runner label inputs. Preserve fixed recipes and reject vacuous single-host equality; no hardware/provisioning or model-promotion claim.

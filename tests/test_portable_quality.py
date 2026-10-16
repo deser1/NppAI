@@ -10,6 +10,25 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PortableQualityTests(unittest.TestCase):
+    def test_retained_raw_evidence_and_tampering(self):
+        directory = ROOT / 'docs/evidence/portable-quality'
+        report = quality.retained_report(directory)
+        dataset = ROOT / 'evaluation/instruction-v3'
+        tasks = ROOT / 'evaluation/gated-copy-probes-v1/tasks.json'
+        self.assertTrue(quality.audit_report(report, dataset, tasks))
+        mutations = [
+            lambda r: r['models']['both64']['summary']['test/original'].__setitem__('requested_name', 1),
+            lambda r: r['functional']['models']['both64'].__setitem__('passed', 1),
+            lambda r: r['functional']['models']['both64']['cases'].pop(),
+            lambda r: r.__setitem__('promotion', True),
+            lambda r: r['inference'].__setitem__('arithmetic', 'both64 forward'),
+        ]
+        for mutate in mutations:
+            broken = copy.deepcopy(report)
+            mutate(broken)
+            with self.assertRaises(ValueError):
+                quality.audit_report(broken, dataset, tasks)
+
     def test_frozen_inputs_and_complete_response_scores(self):
         from scripts import aligned_name_copy as aligned
         from scripts import resampled_name_training as base
