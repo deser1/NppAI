@@ -1,0 +1,11 @@
+# Fixed both64 saved tensor localization
+
+Follow-up to [the four arithmetic arms](arithmetic-variants.md). Keep the same pinned starting weights, seed 42, first resampled batch, AdamW lr=0.001, clipping and runtime profiles. Apply only the predeclared `both64` dispatch substitutions. No full training, tuning, baseline replacement or model promotion.
+
+Run one ordinary both64 step and two instrumented steps independently from the same weights. Require exact equality of loss, logits, raw/clipped gradients, updated parameters and replacement call counts. Require identical repeated operator and saved-tensor records. Write reports before rejecting unreliable instrumentation.
+
+The outer dispatch recorder observes effective operator inputs and substituted outputs; implementation-internal FP64 operators are not individually traced. Autograd pack hooks record the tensor bytes, dtype, shape, stride, phase and number of completed events at save time, returning the original tensor. Snapshot work inside hooks disables dispatch to avoid incidental recording operators. A shared per-trace 128 MiB deduplicated store bounds snapshots; uninitialized allocations and write-only destinations follow the existing recorder exclusions.
+
+Four independently provisioned jobs per historical/portable profile record actual CPU provenance. Compare every pair for the earliest effective ATen event difference and earliest saved tensor difference separately. A differing output with identical recorded call/input is operator-boundary evidence, not internal instruction or accuracy attribution. Earlier saved/hidden differences can occur despite equal final logits. Save-time fingerprints do not establish tensor identity, autograd dependency edges or the location of an internal instruction. Same-host traced/untraced equality is mandatory, including all gradients and updated weights.
+
+Raw tensors from repetition zero and both event/saved indices have 14-day artifact retention. Missing source artifacts fail explicitly. Aggregation requires identical source/model/batch/input fingerprints and initial parameters. Successful measurement is not a portability gate; CPU allocation may omit Intel. Report actual coverage, no-divergence outcomes and all remaining limits. README, ROADMAP and CHANGELOG will record measured results after execution.

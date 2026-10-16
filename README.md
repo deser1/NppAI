@@ -371,3 +371,5 @@ A later allocation with Intel coverage localized the portable-profile AMD–Inte
 [Fixed CPU arithmetic variants](docs/arithmetic-variants.md) compares native, FP64-intermediate softmax, FP64-intermediate AdamW sqrt and their combination on frozen operator inputs and complete first updates. This is a bounded experiment; no default recipe or model promotion is changed.
 
 Measured arithmetic variants make isolated operators and forward logits/loss agree with `both64` in a mixed AMD/Intel historical-profile allocation, but backward gradients and updated weights still differ. The portable allocation matched only observed AMD hosts. No candidate recipe is promoted; retained reports distinguish operator agreement from full-step repeatability.
+
+[Both64 saved-tensor localization](docs/both64-trace.md) traces effective forward/backward operators and autograd save-time tensors on the fixed first batch, requiring full traced/untraced equality before interpreting CPU differences. Measurement pending; no recipe promotion.

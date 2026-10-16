@@ -237,3 +237,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Measure four arithmetic variants on frozen inputs and complete steps: `both64` aligns isolated outputs and forward logits/loss across the observed historical AMD/Intel allocation, but backward/updated weights still diverge. Portable agreement covered AMD only; reject promotion.
 - [ ] Trace forward/saved activations and backward to locate the remaining gradient mismatch with fixed `both64` substitutions and unchanged batch/initial weights before any recipe change or full-training repeatability claim.
+
+- [x] Add guarded both64 operator and saved-autograd-tensor tracing with independent CPU jobs and full-step instrumentation equivalence.
+- [ ] Measure and retain the earliest both64 hidden/saved/operator divergence with actual CPU coverage; numerical repeatability remains open.
