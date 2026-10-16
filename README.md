@@ -354,4 +354,8 @@ Training-only source-aligned name-copy objective with a matched replay control: 
 
 Measured aligned-copy objective: despite lower logged attention alignment loss, both arms remain **0/132 complete development names/signatures**. Same-host control reports reproduced byte-for-byte; historical reply replay passed. No checkpoint is promoted. [Results and raw evidence](docs/aligned-name-copy.md#observed-outcome).
 
-Next model experiment (design only): [gated source-byte identifier-copy protocol](docs/explicit-identifier-copy-protocol.md). No pointer implementation, training result or model promotion is claimed.
+Gated source-byte identifier-copy [protocol](docs/explicit-identifier-copy-protocol.md) now has an experimental Python implementation; [current status](docs/gated-copy-readout.md). Native integration and promotion remain separate gates.
+
+Experimental gated copy readout, distinct `.nppaicopy` format and paired Docker functional probes: [implementation/protocol](docs/gated-copy-readout.md). Python-only; no default-model change or promotion.
+
+Measured gated-readout result: conditional `nc_` test bytes improve 166/308→218/308, but complete development names/signatures remain **0/132** and separate Docker probes **0/6** for both arms. [Raw results and limits](docs/gated-copy-readout.md#observed-outcome). No promotion.

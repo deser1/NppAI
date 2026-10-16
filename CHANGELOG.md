@@ -1,4 +1,6 @@
 ## Unreleased
+- Record gated-readout results: conditional `nc_` test bytes166/308→218/308, while both arms retain0/132 complete development names/signatures and0/6 separate Docker functional passes; preserve raw evidence, no promotion.
+- Add an experimental prompt-only gated source-byte readout, safe versioned Python bundle, causal/UTF-8/duplicate-byte tests and paired training plus separate restricted Docker functional probes. No native/default-model change.
 - Require byte-identical same-host control repeats for aligned-copy comparisons; record cross-runner historical weight identity separately while retaining exact cached-output checks.
 - Preserve recorded model-evidence hashes on Windows with LF checkout rules for docs/evidence.
 - Record source-aligned copy results: exact same-host control repeat and historical reply replay succeeded, but both arms remain 0/132 development names/signatures despite lower logged auxiliary loss. Retain raw evidence and original-training losses; no checkpoint promotion.
@@ -251,6 +253,3 @@ All notable changes to NppAI are documented in this file.
 ### Notes
 - The optimized x64 build currently requires AVX2, FMA, and OS YMM-state support; runtime SIMD dispatch/fallback is not yet implemented.
 - Exact model payload-length validation and rejection of trailing model data remain future hardening work.
-
-### Unreleased — identifier-copy experiment planning
-- Documented a gated source-byte copy-readout proposal, controlled baseline, causal/UTF-8 test requirements and independent promotion gates. No implementation or measured model improvement yet.

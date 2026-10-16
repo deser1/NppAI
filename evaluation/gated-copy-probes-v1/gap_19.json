@@ -1,0 +1,29 @@
+[
+  {
+    "function": "gap_19",
+    "args": [
+      2,
+      9
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "gap_19",
+    "args": [
+      9,
+      2
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "gap_19",
+    "args": [
+      -4,
+      -4
+    ],
+    "kwargs": {},
+    "expected": 0
+  }
+]

@@ -1,0 +1,50 @@
+name: Paired gated source-byte copy readout
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/gated-copy-experiment.yml'
+      - 'scripts/gated_copy_model.py'
+      - 'scripts/train_gated_copy.py'
+      - 'tests/test_gated_copy.py'
+      - 'evaluation/gated-copy-probes-v1/**'
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      actions: read
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed CPU runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'pydantic>=2.7,<3'
+      - name: Verify real causal gradients, UTF-8, duplicates and bundle compatibility
+        run: python -m unittest discover -s tests -p 'test_gated_copy.py' -v
+      - name: Download pinned source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
+      - name: Resolve immutable isolated validator
+        run: |
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Repeat control, train readout and validate separate functional probes
+        run: python scripts/train_gated_copy.py --source source --dataset evaluation/instruction-v3 --output measured --tasks evaluation/gated-copy-probes-v1/tasks.json --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Require container cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-gated-copy-paired
+          path: measured/
+          retention-days: 14

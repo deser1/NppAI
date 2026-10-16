@@ -1,0 +1,32 @@
+[
+  {
+    "task_id": "lift_7",
+    "prompt": "Implement lift_7(x) returning x plus 7. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/lift_7.json"
+  },
+  {
+    "task_id": "gap_19",
+    "prompt": "Implement gap_19(a, b) returning the absolute difference between a and b. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/gap_19.json"
+  },
+  {
+    "task_id": "below_31",
+    "prompt": "Implement below_31(values) returning how many numbers are negative. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/below_31.json"
+  },
+  {
+    "task_id": "first_43",
+    "prompt": "Implement first_43(values) returning the first item or None for an empty list. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/first_43.json"
+  },
+  {
+    "task_id": "edges_59",
+    "prompt": "Implement edges_59(text) returning its first plus last character, or empty for empty text. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/edges_59.json"
+  },
+  {
+    "task_id": "limit_71",
+    "prompt": "Implement limit_71(x, low, high) clamping x between low and high. Return only complete Python code.",
+    "cases_file": "evaluation/gated-copy-probes-v1/limit_71.json"
+  }
+]
