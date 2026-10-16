@@ -123,6 +123,21 @@ def bounded_zip(raw,expected):
     return {name:archive.read(name) for name in names}
 
 
+def read_head_array(raw, expected_shape):
+    stream=io.BytesIO(raw)
+    version=np.lib.format.read_magic(stream)
+    readers={(1,0):np.lib.format.read_array_header_1_0,(2,0):np.lib.format.read_array_header_2_0}
+    if version not in readers:raise ValueError('unsupported head tensor version')
+    shape,fortran,dtype=readers[version](stream,max_header_size=4096)
+    if shape!=tuple(expected_shape) or fortran or dtype!=np.dtype('float32'):
+        raise ValueError('invalid head tensor shape or dtype')
+    if len(raw)-stream.tell()!=int(np.prod(expected_shape))*4:
+        raise ValueError('invalid head tensor payload length')
+    array=np.load(io.BytesIO(raw),allow_pickle=False)
+    if not np.isfinite(array).all():raise ValueError('nonfinite head tensor')
+    return array
+
+
 def load_bundle(path):
     from scripts.check_dense_runtime_parity import load_weights,torch_model
     entries=bounded_zip(Path(path).read_bytes(),('base.nppai','head.npz','manifest.json'))
@@ -140,8 +155,6 @@ def load_bundle(path):
     arrays=bounded_zip(entries['head.npz'],('copy_q.npy','copy_k.npy','gate_weight.npy','gate_bias.npy'))
     for name,parameter in [('copy_q',model.copy_q.weight),('copy_k',model.copy_k.weight),
                            ('gate_weight',model.gate.weight),('gate_bias',model.gate.bias)]:
-        array=np.load(io.BytesIO(arrays[name+'.npy']),allow_pickle=False)
-        if array.dtype!=np.dtype('float32') or tuple(array.shape)!=tuple(parameter.shape) or not np.isfinite(array).all():
-            raise ValueError('invalid head tensor')
+        array=read_head_array(arrays[name+'.npy'],parameter.shape)
         with torch.no_grad():parameter.copy_(torch.from_numpy(array))
     return model.eval(),manifest

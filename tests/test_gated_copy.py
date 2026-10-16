@@ -143,5 +143,16 @@ class GatedCopyTorchTests(unittest.TestCase):
             outer['manifest.json']=json.dumps(manifest).encode();path.write_bytes(zip_bytes(outer))
             with self.assertRaises(ValueError):load_bundle(path)
 
+    def test_untrusted_array_shape_is_rejected_before_numpy_load(self):
+        import numpy as np
+        from scripts.gated_copy_model import read_head_array
+        stream=io.BytesIO()
+        np.lib.format.write_array_header_1_0(stream,{'descr':'<f4','fortran_order':False,'shape':(10**12,64)})
+        with patch.object(np,'load',side_effect=AssertionError('must validate header first')):
+            with self.assertRaisesRegex(ValueError,'shape'):read_head_array(stream.getvalue(),(8,8))
+        stream=io.BytesIO();np.save(stream,np.zeros((8,8),dtype=np.float32),allow_pickle=False)
+        for payload in (stream.getvalue()[:-1],stream.getvalue()+b'x'):
+            with self.assertRaisesRegex(ValueError,'payload'):read_head_array(payload,(8,8))
+
 
 if __name__=='__main__':unittest.main()

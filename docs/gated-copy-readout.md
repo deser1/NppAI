@@ -136,3 +136,5 @@ complete-name or functional acceptance gates. Before scaling full-code training,
 measure a dedicated training-only identifier-copy curriculum and gate behavior;
 keep independent evaluation reserved and require original-task retention. No
 coefficient/seed/checkpoint search was performed in this experiment.
+
+Head array headers, exact shapes, dtypes and payload lengths are checked before NumPy allocates an array; oversized declared shapes and trailing data are rejected.
