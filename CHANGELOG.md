@@ -1,4 +1,5 @@
 ## Unreleased
+- Retain raw outputs before failed historical guards, record per-step CPU training traces and environment provenance, and diagnose historical versus separate single-thread CPU profiles on two runners. Require exact historical checkpoint identity before paired copy training.
 - Record gated-readout results: conditional `nc_` test bytes166/308→218/308, while both arms retain0/132 complete development names/signatures and0/6 separate Docker functional passes; preserve raw evidence, no promotion.
 - Add an experimental prompt-only gated source-byte readout, safe versioned Python bundle, causal/UTF-8/duplicate-byte tests and paired training plus separate restricted Docker functional probes. No native/default-model change.
 - Require byte-identical same-host control repeats for aligned-copy comparisons; record cross-runner historical weight identity separately while retaining exact cached-output checks.

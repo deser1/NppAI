@@ -100,6 +100,9 @@ jobs:
     - name: Run gated copy data and evidence tests
       run: python -m unittest discover -s tests -p "test_gated_copy.py" -v
 
+    - name: Run training reproducibility contracts
+      run: python -m unittest discover -s tests -p "test_training_repro.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 

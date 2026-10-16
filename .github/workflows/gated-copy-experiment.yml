@@ -6,6 +6,7 @@ on:
       - '.github/workflows/gated-copy-experiment.yml'
       - 'scripts/gated_copy_model.py'
       - 'scripts/train_gated_copy.py'
+      - 'scripts/training_repro.py'
       - 'tests/test_gated_copy.py'
       - 'evaluation/gated-copy-probes-v1/**'
 jobs:

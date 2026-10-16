@@ -81,7 +81,7 @@ def audit(report,dataset):
     return {'valid':True,'cases':sum(map(len,groups.values()))}
 
 
-def run(source,dataset,output,arm):
+def run(source,dataset,output,arm,*,runtime_profile="historical-v1"):
     import torch
     import torch.nn.functional as F
     from train_nppai import export_to_bin
@@ -89,11 +89,16 @@ def run(source,dataset,output,arm):
     from scripts.gated_copy_model import GatedCopyModel,source_mask,export_bundle,load_bundle
     backend=pinned_backend(source)
     if backend.model_id!=base.SOURCE_MODEL_ID:raise ValueError('pinned source differs')
-    torch.manual_seed(42);torch.set_num_threads(2);torch.use_deterministic_algorithms(False)
+    from scripts.training_repro import configure,provenance,state_digest
+    configure(torch,runtime_profile)
+    output.mkdir(parents=True,exist_ok=True)
+    (output/'environment.json').write_bytes(base.encoded(provenance(torch,runtime_profile)))
     model=torch_model(backend.weights)
     copy=arm=='copy'
     if copy:
         torch.manual_seed(HEAD_SEED);model=GatedCopyModel(model)
+    trace=output/'trace.jsonl'
+    trace.write_text(json.dumps({'step':0,'parameters':state_digest(model)})+'\n')
     model.eval();groups=aligned.development(dataset);rows=base.training_data(dataset)
     with torch.no_grad():before=evaluate(model,groups,copy,False)
     optimizer=torch.optim.AdamW(model.parameters(),lr=0.001);losses=[];model.train()
@@ -107,6 +112,8 @@ def run(source,dataset,output,arm):
         else:loss=F.cross_entropy(model(x).reshape(-1,256),y.reshape(-1),ignore_index=-100)
         optimizer.zero_grad(set_to_none=True);loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(),1.0);optimizer.step()
+        with trace.open('a') as stream:
+            stream.write(json.dumps({'step':step+1,'parameters':state_digest(model),'loss_hex':float(loss.detach()).hex()})+'\n')
         if step in (0,base.STEPS-1):losses.append(float(loss.detach()))
         if step%128==0 or step==base.STEPS-1:print(f'{arm} step={step+1} loss={float(loss.detach()):.6f}',flush=True)
     output.mkdir(parents=True,exist_ok=True);model.eval()
@@ -128,7 +135,13 @@ def run(source,dataset,output,arm):
                        'platform':platform.platform(),'processor':platform.processor(),'python':platform.python_version()},
             'limits':'Experimental Python-only gated readout. One seed and exposed development views. '
                      'Full responses are separate from assisted names; no native compatibility or automatic promotion.'}
-    report['historical_checkpoint_equal']=historical_identity(report)
+    if runtime_profile!='historical-v1':report['runtime']['profile']=runtime_profile
+    # Preserve complete raw outputs even when the historical guard aborts the pair.
+    (output/'report.json').write_bytes(base.encoded(report))
+    try:report['historical_checkpoint_equal']=historical_identity(report)
+    except ValueError as error:
+        (output/'historical-failure.json').write_bytes(base.encoded({'error':str(error),'profile':runtime_profile}))
+        raise
     evidence=audit(report,dataset);raw=base.encoded(report)
     (output/'report.json').write_bytes(raw)
     print(json.dumps({'arm':arm,'summary':report['summary']['after'],'audit':evidence}),flush=True)
@@ -164,6 +177,7 @@ def functional_probes(models,tasks_path,image):
 
 def run_pair(source,dataset,output,tasks,image):
     control,control_model=run(source,dataset,output/'control','control')
+    if control['historical_checkpoint_equal'] is not True:raise RuntimeError('historical control checkpoint differs')
     repeat,_=run(source,dataset,output/'control-repeat','control')
     if base.encoded(control)!=base.encoded(repeat):raise RuntimeError('same-host control repeat differs')
     copy,copy_model=run(source,dataset,output/'copy','copy')
