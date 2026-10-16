@@ -1,9 +1,11 @@
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
 import tempfile
 import unittest
-from scripts.first_step_ops import TensorStore,first_difference
+from unittest.mock import patch
+from scripts.first_step_ops import TensorStore,first_difference,compare,encoded
 
 
 class OperatorTraceContracts(unittest.TestCase):
@@ -24,6 +26,50 @@ class OperatorTraceContracts(unittest.TestCase):
             self.assertEqual(store.bytes,8)
             with self.assertRaisesRegex(ValueError,'budget'):store.put(b'1','uint8',[1])
             self.assertEqual((Path(directory)/(a['tensor']+'.bin')).read_bytes(),b'1234')
+
+    def test_aggregation_retains_boundary_evidence_and_rejects_different_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for profile in ('historical-v1','portable-cpu-v1'):
+                for replica in range(1,5):
+                    p=root/f'first-step-{profile}-{replica}';(p/'0').mkdir(parents=True)
+                    report={'trace_preserves_untraced_step':True,'trace_repeat':{'identical':True},
+                        'profile':profile,'source_model_id':'same','batch_sha256':'same','x_sha256':'same','y_sha256':'same',
+                        'reference':{'initial_parameters':'same'},'environment':{'cpu':{'model name':'fixture','vendor_id':'fixture'}}}
+                    (p/'report.json').write_text(json.dumps(report))
+                    event={'phase':'forward','op':'aten._softmax.default','schema':'softmax','args':['same'],'kwargs':{},
+                        'output':'other' if replica==4 else 'same'}
+                    (p/'0/events.json').write_text(json.dumps([event]))
+            with patch('builtins.print'):compare(root)
+            result=json.loads((root/'comparison.json').read_text())
+            pair=result['historical-v1']['pairs'][2]
+            self.assertEqual(pair['replicas'],[1,4]);self.assertTrue(pair['same_call']);self.assertTrue(pair['same_inputs'])
+            p=root/'first-step-portable-cpu-v1-4/report.json';report=json.loads(p.read_text());report['x_sha256']='changed';p.write_text(json.dumps(report))
+            with self.assertRaisesRegex(RuntimeError,'source or batch differs'):compare(root)
+
+    def test_retained_operator_evidence_has_verified_reports_and_first_difference(self):
+        root=Path(__file__).resolve().parents[1]/'docs/evidence/first-step-operators'
+        manifest=json.loads((root/'manifest.json').read_bytes());comparison=json.loads((root/'comparison.json').read_bytes());digests={}
+        for record in manifest['records']:
+            raw=(root/record['report_file']).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),record['files']['report.json']['sha256'])
+            report=json.loads(raw);self.assertTrue(all(item==report['reference'] for item in report['traced']))
+            rows=[]
+            for name in record['event_digest_chunks']:rows.extend(json.loads((root/name).read_bytes()))
+            self.assertEqual(len(rows),report['trace_repeat']['counts'][0]);digests[record['artifact_name']]=rows
+        self.assertEqual(len(digests),8)
+        for profile,result in comparison.items():
+            for pair in result['pairs']:
+                a,b=[digests[f'first-step-{profile}-{i}'] for i in pair['replicas']]
+                differences=[i for i,(left,right) in enumerate(zip(a,b)) if left!=right]
+                self.assertEqual(not differences,pair['identical'])
+                if differences:
+                    self.assertEqual(differences[0],pair['event'])
+                    self.assertEqual(hashlib.sha256(encoded(pair['left'])).hexdigest(),a[pair['event']])
+                    self.assertEqual(hashlib.sha256(encoded(pair['right'])).hexdigest(),b[pair['event']])
+        for replica in (1,3):
+            events=json.loads((root/f'historical-v1-{replica}-prefix.json').read_bytes())
+            self.assertEqual([hashlib.sha256(encoded(e)).hexdigest() for e in events],digests[f'first-step-historical-v1-{replica}'][:37])
 
 
 @unittest.skipUnless(importlib.util.find_spec('torch'),'PyTorch required for actual traced autograd')

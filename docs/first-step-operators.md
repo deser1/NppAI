@@ -12,4 +12,22 @@ Require exact equality of initial and updated parameter hashes, raw and clipped 
 
 A first different output for an identical observed operator call and identical recorded inputs localizes a difference at that boundary. Different schemas, call ordering or input fingerprints do not isolate an operator kernel and are labeled accordingly. Identical inputs do not reveal which internal vector instruction, BLAS kernel or reduction implementation caused a difference. Observed ATen boundaries are not every internal CPU instruction, and a single fixed first step does not prove complete-training repeatability.
 
-Artifacts retain event traces, bounded raw tensor snapshots and complete environment/build provenance for 14 days. Raw snapshots may contain initial model parameters and are not committed or promoted. Durable result evidence should retain operator/input/output fingerprints, environment metadata, artifact digests and traced/untraced checks, with limitations. Actual measurements are pending.
+Artifacts retain event traces, bounded raw tensor snapshots and complete environment/build provenance for 14 days. Raw snapshots may contain initial model parameters and are not committed or promoted. Durable result evidence should retain operator/input/output fingerprints, environment metadata, artifact digests and traced/untraced checks, with limitations. Measured results follow.
+
+
+## Measured localization
+
+[Run 38905715952](https://github.com/deser1/NppAI/actions/runs/38905715952) completed all eight trace jobs. All three actual Torch tests passed on each runner; all full-source steps preserved their untraced reference and repeated exactly (737 observed events). The cloud comparison initially failed from an unnecessary top-level training dependency; the same saved JSON traces were compared locally after making imports lazy. The comparison path is now tested under `python -S`, without third-party site packages. It does not require Torch or Pydantic. Tensor blobs are uploaded separately from the small event/report index in subsequent runs.
+
+| Profile | Actual CPU coverage | Pairwise outcome |
+| --- | --- | --- |
+| historical-v1 | two AMD EPYC 9V45 (AVX512), two EPYC 7763 (AVX2) | four mixed-model pairs differ at event index 36; matching-model pairs identical |
+| portable-cpu-v1 | four AMD EPYC 7763 (DEFAULT) | all six pairs identical; no cross-model/vendor coverage in this profile |
+
+The first different historical event is `aten._softmax.default`, schema `aten::_softmax(Tensor self, int dim, bool half_to_float) -> Tensor`, in the first attention forward pass. All 36 preceding event records match. The call uses identical FP32 causal attention scores of shape `[4,177,177]`, dim=-1, half_to_float=false, but output bytes differ. This is observed operator-boundary evidence, not a BLAS/MKL or individual-instruction attribution.
+
+Selected raw input/output ZIP members from replicas 1 and 3 were read and CRC-checked. Their dtype/shape/content hashes match the recorded tensor keys, and input bytes are directly identical. Among 125316 output elements, 17197 differ; maximum absolute delta is 5.960464477539063e-08 and maximum positive-FP32 ULP delta is 4. Both outputs are finite. These are small numerical differences, not an accuracy ranking or a new code-generation result. Whole 80 MB archive digests were not independently streamed/verified; GitHub-reported archive digests are retained and clearly distinguished from verified selected-member hashes.
+
+This allocation contained no Intel host. It shows a boundary across AMD generations/dispatch capabilities, so vendor name alone is insufficient to define compatibility. It does not directly identify the earlier AMD–Intel difference or prove that the candidate DEFAULT profile fixes it. Initial source, batch and targets match; final first-step parameter hashes diverge in the mixed historical pairs. No baseline, arithmetic implementation or model promotion was changed.
+
+[Retained comparison](evidence/first-step-operators/comparison.json), [manifest](evidence/first-step-operators/manifest.json), per-run reports, ordered event-fingerprint chunks, prefix contexts through event 36, and [selected softmax member verification](evidence/first-step-operators/selected-softmax.json) preserve the measured finding. Fingerprints verify the recorded common prefix and first differing event; full raw snapshots/event records remain in the 14-day artifacts and cannot be reconstructed from fingerprints alone. Next: measure isolated softmax alternatives and backward behavior on the same fixed inputs, with explicitly observed cross-vendor coverage, before changing the training recipe.

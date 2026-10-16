@@ -48,7 +48,16 @@ jobs:
         if: always()
         with:
           name: first-step-${{ matrix.profile }}-${{ matrix.replica }}
-          path: measured/
+          path: |
+            measured/report.json
+            measured/*/events.json
+            measured/*/ignored-non-aten.json
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: operator-tensors-${{ matrix.profile }}-${{ matrix.replica }}
+          path: measured/*/tensors/
           retention-days: 14
   compare:
     needs: trace
@@ -64,7 +73,7 @@ jobs:
           pattern: first-step-*
           path: replicas
       - name: Locate first observed operator differences and report CPU coverage
-        run: python scripts/first_step_ops.py --compare replicas
+        run: python -S scripts/first_step_ops.py --compare replicas
       - uses: actions/upload-artifact@v4
         if: always()
         with:

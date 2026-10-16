@@ -231,4 +231,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Measure eight controls across two profiles and two runners per profile: all same-host repeats exact, both profiles diverge across recorded AMD/Intel environments at update 1; reject the portable candidate and retain evidence.
 - [ ] Localize the numerical operator/backend divergence or freeze a supported hardware environment before claiming cross-runner repeatability; keep historical identity and promotion gates strict.
 
-- [ ] Localize first-step divergence at observed ATen boundaries with identical inputs; verify tracing preserves untraced gradients, clipped gradients, loss and updated weights, and report actual CPU coverage.
+- [x] Localize an observed first-step boundary: FP32 attention softmax differs for identical inputs on recorded AMD EPYC AVX512/AVX2 hosts; traced/untraced steps and same-host repeats match exactly. Retain evidence; Intel absent in this allocation.
+- [ ] Test isolated softmax alternatives and their backward behavior on frozen inputs with measured cross-vendor coverage before modifying the training arithmetic or claiming repeatability.

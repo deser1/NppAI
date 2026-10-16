@@ -1,4 +1,5 @@
 ## Unreleased
+- Localize first observed historical-profile difference to FP32 attention softmax with identical inputs across recorded AMD EPYC AVX512/AVX2 hosts: max absolute delta about 6e-8 (4 ULP). Preserve traced/untraced equality checks, ordered fingerprints and selected tensor verification; no Intel coverage or portability claim in this allocation.
 - Add bounded CPU first-step operator snapshots with traced/untraced equivalence checks and independently provisioned runner comparisons; keep historical model identity and promotion gates unchanged.
 - Diagnose eight CPU controls: exact same-host repeats but first-update divergence across AMD/Intel runners in both historical and candidate single-thread profiles. Reject cross-runner portability; retain traces, environment comparison and artifact file digests.
 - Retain raw outputs before failed historical guards, record per-step CPU training traces and environment provenance, and diagnose historical versus separate single-thread CPU profiles on two runners. Require exact historical checkpoint identity before paired copy training.

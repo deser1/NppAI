@@ -7,7 +7,6 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from scripts import resampled_name_training as base
 from scripts.training_repro import PROFILES,configure,provenance,state_digest
 
 
@@ -116,6 +115,7 @@ def first_difference(left,right):
 
 def diagnose(source,dataset,output,profile):
     import torch
+    from scripts import resampled_name_training as base
     from scripts.run_local_model_smoke import pinned_backend
     output.mkdir(parents=True,exist_ok=True);configure(torch,profile)
     environment=provenance(torch,profile)
