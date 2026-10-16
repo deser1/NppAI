@@ -220,9 +220,13 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Measure source-aligned attention objective with exact same-host control repeat and historical reply replay: both arms remain 0/132 development names/signatures and complete matches; retain losses, raw reports and original-training regressions, no promotion.
 - [ ] Evaluate an explicit source-byte copy readout or other copying mechanism on training-only diagnostics before scaling; require complete-code and independent functional evidence.
 
-- [x] Specify gated source-byte identifier-copy readout experiment, causal safeguards, paired baseline and promotion gates; see [protocol](docs/explicit-identifier-copy-protocol.md). This is a design only, not a measured improvement.
-- [ ] Implement and run gated source-byte copy experiment, then validate autonomous full-code and independent Docker functional results before any checkpoint promotion.
+- [x] Specify gated source-byte identifier-copy readout experiment, causal safeguards, paired baseline and promotion gates; see [protocol](docs/explicit-identifier-copy-protocol.md). Implementation and measured limitations are recorded below.
+- [x] Run gated source-byte copy experiment and independent Docker functional probes; reject promotion because complete-code gates fail.
 
 - [x] Implement prompt-only gated copy distribution, versioned Python bundle and matched same-host control/repeat experiment with separate Docker functional probes.
 - [x] Measure gated readout: conditional `nc_` bytes166/308→218/308, but full development names/signatures0/132 and separately authored functional probes0/6 in both arms; retain raw evidence and reject promotion. See [readout](docs/gated-copy-readout.md).
 - [ ] Measure a dedicated training-only identifier-copy curriculum and gate behavior before scaling full-code training; retain independent evaluation and original-task regression gates.
+
+- [x] Preserve raw control reports before historical guards, capture CPU/library provenance and every-step parameter/loss traces; require exact historical checkpoint identity before paired copy training.
+- [x] Measure eight controls across two profiles and two runners per profile: all same-host repeats exact, both profiles diverge across recorded AMD/Intel environments at update 1; reject the portable candidate and retain evidence.
+- [ ] Localize the numerical operator/backend divergence or freeze a supported hardware environment before claiming cross-runner repeatability; keep historical identity and promotion gates strict.

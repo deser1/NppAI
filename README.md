@@ -359,3 +359,5 @@ Gated source-byte identifier-copy [protocol](docs/explicit-identifier-copy-proto
 Experimental gated copy readout, distinct `.nppaicopy` format and paired Docker functional probes: [implementation/protocol](docs/gated-copy-readout.md). Python-only; no default-model change or promotion.
 
 Measured gated-readout result: conditional `nc_` test bytes improve 166/308→218/308, but complete development names/signatures remain **0/132** and separate Docker probes **0/6** for both arms. [Raw results and limits](docs/gated-copy-readout.md#observed-outcome). No promotion.
+
+CPU diagnostics show exact same-host training repeats but divergence between recorded AMD/Intel runners after update 1. A separate single-thread deterministic profile also fails cross-runner equality. Raw failures, step hashes and provenance are retained; exact historical checkpoint identity blocks incompatible paired experiments. No baseline or model is promoted. See [diagnostic protocol](docs/training-reproducibility.md).

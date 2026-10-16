@@ -43,3 +43,6 @@ dataset_export.txt
 C:\\NppAI_Telemetry.jsonl
 # Experimental pointer/gate bundle; never commit trained weights.
 *.nppaicopy
+
+# Retained training diagnostics contain hashes/losses, not datasets or weights.
+!docs/evidence/training-reproducibility/*.jsonl

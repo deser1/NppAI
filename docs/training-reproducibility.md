@@ -1,0 +1,30 @@
+# CPU training reproducibility investigation
+
+The second attempt of [run 38849826341](https://github.com/deser1/NppAI/actions/runs/38849826341/attempts/2) passed all eight tests but failed `historical control generations differ`. The old implementation aborted before writing the raw report. The uploaded artifact retained only the control checkpoint; no copy training or functional validation ran in that attempt.
+
+Both jobs report Python 3.12.15, PyTorch 2.14.1+cpu, NumPy 2.5.2 and runner image ubuntu-24.04 version 20261012.334.1. Logged losses diverge by step 513 at six printed decimals (0.232455 versus 0.232454); this does not identify the first numerical divergence. Historical checkpoint SHA256 is `fc059649eacf8840536fecd1619451bac702eb7ce858d94908527aed2344780a`; the failed rerun is `1f41fe48b08dc1960c178d638c72c014de3dac132ff30bbf5b36f650d80f9525`. Among 131392 FP32 parameters, 114402 differ; max absolute delta is 0.0001522749662399292 and mean absolute delta is 0.000007883507350925356. Both downloaded ZIP digests were checked. Matching software versions alone did not establish repeatability. Previous jobs did not retain CPU model/flags or per-step hashes, so attributing this failure to a specific CPU/kernel is not justified.
+
+## Predeclared diagnostic
+
+Use the same pinned starting weights, seed 42, AdamW settings, original response loss, training-only resampled schedule and 1024 updates. Do not tune names, outputs, thresholds or seeds. Two independently provisioned runner jobs per runtime profile each execute the control twice. Record CPU model/flags/microcode, Torch build configuration, thread counts, dispatch environment and git revision, initial parameter hash, and parameter hash plus exact hexadecimal loss after every update. Persist full raw report before the historical guard; record guard failures separately, then rethrow in ordinary paired training. Sidecars do not change the historical report schema or replace its baseline.
+
+- `historical-v1`: original two-thread, nondeterministic-algorithm policy with MKLDNN enabled. Historical checks remain strict, including checkpoint identity before copy training.
+- `portable-cpu-v1`: a separate diagnostic profile with one intra-op thread, deterministic algorithms, MKLDNN disabled, `ATEN_CPU_CAPABILITY=default`, `MKL_CBWR=COMPATIBLE`, `OMP_NUM_THREADS=1` and `OPENBLAS_NUM_THREADS=1`, set before Torch import. It is not expected to preserve a different arithmetic recipe's historical checkpoint, and does not become a new baseline automatically.
+
+Require exact same-host trace, checkpoint and raw report equality. Aggregate cross-runner traces, checkpoints and raw generations separately; runtime metadata may legitimately differ. The portable cross-runner check fails if any of those equalities or either same-host check fails. Historical mismatches are retained as diagnostic outcomes, not silently classified as historical successes. Unexpected errors still fail jobs. The standard paired copy workflow continues to abort on historical mismatch; diagnostic jobs never train a copy candidate or execute generated code.
+
+Passing on two machines is evidence only for the recorded environments, not a universal guarantee across CPU families, OS versions or Torch releases. The profile changes several numerical controls together; this experiment cannot isolate which individual backend/dispatch setting causes any improvement. Full per-step traces permit localization of observed divergence, not an automatic causal attribution. No weights are promoted. Measured results follow.
+
+
+## Measured outcome: profile rejected
+
+[Diagnostic run 38902297916](https://github.com/deser1/NppAI/actions/runs/38902297916) completed all eight controls (two profiles × two runner jobs × two repetitions). All four same-host comparisons match exact parameter/loss traces, checkpoint bytes and raw report bytes. Across runner jobs, both profiles diverge immediately after update 1 despite identical initial parameter hashes, and final weights and raw generations differ. The aggregation correctly fails. The separately triggered paired experiment also correctly aborts on the historical guard; its eight Torch tests pass. Neither red experiment is a successful portability gate.
+
+| Profile | Replica 1 CPU | Replica 2 CPU | Same-host pairs | Across-runner trace/weights/generations |
+| --- | --- | --- | --- | --- |
+| historical-v1 | Intel Xeon Platinum 8573C, AVX512 | AMD EPYC 7763, AVX2 | both exact | all differ |
+| portable-cpu-v1 | AMD EPYC 7763, DEFAULT | Intel Xeon Platinum 8573C, DEFAULT | both exact | all differ |
+
+The AMD historical run reproduces checkpoint `fc059649…`; Intel historical reproduces the failed rerun checkpoint `1f41fe48…`. This localizes the observed reproducibility boundary to the recorded runner/CPU environments, and demonstrates that fixing seeds/versions/threads and the candidate dispatch controls is insufficient here. It does not isolate a single offending operator or prove CPU vendor alone is causal. The two portable runs can pass cached development-output comparisons while their checkpoint identity is false and other generated views differ; the added exact-checkpoint guard prevents treating this as a historical reproduction.
+
+Retained [comparison](evidence/training-reproducibility/comparison.json), [manifest](evidence/training-reproducibility/manifest.json) and canonical 1025-record traces preserve CPU/config data and the first divergence. Each trace is split into 256-record JSONL chunks; concatenating listed chunks reconstructs the original trace bytes. Canonical traces represent both byte-identical repetitions; the manifest lists per-file hashes for both runs. All four source artifact ZIP digests were verified locally before direct trace/report/checkpoint comparison. Full reports/weights remain in 14-day Actions artifacts, not git. No universal portability claim or replacement baseline is accepted. Further work requires operator-level numerical localization or an explicitly frozen hardware environment; rerunning until a matching CPU appears is not a fix.
