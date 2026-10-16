@@ -48,8 +48,11 @@ def trace_mode(path):
     from torch.utils._python_dispatch import TorchDispatchMode
     class Recorder(TorchDispatchMode):
         def __init__(self):
-            super().__init__();self.events=[];self.store=TensorStore(path/'tensors');self.phase='unset'
+            super().__init__();self.events=[];self.store=TensorStore(path/'tensors');self.phase='unset';self.ignored={}
         def __torch_dispatch__(self,func,types,args=(),kwargs=None):
+            if not str(func).startswith('aten.'):
+                self.ignored[str(func)]=self.ignored.get(str(func),0)+1
+                return func(*args,**(kwargs or {}))
             write_only=str(func) in ('aten.zero_.default','aten.fill_.Scalar','aten.fill_.Tensor','aten.copy_.default')
             arguments={'sequence':'tuple','items':[snapshot(value,self.store,not (write_only and index==0)) for index,value in enumerate(args)]}
             keywords={key:snapshot(value,self.store,key!='out') for key,value in sorted((kwargs or {}).items())}
@@ -93,7 +96,9 @@ def step(weights,x,y,profile,path=None):
     result={'initial_parameters':initial,'updated_parameters':state_digest(model),
             'loss_hex':float(loss.detach()).hex(),'raw_gradients':raw_gradients,'clipped_gradients':clipped_gradients,
             'logits':hashlib.sha256(logits.detach().contiguous().numpy().tobytes()).hexdigest()}
-    if recorder:(path/'events.json').write_bytes(encoded(recorder.events))
+    if recorder:
+        (path/'events.json').write_bytes(encoded(recorder.events))
+        (path/'ignored-non-aten.json').write_bytes(encoded(recorder.ignored))
     return result
 
 
