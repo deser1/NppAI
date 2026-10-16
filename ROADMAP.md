@@ -242,4 +242,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Measure and retain the earliest observed both64 divergence and actual CPU coverage; full-training numerical repeatability remains open.
 
 - [x] Measure both64 first-step traces: historical AMD-only pairs first differ at loss log-softmax (event 141), saved index 80; portable both64 matches all 799 events, 84 saves and complete updates across observed AMD/Intel pairs. Retain evidence and coverage limits.
-- [ ] Predeclare a fixed loss-log-softmax arithmetic arm using frozen observed inputs; test complete-step and then full-training repeatability before any recipe promotion.
+- [ ] Predeclare fixed loss-log-softmax and backward-matmul arithmetic arms using frozen observed inputs; test complete-step and then full-training repeatability before any recipe promotion.
+
+- [x] Observe historical-profile Intel/AMD coverage in a second both64 allocation: first differences at loss log-softmax or backward FP32 matmul for identical recorded inputs; portable first-step Intel/AMD agreement repeats. Retain comparison and verification limits.
