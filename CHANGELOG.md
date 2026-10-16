@@ -251,3 +251,6 @@ All notable changes to NppAI are documented in this file.
 ### Notes
 - The optimized x64 build currently requires AVX2, FMA, and OS YMM-state support; runtime SIMD dispatch/fallback is not yet implemented.
 - Exact model payload-length validation and rejection of trailing model data remain future hardening work.
+
+### Unreleased — identifier-copy experiment planning
+- Documented a gated source-byte copy-readout proposal, controlled baseline, causal/UTF-8 test requirements and independent promotion gates. No implementation or measured model improvement yet.
