@@ -1,9 +1,12 @@
 import copy
+import hashlib
+import json
 import importlib.util
 import tempfile
 import unittest
 from pathlib import Path
-from scripts.arithmetic_variants import SPECS,agreement,validate_input
+from scripts.arithmetic_variants import SPECS,VARIANTS,agreement,validate_input
+from scripts.first_step_ops import encoded
 
 
 class ArithmeticContracts(unittest.TestCase):
@@ -20,6 +23,33 @@ class ArithmeticContracts(unittest.TestCase):
         self.assertFalse(agreement(a,b)['complete_step_identical'])
         self.assertTrue(agreement(a,b)['step']['updated_parameters'])
         self.assertFalse(agreement(a,b)['step']['raw_gradients'])
+
+    def test_retained_reports_reconstruct_original_hashes_and_pairwise_findings(self):
+        root=Path(__file__).resolve().parents[1]/'docs/evidence/arithmetic-variants'
+        manifest=json.loads((root/'manifest.json').read_bytes());comparison=json.loads((root/'comparison.json').read_bytes());reports={}
+        self.assertEqual(len(manifest['records']),8)
+        for record in manifest['records']:
+            report=json.loads((root/record['metadata_file']).read_bytes())
+            report['arms']={variant:json.loads((root/record['arm_files'][variant]).read_bytes()) for variant in VARIANTS}
+            self.assertEqual(hashlib.sha256(encoded(report)).hexdigest(),record['report_sha256'])
+            self.assertEqual(report['operator_inputs'],SPECS);self.assertFalse(report['promotion']);self.assertEqual(report['steps'],1)
+            for variant,arm in report['arms'].items():
+                self.assertEqual(arm['repeats'][0],arm['repeats'][1])
+                state=arm['repeats'][0]['complete']['state']
+                self.assertEqual(state['initial_parameters'],report['reference']['initial_parameters'])
+                if variant=='native':self.assertEqual(state,report['reference'])
+                self.assertEqual(arm['updated_equals_native'],state['updated_parameters']==report['reference']['updated_parameters'])
+            reports[record['artifact_name']]=report
+        for profile,result in comparison.items():
+            for pair in result['pairs']:
+                a,b=[reports[f'arithmetic-{profile}-{i}'] for i in pair['replicas']]
+                for variant in VARIANTS:
+                    left=a['arms'][variant]['repeats'][0];right=b['arms'][variant]['repeats'][0];finding=pair['variants'][variant]
+                    self.assertEqual(finding['complete_step_identical'],left['complete']['state']==right['complete']['state'])
+                    for kind,equal in finding['isolated'].items():
+                        self.assertEqual(equal,left['isolated']['outputs'][kind]==right['isolated']['outputs'][kind])
+                    for stage,equal in finding['step'].items():
+                        self.assertEqual(equal,left['complete']['state'][stage]==right['complete']['state'][stage])
 
 
 @unittest.skipUnless(importlib.util.find_spec('torch'),'PyTorch required for actual mixed-precision arithmetic')

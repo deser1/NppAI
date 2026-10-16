@@ -21,4 +21,24 @@ Four independently provisioned jobs per existing runtime profile (`historical-v1
 
 Compare all six runner pairs per profile and each variant separately: isolated forward/backward/sqrt, logits, loss, raw gradients, clipped gradients and updated weights. Validate matching source, batch, targets and operator inputs first; report actual CPU/vendor coverage and cross-vendor pair counts. One-step agreement on the recorded machines cannot establish full-training repeatability, accuracy, performance or native runtime compatibility. Diagnostic CI succeeds when measurements/checks complete; differences remain explicit results, never automatic model-promotion success. No new baseline is accepted.
 
-README, ROADMAP and CHANGELOG record measured outcomes after the run. Next steps depend on complete-step evidence, not isolated-output equality alone. Measurements pending.
+README, ROADMAP and CHANGELOG record measured outcomes after the run. Next steps depend on complete-step evidence, not isolated-output equality alone. Measured findings follow.
+
+
+## Measured run 38950494422
+
+[All ten workflow jobs passed](https://github.com/deser1/NppAI/actions/runs/38950494422): preparation, eight measurement jobs and aggregation. Each measurement job passed all five actual tests. All 64 variant updates (8 jobs × 4 arms × 2 repetitions) repeated exactly on their host; the eight native arms matched ordinary source-step references. Every source/model/batch/input guard passed. This is successful measurement execution, not a successful portability gate.
+
+The historical allocation included Intel Xeon 6973P-C, two AMD EPYC 7763 hosts and AMD EPYC 9V74 (three cross-vendor pairs). The portable allocation included AMD EPYC 9V45 and three EPYC 7763 hosts, with **zero cross-vendor pairs**.
+
+| Historical-profile variant | Isolated softmax forward/backward equal across all pairs | Isolated sqrt equal | Complete logits and loss equal | Raw/clipped gradients and updated weights equal |
+| --- | --- | --- | --- | --- |
+| native | no | no | no | no |
+| softmax64 | yes | no | yes | no |
+| sqrt64 | no | yes | no | no |
+| both64 | yes | yes | yes | no |
+
+The combined replacement makes the three isolated outputs, complete forward logits and loss agree across the observed historical-profile CPU pairs, including Intel–AMD. Raw gradients, clipped gradients and updated parameter fingerprints still diverge. The first unequal retained step fields are raw gradients, despite isolated softmax backward agreement. This experiment does not record every intermediate/saved forward tensor, so it cannot yet identify a backward operator or establish that all hidden forward values agree. Changing only softmax/sqrt is insufficient for complete-step repeatability in that profile. No candidate is accepted as a replacement arithmetic recipe.
+
+All four variants agree on all isolated outputs and complete-step stages in the portable allocation. This is observed agreement across the recorded AMD models only; it does not retest the previously failed portable AMD–Intel pair and cannot establish a cross-vendor fix. Neither this positive subset nor the FP64 arithmetic implies full-training reproducibility, speed or code quality.
+
+All ten ZIP SHA256 digests were verified locally. Prepared input bytes were checked against source constants; every isolated result array was checked against its dtype/shape/content key and finiteness. Both repetitions, ordinary/native equality and reported per-host deltas from native were independently audited. [Comparison](evidence/arithmetic-variants/comparison.json), [manifest](evidence/arithmetic-variants/manifest.json), and per-run metadata/arm files retain all report content. Recombining metadata with its four listed arm files and applying canonical JSON encoding reconstructs the original report SHA256. Binary inputs/results remain in 14-day artifacts; retained hashes do not reconstruct their bytes. Next: trace forward/saved activations and backward under `both64` to locate the remaining gradient mismatch on unchanged source inputs with measured CPU coverage; keep the original baseline and promotion gates.

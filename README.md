@@ -369,3 +369,5 @@ The first-step diagnostic localized a historical-profile difference to FP32 atte
 A later allocation with Intel coverage localized the portable-profile AMD–Intel difference to FP32 `sqrt` in AdamW for identical inputs (max 1 ULP). Forward/backward/clipping traces match up to that boundary. Both operator findings and original arithmetic remain recorded; no reproducibility fix or model promotion is claimed.
 
 [Fixed CPU arithmetic variants](docs/arithmetic-variants.md) compares native, FP64-intermediate softmax, FP64-intermediate AdamW sqrt and their combination on frozen operator inputs and complete first updates. This is a bounded experiment; no default recipe or model promotion is changed.
+
+Measured arithmetic variants make isolated operators and forward logits/loss agree with `both64` in a mixed AMD/Intel historical-profile allocation, but backward gradients and updated weights still differ. The portable allocation matched only observed AMD hosts. No candidate recipe is promoted; retained reports distinguish operator agreement from full-step repeatability.

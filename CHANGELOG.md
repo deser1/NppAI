@@ -1,4 +1,5 @@
 ## Unreleased
+- Record four-arm arithmetic results: FP64-intermediate softmax/sqrt aligns isolated operators and forward logits/loss on observed historical AMD/Intel hosts, but gradients and updated weights still differ. Preserve all reports, verified output hashes and CPU coverage; no recipe promotion.
 - Add a fixed four-arm arithmetic experiment: native, FP64-intermediate attention softmax, FP64-intermediate AdamW sqrt and both, with verified frozen inputs, complete-step/native-reference guards and CPU coverage reporting. No default recipe change.
 - Localize the portable-profile AMD–Intel difference to AdamW FP32 sqrt at event 523 with identical input: 276/16384 outputs differ by at most 1 ULP; retain matching prior-event fingerprints and verified selected members. No arithmetic replacement or portability claim.
 - Localize first observed historical-profile difference to FP32 attention softmax with identical inputs across recorded AMD EPYC AVX512/AVX2 hosts: max absolute delta about 6e-8 (4 ULP). Preserve traced/untraced equality checks, ordered fingerprints and selected tensor verification; no Intel coverage or portability claim in this allocation.
