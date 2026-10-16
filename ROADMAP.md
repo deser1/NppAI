@@ -236,4 +236,12 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Test isolated attention-softmax and AdamW-sqrt arithmetic alternatives on frozen inputs and complete updates with cross-vendor coverage before changing the training recipe or claiming repeatability.
 
 - [x] Measure four arithmetic variants on frozen inputs and complete steps: `both64` aligns isolated outputs and forward logits/loss across the observed historical AMD/Intel allocation, but backward/updated weights still diverge. Portable agreement covered AMD only; reject promotion.
-- [ ] Trace forward/saved activations and backward to locate the remaining gradient mismatch with fixed `both64` substitutions and unchanged batch/initial weights before any recipe change or full-training repeatability claim.
+- [x] Trace the observed remaining both64 mismatch on unchanged inputs: historical AMD-only loss-log-softmax output and saved tensor differ; full-training/cross-vendor generalization remains open.
+
+- [x] Add guarded both64 operator and saved-autograd-tensor tracing with independent CPU jobs and full-step instrumentation equivalence.
+- [x] Measure and retain the earliest observed both64 divergence and actual CPU coverage; full-training numerical repeatability remains open.
+
+- [x] Measure both64 first-step traces: historical AMD-only pairs first differ at loss log-softmax (event 141), saved index 80; portable both64 matches all 799 events, 84 saves and complete updates across observed AMD/Intel pairs. Retain evidence and coverage limits.
+- [ ] Predeclare fixed loss-log-softmax and backward-matmul arithmetic arms using frozen observed inputs; test complete-step and then full-training repeatability before any recipe promotion.
+
+- [x] Observe historical-profile Intel/AMD coverage in a second both64 allocation: first differences at loss log-softmax or backward FP32 matmul for identical recorded inputs; portable first-step Intel/AMD agreement repeats. Retain comparison and verification limits.
