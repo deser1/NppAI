@@ -1,4 +1,5 @@
 ## Unreleased
+- Add gated portable native/both64 1024-update repeatability experiment, byte-verified repeats/checkpoints and every-step comparison. Fixed source/schedule; measurement pending, no baseline or model promotion.
 - Retain a second both64 allocation with historical Intel/AMD coverage: loss log-softmax and backward FP32 matmul are separate observed first-difference boundaries. Portable first-step agreement repeats; full-training portability remains open.
 - Add fixed both64 forward/backward and saved-autograd-tensor tracing, exact instrumentation/repeat guards and CPU coverage comparison. Measured historical AMD-only first difference at loss log-softmax and its saved tensor, while portable both64 matches a complete first step across recorded AMD/Intel pairs. Retain independently verified evidence; no full-training or baseline/model promotion claim.
 - Record four-arm arithmetic results: FP64-intermediate softmax/sqrt aligns isolated operators and forward logits/loss on observed historical AMD/Intel hosts, but gradients and updated weights still differ. Preserve all reports, verified output hashes and CPU coverage; no recipe promotion.

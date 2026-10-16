@@ -245,3 +245,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Predeclare fixed loss-log-softmax and backward-matmul arithmetic arms using frozen observed inputs; test complete-step and then full-training repeatability before any recipe promotion.
 
 - [x] Observe historical-profile Intel/AMD coverage in a second both64 allocation: first differences at loss log-softmax or backward FP32 matmul for identical recorded inputs; portable first-step Intel/AMD agreement repeats. Retain comparison and verification limits.
+
+- [x] Predeclare guarded portable native/both64 full-training repeatability with fixed 1024 updates, same-host repetitions, every-step traces and actual CPU coverage.
+- [ ] Measure and retain complete-schedule/checkpoint agreement or earliest divergence on observed AMD/Intel hosts; keep quality and promotion separate.
