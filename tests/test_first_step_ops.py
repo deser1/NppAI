@@ -47,29 +47,34 @@ class OperatorTraceContracts(unittest.TestCase):
             p=root/'first-step-portable-cpu-v1-4/report.json';report=json.loads(p.read_text());report['x_sha256']='changed';p.write_text(json.dumps(report))
             with self.assertRaisesRegex(RuntimeError,'source or batch differs'):compare(root)
 
+
     def test_retained_operator_evidence_has_verified_reports_and_first_difference(self):
         root=Path(__file__).resolve().parents[1]/'docs/evidence/first-step-operators'
-        manifest=json.loads((root/'manifest.json').read_bytes());comparison=json.loads((root/'comparison.json').read_bytes());digests={}
-        for record in manifest['records']:
-            raw=(root/record['report_file']).read_bytes()
-            self.assertEqual(hashlib.sha256(raw).hexdigest(),record['files']['report.json']['sha256'])
-            report=json.loads(raw);self.assertTrue(all(item==report['reference'] for item in report['traced']))
-            rows=[]
-            for name in record['event_digest_chunks']:rows.extend(json.loads((root/name).read_bytes()))
-            self.assertEqual(len(rows),report['trace_repeat']['counts'][0]);digests[record['artifact_name']]=rows
-        self.assertEqual(len(digests),8)
-        for profile,result in comparison.items():
-            for pair in result['pairs']:
-                a,b=[digests[f'first-step-{profile}-{i}'] for i in pair['replicas']]
-                differences=[i for i,(left,right) in enumerate(zip(a,b)) if left!=right]
-                self.assertEqual(not differences,pair['identical'])
-                if differences:
-                    self.assertEqual(differences[0],pair['event'])
-                    self.assertEqual(hashlib.sha256(encoded(pair['left'])).hexdigest(),a[pair['event']])
-                    self.assertEqual(hashlib.sha256(encoded(pair['right'])).hexdigest(),b[pair['event']])
-        for replica in (1,3):
-            events=json.loads((root/f'historical-v1-{replica}-prefix.json').read_bytes())
-            self.assertEqual([hashlib.sha256(encoded(e)).hexdigest() for e in events],digests[f'first-step-historical-v1-{replica}'][:37])
+        for prefix in ('','validation-'):
+            manifest=json.loads((root/(prefix+'manifest.json')).read_bytes())
+            comparison=json.loads((root/(prefix+'comparison.json')).read_bytes());digests={}
+            for record in manifest['records']:
+                raw=(root/record['report_file']).read_bytes()
+                self.assertEqual(hashlib.sha256(raw).hexdigest(),record['files']['report.json']['sha256'])
+                report=json.loads(raw);self.assertTrue(all(item==report['reference'] for item in report['traced']))
+                self.assertTrue(report['trace_preserves_untraced_step']);self.assertTrue(report['trace_repeat']['identical'])
+                rows=[]
+                for name in record['event_digest_chunks']:rows.extend(json.loads((root/name).read_bytes()))
+                self.assertEqual(len(rows),report['trace_repeat']['counts'][0]);digests[record['artifact_name']]=rows
+            self.assertEqual(len(digests),8)
+            for profile,result in comparison.items():
+                for pair in result['pairs']:
+                    a,b=[digests[f'first-step-{profile}-{i}'] for i in pair['replicas']]
+                    differences=[i for i,(left,right) in enumerate(zip(a,b)) if left!=right]
+                    self.assertEqual(not differences,pair['identical'])
+                    if differences:
+                        self.assertEqual(differences[0],pair['event'])
+                        self.assertEqual(hashlib.sha256(encoded(pair['left'])).hexdigest(),a[pair['event']])
+                        self.assertEqual(hashlib.sha256(encoded(pair['right'])).hexdigest(),b[pair['event']])
+            if not prefix:
+                for replica in (1,3):
+                    events=json.loads((root/f'historical-v1-{replica}-prefix.json').read_bytes())
+                    self.assertEqual([hashlib.sha256(encoded(e)).hexdigest() for e in events],digests[f'first-step-historical-v1-{replica}'][:37])
 
 
 @unittest.skipUnless(importlib.util.find_spec('torch'),'PyTorch required for actual traced autograd')

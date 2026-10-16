@@ -365,3 +365,5 @@ CPU diagnostics show exact same-host training repeats but divergence between rec
 [First-step operator localization](docs/first-step-operators.md) checks whether tracing preserves the original update, then compares input/output fingerprints at observed ATen boundaries. This diagnoses numerical differences without changing the baseline or claiming improved code generation.
 
 The first-step diagnostic localized a historical-profile difference to FP32 attention softmax for byte-identical inputs on recorded AMD EPYC AVX512/AVX2 hosts (max delta about 6e-8). That allocation did not include Intel; cross-vendor repeatability remains unresolved. The measured evidence and coverage limits are recorded in the operator protocol.
+
+A later allocation with Intel coverage localized the portable-profile AMD–Intel difference to FP32 `sqrt` in AdamW for identical inputs (max 1 ULP). Forward/backward/clipping traces match up to that boundary. Both operator findings and original arithmetic remain recorded; no reproducibility fix or model promotion is claimed.

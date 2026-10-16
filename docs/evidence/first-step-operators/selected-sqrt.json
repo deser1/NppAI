@@ -1,0 +1,47 @@
+{
+  "op": "aten.sqrt.default",
+  "event_index": 523,
+  "shape": [
+    256,
+    64
+  ],
+  "inputs_byte_identical": true,
+  "elements": 16384,
+  "different_elements": 276,
+  "max_abs_delta": 5.820766091346741e-11,
+  "max_ulp_delta": 1,
+  "different_with_subnormal_input": 0,
+  "different_with_normal_positive_input": 276,
+  "outputs_finite": true,
+  "members": [
+    {
+      "artifact": "operator-tensors-portable-cpu-v1-1",
+      "member": "0/tensors/57db9820a623c32409b33c3dfdb7f364ad26aafeb8145b401ee42c220f890a62.bin",
+      "tensor_key": "57db9820a623c32409b33c3dfdb7f364ad26aafeb8145b401ee42c220f890a62",
+      "bytes": 65536,
+      "sha256": "c9a9a4c682f4567eee882365eaeecc3fcdd94720f754c29b2648c4e6e9d6c477"
+    },
+    {
+      "artifact": "operator-tensors-portable-cpu-v1-1",
+      "member": "0/tensors/0717f42e3882bc4df141b1c72fe1124b3c4162becb84a4eaeb72cc2a74401f14.bin",
+      "tensor_key": "0717f42e3882bc4df141b1c72fe1124b3c4162becb84a4eaeb72cc2a74401f14",
+      "bytes": 65536,
+      "sha256": "3d6cc6cf10ad5883f70b3107b423d4b37f04ab9ad1056f2216e94887898253fd"
+    },
+    {
+      "artifact": "operator-tensors-portable-cpu-v1-4",
+      "member": "0/tensors/57db9820a623c32409b33c3dfdb7f364ad26aafeb8145b401ee42c220f890a62.bin",
+      "tensor_key": "57db9820a623c32409b33c3dfdb7f364ad26aafeb8145b401ee42c220f890a62",
+      "bytes": 65536,
+      "sha256": "c9a9a4c682f4567eee882365eaeecc3fcdd94720f754c29b2648c4e6e9d6c477"
+    },
+    {
+      "artifact": "operator-tensors-portable-cpu-v1-4",
+      "member": "0/tensors/689590182f20d58f65209a7ce7b6264db4a28e4050c21d998fbfb429b3577100.bin",
+      "tensor_key": "689590182f20d58f65209a7ce7b6264db4a28e4050c21d998fbfb429b3577100",
+      "bytes": 65536,
+      "sha256": "82bbadb7262814b68197ae173fad86b9a8aef89ba65588bf2051f4824defc9c7"
+    }
+  ],
+  "verification": "Selected raw ZIP members CRC-checked and dtype/shape/content keys verified. Raw archive digests are GitHub-reported, not independently full-byte verified. Index ZIP digests were fully verified."
+}

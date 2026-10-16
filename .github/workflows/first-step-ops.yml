@@ -57,7 +57,7 @@ jobs:
         if: always()
         with:
           name: operator-tensors-${{ matrix.profile }}-${{ matrix.replica }}
-          path: measured/*/tensors/
+          path: measured/0/tensors/
           retention-days: 14
   compare:
     needs: trace
