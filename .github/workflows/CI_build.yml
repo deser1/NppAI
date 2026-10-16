@@ -112,6 +112,9 @@ jobs:
     - name: Run portable full-training contracts
       run: python -m unittest discover -s tests -p "test_portable_full_training.py" -v
 
+    - name: Run frozen portable quality and evidence contracts
+      run: python -m unittest discover -s tests -p "test_portable_quality.py" -v
+
     - name: Run both64 saved tensor trace contracts
       run: python -m unittest discover -s tests -p "test_both64_trace.py" -v
 

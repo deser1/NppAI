@@ -255,4 +255,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Add actual CPU/OS qualification, existing-runner label inputs and a separate passed/failed/inconclusive full-training gate; no training on mismatched hardware or vacuous single-host equality.
 - [x] Measure the bounded vendor-qualified allocation: three wrong-vendor slots skip training; one eligible AMD host yields inconclusive and strict exit 2. Preserve this result separately from the successful unrestricted Intel/AMD regression evidence.
 - [ ] Supply existing vendor-specific Ubuntu 24.04 x64 runner labels for predictable hardware certification.
-- [ ] Evaluate portable both64 code-generation/functional quality independently before any recipe/weight promotion.
+- [x] Evaluate frozen portable native/both64 exports with identical FP32 decoding and separate Docker functional checks: both remain 0/132 development names/signatures/exact replies and 0/6 functional passes. Retain audited raw evidence and reject promotion; see [quality readout](docs/portable-quality.md).
+- [ ] Diagnose a training-only identifier-copy curriculum and complete-code regressions, then freeze a candidate before genuinely fresh broader functional evaluation; numerical repeatability alone is insufficient.
