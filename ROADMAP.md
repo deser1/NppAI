@@ -247,7 +247,12 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Observe historical-profile Intel/AMD coverage in a second both64 allocation: first differences at loss log-softmax or backward FP32 matmul for identical recorded inputs; portable first-step Intel/AMD agreement repeats. Retain comparison and verification limits.
 
 - [x] Predeclare guarded portable native/both64 full-training repeatability with fixed 1024 updates, same-host repetitions, every-step traces and actual CPU coverage.
-- [ ] Measure and retain complete-schedule/checkpoint agreement or earliest divergence on observed AMD/Intel hosts; keep quality and promotion separate.
+- [x] Measure and retain full 1024-update Intel/AMD evidence: portable both64 matches all traces/checkpoints across recorded Xeon 8573C and EPYC 7763/9V74; native first differs in parameters at update 1. Quality/promotion remain separate.
 
 - [x] Measure portable native/both64 1024-update repeats on four AMD hosts; verify all trace/checkpoint bytes and retain reconstructed evidence plus original aggregation import failure/repair.
-- [ ] Obtain and assess full-schedule Intel/AMD evidence; AMD-only equality does not satisfy the cross-vendor repeatability gate.
+- [x] Obtain and audit full-schedule Intel/AMD evidence in regression allocation 38959870764 (three cross-vendor pairs); limit the result to the recorded seed/schedule/runtime/hosts.
+
+- [x] Add actual CPU/OS qualification, existing-runner label inputs and a separate passed/failed/inconclusive full-training gate; no training on mismatched hardware or vacuous single-host equality.
+- [x] Measure the bounded vendor-qualified allocation: three wrong-vendor slots skip training; one eligible AMD host yields inconclusive and strict exit 2. Preserve this result separately from the successful unrestricted Intel/AMD regression evidence.
+- [ ] Supply existing vendor-specific Ubuntu 24.04 x64 runner labels for predictable hardware certification.
+- [ ] Evaluate portable both64 code-generation/functional quality independently before any recipe/weight promotion.

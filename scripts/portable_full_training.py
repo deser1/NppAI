@@ -159,8 +159,9 @@ def trace_difference(left, right):
     return {'identical': len(left) == len(right), 'counts': [len(left), len(right)]}
 
 
-def compare(root):
-    dirs = [root / f'portable-full-{i}' for i in range(1, 5)]
+def compare(root, *, directories=None, emit=True, allow_single=False):
+    dirs = list(directories) if directories is not None else [root / f'portable-full-{i}' for i in range(1, 5)]
+    if len(dirs) < (1 if allow_single else 2): raise ValueError('at least two completed training runs required')
     reports = [json.loads((p / 'report.json').read_bytes()) for p in dirs]
     traces = {}
     for i, (p, report) in enumerate(zip(dirs, reports)):
@@ -186,11 +187,11 @@ def compare(root):
             raise ValueError('source or training exposure differs')
     for variant in VARIANTS:
         if len({r['arms'][variant]['repeats'][0]['initial_parameters'] for r in reports}) != 1: raise ValueError('initial weights differ')
-        for index in range(4):
+        for index in range(len(reports)):
             if [r['inputs'] for r in traces[index, variant][1:]] != [r['inputs'] for r in traces[0, 'native'][1:]]:
                 raise ValueError('per-step training inputs differ')
     pairs = []
-    for a, b in itertools.combinations(range(4), 2):
+    for a, b in itertools.combinations(range(len(reports)), 2):
         av, bv = [reports[i]['environment']['cpu'].get('vendor_id') for i in (a, b)]
         arms = {}
         for variant in VARIANTS:
@@ -202,10 +203,11 @@ def compare(root):
     cross_vendor = sum(p['cross_vendor'] for p in pairs)
     result = {'reports': reports, 'pairs': pairs, 'coverage': {'cpu_models': [r['environment']['cpu'].get('model name') for r in reports],
         'vendors': [r['environment']['cpu'].get('vendor_id') for r in reports], 'cross_vendor_pairs': cross_vendor},
-        'summary': {v: {'all_training_traces_and_checkpoints_identical': all(p['arms'][v]['trace']['identical'] and p['arms'][v]['checkpoint_identical'] and p['arms'][v]['final_parameters_identical'] for p in pairs)} for v in VARIANTS},
+        'summary': {v: {'all_training_traces_and_checkpoints_identical': bool(pairs) and all(p['arms'][v]['trace']['identical'] and p['arms'][v]['checkpoint_identical'] and p['arms'][v]['final_parameters_identical'] for p in pairs)} for v in VARIANTS},
         'promotion': False, 'limits': reports[0]['limits']}
     (root / 'comparison.json').write_bytes(encoded(result))
-    print(json.dumps({k: v for k, v in result.items() if k not in ('reports', 'pairs')}))
+    if emit: print(json.dumps({k: v for k, v in result.items() if k not in ('reports', 'pairs')}))
+    return result
 
 
 if __name__ == '__main__':

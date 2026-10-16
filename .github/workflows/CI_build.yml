@@ -106,6 +106,9 @@ jobs:
     - name: Run first-step operator trace contracts
       run: python -m unittest discover -s tests -p "test_first_step_ops.py" -v
 
+    - name: Run vendor qualification contracts
+      run: python -m unittest discover -s tests -p "test_vendor_pair_training.py" -v
+
     - name: Run portable full-training contracts
       run: python -m unittest discover -s tests -p "test_portable_full_training.py" -v
 

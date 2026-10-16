@@ -1,4 +1,7 @@
 ## Unreleased
+- Verify full 1024-update portable both64 trace/checkpoint equality across observed Intel Xeon 8573C and AMD EPYC 7763/9V74; native first differs in parameters at update 1. Retain byte-audited evidence and scope limits, no recipe/weight promotion.
+- Record the separate vendor-qualified allocation as inconclusive: three wrong-vendor slots skip training; one qualified AMD host cannot pass strict certification (exit 2). Preserve all hardware evidence.
+- Add vendor-qualified full-training workflow: actual CPU/OS guards before training, explicit inconclusive coverage, strict certification and existing-runner label inputs. Preserve fixed recipes and reject vacuous single-host equality; no hardware/provisioning or model-promotion claim.
 - Retain full 1024-update native/both64 agreement on the observed AMD-only allocation, with byte-verified repeated traces/checkpoints. Fix stdlib aggregation importing a training-only optional dependency; preserve the original failed aggregation and coverage limits. No cross-vendor or model-promotion claim.
 - Add gated portable native/both64 1024-update repeatability experiment, byte-verified repeats/checkpoints and every-step comparison. Fixed source/schedule; measurement pending, no baseline or model promotion.
 - Retain a second both64 allocation with historical Intel/AMD coverage: loss log-softmax and backward FP32 matmul are separate observed first-difference boundaries. Portable first-step agreement repeats; full-training portability remains open.
