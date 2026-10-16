@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 import tempfile
@@ -52,6 +53,21 @@ class TrainingReproTests(unittest.TestCase):
             result=json.loads((root/'comparison.json').read_text())
             self.assertTrue(result['historical-v1']['checkpoint_identical'])
             self.assertFalse(result['portable-cpu-v1']['checkpoint_identical'])
+
+    def test_retained_traces_reconstruct_verified_artifact_bytes(self):
+        root=Path(__file__).resolve().parents[1]/'docs/evidence/training-reproducibility'
+        manifest=json.loads((root/'manifest.json').read_text());initial=set()
+        self.assertEqual(len(manifest['records']),4)
+        for record in manifest['records']:
+            raw=b''.join((root/name).read_bytes() for name in record['trace_chunks'])
+            rows=[json.loads(line) for line in raw.splitlines()]
+            self.assertEqual([r['step'] for r in rows],list(range(1025)))
+            initial.add(rows[0]['parameters'])
+            for repetition in (0,1):
+                expected=record['files'][str(repetition)+'/trace.jsonl']
+                self.assertEqual(len(raw),expected['bytes'])
+                self.assertEqual(hashlib.sha256(raw).hexdigest(),expected['sha256'])
+        self.assertEqual(len(initial),1)
 
 
 if __name__=='__main__':unittest.main()
