@@ -1,6 +1,6 @@
 # Explicit source-byte identifier copy: next controlled experiment
 
-Status: **experimental Python implementation prepared; measurements pending**.
+Status: **experimental Python implementation measured; acceptance gates not met, no promotion**.
 See [implementation and measured status](gated-copy-readout.md).
 
 ## Motivation
@@ -62,6 +62,6 @@ source bytes need explicit unit tests.
 - [x] Implement experimental pointer/gate model and versioned Python-only export/load compatibility.
 - [x] Add causal masking, duplicate-byte, UTF-8, EOS and gradient unit tests (actual execution in experiment CI).
 - [x] Add paired pinned-control experiment and evidence audits.
-- [ ] Run actual PyTorch training and autonomous complete-code evaluation.
-- [ ] Run independent Docker functional checks and publish failures/regressions.
-- [ ] Decide promotion separately, based on observed results.
+- [x] Run actual PyTorch training and autonomous complete-code evaluation (0/132 complete development names).
+- [x] Run separately authored Docker functional checks and publish failures/regressions (0/6 per arm; small correlated probes).
+- [x] Reject promotion for this experiment: complete-name and functional gates remain unmet.

@@ -123,10 +123,25 @@ class GatedCopyTorchTests(unittest.TestCase):
             loaded,manifest=load_bundle(path)
             self.assertFalse(manifest['native_compatible'])
             self.assertTrue(all(torch.equal(a,b) for a,b in zip(model.parameters(),loaded.parameters())))
+            x=torch.tensor([[65,66,65]]);mask=torch.tensor([[True,True,False]])
+            with torch.no_grad():self.assertTrue(torch.allclose(model(x,mask),loaded(x,mask),atol=1e-6))
             with self.assertRaises(ValueError):load_weights(path)
             entries=bounded_zip(path.read_bytes(),('base.nppai','head.npz','manifest.json'))
             entries['head.npz']=b'invalid';path.write_bytes(zip_bytes(entries))
             with self.assertRaisesRegex(ValueError,'digest'):load_bundle(path)
+
+    def test_pickle_backed_head_arrays_are_rejected_even_with_valid_digest(self):
+        import numpy as np
+        from scripts.gated_copy_model import export_bundle,load_bundle,bounded_zip,zip_bytes
+        with tempfile.TemporaryDirectory() as temp:
+            path=Path(temp)/'model.nppaicopy';export_bundle(self.model(),path,experiment.base.SOURCE_MODEL_ID)
+            outer=bounded_zip(path.read_bytes(),('base.nppai','head.npz','manifest.json'))
+            inner=bounded_zip(outer['head.npz'],('copy_q.npy','copy_k.npy','gate_weight.npy','gate_bias.npy'))
+            stream=io.BytesIO();np.save(stream,np.array([{'fixture':'object'}],dtype=object),allow_pickle=True)
+            inner['copy_q.npy']=stream.getvalue();outer['head.npz']=zip_bytes(inner)
+            manifest=json.loads(outer['manifest.json']);manifest['head_sha256']=experiment.base.digest(outer['head.npz'])
+            outer['manifest.json']=json.dumps(manifest).encode();path.write_bytes(zip_bytes(outer))
+            with self.assertRaises(ValueError):load_bundle(path)
 
 
 if __name__=='__main__':unittest.main()

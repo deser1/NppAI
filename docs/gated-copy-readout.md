@@ -68,6 +68,71 @@ of workflow success. A completed experiment can have zero functional passes.
 
 ## Observed outcome
 
-Pending actual training, export/load and Docker measurement. Both autonomous full
-response and independent functional counts must be reported before discussing
-promotion; assisted improvements alone are insufficient.
+Measured run [38849007538](https://github.com/deser1/NppAI/actions/runs/38849007538)
+completed on 2026-10-16. All six initial tests passed with actual PyTorch inference,
+including causal masking/gradients and bundle round-trip. Both control reports
+are byte-identical; historical control weight identity is true in this run.
+Source schedules match. The copy bundle was reloaded before all after-scoring,
+with exact parameter equality. Separate functional validation used actual Docker
+and the container cleanup check passed.
+
+**Both arms remain 0/132 development requested names, full signatures, reference
+AST and exact full replies. Both score 0/6 separately authored functional probes.**
+No model is promoted and the native/default runtime is unchanged.
+
+| Conditional name-byte group | Control correct / bytes | Copy correct / bytes |
+|---|---:|---:|
+| Renamed validation (`ev_`) | 44/176 | 56/176 |
+| Renamed test (`ev_`) | 69/308 | 88/308 |
+| Matched-prefix validation (`nc_`) | 85/176 | 127/176 |
+| Matched-prefix test (`nc_`) | 166/308 | 218/308 |
+
+These conditional counts supply prior correct name bytes. Complete conditional
+names and separate `def `-scaffolded exact names still score 0/132 development
+views. One of 16 renamed training views has all conditional name bytes correct,
+but not a correct scaffolded name terminated by `(`. It does not establish free
+copying. Original training exact replies are 4/16 control and 5/16 copy. Copy
+retains one prior exact hit, loses one and gains four; control retains none,
+loses two and gains four. Exposed training gains are not generalization.
+
+Logged first/final training minibatch loss is 1.2386/0.2505 for control versus
+1.0356/0.1527 for copy. These are different sampled minibatches, not held-out mean
+loss. The initial copy distribution already differs from control; raw before
+outputs are retained rather than attributing every difference to training.
+
+| Separate functional outcome | Control | Copy |
+|---|---:|---:|
+| Passed tasks | 0/6 | 0/6 |
+| Empty response | 1 | 1 |
+| Syntax failure | 0 | 1 |
+| Missing requested callable | 5 | 4 |
+
+The worker stops at the first failure. Valid syntax with a different function name
+cannot establish body semantics, and the 18 authored cases were not all invoked.
+Test cases never entered model prompts or optimization. This six-probe result is
+small and correlated with familiar operation templates, not broad independent
+problem accuracy. The probes are exposed regression material after this run.
+
+Exact raw reports, model identities, initial/full outputs, probabilities, causal
+checks and regression counts are retained through the two chunk manifests:
+
+- [Control evidence](evidence/gated-copy-readout/control/manifest.json), report
+  SHA-256 `af50cbd6548abb6c51b4ef3c8ecbaea1020df8e6fc8037a4d01b42c32d355b7a`.
+- [Copy evidence](evidence/gated-copy-readout/copy/manifest.json), report
+  SHA-256 `bd56c9f40b1dd8d99287308461323cb68a4bf670d974e2419c2c496c96e0d2ea`.
+- [Paired audit](evidence/gated-copy-readout/pair-audit.json) and
+  [functional report](evidence/gated-copy-readout/functional.json), functional
+  SHA-256 `82bda5f278e1113b0559fcbef191fc3b9992861c97c31fa183e48048525ec0c8`.
+
+Artifact 12023943809 ZIP digest was verified:
+`8f95a8989dc5b1402b4b4fdf5d79bdc4ed1752af5aed39aab982d686fa7c25cd`.
+Control/repeat raw bytes were compared directly and each report reconstructed
+byte-for-byte from the preserved chunks. The experimental bundle SHA-256 is
+`262305595112a89f744e95fdca9aef135d5931919754ad672304fb5b3847a792`;
+trained weights remain in the retained Actions artifact, not in git.
+
+The copy readout improves some conditional byte counts but does not satisfy the
+complete-name or functional acceptance gates. Before scaling full-code training,
+measure a dedicated training-only identifier-copy curriculum and gate behavior;
+keep independent evaluation reserved and require original-task retention. No
+coefficient/seed/checkpoint search was performed in this experiment.

@@ -224,4 +224,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Implement and run gated source-byte copy experiment, then validate autonomous full-code and independent Docker functional results before any checkpoint promotion.
 
 - [x] Implement prompt-only gated copy distribution, versioned Python bundle and matched same-host control/repeat experiment with separate Docker functional probes.
-- [ ] Record actual readout training, autonomous full-response and independent functional results; native integration/promotion remain separate gates. See [readout](docs/gated-copy-readout.md).
+- [x] Measure gated readout: conditional `nc_` bytes166/308→218/308, but full development names/signatures0/132 and separately authored functional probes0/6 in both arms; retain raw evidence and reject promotion. See [readout](docs/gated-copy-readout.md).
+- [ ] Measure a dedicated training-only identifier-copy curriculum and gate behavior before scaling full-code training; retain independent evaluation and original-task regression gates.
