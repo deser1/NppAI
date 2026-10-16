@@ -1,0 +1,46 @@
+{
+  "event_index": 36,
+  "op": "aten._softmax.default",
+  "shape": [
+    4,
+    177,
+    177
+  ],
+  "inputs_byte_identical": true,
+  "elements": 125316,
+  "different_elements": 17197,
+  "max_abs_delta": 5.960464477539063e-08,
+  "max_ulp_delta": 4,
+  "outputs_finite": true,
+  "members": [
+    {
+      "artifact": "first-step-historical-v1-3",
+      "member": "0/tensors/7aca10a0ed8a06967526792b606d0f546d9a2f7c3c33725b601a2aa98884633d.bin",
+      "bytes": 501264,
+      "sha256": "e08a5eb647e691cdb550c3c06ac5e681ab4f70784f3b02ed9aa6c95764e2ea1a",
+      "tensor_key": "7aca10a0ed8a06967526792b606d0f546d9a2f7c3c33725b601a2aa98884633d"
+    },
+    {
+      "artifact": "first-step-historical-v1-3",
+      "member": "0/tensors/3c00e56d77b1aaada9e5095a411f3ba3d313a89bf25a2d1394deb250b0d3313c.bin",
+      "bytes": 501264,
+      "sha256": "7cbd5f16b947734f984b70cf075ad484e157beb86379a8ddd9c5bd36d0a6f5ba",
+      "tensor_key": "3c00e56d77b1aaada9e5095a411f3ba3d313a89bf25a2d1394deb250b0d3313c"
+    },
+    {
+      "artifact": "first-step-historical-v1-1",
+      "member": "0/tensors/7aca10a0ed8a06967526792b606d0f546d9a2f7c3c33725b601a2aa98884633d.bin",
+      "bytes": 501264,
+      "sha256": "e08a5eb647e691cdb550c3c06ac5e681ab4f70784f3b02ed9aa6c95764e2ea1a",
+      "tensor_key": "7aca10a0ed8a06967526792b606d0f546d9a2f7c3c33725b601a2aa98884633d"
+    },
+    {
+      "artifact": "first-step-historical-v1-1",
+      "member": "0/tensors/73ce14556cf9c45d79bdcaece802617efddcc4b6735251e8e1582429b53adbac.bin",
+      "bytes": 501264,
+      "sha256": "5924952cc849ad45cdcebe47234fd47b0761589930bf6bf7ff12e9645dfae8c8",
+      "tensor_key": "73ce14556cf9c45d79bdcaece802617efddcc4b6735251e8e1582429b53adbac"
+    }
+  ],
+  "verification": "Selected ZIP members read with CRC checks and verified against recorded dtype/shape/content keys. Whole ZIP digest not independently checked; reported archive digests retained separately."
+}

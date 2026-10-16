@@ -230,3 +230,7 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Preserve raw control reports before historical guards, capture CPU/library provenance and every-step parameter/loss traces; require exact historical checkpoint identity before paired copy training.
 - [x] Measure eight controls across two profiles and two runners per profile: all same-host repeats exact, both profiles diverge across recorded AMD/Intel environments at update 1; reject the portable candidate and retain evidence.
 - [ ] Localize the numerical operator/backend divergence or freeze a supported hardware environment before claiming cross-runner repeatability; keep historical identity and promotion gates strict.
+
+- [x] Localize an observed first-step boundary: FP32 attention softmax differs for identical inputs on recorded AMD EPYC AVX512/AVX2 hosts; traced/untraced steps and same-host repeats match exactly. Retain evidence; Intel absent in this allocation.
+- [x] Capture Intel in a second operator allocation: portable-profile AMD–Intel traces first differ in AdamW FP32 sqrt at event 523 for identical inputs (max 1 ULP), with matching prior forward/backward/clip events.
+- [ ] Test isolated attention-softmax and AdamW-sqrt arithmetic alternatives on frozen inputs and complete updates with cross-vendor coverage before changing the training recipe or claiming repeatability.
