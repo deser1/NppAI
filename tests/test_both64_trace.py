@@ -39,6 +39,42 @@ class TraceContracts(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'unreliable'):compare(root)
 
 
+    def test_retained_evidence_binds_reports_saved_tensors_and_first_operator_difference(self):
+        import hashlib
+        from scripts.first_step_ops import encoded
+        root=Path(__file__).resolve().parents[1]/'docs/evidence/both64-trace'
+        manifest=json.loads((root/'manifest.json').read_bytes());comparison=json.loads((root/'comparison.json').read_bytes())
+        self.assertEqual(len(manifest['records']),8);events={};saved={};reports={}
+        for record in manifest['records']:
+            name=record['artifact_name'];raw=(root/record['report_file']).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),record['files']['report.json']['sha256'])
+            report=json.loads(raw);reports[name]=report
+            self.assertEqual(report['traced'],[report['reference']]*2)
+            self.assertTrue(report['trace_preserves_untraced_step']);self.assertTrue(report['saved_repeat'])
+            self.assertEqual(report['environment']['git_revision'],manifest['checkout_merge_sha'])
+            rows=[]
+            for file in record['event_digest_chunks']:rows.extend(json.loads((root/file).read_bytes()))
+            events[name]=rows;self.assertEqual(len(rows),report['trace_repeat']['counts'][0])
+            raw=(root/record['saved_file']).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),record['files']['0/saved.json']['sha256'])
+            saved[name]=json.loads(raw);self.assertEqual([len(saved[name])]*2,report['saved_counts'])
+        for profile,result in comparison.items():
+            self.assertEqual(result['reports'],[reports[f'both64-report-{profile}-{i}'] for i in range(1,5)])
+            for pair in result['pairs']:
+                a,b=[f'both64-report-{profile}-{i}' for i in pair['replicas']]
+                differences=[i for i,(x,y) in enumerate(zip(events[a],events[b])) if x!=y]
+                finding=pair['first_operator_difference'];self.assertEqual(finding['identical'],not differences)
+                if differences:
+                    self.assertEqual(finding['event'],differences[0])
+                    self.assertEqual(hashlib.sha256(encoded(finding['left'])).hexdigest(),events[a][differences[0]])
+                    self.assertEqual(hashlib.sha256(encoded(finding['right'])).hexdigest(),events[b][differences[0]])
+                self.assertEqual(pair['first_saved_difference'],saved_difference(saved[a],saved[b]))
+                self.assertEqual(pair['step'],{k:reports[a]['reference']['state'][k]==reports[b]['reference']['state'][k] for k in reports[a]['reference']['state']})
+        for replica in (1,4):
+            prefix=json.loads((root/f'historical-v1-{replica}-prefix.json').read_bytes())
+            self.assertEqual([hashlib.sha256(encoded(e)).hexdigest() for e in prefix],events[f'both64-report-historical-v1-{replica}'][:len(prefix)])
+
+
 @unittest.skipUnless(importlib.util.find_spec('torch'),'PyTorch required')
 class RealTrace(unittest.TestCase):
     def test_both64_trace_and_saved_hooks_preserve_full_step_and_effective_softmax(self):
