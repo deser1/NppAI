@@ -1,4 +1,5 @@
 ## Unreleased
+- Retain full 1024-update native/both64 agreement on the observed AMD-only allocation, with byte-verified repeated traces/checkpoints. Fix stdlib aggregation importing a training-only optional dependency; preserve the original failed aggregation and coverage limits. No cross-vendor or model-promotion claim.
 - Add gated portable native/both64 1024-update repeatability experiment, byte-verified repeats/checkpoints and every-step comparison. Fixed source/schedule; measurement pending, no baseline or model promotion.
 - Retain a second both64 allocation with historical Intel/AMD coverage: loss log-softmax and backward FP32 matmul are separate observed first-difference boundaries. Portable first-step agreement repeats; full-training portability remains open.
 - Add fixed both64 forward/backward and saved-autograd-tensor tracing, exact instrumentation/repeat guards and CPU coverage comparison. Measured historical AMD-only first difference at loss log-softmax and its saved tensor, while portable both64 matches a complete first step across recorded AMD/Intel pairs. Retain independently verified evidence; no full-training or baseline/model promotion claim.

@@ -8,7 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.arithmetic_variants import arithmetic_mode, complete_step, digest
 from scripts.first_step_ops import encoded, gradients
 from scripts.training_repro import configure, provenance, state_digest
-from scripts import resampled_name_training as base
+STEPS = 1024
+SOURCE_MODEL_ID = 'sha256:161d6303c7e77f005cbabba5a1790b9d6a6dfc1812c121bfbb3f1cb6820e5b1a'
 
 PROFILE = 'portable-cpu-v1'
 VARIANTS = ('native', 'both64')
@@ -31,7 +32,7 @@ def first_step_gate(root):
         if not cross_vendor:
             raise ValueError('first-step Intel/AMD coverage missing')
         for report in result['reports']:
-            if report['variant'] != 'both64' or report['source_model_id'] != base.SOURCE_MODEL_ID:
+            if report['variant'] != 'both64' or report['source_model_id'] != SOURCE_MODEL_ID:
                 raise ValueError('first-step recipe/source differs')
             if not report['trace_preserves_untraced_step'] or not report['trace_repeat']['identical'] or not report['saved_repeat']:
                 raise ValueError('unreliable first-step evidence')
@@ -111,9 +112,12 @@ def train(weights, batches, output, variant):
 
 def run(source, dataset, output):
     import torch
+    from scripts import resampled_name_training as base
     from scripts.run_local_model_smoke import pinned_backend
     from scripts.aligned_name_copy import CONTROL_MODEL_SHA256
     from scripts.check_dense_runtime_parity import torch_model
+    if base.STEPS != STEPS or base.SOURCE_MODEL_ID != SOURCE_MODEL_ID:
+        raise ValueError('fixed training protocol differs')
     configure(torch, PROFILE); output.mkdir(parents=True, exist_ok=True)
     gate = first_step_gate(Path(__file__).resolve().parents[1] / 'docs/evidence/both64-trace')
     backend = pinned_backend(source)
@@ -160,7 +164,7 @@ def compare(root):
     reports = [json.loads((p / 'report.json').read_bytes()) for p in dirs]
     traces = {}
     for i, (p, report) in enumerate(zip(dirs, reports)):
-        if report['version'] != 1 or report['profile'] != PROFILE or report['steps'] != base.STEPS or report['promotion'] is not False or set(report['arms']) != set(VARIANTS):
+        if report['version'] != 1 or report['profile'] != PROFILE or report['steps'] != STEPS or report['promotion'] is not False or set(report['arms']) != set(VARIANTS):
             raise ValueError('full-training schema differs')
         for variant, arm in report['arms'].items():
             if not arm['same_host_identical'] or len(arm['repeats']) != 2 or arm['repeats'][0] != arm['repeats'][1]:
@@ -172,7 +176,7 @@ def compare(root):
             if raw[0] != raw[1] or any(digest(r) != arm['repeats'][0]['trace_sha256'] for r in raw):
                 raise ValueError('trace repeat bytes differ')
             trace = [json.loads(line) for line in raw[0].splitlines()]
-            if len(trace) != base.STEPS + 1 or [r['step'] for r in trace] != list(range(base.STEPS + 1)):
+            if len(trace) != STEPS + 1 or [r['step'] for r in trace] != list(range(STEPS + 1)):
                 raise ValueError('incomplete training trace')
             if trace[0]['parameters'] != arm['repeats'][0]['initial_parameters'] or trace[-1]['parameters'] != arm['repeats'][0]['final_parameters']:
                 raise ValueError('trace endpoint differs')

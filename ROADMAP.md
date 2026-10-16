@@ -248,3 +248,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Predeclare guarded portable native/both64 full-training repeatability with fixed 1024 updates, same-host repetitions, every-step traces and actual CPU coverage.
 - [ ] Measure and retain complete-schedule/checkpoint agreement or earliest divergence on observed AMD/Intel hosts; keep quality and promotion separate.
+
+- [x] Measure portable native/both64 1024-update repeats on four AMD hosts; verify all trace/checkpoint bytes and retain reconstructed evidence plus original aggregation import failure/repair.
+- [ ] Obtain and assess full-schedule Intel/AMD evidence; AMD-only equality does not satisfy the cross-vendor repeatability gate.

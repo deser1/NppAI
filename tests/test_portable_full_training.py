@@ -9,6 +9,13 @@ from scripts.portable_full_training import first_step_gate,trace_difference,comp
 
 
 class FullTrainingContracts(unittest.TestCase):
+    def test_aggregation_cli_imports_with_standard_library_only(self):
+        import subprocess
+        import sys
+        root=Path(__file__).resolve().parents[1]
+        result=subprocess.run([sys.executable,'-S',str(root/'scripts/portable_full_training.py'),'--help'],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+
     def test_fixed_gate_requires_unmodified_cross_vendor_first_step_evidence(self):
         root=Path(__file__).resolve().parents[1]/'docs/evidence/both64-trace'
         result=first_step_gate(root)
@@ -29,7 +36,7 @@ class FullTrainingContracts(unittest.TestCase):
     def test_aggregation_validates_raw_repeats_and_input_exposure(self):
         from scripts.first_step_ops import encoded
         from scripts.arithmetic_variants import digest
-        with tempfile.TemporaryDirectory() as directory,patch('scripts.portable_full_training.base.STEPS',2):
+        with tempfile.TemporaryDirectory() as directory,patch('scripts.portable_full_training.STEPS',2):
             root=Path(directory)
             for i in range(1,5):
                 p=root/f'portable-full-{i}';arms={}
@@ -52,6 +59,40 @@ class FullTrainingContracts(unittest.TestCase):
             r['training_sha256']='same';p.write_bytes(encoded(r))
             (root/'portable-full-1/native/1/trace.jsonl').write_bytes(b'changed')
             with self.assertRaisesRegex(ValueError,'trace repeat'):compare(root)
+
+
+    def test_retained_full_traces_reconstruct_exact_bytes_and_pairwise_results(self):
+        from scripts.arithmetic_variants import digest
+        from scripts.first_step_ops import encoded
+        root=Path(__file__).resolve().parents[1]/'docs/evidence/portable-full-training'
+        manifest=json.loads((root/'manifest.json').read_bytes());comparison=json.loads((root/'comparison.json').read_bytes())
+        self.assertEqual(digest((root/'comparison.json').read_bytes()),manifest['comparison_sha256'])
+        traces={}
+        for sha,record in manifest['traces'].items():
+            rows=[]
+            for file in record['chunks']:rows.extend(json.loads((root/file).read_bytes()))
+            raw=b''.join(encoded(row) for row in rows)
+            self.assertEqual(digest(raw),sha);self.assertEqual(len(raw),record['bytes'])
+            self.assertEqual([row['step'] for row in rows],list(range(1025)));traces[sha]=rows
+        self.assertEqual(len(manifest['records']),4);reports={}
+        for record in manifest['records']:
+            raw=(root/record['report_file']).read_bytes();self.assertEqual(digest(raw),record['report_sha256'])
+            report=json.loads(raw);reports[record['artifact_name']]=report
+            raw=(root/record['preflight_file']).read_bytes();self.assertEqual(digest(raw),record['preflight_sha256'])
+            preflight=json.loads(raw);self.assertTrue(preflight['matches_frozen_candidate'])
+            self.assertTrue(all(preflight['first_step']==g['reference'] for g in report['gate']))
+            for variant,arm in report['arms'].items():
+                self.assertTrue(arm['same_host_identical']);self.assertEqual(arm['repeats'][0],arm['repeats'][1])
+                r=arm['repeats'][0];self.assertEqual(r['trace_sha256'],record['arms'][variant]['trace_sha256'])
+                self.assertEqual(traces[r['trace_sha256']][0]['parameters'],r['initial_parameters'])
+                self.assertEqual(traces[r['trace_sha256']][-1]['parameters'],r['final_parameters'])
+        self.assertEqual(comparison['reports'],[reports[f'portable-full-{i}'] for i in range(1,5)])
+        for pair in comparison['pairs']:
+            a,b=[reports[f'portable-full-{i}'] for i in pair['replicas']]
+            for variant,result in pair['arms'].items():
+                x,y=[r['arms'][variant]['repeats'][0] for r in (a,b)]
+                self.assertEqual(result['trace'],trace_difference(traces[x['trace_sha256']],traces[y['trace_sha256']]))
+                self.assertEqual(result['checkpoint_identical'],x['checkpoint_sha256']==y['checkpoint_sha256'])
 
 
 @unittest.skipUnless(importlib.util.find_spec('torch'),'PyTorch required')
