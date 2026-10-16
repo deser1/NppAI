@@ -234,3 +234,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Localize an observed first-step boundary: FP32 attention softmax differs for identical inputs on recorded AMD EPYC AVX512/AVX2 hosts; traced/untraced steps and same-host repeats match exactly. Retain evidence; Intel absent in this allocation.
 - [x] Capture Intel in a second operator allocation: portable-profile AMD–Intel traces first differ in AdamW FP32 sqrt at event 523 for identical inputs (max 1 ULP), with matching prior forward/backward/clip events.
 - [ ] Test isolated attention-softmax and AdamW-sqrt arithmetic alternatives on frozen inputs and complete updates with cross-vendor coverage before changing the training recipe or claiming repeatability.
+
+- [x] Measure four arithmetic variants on frozen inputs and complete steps: `both64` aligns isolated outputs and forward logits/loss across the observed historical AMD/Intel allocation, but backward/updated weights still diverge. Portable agreement covered AMD only; reject promotion.
+- [ ] Trace forward/saved activations and backward to locate the remaining gradient mismatch with fixed `both64` substitutions and unchanged batch/initial weights before any recipe change or full-training repeatability claim.
