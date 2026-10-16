@@ -3,7 +3,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import MagicMock,patch
-from scripts.training_repro import compare_traces,configure
+from scripts.training_repro import compare_traces,compare_replicas,configure
 
 
 class TrainingReproTests(unittest.TestCase):
@@ -35,6 +35,23 @@ class TrainingReproTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'historical control checkpoint differs'):
                 experiment.run_pair(None,None,Path('unused'),None,None)
         self.assertEqual(run.call_count,1)
+
+    def test_portability_failure_is_retained_and_not_converted_to_success(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for profile in ('historical-v1','portable-cpu-v1'):
+                for replica in (1,2):
+                    p=root/f'training-repro-{profile}-{replica}';(p/'0').mkdir(parents=True)
+                    (p/'comparison.json').write_text(json.dumps({'same_host_identical':True,'outcomes':[],
+                        'checkpoints':['same' if profile=='historical-v1' else str(replica)]}))
+                    (p/'0/trace.jsonl').write_text(json.dumps({'step':0,'parameters':'same'})+'\n')
+                    (p/'0/report.json').write_text(json.dumps({'before':{},'after':{}}))
+                    (p/'0/environment.json').write_text('{}')
+            with self.assertRaisesRegex(RuntimeError,'portable profile did not reproduce'):
+                compare_replicas(root)
+            result=json.loads((root/'comparison.json').read_text())
+            self.assertTrue(result['historical-v1']['checkpoint_identical'])
+            self.assertFalse(result['portable-cpu-v1']['checkpoint_identical'])
 
 
 if __name__=='__main__':unittest.main()

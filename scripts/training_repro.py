@@ -70,6 +70,9 @@ def diagnose(source,dataset,output,profile):
             outcomes.append({'historical_guard_passed':False,'error':str(error)})
         else:outcomes.append({'historical_guard_passed':True})
         if not (directory/'report.json').exists():raise RuntimeError('missing raw diagnostic report')
+        report=json.loads((directory/'report.json').read_text())
+        outcomes[-1]['historical_checkpoint_equal']=report['historical_checkpoint_equal']
+        outcomes[-1]['checkpoint_matches_historical']=report['checkpoint_sha256']==experiment.aligned.CONTROL_MODEL_SHA256
     comparison=compare_traces(output/'0/trace.jsonl',output/'1/trace.jsonl')
     checkpoints=[hashlib.sha256((output/str(i)/'control.nppai').read_bytes()).hexdigest() for i in range(2)]
     reports=[hashlib.sha256((output/str(i)/'report.json').read_bytes()).hexdigest() for i in range(2)]

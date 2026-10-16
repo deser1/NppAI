@@ -1,0 +1,238 @@
+{
+  "run_id": 38902297916,
+  "head": "9c8fc2006f1c1fc85c9e2a0236aae7b9ee11073a",
+  "records": [
+    {
+      "artifact_name": "training-repro-historical-v1-1",
+      "historical_checkpoint_equal": null,
+      "trace_chunks": [
+        "historical-v1-1-steps-0000.jsonl",
+        "historical-v1-1-steps-0256.jsonl",
+        "historical-v1-1-steps-0512.jsonl",
+        "historical-v1-1-steps-0768.jsonl",
+        "historical-v1-1-steps-1024.jsonl"
+      ],
+      "files": {
+        "0/control.nppai": {
+          "sha256": "1f41fe48b08dc1960c178d638c72c014de3dac132ff30bbf5b36f650d80f9525",
+          "bytes": 525640
+        },
+        "0/environment.json": {
+          "sha256": "17672791631db0a1064940021538542e057e401e025901f6d218d573b9c93780",
+          "bytes": 3349
+        },
+        "0/historical-failure.json": {
+          "sha256": "aef51d3837318760293fd4e97884f0c85e9fd18952a22257e9513681fd5ebab7",
+          "bytes": 79
+        },
+        "0/report.json": {
+          "sha256": "cc99786a593828dcb34840cc53502565796e21175171922dcb9e8ed5d7ec7f7a",
+          "bytes": 207111
+        },
+        "0/trace.jsonl": {
+          "sha256": "b7dacbaf81af316317309ae2153570e5ac21ea575d9699f748af51a6f2825890",
+          "bytes": 135179
+        },
+        "1/control.nppai": {
+          "sha256": "1f41fe48b08dc1960c178d638c72c014de3dac132ff30bbf5b36f650d80f9525",
+          "bytes": 525640
+        },
+        "1/environment.json": {
+          "sha256": "17672791631db0a1064940021538542e057e401e025901f6d218d573b9c93780",
+          "bytes": 3349
+        },
+        "1/historical-failure.json": {
+          "sha256": "aef51d3837318760293fd4e97884f0c85e9fd18952a22257e9513681fd5ebab7",
+          "bytes": 79
+        },
+        "1/report.json": {
+          "sha256": "cc99786a593828dcb34840cc53502565796e21175171922dcb9e8ed5d7ec7f7a",
+          "bytes": 207111
+        },
+        "1/trace.jsonl": {
+          "sha256": "b7dacbaf81af316317309ae2153570e5ac21ea575d9699f748af51a6f2825890",
+          "bytes": 135179
+        },
+        "comparison.json": {
+          "sha256": "aefa8150da2f32f1a67270cfcfec63397ee7886f7def151f1b0681c2eb76e8b1",
+          "bytes": 869
+        }
+      }
+    },
+    {
+      "artifact_name": "training-repro-historical-v1-2",
+      "historical_checkpoint_equal": true,
+      "trace_chunks": [
+        "historical-v1-2-steps-0000.jsonl",
+        "historical-v1-2-steps-0256.jsonl",
+        "historical-v1-2-steps-0512.jsonl",
+        "historical-v1-2-steps-0768.jsonl",
+        "historical-v1-2-steps-1024.jsonl"
+      ],
+      "files": {
+        "0/control.nppai": {
+          "sha256": "fc059649eacf8840536fecd1619451bac702eb7ce858d94908527aed2344780a",
+          "bytes": 525640
+        },
+        "0/environment.json": {
+          "sha256": "19fe2730f4e278d7fbb58a10a53d2f6d13ac3605d2142a782c019520c6e6f729",
+          "bytes": 3208
+        },
+        "0/report.json": {
+          "sha256": "af50cbd6548abb6c51b4ef3c8ecbaea1020df8e6fc8037a4d01b42c32d355b7a",
+          "bytes": 207050
+        },
+        "0/trace.jsonl": {
+          "sha256": "6ee08a85212fbeb53443bed9967712712ec58b4b035a899a1d89eec05dd5a8be",
+          "bytes": 135179
+        },
+        "1/control.nppai": {
+          "sha256": "fc059649eacf8840536fecd1619451bac702eb7ce858d94908527aed2344780a",
+          "bytes": 525640
+        },
+        "1/environment.json": {
+          "sha256": "19fe2730f4e278d7fbb58a10a53d2f6d13ac3605d2142a782c019520c6e6f729",
+          "bytes": 3208
+        },
+        "1/report.json": {
+          "sha256": "af50cbd6548abb6c51b4ef3c8ecbaea1020df8e6fc8037a4d01b42c32d355b7a",
+          "bytes": 207050
+        },
+        "1/trace.jsonl": {
+          "sha256": "6ee08a85212fbeb53443bed9967712712ec58b4b035a899a1d89eec05dd5a8be",
+          "bytes": 135179
+        },
+        "comparison.json": {
+          "sha256": "be7ec1b96f90e87982a707f837cbb7e5a598f758d4765ad816fc77baaee5fdc5",
+          "bytes": 755
+        }
+      }
+    },
+    {
+      "artifact_name": "training-repro-portable-cpu-v1-1",
+      "historical_checkpoint_equal": false,
+      "trace_chunks": [
+        "portable-cpu-v1-1-steps-0000.jsonl",
+        "portable-cpu-v1-1-steps-0256.jsonl",
+        "portable-cpu-v1-1-steps-0512.jsonl",
+        "portable-cpu-v1-1-steps-0768.jsonl",
+        "portable-cpu-v1-1-steps-1024.jsonl"
+      ],
+      "files": {
+        "0/control.nppai": {
+          "sha256": "75b01f90c184507f63ee8aba4a1a95d30c1c61f780e3fd595fccd71d56c4a743",
+          "bytes": 525640
+        },
+        "0/environment.json": {
+          "sha256": "759a687886cb66be9a183d7574a22d10b1de09fad85fd2bc9965ea6d380f1b44",
+          "bytes": 3226
+        },
+        "0/report.json": {
+          "sha256": "a1fa97e959cf557ccc83d493cfdda1c290561b5cfec1adc382ec46f926f8912a",
+          "bytes": 209829
+        },
+        "0/trace.jsonl": {
+          "sha256": "fb22736a57e24552473ed9ce0045161375177f4ea88a6d06bbae60e8fd12beaf",
+          "bytes": 135179
+        },
+        "1/control.nppai": {
+          "sha256": "75b01f90c184507f63ee8aba4a1a95d30c1c61f780e3fd595fccd71d56c4a743",
+          "bytes": 525640
+        },
+        "1/environment.json": {
+          "sha256": "759a687886cb66be9a183d7574a22d10b1de09fad85fd2bc9965ea6d380f1b44",
+          "bytes": 3226
+        },
+        "1/report.json": {
+          "sha256": "a1fa97e959cf557ccc83d493cfdda1c290561b5cfec1adc382ec46f926f8912a",
+          "bytes": 209829
+        },
+        "1/trace.jsonl": {
+          "sha256": "fb22736a57e24552473ed9ce0045161375177f4ea88a6d06bbae60e8fd12beaf",
+          "bytes": 135179
+        },
+        "comparison.json": {
+          "sha256": "2ddebf4f3a9a640e9557126a2d16c166c490d04e3579d9502412cbd6a4d58d62",
+          "bytes": 757
+        }
+      }
+    },
+    {
+      "artifact_name": "training-repro-portable-cpu-v1-2",
+      "historical_checkpoint_equal": false,
+      "trace_chunks": [
+        "portable-cpu-v1-2-steps-0000.jsonl",
+        "portable-cpu-v1-2-steps-0256.jsonl",
+        "portable-cpu-v1-2-steps-0512.jsonl",
+        "portable-cpu-v1-2-steps-0768.jsonl",
+        "portable-cpu-v1-2-steps-1024.jsonl"
+      ],
+      "files": {
+        "0/control.nppai": {
+          "sha256": "253a1ee26096bf75f0553760609f5dac9c192e7d153b8017645ee893431ecc4c",
+          "bytes": 525640
+        },
+        "0/environment.json": {
+          "sha256": "2ed0872bc175bb6e8f497a98e63ffba5cb84842625b034ad0e243f119412a18c",
+          "bytes": 3365
+        },
+        "0/report.json": {
+          "sha256": "0f9d8f1852563767db06b18600285b30351091a4bfce7c210309d778def6639c",
+          "bytes": 209769
+        },
+        "0/trace.jsonl": {
+          "sha256": "6a3dce06dbbd820fc777df982cd43755b1412c0d9ba35c48a0e4f51ee7b11280",
+          "bytes": 135179
+        },
+        "1/control.nppai": {
+          "sha256": "253a1ee26096bf75f0553760609f5dac9c192e7d153b8017645ee893431ecc4c",
+          "bytes": 525640
+        },
+        "1/environment.json": {
+          "sha256": "2ed0872bc175bb6e8f497a98e63ffba5cb84842625b034ad0e243f119412a18c",
+          "bytes": 3365
+        },
+        "1/report.json": {
+          "sha256": "0f9d8f1852563767db06b18600285b30351091a4bfce7c210309d778def6639c",
+          "bytes": 209769
+        },
+        "1/trace.jsonl": {
+          "sha256": "6a3dce06dbbd820fc777df982cd43755b1412c0d9ba35c48a0e4f51ee7b11280",
+          "bytes": 135179
+        },
+        "comparison.json": {
+          "sha256": "ffb9da3965d69f7ff7e946467c1cdcbf3b3f98a25116bad8ab38f6580f94d835",
+          "bytes": 757
+        }
+      }
+    }
+  ],
+  "limits": "Only environment comparison, per-step traces and file digests are retained in git. Full raw reports and weights remain in the 14-day Actions artifacts. No promotion.",
+  "artifacts": [
+    {
+      "name": "training-repro-portable-cpu-v1-1",
+      "id": 12047300708,
+      "digest": "sha256:31b9f5f43775d6f778fe94bf1cee96d385879b7920b028d979f1ce7a49896910"
+    },
+    {
+      "name": "training-repro-historical-v1-1",
+      "id": 12047096724,
+      "digest": "sha256:76de9e2503265e8274a05f9237874ff51f9b70c83315cfbff1a122d78e963c94"
+    },
+    {
+      "name": "training-repro-portable-cpu-v1-2",
+      "id": 12047056281,
+      "digest": "sha256:2e4d53e31190375a2443ad93351e71a4c584bdc23d7db61f69497441076eb1d5"
+    },
+    {
+      "name": "training-repro-historical-v1-2",
+      "id": 12046956757,
+      "digest": "sha256:e1f83acb129c5903ceb1807547592a1e291b4fba4ef7806cd9215ef83f23780c"
+    },
+    {
+      "name": "training-repro-comparison",
+      "id": 12046257692,
+      "digest": "sha256:11e083aae8bf40f8b0d9e2db4744fb9234f97df30a666946754cbabfb2ec8aba"
+    }
+  ]
+}
