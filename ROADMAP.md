@@ -251,3 +251,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Measure portable native/both64 1024-update repeats on four AMD hosts; verify all trace/checkpoint bytes and retain reconstructed evidence plus original aggregation import failure/repair.
 - [ ] Obtain and assess full-schedule Intel/AMD evidence; AMD-only equality does not satisfy the cross-vendor repeatability gate.
+
+- [x] Add actual CPU/OS qualification, existing-runner label inputs and a separate passed/failed/inconclusive full-training gate; no training on mismatched hardware or vacuous single-host equality.
+- [ ] Measure one vendor-qualified allocation; obtain existing Intel/AMD Ubuntu 24.04 x64 runners if standard allocation lacks a vendor. Do not certify missing coverage.
