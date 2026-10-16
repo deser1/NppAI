@@ -103,6 +103,9 @@ jobs:
     - name: Run training reproducibility contracts
       run: python -m unittest discover -s tests -p "test_training_repro.py" -v
 
+    - name: Run first-step operator trace contracts
+      run: python -m unittest discover -s tests -p "test_first_step_ops.py" -v
+
     - name: Run backend tests
       run: python -m unittest discover -s tests -p "test_server_backend.py" -v
 

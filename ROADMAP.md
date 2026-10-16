@@ -230,3 +230,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Preserve raw control reports before historical guards, capture CPU/library provenance and every-step parameter/loss traces; require exact historical checkpoint identity before paired copy training.
 - [x] Measure eight controls across two profiles and two runners per profile: all same-host repeats exact, both profiles diverge across recorded AMD/Intel environments at update 1; reject the portable candidate and retain evidence.
 - [ ] Localize the numerical operator/backend divergence or freeze a supported hardware environment before claiming cross-runner repeatability; keep historical identity and promotion gates strict.
+
+- [ ] Localize first-step divergence at observed ATen boundaries with identical inputs; verify tracing preserves untraced gradients, clipped gradients, loss and updated weights, and report actual CPU coverage.
