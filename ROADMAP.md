@@ -222,3 +222,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Specify gated source-byte identifier-copy readout experiment, causal safeguards, paired baseline and promotion gates; see [protocol](docs/explicit-identifier-copy-protocol.md). This is a design only, not a measured improvement.
 - [ ] Implement and run gated source-byte copy experiment, then validate autonomous full-code and independent Docker functional results before any checkpoint promotion.
+
+- [x] Implement prompt-only gated copy distribution, versioned Python bundle and matched same-host control/repeat experiment with separate Docker functional probes.
+- [ ] Record actual readout training, autonomous full-response and independent functional results; native integration/promotion remain separate gates. See [readout](docs/gated-copy-readout.md).

@@ -1,0 +1,32 @@
+[
+  {
+    "function": "limit_71",
+    "args": [
+      2,
+      4,
+      9
+    ],
+    "kwargs": {},
+    "expected": 4
+  },
+  {
+    "function": "limit_71",
+    "args": [
+      7,
+      4,
+      9
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "limit_71",
+    "args": [
+      20,
+      4,
+      9
+    ],
+    "kwargs": {},
+    "expected": 9
+  }
+]

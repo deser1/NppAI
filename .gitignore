@@ -41,3 +41,5 @@ models/
 dataset_export.txt
 *.jsonl
 C:\\NppAI_Telemetry.jsonl
+# Experimental pointer/gate bundle; never commit trained weights.
+*.nppaicopy

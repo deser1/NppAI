@@ -1,0 +1,26 @@
+[
+  {
+    "function": "edges_59",
+    "args": [
+      "abc"
+    ],
+    "kwargs": {},
+    "expected": "ac"
+  },
+  {
+    "function": "edges_59",
+    "args": [
+      "x"
+    ],
+    "kwargs": {},
+    "expected": "xx"
+  },
+  {
+    "function": "edges_59",
+    "args": [
+      ""
+    ],
+    "kwargs": {},
+    "expected": ""
+  }
+]

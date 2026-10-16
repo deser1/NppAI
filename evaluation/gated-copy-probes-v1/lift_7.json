@@ -1,0 +1,26 @@
+[
+  {
+    "function": "lift_7",
+    "args": [
+      0
+    ],
+    "kwargs": {},
+    "expected": 7
+  },
+  {
+    "function": "lift_7",
+    "args": [
+      -7
+    ],
+    "kwargs": {},
+    "expected": 0
+  },
+  {
+    "function": "lift_7",
+    "args": [
+      12
+    ],
+    "kwargs": {},
+    "expected": 19
+  }
+]
