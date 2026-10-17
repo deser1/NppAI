@@ -1,7 +1,7 @@
 import importlib.util
+import copy
 import json
 from pathlib import Path
-import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -13,6 +13,34 @@ DATASET = ROOT / 'evaluation/instruction-v3'
 
 
 class CurriculumContracts(unittest.TestCase):
+    def test_retained_raw_evidence_traces_and_tampering(self):
+        directory = ROOT / 'docs/evidence/copy-curriculum'
+        report = experiment.retained(directory)
+        tasks = ROOT / 'evaluation/gated-copy-probes-v1/tasks.json'
+        self.assertTrue(experiment.audit(report, DATASET, tasks))
+        starts = []
+        for arm in experiment.ARMS:
+            raw = experiment.retained_trace(directory, arm)
+            rows = experiment.audit_trace(raw, DATASET, arm, report['arms'][arm]['identity']['trace_sha256'])
+            starts.append(rows[0])
+            rows[1]['batch_sha256'] = '0' * 64
+            broken = b''.join(experiment.quality.encoded(row) for row in rows)
+            with self.assertRaisesRegex(ValueError, 'trace batch'):
+                experiment.audit_trace(broken, DATASET, arm, experiment.quality.digest(broken))
+        self.assertEqual(starts[0], starts[1])
+        mutations = [
+            lambda r: r['arms']['curriculum']['summary']['test/original'].__setitem__('exact_response', 28),
+            lambda r: r['arms']['curriculum']['functional']['models']['copy'].__setitem__('passed', 1),
+            lambda r: r['arms']['curriculum']['training_only_gate_diagnostic'][0]['name_gate'].__setitem__(0, 2),
+            lambda r: r['arms']['curriculum']['retention']['train/original']['exact_response'].__setitem__('lost', 0),
+            lambda r: r.__setitem__('promotion', True),
+        ]
+        for mutate in mutations:
+            broken = copy.deepcopy(report)
+            mutate(broken)
+            with self.assertRaises(ValueError):
+                experiment.audit(broken, DATASET, tasks)
+
     def test_train_only_schedule_and_stage_boundary(self):
         original = base.read_split
         calls = []

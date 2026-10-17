@@ -170,9 +170,135 @@ def functional(model, tasks, image):
     return functional_probes({'copy': model}, tasks, image)
 
 
+def audit(report, dataset, tasks):
+    from scripts import resampled_name_training as base
+    from scripts import diagnose_name_bytes as diagnostic
+    protocol_raw = (ROOT / 'evaluation/copy-curriculum-v1.json').read_bytes()
+    protocol = json.loads(protocol_raw)
+    groups, fingerprints = quality.inputs(dataset, tasks)
+    if (report['protocol_sha256'] != quality.digest(protocol_raw) or report['spec'] != SPEC or
+            protocol['spec'] != SPEC or report['evaluation_inputs'] != fingerprints or
+            fingerprints != protocol['evaluation_inputs'] or report['promotion'] is not False or
+            set(report['arms']) != set(ARMS)):
+        raise ValueError('curriculum report provenance differs')
+    if report['before_summary'] != quality.audit_groups(report['before'], groups):
+        raise ValueError('initial curriculum summary differs')
+    import re
+    expected_tasks = json.loads(tasks.read_bytes())
+    for arm, result in report['arms'].items():
+        if (schedule_evidence(dataset, arm) != protocol['schedules'][arm] or
+                result['same_host_repeat_equal'] is not True or
+                result['parameters_unchanged_by_evaluation'] is not True or
+                result['identity']['roundtrip_equal'] is not True or
+                any(not re.fullmatch(r'[0-9a-f]{64}', result['identity'][name])
+                    for name in ('checkpoint_sha256', 'trace_sha256'))):
+            raise ValueError('curriculum training identity differs')
+        if result['summary'] != quality.audit_groups(result['after'], groups):
+            raise ValueError('curriculum summary differs')
+        if result['retention'] != base.retention(report['before'], result['after']):
+            raise ValueError('curriculum retention differs')
+        training = groups['train/original'] + groups['train/renamed']
+        cases = result['training_only_gate_diagnostic']
+        if len(cases) != len(training):
+            raise ValueError('training-only diagnostic count differs')
+        for case, record in zip(cases, training):
+            _, target = diagnostic.plan(record)
+            response_count = len(record['answer'].encode()) + 1
+            if (any(case[key] != record[key] for key in ('id', 'function', 'prompt')) or
+                    len(case['name_gate']) != len(target) or
+                    len(case['pointer_target_probability']) != len(target) or
+                    len(case['other_gate']) != response_count - len(target)):
+                raise ValueError('training-only diagnostic identity differs')
+            probabilities = case['name_gate'] + case['other_gate'] + case['pointer_target_probability']
+            if any(not isinstance(p, (float, int)) or not math.isfinite(p) or not 0 <= p <= 1 for p in probabilities):
+                raise ValueError('invalid copy/gate probability')
+            item = case['name_bytes']
+            if item['metrics'] != diagnostic.metrics(target, item['predictions'], item['target_probabilities'], item['scaffolded_bytes']):
+                raise ValueError('conditional training-byte score differs')
+            check = item['prefix_check']
+            if (check['consistent'] is not True or check['count'] != len(target) or
+                    not math.isfinite(check['max_logit_delta']) or not 0 <= check['max_logit_delta'] <= 0.01):
+                raise ValueError('training causal prefix differs')
+        f = result['functional']
+        if (f['manifest_sha256'] != fingerprints['tasks_sha256'] or set(f['models']) != {'copy'} or
+                not re.fullmatch(r'sha256:[0-9a-f]{64}', f['image'])):
+            raise ValueError('functional curriculum provenance differs')
+        measured = f['models']['copy']
+        if measured['tasks'] != len(expected_tasks) or len(measured['cases']) != len(expected_tasks):
+            raise ValueError('functional curriculum count differs')
+        for case, task in zip(measured['cases'], expected_tasks):
+            if (any(case[key] != value for key, value in task.items()) or
+                    case['suite_sha256'] != fingerprints['suites'][task['task_id']] or
+                    case['category'] not in ('empty', 'syntax_failure', 'functional_failure', 'passed')):
+                raise ValueError('functional curriculum case differs')
+        if measured['passed'] != sum(c['category'] == 'passed' for c in measured['cases']):
+            raise ValueError('functional curriculum pass count differs')
+    return True
+
+
+def retained(directory):
+    manifest = json.loads((directory / 'manifest.json').read_bytes())
+    raw = (directory / 'report.json').read_bytes()
+    if quality.digest(raw) != manifest['metadata_sha256']:
+        raise ValueError('retained curriculum metadata differs')
+    report = json.loads(raw)
+    for item in manifest['chunks']:
+        raw = (directory / item['file']).read_bytes()
+        if quality.digest(raw) != item['sha256']:
+            raise ValueError('retained curriculum chunk differs')
+        value = json.loads(raw)
+        if item['kind'] == 'before':
+            report['before'][item['group']] = value
+        elif item['kind'] == 'after':
+            report['arms'][item['arm']]['after'][item['group']] = value
+        elif item['kind'] == 'diagnostic':
+            report['arms'][item['arm']]['training_only_gate_diagnostic'].extend(value)
+        else:
+            raise ValueError('unknown curriculum evidence chunk')
+    if quality.digest(quality.encoded(report)) != manifest['report_sha256']:
+        raise ValueError('reconstructed curriculum report differs')
+    return report
+
+
+def audit_trace(raw, dataset, arm, expected_sha256):
+    import re
+    if quality.digest(raw) != expected_sha256:
+        raise ValueError('curriculum trace digest differs')
+    rows = [json.loads(line) for line in raw.splitlines()]
+    if len(rows) != STEPS + 1 or [row['step'] for row in rows] != list(range(STEPS + 1)):
+        raise ValueError('curriculum trace steps differ')
+    for row in rows:
+        if not re.fullmatch(r'[0-9a-f]{64}', row['parameters']):
+            raise ValueError('curriculum trace parameter hash differs')
+    for records, row in zip(schedule(dataset, arm), rows[1:]):
+        if row['batch_sha256'] != quality.digest(quality.encoded(records)):
+            raise ValueError('curriculum trace batch differs')
+        components = row['losses']
+        if set(components) != {'response_nll', 'pointer_nll', 'gate_bce'} or any(
+                not math.isfinite(v) or v < 0 for v in components.values()):
+            raise ValueError('curriculum trace loss components differ')
+        loss = float.fromhex(row['loss_hex'])
+        expected = components['response_nll']
+        if arm == 'curriculum':
+            expected += components['pointer_nll'] + 0.1 * components['gate_bce']
+        if not math.isfinite(loss) or not math.isclose(loss, expected, rel_tol=1e-6, abs_tol=1e-5):
+            raise ValueError('curriculum trace total loss differs')
+    return rows
+
+
+def retained_trace(directory, arm):
+    manifest = json.loads((directory / 'manifest.json').read_bytes())
+    data = []
+    for item in manifest['traces'][arm]:
+        raw = (directory / item['file']).read_bytes()
+        if quality.digest(raw) != item['sha256']:
+            raise ValueError('retained curriculum trace chunk differs')
+        data.extend(json.loads(raw))
+    return b''.join(quality.encoded(row) for row in data)
+
+
 def run(archive, dataset, tasks, output, image):
     import torch
-    from scripts import aligned_name_copy as aligned
     from scripts import resampled_name_training as base
     from scripts.check_dense_runtime_parity import load_weights
     from scripts.train_gated_copy import evaluate
@@ -204,6 +330,7 @@ def run(archive, dataset, tasks, output, image):
                 raise ValueError('same-host training repeat differs: ' + arm)
         if identity != repeat:
             raise ValueError('same-host repeat identity differs')
+        audit_trace((output / arm / '0/trace.jsonl').read_bytes(), dataset, arm, identity['trace_sha256'])
         parameter_state = state_digest(first)
         after = evaluate(first, groups, True, False)
         # The diagnostic sees only the same 16 original and 16 renamed TRAIN views.
@@ -219,6 +346,7 @@ def run(archive, dataset, tasks, output, image):
         (output / 'report.json').write_bytes(quality.encoded(report))
         print(json.dumps({'arm': arm, 'summary': result['summary'],
                           'functional_passed': result['functional']['models']['copy']['passed']}), flush=True)
+    audit(report, dataset, tasks)
     return report
 
 
