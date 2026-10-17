@@ -1,6 +1,6 @@
 # Alias copying and Docker failure diagnosis — next experiment
 
-Status: **retained-evidence extractor implemented; fresh inference, oracle interventions and Docker reruns pending**.
+Status: **retained extractor and frozen oracle interventions measured, including Docker reruns; no promotion**.
 
 ## Baseline and question
 PR #198 measured 27/132 exact replies on exposed development natural-name
@@ -41,7 +41,7 @@ pass independent Docker functional evaluation before checkpoint promotion.
 
 ## Follow-up work
 - [x] Implement read-only retained trace extractor and deterministic unit tests (partial protocol coverage; see limits below).
-- [ ] Run frozen diagnostics with audited artifacts and Docker failure taxonomy.
+- [x] Run frozen diagnostics with audited artifacts and Docker failure taxonomy.
 - [ ] Choose a single causal intervention from observed first-error counts.
 - [ ] Evaluate a paired training experiment without holdout leakage.
 
@@ -121,5 +121,44 @@ requires unchanged model state; partial reports do not establish success.
 Workflow: `.github/workflows/alias-oracle.yml` (pinned CPU runtime, dedicated
 experiment branch push or manual dispatch). Local non-Torch contracts run in
 normal CI; the dedicated job additionally runs actual decoder intervention tests.
-Results pending. Assisted outcomes diagnose sensitivity and are not guaranteed
+Results measured below. Assisted outcomes diagnose sensitivity and are not guaranteed
 mathematical upper bounds, independent holdout accuracy, or model promotion.
+
+## Measured frozen interventions
+
+Run [39055914603](https://github.com/deser1/NppAI/actions/runs/39055914603)
+completed on source `c024951430da4ad747088db8dc15f1101170153e`.
+All 228 autonomous responses replayed retained bytes/events exactly, each of the
+four modes generated twice identically, and model weights remained unchanged.
+
+| Mode | Exact development replies | Exact renamed/matched-prefix | Docker passes |
+| --- | ---: | ---: | ---: |
+| Autonomous | 27/132 | 0/88 | 0/6 |
+| Oracle start | 57/132 | 30/88 | 0/6 |
+| Oracle exit | 29/132 | 0/88 | 0/6 |
+| Both oracles | 65/132 | 36/88 | 0/6 |
+
+Correcting source selection helps this exposed set much more than exit-only
+intervention. This supports prioritizing a single controlled start-selection
+training intervention next, but does not prove generalization. Both oracles
+still fail 52/88 alias replies and every functional probe. Delegating to the
+vocabulary head at the name boundary can append more identifier bytes (for
+example `lift_7tlpue7`), so an exit oracle is not an output-name repair.
+With start-only, `lift_7` returns `-x`, `below_31` returns `max(values)`, and
+`limit_71` returns `abs(x)`; correct names do not resolve body semantics.
+
+`docs/evidence/alias-oracle/raw-records.zip` retains every original JSON member,
+including per-case bytes/events/readouts and the original manifest.
+`report.json` retains runtime, hashes, all group summaries and full Docker
+outputs/diagnostics. `retention.json` pins both original and retained ZIP hashes.
+The checkpoint binary is excluded from the retained ZIP; its SHA-256 remains
+in the original manifest, and its bytes remain in the original Actions artifact.
+
+```sh
+python scripts/audit_alias_oracle.py
+```
+
+The read-only auditor verifies ZIP/file hashes, input identities, all 912
+response scores, cursor/exit event consistency, baseline reconstruction and
+functional totals. It does not rerun Docker or reconstruct model logits from
+weights. No independent holdout was exposed and no checkpoint promoted.

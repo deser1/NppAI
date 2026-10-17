@@ -394,4 +394,6 @@ Next diagnostic (planned, not measured): [alias copying and Docker failure taxon
 
 The [retained alias diagnostic](docs/alias-copy-failure-diagnostic.md#retained-evidence-extractor) now reconstructs first output differences and source-start observations without inference. Of 88 exposed renamed/matched-prefix replies, 86 select a wrong source start and two diverge before the name. Oracle interventions remain pending.
 
-A frozen [oracle diagnostic runner](scripts/alias_oracle_diagnostic.py) compares autonomous, start-only, exit-only and combined interventions on the same checkpoint. Baseline byte/event replay, exact repeats and unchanged weights are mandatory; assisted results are not autonomous gains. Measurement pending.
+A frozen [oracle diagnostic runner](scripts/alias_oracle_diagnostic.py) compares autonomous, start-only, exit-only and combined interventions on the same checkpoint. Baseline byte/event replay, exact repeats and unchanged weights are mandatory; assisted results are not autonomous gains. Measurement completed; see diagnostic results below.
+
+Measured frozen oracle diagnostics: autonomous 27/132 exact development replies (0/88 aliases), start-only 57/132 (30/88), exit-only 29/132 (0/88), both 65/132 (36/88). Every mode remains 0/6 Docker. Baseline replay and same-host repeats passed; weights unchanged; assisted results only, no promotion.

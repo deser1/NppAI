@@ -127,6 +127,9 @@ jobs:
     - name: Alias oracle contracts
       run: python -m unittest discover -s tests -p "test_alias_oracle_diagnostic.py" -v
 
+    - name: Audit retained oracle evidence
+      run: python -m unittest discover -s tests -p "test_alias_oracle_evidence.py" -v
+
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
