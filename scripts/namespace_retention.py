@@ -172,6 +172,84 @@ def train(weights, dataset, output, arm):
                     'trace_sha256': quality.digest(trace.read_bytes()), 'teacher_unchanged': True, 'roundtrip_equal': True}
 
 
+def audit_views(cases, groups):
+    summary = quality.audit_groups(cases, groups)
+    for group, rows in groups.items():
+        for case, row in zip(cases[group], rows):
+            if case['name_prefix'] is not case['output'].startswith('def ' + row['function'] + '('):
+                raise ValueError('raw namespace prefix score differs')
+    return summary
+
+
+def audit(report, dataset, tasks):
+    import re
+    protocol_raw = (ROOT / 'evaluation/namespace-retention-v1.json').read_bytes()
+    protocol = json.loads(protocol_raw)
+    groups, fingerprints = inputs(dataset, tasks)
+    if (report['protocol_sha256'] != quality.digest(protocol_raw) or report['spec'] != SPEC or
+            report['inputs'] != fingerprints or report['promotion'] is not False or
+            set(report['arms']) != set(ARMS) or protocol != {'spec': SPEC, 'inputs': fingerprints,
+                'schedules': {a: schedule_evidence(dataset, a) for a in ARMS}}):
+        raise ValueError('namespace report provenance differs')
+    if (report['before_summary'] != audit_views(report['before'], groups) or
+            report['before_prefix_summary'] != prefix_summary(report['before'])):
+        raise ValueError('initial namespace summary differs')
+    expected_tasks = json.loads(tasks.read_bytes())
+    for result in report['arms'].values():
+        if (result['same_host_repeat_equal'] is not True or result['parameters_unchanged_by_evaluation'] is not True or
+                result['identity']['teacher_unchanged'] is not True or result['identity']['roundtrip_equal'] is not True or
+                any(not re.fullmatch(r'[0-9a-f]{64}', result['identity'][k])
+                    for k in ('checkpoint_sha256', 'trace_sha256'))):
+            raise ValueError('namespace training identity differs')
+        if (result['summary'] != audit_views(result['after'], groups) or
+                result['prefix_summary'] != prefix_summary(result['after']) or
+                result['retention'] != base.retention(report['before'], result['after'])):
+            raise ValueError('namespace scores or retention differ')
+        f = result['functional']
+        if (f['manifest_sha256'] != fingerprints['tasks_sha256'] or set(f['models']) != {'copy'} or
+                not re.fullmatch(r'sha256:[0-9a-f]{64}', f['image'])):
+            raise ValueError('namespace functional provenance differs')
+        measured = f['models']['copy']
+        if measured['tasks'] != len(expected_tasks) or len(measured['cases']) != len(expected_tasks):
+            raise ValueError('namespace functional count differs')
+        for case, task in zip(measured['cases'], expected_tasks):
+            if (any(case[k] != value for k, value in task.items()) or
+                    case['suite_sha256'] != fingerprints['suites'][task['task_id']] or
+                    case['category'] not in ('empty', 'syntax_failure', 'functional_failure', 'passed')):
+                raise ValueError('namespace functional case differs')
+        if measured['passed'] != sum(c['category'] == 'passed' for c in measured['cases']):
+            raise ValueError('namespace functional pass count differs')
+    return True
+
+
+def audit_trace(raw, dataset, arm, expected_sha256):
+    import re
+    if quality.digest(raw) != expected_sha256:
+        raise ValueError('namespace trace digest differs')
+    rows = [json.loads(line) for line in raw.splitlines()]
+    if len(rows) != STEPS + 1 or [r['step'] for r in rows] != list(range(STEPS + 1)):
+        raise ValueError('namespace trace steps differ')
+    if rows[0]['teacher'] != rows[0]['parameters']:
+        raise ValueError('teacher initialization differs')
+    if any(not re.fullmatch(r'[0-9a-f]{64}', row['parameters']) for row in rows):
+        raise ValueError('namespace parameter hash differs')
+    for (records, original), row in zip(schedule(dataset, arm), rows[1:]):
+        if row['batch_sha256'] != quality.digest(quality.encoded({'records': records, 'original': original})):
+            raise ValueError('namespace trace exposure differs')
+        parts = row['losses']
+        if set(parts) != {'response_nll', 'pointer_nll', 'gate_bce', 'teacher_kl'} or any(
+                not math.isfinite(value) or value < (-1e-5 if key == 'teacher_kl' else 0)
+                for key, value in parts.items()):
+            raise ValueError('namespace trace components differ')
+        if not ARMS[arm][1] and parts['teacher_kl'] != 0:
+            raise ValueError('unexpected teacher contribution')
+        expected = parts['response_nll'] + parts['pointer_nll'] + 0.1 * parts['gate_bce'] + 0.5 * parts['teacher_kl']
+        value = float.fromhex(row['loss_hex'])
+        if not math.isfinite(value) or not math.isclose(value, expected, rel_tol=1e-6, abs_tol=1e-5):
+            raise ValueError('namespace trace total loss differs')
+    return rows
+
+
 def run(archive, dataset, tasks, output, image):
     from scripts.training_repro import configure, provenance, state_digest
     from scripts.check_dense_runtime_parity import load_weights
@@ -198,6 +276,7 @@ def run(archive, dataset, tasks, output, image):
                 raise ValueError('pilot same-host repeat differs')
         if identity != repeat:
             raise ValueError('pilot repeated identity differs')
+        audit_trace((output / arm / '0/trace.jsonl').read_bytes(), dataset, arm, identity['trace_sha256'])
         state = state_digest(model)
         after = evaluate(model, groups)
         result = {'identity': identity, 'same_host_repeat_equal': True, 'after': after,
@@ -210,6 +289,7 @@ def run(archive, dataset, tasks, output, image):
         (output / 'report.json').write_bytes(quality.encoded(report))
         print(json.dumps({'arm': arm, 'summary': result['summary'], 'prefix_summary': result['prefix_summary'],
                           'functional_passed': result['functional']['models']['copy']['passed']}), flush=True)
+    audit(report, dataset, tasks)
     return report
 
 

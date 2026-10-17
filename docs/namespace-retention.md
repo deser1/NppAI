@@ -1,6 +1,6 @@
 # Namespace and original-task retention pilot
 
-Status: predeclared 2×2 experiment; measurement pending. No promotion.
+Status: predeclared 2×2 experiment measured; copying and retention gates fail. No promotion.
 
 The prior copy curriculum had 5/132 exposed development exact hits, 0/6
 functional task passes and original-training regression 4/16→1/16. This smaller
@@ -49,3 +49,61 @@ two byte-identical trace/bundle repetitions per arm, all finite updates, unchang
 teacher/evaluation parameters and safe Python-only export/load. CPU arithmetic
 is native FP32 in the portable environment; same-host repeats do not certify
 cross-vendor training. No default, native compatibility or weight promotion.
+
+## Measured result
+
+[Run 39019625587](https://github.com/deser1/NppAI/actions/runs/39019625587)
+completed on AMD EPYC 9V74 under pinned Python 3.12.15, Torch 2.14.1+cpu and
+NumPy 2.5.2. All eight 512-update trainings completed. Both repetitions of each
+arm have identical complete trace and experimental bundle bytes; all four arms
+have the same initial student/teacher parameter hashes. Teacher parameters and
+evaluation parameters remained unchanged where required.
+
+| Autonomous readout | fixed | diverse | retained | diverse_retained |
+|---|---:|---:|---:|---:|
+| New train-family alias name prefix | 0/64 | 0/64 | 0/64 | 0/64 |
+| New train-family alias exact full reply | 0/64 | 0/64 | 0/64 | 0/64 |
+| Parseable single-function train-family replies | 45/64 | 56/64 | 49/64 | 49/64 |
+| Original training exact full reply | 1/16 | 2/16 | 6/16 | 1/16 |
+| Initial original-training exact hits retained | 0/4 | 0/4 | 0/4 | 0/4 |
+| New original-training exact hits gained | 1 | 2 | 6 | 1 |
+| Exposed development exact full reply | 3/132 | 1/132 | 3/132 | 1/132 |
+| Exposed Docker functional passes | 0/6 | 0/6 | 0/6 | 0/6 |
+
+The common initial model has four exact original-training replies. **All four
+are lost in every arm**. The retained arm's total rises to six entirely new hits;
+that higher total is not successful retention. Original requested signatures are
+1/16, 3/16, 6/16 and 1/16 respectively; only diverse and retained preserve one of
+five initial signature hits, while the other two preserve none. Copying new
+suffixes fails even with the familiar `nc_` and training-prefix `id_` views, not
+only with the two prefixes absent from training. The 64 probe replies represent
+16 correlated training-family views across four prefix variants, not 64
+independent tasks.
+
+Functional breakdown is fixed: four callable failures, one syntax failure and
+one empty reply; diverse: three callable failures, two syntax failures and one
+empty reply; both teacher arms: five callable failures and one empty reply.
+The worker stops at the first failure. Configured authored cases are not all
+executed, and valid syntax does not establish correct function bodies.
+
+Within this one-seed fixed pilot, teacher KL increases total training exact hits
+with the fixed prefix but does not preserve initial exact hits. Adding namespace
+diversity does not resolve unseen-suffix copying, and the combined arm does not
+show additive gains. These observations do not establish universal factor effects
+or justify selecting a production recipe. They are not directly comparable to
+the prior 1024-update experiment's counts because budget and warmup targets differ.
+
+Original artifact ZIP SHA256/CRC, all repeated trace/bundle bytes, every minibatch
+hash and loss composition, raw reply metrics and lost/retained/gained counts were
+independently audited. `docs/evidence/namespace-retention/manifest.json` binds
+the source artifact and reconstructs the exact report plus all four full traces.
+Regression tests reject false retention/prefix/pass claims and altered exposures.
+Experimental weights remain in the 14-day Actions artifact; retained hashes alone
+cannot reconstruct them.
+
+The next step should diagnose training-family **sequential source-position
+transitions and name termination**, plus drift on the four original exact hits,
+before another training expansion. A prompt-only monotonic pointer/cursor
+mechanism or a protected base readout would require its own fixed protocol,
+causal tests, complete-code/retention measurements and eventual fresh functional
+evaluation. This report does not promote or implement either proposed mechanism.
