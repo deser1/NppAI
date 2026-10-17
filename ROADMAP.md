@@ -272,3 +272,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Measure both frozen-base arms with exact repeats: sequential copying retains 4/4 original exact hits, yields 27/132 exposed development exact replies (natural-name views only) and 11/64 new TRAIN-family alias replies; renamed development remains 0/88 and Docker regression 0/6. Retain audited raw replies, cursor events, traces and exported-base identity; no promotion.
 - [ ] Diagnose frozen source-start/exit decisions across failed alias prefixes and six exposed functional outputs before another controlled mechanism change; keep fresh broader evaluation reserved.
+
+- [x] Define frozen alias source-start/exit and Docker first-failure diagnostic with causal traces, assisted upper bounds and evidence gates; see [protocol](docs/alias-copy-failure-diagnostic.md). Design only.
