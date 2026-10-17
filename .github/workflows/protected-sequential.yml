@@ -5,6 +5,7 @@ on:
     paths:
       - '.github/workflows/protected-sequential.yml'
       - 'scripts/protected_sequential.py'
+      - 'scripts/audit_protected_sequential.py'
       - 'scripts/sequential_copy_model.py'
       - 'tests/test_protected_sequential.py'
       - 'evaluation/protected-sequential-v1.json'

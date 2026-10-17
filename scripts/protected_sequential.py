@@ -255,12 +255,36 @@ def audit(report, dataset, tasks):
     return True
 
 
+def functional(model, tasks, image, arm):
+    from scripts.train_gated_copy import functional_probes
+    if arm == 'frozen_soft':
+        return functional_probes({'copy': model}, tasks, image)
+    from scripts.sequential_copy_model import generate
+    import sandbox_validate
+    items = []
+    for task in json.loads(tasks.read_bytes()):
+        cases, suite = sandbox_validate.load_cases(Path(task['cases_file']))
+        source = generate(model, task['prompt'])
+        category, detail = 'empty', 'Empty/whitespace output'
+        if source.strip():
+            status, detail = sandbox_validate.validate(source, 'syntax', cases, image)
+            category = 'syntax_failure'
+            if status == 0:
+                status, detail = sandbox_validate.validate(source, 'tests', cases, image)
+                category = 'passed' if status == 0 else 'functional_failure'
+            if status not in (0, 1):
+                raise RuntimeError('validation infrastructure: ' + detail[:512])
+        items.append({**task, 'source': source, 'suite_sha256': suite,
+                      'category': category, 'diagnostics': detail[:4096]})
+    return {'manifest_sha256': quality.digest(tasks.read_bytes()), 'image': image,
+            'models': {'copy': {'tasks':len(items), 'passed':sum(c['category']=='passed' for c in items), 'cases':items}},
+            'limits':'Six previously exposed regression probes, not fresh independent task accuracy.'}
+
+
 def run(archive, dataset, tasks, output, image):
     import torch
     from scripts.check_dense_runtime_parity import load_weights
     from scripts.training_repro import configure, provenance, state_digest
-    from scripts.train_gated_copy import functional_probes
-    from scripts import sequential_copy_model as sequential
     raw = (ROOT / 'evaluation/protected-sequential-v1.json').read_bytes()
     if json.loads(raw) != protocol(dataset, tasks):
         raise ValueError('predeclared protocol differs')
@@ -279,11 +303,10 @@ def run(archive, dataset, tasks, output, image):
         audit_trace((output / arm / '0/trace.jsonl').read_bytes(), dataset, arm, identity)
         state = state_digest(model)
         after = evaluate(model, groups, arm)
-        functional = functional_probes({'copy': model}, tasks, image,
-                        generator=sequential.generate if arm == 'frozen_sequential' else None)
+        functional_result = functional(model, tasks, image, arm)
         result = {'before': before, 'after': after, 'identity': identity,
                   'same_host_repeat_equal': True, 'retention': base.retention(before, after),
-                  'functional': functional, 'parameters_unchanged_by_evaluation': state == state_digest(model)}
+                  'functional': functional_result, 'parameters_unchanged_by_evaluation': state == state_digest(model)}
         if not result['parameters_unchanged_by_evaluation']:
             raise ValueError('evaluation changed protected model')
         for stage in ('before', 'after'):
@@ -292,7 +315,7 @@ def run(archive, dataset, tasks, output, image):
         report['arms'][arm] = result
         (output / 'report.json').write_bytes(quality.encoded(report))
         print(json.dumps({'arm': arm, 'summary': result['after_summary'],
-                          'functional_passed': functional['models']['copy']['passed'],
+                          'functional_passed': functional_result['models']['copy']['passed'],
                           'retention': result['retention']['train/original']}), flush=True)
     audit(report, dataset, tasks)
     return report
