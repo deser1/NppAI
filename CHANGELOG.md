@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add audited, read-only alias-copy evidence extraction, seven deterministic tests and CI coverage. Retained alias failures split into 86 wrong-source-start observations and two declaration-prefix divergences; preserve historical Docker failures without rerunning code or promoting weights.
+
 - Documented the next frozen alias-copy start/exit and Docker first-failure diagnostic protocol; no new model results or checkpoint promotion.
 
 - Measure protected-base copying: sequential mechanism retains all 4 initial exact hits and reaches 27/132 exposed development exact replies, versus 0/132 soft mixture and 3/4 retained. All 27 hits are natural-name views; renamed views remain 0/88 and Docker probes 0/6. Preserve repeated traces/bundles, source-cursor events and actual exported-base identity; no promotion.

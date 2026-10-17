@@ -121,6 +121,9 @@ jobs:
     - name: Run protected sequential copy contracts
       run: python -m unittest discover -s tests -p "test_protected_sequential.py" -v
 
+    - name: Alias copy retained-evidence diagnostics
+      run: python -m unittest discover -s tests -p "test_alias_copy_failure_diagnostic.py" -v
+
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
