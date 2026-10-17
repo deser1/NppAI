@@ -1,0 +1,1 @@
+[{"batch_sha256": "cf6389dcd8e78528937b3c49fbc9dd4485ee4239d1ee8331f01c826fa29ba036", "loss_hex": "0x1.6d17700000000p-1", "losses": {"gate_bce": 0.08714799582958221, "pointer_nll": 0.5273001790046692, "response_nll": 0.1770544946193695, "teacher_kl": 0.0}, "parameters": "9592466b4d57b3bc265cee79be9224a1c36ca32b6fbba3404748e7d1e4288306", "step": 512}]

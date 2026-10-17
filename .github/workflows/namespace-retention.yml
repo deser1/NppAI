@@ -1,0 +1,53 @@
+name: Namespace and retention factorial pilot
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/namespace-retention.yml'
+      - 'scripts/namespace_retention.py'
+      - 'tests/test_namespace_retention.py'
+      - 'evaluation/namespace-retention-v1.json'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      MKL_CBWR: COMPATIBLE
+      ATEN_CPU_CAPABILITY: default
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install pinned CPU runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'pydantic>=2.7,<3'
+      - name: Verify actual teacher isolation, gradients and causal copying
+        run: |
+          python -m unittest discover -s tests -p 'test_namespace_retention.py' -v
+          python -m unittest discover -s tests -p 'test_gated_copy.py' -v
+      - name: Download exact frozen initialization archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api 'repos/${{ github.repository }}/actions/artifacts/12072377313/zip' > training.zip
+      - name: Resolve immutable isolated validator
+        run: |
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Repeat four frozen arms and measure complete code
+        run: python scripts/namespace_retention.py --archive training.zip --dataset evaluation/instruction-v3 --tasks evaluation/gated-copy-probes-v1/tasks.json --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Require container cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: namespace-retention
+          path: measured/
+          retention-days: 14
