@@ -266,3 +266,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Freeze and implement the five-model copy-transition diagnostic with 68 training-reference cases, separate autonomous/gold-prefix/scaffolded modes, exact cached replay, loaded parameter identity and first-error vocabulary/readout comparisons; see [protocol](docs/copy-transition-diagnostic.md).
 - [x] Measure all 340 frozen replays: conditional pointer/byte gains do not complete 0/64 scaffolded names; original-hit first errors occur in 15 name positions and one body position, with four correct-vocabulary overrides and twelve vocabulary drifts. Retain raw causal/trajectory readouts and exit-gate failures; no promotion.
 - [ ] Predeclare a protected/frozen-vocabulary versus prompt-only sequential-pointer/name-exit protocol, then require autonomous full-code and original-hit retention before fresh functional evaluation.
+
+- [x] Predeclare and implement the protected/frozen vocabulary versus prompt-only sequential pointer and learned name-exit comparison, including causal cursor safeguards and complete-reply/retention gates; see [protocol](docs/protected-sequential.md).
+- [ ] Measure both protected arms with repeated traces, immutable bases, raw autonomous code and original exact-hit retention before fresh broader evaluation.

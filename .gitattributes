@@ -5,5 +5,6 @@ evaluation/portable-quality-v1.json text eol=lf
 evaluation/copy-curriculum-v1.json text eol=lf
 evaluation/namespace-retention-v1.json text eol=lf
 evaluation/copy-transition-v1.json text eol=lf
+evaluation/protected-sequential-v1.json text eol=lf
 # Recorded evidence hashes refer to exact LF bytes, including Windows checkouts.
 docs/evidence/** text eol=lf

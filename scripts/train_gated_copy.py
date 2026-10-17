@@ -148,7 +148,7 @@ def run(source,dataset,output,arm,*,runtime_profile="historical-v1"):
     return report,loaded
 
 
-def functional_probes(models,tasks_path,image):
+def functional_probes(models,tasks_path,image,*,generator=None):
     from scripts.gated_copy_model import generate
     from scripts.train_instruction_experiment import generate as plain_generate
     raw=tasks_path.read_bytes();tasks=json.loads(raw);prepared=[];seen=set()
@@ -161,7 +161,7 @@ def functional_probes(models,tasks_path,image):
     for arm,model in models.items():
         items=[]
         for task,cases,suite in prepared:
-            source=generate(model,task['prompt']) if arm=='copy' else plain_generate(model,task['prompt'],256)
+            source=generator(model,task['prompt']) if generator is not None else (generate(model,task['prompt']) if arm=='copy' else plain_generate(model,task['prompt'],256))
             category='empty';detail='Empty/whitespace output'
             if source.strip():
                 status,detail=sandbox_validate.validate(source,'syntax',cases,image);category='syntax_failure'
