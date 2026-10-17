@@ -1,4 +1,5 @@
 ## Unreleased
+- Add a fixed training-only identifier-copy curriculum with paired gated-readout control, 256-step base-frozen warmup, 768 full-code updates, causal prompt-position/gate supervision, exact same-host repeats and separate full-response/Docker regression checks. Freeze exposure and runtime limits; measurement pending, no promotion.
 - Measure frozen portable native/both64 exported-checkpoint quality with identical FP32 greedy inference: both remain 0/132 development requested names/signatures/exact replies and 0/6 Docker functional passes. Preserve independently audited raw replies, suite/checkpoint/archive hashes and report reconstruction; reject promotion and retain exposed-task limits.
 - Verify full 1024-update portable both64 trace/checkpoint equality across observed Intel Xeon 8573C and AMD EPYC 7763/9V74; native first differs in parameters at update 1. Retain byte-audited evidence and scope limits, no recipe/weight promotion.
 - Record the separate vendor-qualified allocation as inconclusive: three wrong-vendor slots skip training; one qualified AMD host cannot pass strict certification (exit 2). Preserve all hardware evidence.

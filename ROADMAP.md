@@ -257,3 +257,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Supply existing vendor-specific Ubuntu 24.04 x64 runner labels for predictable hardware certification.
 - [x] Evaluate frozen portable native/both64 exports with identical FP32 decoding and separate Docker functional checks: both remain 0/132 development names/signatures/exact replies and 0/6 functional passes. Retain audited raw evidence and reject promotion; see [quality readout](docs/portable-quality.md).
 - [ ] Diagnose a training-only identifier-copy curriculum and complete-code regressions, then freeze a candidate before genuinely fresh broader functional evaluation; numerical repeatability alone is insufficient.
+- [x] Freeze and implement the paired 256/768 identifier-copy curriculum with training-only prompt-position/gate supervision, identical initialization, same-host repeats and separate complete-code/Docker regression measurements; see [protocol](docs/copy-curriculum.md).
+- [ ] Measure the fixed curriculum and publish all raw outputs, copy/gate diagnostics and original-task regressions before considering further scaling.
