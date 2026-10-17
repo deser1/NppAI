@@ -1,4 +1,5 @@
 import importlib.util
+import copy
 import json
 from pathlib import Path
 import tempfile
@@ -12,6 +13,24 @@ DATASET = ROOT / 'evaluation/instruction-v3'
 
 
 class TransitionContracts(unittest.TestCase):
+    def test_retained_raw_points_and_false_diagnostic_claims(self):
+        report = diagnostic.retained(ROOT / 'docs/evidence/copy-transition')
+        self.assertTrue(diagnostic.audit(report, DATASET))
+        mutations = [
+            lambda r: r['models']['fixed']['summary'].__setitem__('scaffolded_exact_names', 64),
+            lambda r: r['models']['fixed']['cases'][0]['conditional'][0].__setitem__('gate', 2),
+            lambda r: r['models']['fixed']['cases'][0]['conditional'][0].__setitem__('aligned_source', 0),
+            lambda r: r['models']['fixed']['cases'][0]['conditional'][0].__setitem__('causal_max_delta', 1),
+            lambda r: r['models']['fixed']['cases'][0].__setitem__('cached_output_equal', False),
+            lambda r: r['models']['fixed'].__setitem__('parameters_after', '0' * 64),
+            lambda r: r.__setitem__('promotion', True),
+        ]
+        for mutate in mutations:
+            broken = copy.deepcopy(report)
+            mutate(broken)
+            with self.assertRaises(ValueError):
+                diagnostic.audit(broken, DATASET)
+
     def test_frozen_cases_open_training_references_only(self):
         read = diagnostic.base.read_split
         opened = []

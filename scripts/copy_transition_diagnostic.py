@@ -263,6 +263,159 @@ def summarize(items):
                 r['full']['first_difference']['point']['target'] for r in drift if r['full']['first_difference'] is not None)}
 
 
+def audit_point(item, record, target=None, source=None):
+    prefix, _, _, _ = plan(record)
+    if target is None and any(k in item for k in ('target', 'target_probability', 'vocab_target_probability', 'pointer_target_probability')):
+        raise ValueError('unexpected reference target after prefix drift')
+    if source is None and any(k in item for k in ('aligned_source', 'aligned_probability')):
+        raise ValueError('unexpected reference source after prefix drift')
+    for key in ('predicted', 'vocab_predicted', 'pointer_predicted', 'peak_byte'):
+        if type(item[key]) is not int or not 0 <= item[key] < 256:
+            raise ValueError('invalid diagnostic byte')
+    probabilities = ('gate', 'peak_probability', 'predicted_probability', 'predicted_vocab_probability',
+                     'predicted_pointer_probability')
+    if target is not None:
+        if item['target'] != target:
+            raise ValueError('diagnostic target byte differs')
+        probabilities += ('target_probability', 'vocab_target_probability', 'pointer_target_probability')
+    if source is not None:
+        if item['aligned_source'] != source:
+            raise ValueError('diagnostic source position differs')
+        probabilities += ('aligned_probability',)
+    if any(not isinstance(item[k], (int, float)) or not math.isfinite(item[k]) or not 0 <= item[k] <= 1.000001 for k in probabilities):
+        raise ValueError('invalid diagnostic probability')
+    peak = item['peak_position']
+    left, right = len(b'[USER]: '), len(b'[USER]: ') + len(record['prompt'].encode())
+    if type(peak) is not int or peak < 0:
+        raise ValueError('invalid diagnostic peak position')
+    if item['peak_probability'] > 0 and (not left <= peak < right or prefix[peak] != item['peak_byte']):
+        raise ValueError('diagnostic pointer escapes prompt')
+    g = item['gate']
+    expected = (1-g)*item['predicted_vocab_probability'] + g*item['predicted_pointer_probability']
+    if not math.isclose(item['predicted_probability'], expected, rel_tol=2e-5, abs_tol=2e-6):
+        raise ValueError('diagnostic mixture probability differs')
+    if target is not None:
+        expected = (1-g)*item['vocab_target_probability'] + g*item['pointer_target_probability']
+        if not math.isclose(item['target_probability'], expected, rel_tol=2e-5, abs_tol=2e-6):
+            raise ValueError('diagnostic target mixture differs')
+
+
+def audit(report, dataset):
+    import re
+    protocol_raw = (ROOT / 'evaluation/copy-transition-v1.json').read_bytes()
+    selected = cases(dataset)
+    fingerprint = quality.digest(quality.encoded(selected))
+    if (json.loads(protocol_raw) != {'spec': SPEC, 'cases_sha256': fingerprint} or report['spec'] != SPEC or
+            report['protocol_sha256'] != quality.digest(protocol_raw) or report['cases_sha256'] != fingerprint or
+            report['promotion'] is not False or set(report['models']) != set(MODELS)):
+        raise ValueError('diagnostic report provenance differs')
+    root = ROOT / 'docs/evidence/namespace-retention'
+    manifest = json.loads((root / 'manifest.json').read_bytes())
+    if manifest['report_sha256'] != SOURCE_REPORT_SHA256:
+        raise ValueError('retained source identity differs')
+    metadata_raw = (root / 'report.json').read_bytes()
+    if quality.digest(metadata_raw) != manifest['metadata_sha256']:
+        raise ValueError('retained source metadata differs')
+    metadata = json.loads(metadata_raw)
+    cached = {}
+    for name in MODELS:
+        for group in {c['group'] for c in selected}:
+            entry = next(c for c in manifest['chunks'] if c['kind'] == ('before' if name == 'initial' else 'after')
+                         and c['group'] == group and (name == 'initial' or c.get('arm') == name))
+            raw = (root / entry['file']).read_bytes()
+            if quality.digest(raw) != entry['sha256']:
+                raise ValueError('cached training reply bytes differ')
+            cached[name, group] = json.loads(raw)
+    for name, result in report['models'].items():
+        expected_checkpoint = quality.CHECKPOINTS['both64'] if name == 'initial' else metadata['arms'][name]['identity']['checkpoint_sha256']
+        chunk = manifest['traces']['fixed'][0] if name == 'initial' else manifest['traces'][name][-1]
+        raw = (root / chunk['file']).read_bytes()
+        if quality.digest(raw) != chunk['sha256']:
+            raise ValueError('cached parameter trace differs')
+        expected_state = json.loads(raw)[0 if name == 'initial' else -1]['parameters']
+        if (result['checkpoint_sha256'] != expected_checkpoint or result['parameters_before'] != expected_state or
+                result['parameters_after'] != expected_state or result['parameters_unchanged'] is not True or
+                not re.fullmatch(r'[0-9a-f]{64}', result['parameters_before']) or len(result['cases']) != len(selected)):
+            raise ValueError('diagnostic model identity differs')
+        for case, frozen in zip(result['cases'], selected):
+            record = frozen['record']
+            if any(case[k] != frozen[k] for k in ('group', 'index', 'role')) or case['id'] != record['id']:
+                raise ValueError('diagnostic case identity differs')
+            full = case['full']
+            output = full['bytes']
+            if any(type(b) is not int or not 0 <= b < 256 for b in output) or full['finish'] not in ('eos', 'budget'):
+                raise ValueError('invalid autonomous bytes')
+            if (len(output) > SPEC['full_budget'] or (full['finish'] == 'budget' and len(output) != SPEC['full_budget']) or
+                    bytes(output).decode('utf-8', errors='replace') != full['output'] or case['cached_output_equal'] is not True or
+                    full['output'] != cached[name, case['group']][case['index']]['output'] or
+                    case['full_metrics'] != base.score(record, full['output'])):
+                raise ValueError('diagnostic autonomous replay differs')
+            expected = record['answer'].encode() + b'\0'
+            observed = output + ([0] if full['finish'] == 'eos' else [])
+            first = next((i for i, (a,b) in enumerate(zip(observed, expected)) if a != b), None)
+            difference = full['first_difference']
+            _, target, sources, start = plan(record)
+            if first is None:
+                if difference is not None:
+                    raise ValueError('spurious autonomous first error')
+            else:
+                if difference is None or difference['offset'] != first or difference['phase'] != phase(record, first):
+                    raise ValueError('autonomous first error differs')
+                source = sources[first-4] if 4 <= first < 4 + len(target) else None
+                audit_point(difference['point'], record, expected[first], source)
+                if difference['point']['predicted'] != observed[first]:
+                    raise ValueError('autonomous first error prediction differs')
+            conditional_rows = case['conditional']
+            if len(conditional_rows) != len(target):
+                raise ValueError('conditional point count differs')
+            for i, (point_row, byte, source) in enumerate(zip(conditional_rows, target, sources)):
+                audit_point(point_row, record, byte, source)
+                if (point_row['offset'] != i or not math.isfinite(point_row['causal_max_delta']) or
+                        not 0 <= point_row['causal_max_delta'] <= 0.0002 or
+                        point_row['peak_in_name'] is not (start <= point_row['peak_position'] < start + len(target) - 1) or
+                        point_row['peak_delta'] != (point_row['peak_position'] - conditional_rows[i-1]['peak_position'] if i else None)):
+                    raise ValueError('conditional causal/transition record differs')
+            free = case['scaffolded']
+            trace = free['trace']
+            if not trace or len(trace) > SPEC['def_scaffold_budget'] or free['bytes'] != [p['predicted'] for p in trace] or free['exact_name'] is not (bytes(free['bytes']) == target):
+                raise ValueError('scaffolded output differs')
+            for i, point_row in enumerate(trace):
+                intact = bytes(free['bytes'][:i]) == target[:i] and i < len(target)
+                audit_point(point_row, record, target[i] if intact else None, sources[i] if intact else None)
+                if (point_row['offset'] != i or point_row['reference_prefix_intact'] is not intact or
+                        point_row['peak_in_name'] is not (start <= point_row['peak_position'] < start + len(target) - 1) or
+                        point_row['peak_delta'] != (point_row['peak_position'] - trace[i-1]['peak_position'] if i else None) or
+                        (i < len(trace)-1 and point_row['predicted'] in (0,10,40))):
+                    raise ValueError('scaffolded transition differs')
+            initial_point = case['initial_at_difference']
+            if frozen['role'] == 'initial_exact_training' and first is not None:
+                source = sources[first-4] if 4 <= first < 4 + len(target) else None
+                audit_point(initial_point, record, expected[first], source)
+                if initial_point['predicted'] != expected[first]:
+                    raise ValueError('initial shared-prefix prediction differs')
+            elif initial_point is not None:
+                raise ValueError('unexpected initial shared-prefix record')
+        if result['summary'] != summarize(result['cases']):
+            raise ValueError('diagnostic summary differs')
+    return True
+
+
+def retained(directory):
+    manifest = json.loads((directory / 'manifest.json').read_bytes())
+    raw = (directory / 'report.json').read_bytes()
+    if quality.digest(raw) != manifest['metadata_sha256']:
+        raise ValueError('diagnostic retained metadata differs')
+    report = json.loads(raw)
+    for chunk in manifest['chunks']:
+        raw = (directory / chunk['file']).read_bytes()
+        if quality.digest(raw) != chunk['sha256']:
+            raise ValueError('diagnostic retained chunk differs')
+        report['models'][chunk['model']]['cases'].extend(json.loads(raw))
+    if quality.digest(quality.encoded(report)) != manifest['report_sha256']:
+        raise ValueError('diagnostic reconstructed report differs')
+    return report
+
+
 def run(archive, dataset, output):
     import torch
     from scripts.training_repro import configure, provenance, state_digest
@@ -305,6 +458,7 @@ def run(archive, dataset, output):
         if not report['models'][name]['parameters_unchanged'] or any(not r['cached_output_equal'] for r in items):
             raise ValueError('frozen diagnostic replay/parameters differ; raw report preserved')
         print(json.dumps({'model': name, 'summary': report['models'][name]['summary']}), flush=True)
+    audit(report, dataset)
     return report
 
 

@@ -1,6 +1,6 @@
 # Frozen copy-transition and exact-hit drift diagnostic
 
-Status: fixed readout, measurement pending. No training or weight promotion.
+Status: fixed readout measured. No training or weight promotion.
 
 The namespace/retention pilot copied none of 64 new train-family aliases and lost
 all four initial original-training exact hits in every arm. This readout localizes
@@ -54,3 +54,70 @@ post-readout parameter hashes, exact cached replies and causal-prefix agreement.
 The original models remain in 14-day Actions artifacts; retained hashes cannot
 reconstruct weights after expiry. The diagnostic does not change production
 inference, architecture or model defaults.
+
+## Measured copy readout
+
+[Run 39021877939](https://github.com/deser1/NppAI/actions/runs/39021877939)
+completed on AMD EPYC 7763 with pinned Python 3.12.15, Torch 2.14.1+cpu and NumPy
+2.5.2. All 340 autonomous replies replay the frozen source outputs exactly.
+Loaded parameter hashes match the recorded initialization/final traces and remain
+unchanged after diagnosis. All conditional causal-prefix checks passed.
+
+| Readout | Initial | Fixed | Diverse | Retained | Diverse + retained |
+|---|---:|---:|---:|---:|---:|
+| Autonomous new-alias full replies | 0/64 | 0/64 | 0/64 | 0/64 | 0/64 |
+| `def `-scaffolded exact names through `(` | 0/64 | 0/64 | 0/64 | 0/64 | 0/64 |
+| Gold-prefix correct name bytes | 171/752 | 297/752 | 335/752 | 282/752 | 320/752 |
+| Gold-prefix peaks at aligned name positions | 19/752 | 318/752 | 356/752 | 325/752 | 352/752 |
+| Gold-prefix next-position peak pairs | 7/688 | 206/688 | 240/688 | 212/688 | 231/688 |
+| Gold-prefix correct `(` predictions | 46/64 | 37/64 | 40/64 | 37/64 | 42/64 |
+| Scaffolded first error at name byte 0 or 1 | 48/64 | 48/64 | 45/64 | 48/64 | 43/64 |
+
+Training improves some conditional position/byte observations, but conditional
+name bytes still fail frequently and no scaffolded name completes. Pointer peaks
+are often not sequential; duplicate-byte aggregation limits interpretation of
+individual peak jumps. Most scaffolded failures already occur in the first two
+name bytes, before termination can be the first error. Supplying correct prior
+name bytes therefore does not represent autonomous copying success.
+
+At the gold-prefix `(` query the trained models' mean gate is 0.544, 0.507,
+0.505 and 0.472, versus initial 0.018. Their vocabulary argmax is correct while
+the mixture is wrong in 27, 24, 26 and 22 of 64 termination queries respectively.
+This is an additional observed exit/gate problem under supplied name prefixes;
+it is not proof that termination explains the earlier free-decoding failures.
+
+## Lost original exact hits
+
+All four original hits remain exact for the initial model and fail in all four
+trained models. Of those 16 model/case losses, **15 first differ inside the
+function name** and one inside the body. The initial model predicts the correct
+byte on every shared prefix at those errors.
+
+| First-error observation | Fixed | Diverse | Retained | Diverse + retained |
+|---|---:|---:|---:|---:|
+| First error in name / body | 4 / 0 | 3 / 1 | 4 / 0 | 4 / 0 |
+| Final vocabulary correct, mixture wrong | 3 | 0 | 1 | 0 |
+| Initial vocabulary correct, final vocabulary wrong | 1 | 4 | 3 | 4 |
+
+Four losses have an observed override of a still-correct vocabulary prediction;
+their gate values are about 0.935, 0.933, 0.950 and 0.852. The remaining twelve
+have vocabulary argmax drift from correct to wrong. The one body error has gate
+about 0.004 and a changed vocabulary prediction. A head-only explanation or a
+base-only explanation would miss part of this evidence. These local comparisons
+do not constitute full-trajectory ablations or guarantee a repair.
+
+Original artifact ZIP SHA256/CRC and all five weight-file hashes were checked.
+`docs/evidence/copy-transition/manifest.json` reconstructs the exact report,
+including every conditional/scaffolded point, raw reply and shared-prefix drift
+comparison. Replay, probability mixture identities, source alignment, causal
+deltas, first-error positions and summaries are independently audited. Tests
+reject altered reference alignment, probabilities, replay/parameter claims and
+summary counts. Weights remain in 14-day Actions artifacts; hashes alone do not
+reconstruct them. No independent functional benchmark was rerun by this diagnostic.
+
+The next controlled protocol should separate a frozen/protected vocabulary path
+from a prompt-only sequential pointer and an explicit learned name-exit decision.
+Predeclare baseline, causal/source-start/termination safeguards and autonomous
+full-code plus exact-hit retention gates. Any monotonic cursor or protection rule
+must be disclosed as a mechanism change and measured end to end before fresh
+functional evaluation or promotion. Neither mechanism is implemented here.
