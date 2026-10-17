@@ -115,6 +115,9 @@ jobs:
     - name: Run frozen portable quality and evidence contracts
       run: python -m unittest discover -s tests -p "test_portable_quality.py" -v
 
+    - name: Run identifier-copy curriculum contracts
+      run: python -m unittest discover -s tests -p "test_copy_curriculum.py" -v
+
     - name: Run both64 saved tensor trace contracts
       run: python -m unittest discover -s tests -p "test_both64_trace.py" -v
 
