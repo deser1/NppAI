@@ -121,6 +121,9 @@ jobs:
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
+    - name: Run frozen copy-transition diagnostic contracts
+      run: python -m unittest discover -s tests -p "test_copy_transition_diagnostic.py" -v
+
     - name: Run both64 saved tensor trace contracts
       run: python -m unittest discover -s tests -p "test_both64_trace.py" -v
 
