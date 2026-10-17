@@ -155,14 +155,14 @@ def audit_events(case, row):
     left, right = len(b'[USER]: '), len(b'[USER]: ' + row['prompt'].encode())
     events = case['events']
     output_bytes = case['output_bytes']
-    if (any(type(b) != int or not 0 <= b <= 255 for b in output_bytes) or
+    if (len(output_bytes) > 160 or any(type(b) != int or not 1 <= b <= 255 for b in output_bytes) or
             bytes(output_bytes).decode('utf-8', errors='replace') != case['output']):
         raise ValueError('sequential raw output bytes differ')
     # Outputs with invalid UTF-8 are decoded with replacement; raw event bytes still audited against source.
     previous = None
     for i, event in enumerate(events):
         query, cursor = event['response_query'], event['cursor']
-        if not 4 <= query < 160 or (i == 0 and query != 4) or not 0 <= event['base_byte'] < 256:
+        if not 4 <= query < 160 or query > len(output_bytes) or (i == 0 and query != 4) or not 0 <= event['base_byte'] < 256:
             raise ValueError('sequential event timing differs')
         if previous is not None and (previous['kind'] != 'copy' or query != previous['response_query'] + 1 or
                                      cursor != previous['cursor'] + 1):

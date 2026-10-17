@@ -69,6 +69,60 @@ better complete development replies and functional improvement before a frozen
 candidate can proceed to genuinely fresh broader evaluation. This pilot never
 promotes automatically, even if those gates happen to pass.
 
-Measurement pending. Weights will be in 14-day Actions artifacts, while raw
-reports/traces and source/artifact hashes will be retained in the repository;
-hashes alone cannot reconstruct expired weights.
+## Measured result
+
+Measurement run [39036199267](https://github.com/deser1/NppAI/actions/runs/39036199267)
+used Python 3.12.15, Torch 2.14.1+cpu and an observed AMD EPYC 7763.
+Artifact `12102426032` ZIP SHA256 is
+`35d8a994d589fbe7776013e20a8d38a3c7e5281195e2f1fb6c4387f1f1d4e074`.
+The initialization is the pinned portable export documented in the protocol;
+this single measured allocation does not establish cross-vendor repeatability.
+
+Both arms completed all 512 updates twice, with byte-identical same-host traces
+and bundles. Every exported base is byte-identical to the pinned starting
+`.nppai`, and evaluation leaves all parameters unchanged.
+
+| Complete autonomous measurement | Frozen soft | Frozen sequential |
+|---|---:|---:|
+| Exposed development requested names /132 | 0 | 38 |
+| Exposed development signatures /132 | 0 | 33 |
+| Exposed development exact replies /132 | 0 | 27 |
+| Original TRAIN exact replies, before → after /16 | 4 → 3 | 4 → 14 |
+| Original prior exact hits retained /4 | 3 | 4 |
+| Original prior exact hits lost /4 | 1 | 0 |
+| New TRAIN-family alias exact replies /64 | 0 | 11 |
+| Exposed Docker functional passes /6 | 0 | 0 |
+
+All 27 development exact replies come from the **44 natural-name views**:
+14/16 validation and 13/28 test. The 88 renamed/matched-prefix development views
+still yield **0 exact replies and 0 requested names**. Names/signatures above
+therefore must not be read as namespace-invariant copying or fresh task accuracy.
+The sequential TRAIN-family prefix breakdown is uneven: exact replies are
+0/16 `nc_`, 9/16 `id_`, 2/16 `q_`, 0/16 `rename_`. Those are unseen suffixes on
+known training references, not unseen task families. The sequential arm retains
+all four original exact hits and gains ten others; the soft arm loses one.
+The sequential alias name-prefix count is 21/64, distinct from 11/64 complete
+replies and from AST-validated requested names. Its Docker failures comprise
+three syntax failures, two functional failures and one empty response; the soft
+arm has five functional failures and one empty response.
+
+The frozen sequential mechanism improves complete replies and exact-hit
+retention under this fixed comparison, but fails the functional gate and the
+renamed development diagnostics. **No promotion.** This is a bundled mechanism
+result, not evidence that a hard cursor alone or base freezing alone caused it.
+No new holdout was opened and no settings were tuned to these outcomes.
+
+Raw complete replies, sequential bytes/events and all 513 trace rows per arm
+are reconstructed from `docs/evidence/protected-sequential/manifest.json` and
+independently audited with `python scripts/audit_protected_sequential.py`.
+Original ZIP SHA256/CRC, repeated raw bundles/traces, exported base bytes, input
+exposure, loss components, source boundaries, cursor increments, exit decisions,
+raw emitted bytes, scoring and retained/lost/gained counts are verified.
+Weights remain in 14-day Actions artifacts; retained hashes alone cannot
+reconstruct them.
+
+Next, diagnose learned source starts and exits across the failed alias prefixes
+and the six functional regression outputs with frozen weights. Use TRAIN
+references for any further mechanism change, predeclare its comparison, and
+reserve genuinely fresh broader functional evaluation for a frozen candidate
+that passes complete-code and retention gates.

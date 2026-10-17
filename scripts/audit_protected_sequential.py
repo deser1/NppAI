@@ -41,7 +41,7 @@ def retain(archive, directory, expected_sha256, run_id, artifact_id):
         report_raw = bundle.read('report.json')
         report = json.loads(report_raw)
         pilot.audit(report, dataset, tasks)
-        if bundle.read('source/both64.nppai') and pilot.quality.digest(bundle.read('source/both64.nppai')) != pilot.quality.CHECKPOINTS['both64']:
+        if pilot.quality.digest(bundle.read('source/both64.nppai')) != pilot.quality.CHECKPOINTS['both64']:
             raise ValueError('protected source checkpoint differs')
         traces = {}
         for arm in pilot.ARMS:
