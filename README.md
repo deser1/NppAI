@@ -393,3 +393,5 @@ A second both64 trace allocation includes historical-profile Intel/AMD pairs: so
 Next diagnostic (planned, not measured): [alias copying and Docker failure taxonomy](docs/alias-copy-failure-diagnostic.md). Existing 0/88 renamed/matched-prefix and 0/6 Docker results remain unchanged.
 
 The [retained alias diagnostic](docs/alias-copy-failure-diagnostic.md#retained-evidence-extractor) now reconstructs first output differences and source-start observations without inference. Of 88 exposed renamed/matched-prefix replies, 86 select a wrong source start and two diverge before the name. Oracle interventions remain pending.
+
+A frozen [oracle diagnostic runner](scripts/alias_oracle_diagnostic.py) compares autonomous, start-only, exit-only and combined interventions on the same checkpoint. Baseline byte/event replay, exact repeats and unchanged weights are mandatory; assisted results are not autonomous gains. Measurement pending.

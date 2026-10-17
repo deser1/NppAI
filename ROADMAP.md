@@ -277,3 +277,6 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Implement and test read-only retained alias trace extraction: byte offsets, overlapping start/exit observations, historical Docker diagnostics; 86/88 alias replies select a wrong source start, two diverge before names.
 - [ ] Run pinned-checkpoint oracle-start/oracle-exit comparisons and fresh restricted Docker diagnostics; retained evidence extraction does not complete this gate.
+
+- [x] Implement frozen oracle-start, oracle-exit and combined diagnostic runner with exact baseline replay, raw readouts, repeat checks and restricted Docker probes.
+- [ ] Measure and retain oracle diagnostic results; no autonomous improvement or promotion inferred from assisted results.

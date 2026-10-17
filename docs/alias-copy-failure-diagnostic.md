@@ -95,3 +95,31 @@ checkpoint and a separate run. Unit fixtures cover UTF-8 byte offsets, repeated
 bytes/names, underscores/digits, wrong starts, early/late exits and tampering;
 they do not establish model performance on those cases. No weights changed,
 no generated code executed, no fresh holdout consumed, no promotion.
+
+## Frozen oracle runner
+
+`scripts/alias_oracle_diagnostic.py` accepts only the SHA-256-pinned PR #198
+archive and repeated checkpoint. Four fixed modes are evaluated without tuning:
+autonomous; oracle start only; oracle exit only; both. A start oracle selects the
+unique requested-name prompt byte position. The exit oracle forces copying until
+`4 + UTF-8 name length` response bytes, then delegates to the unchanged vocabulary
+head. Exit-only does not correct a wrong start. Neither supplies `def ` or rewrites
+outputs. A missing/ambiguous requested source span fails rather than being guessed.
+
+The original decoder and model remain unchanged. A diagnostic proxy records
+learned start position/probability, vocabulary byte and learned/effective exit
+probabilities. A modified start readout is only consumed if the original decoder
+reaches its autonomous `def ` trigger; `triggered` and events make this visible.
+
+Before assisted comparisons, every autonomous output byte and cursor event must
+match the retained baseline. All four modes repeat exactly. The six exposed
+functional probes also repeat, then run through the existing restricted Docker
+validator. Complete raw records, source/checkpoint/suite hashes, runtime/hardware,
+Docker image ID and a SHA-256 manifest are uploaded. The final `complete` marker
+requires unchanged model state; partial reports do not establish success.
+
+Workflow: `.github/workflows/alias-oracle.yml` (pinned CPU runtime, dedicated
+experiment branch push or manual dispatch). Local non-Torch contracts run in
+normal CI; the dedicated job additionally runs actual decoder intervention tests.
+Results pending. Assisted outcomes diagnose sensitivity and are not guaranteed
+mathematical upper bounds, independent holdout accuracy, or model promotion.

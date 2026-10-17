@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add frozen alias oracle diagnostic runner and dedicated pinned-runtime workflow: independent start/exit interventions, baseline replay, repeated generations, readouts and isolated Docker probes. Measurement pending; no training or promotion.
+
 - Add audited, read-only alias-copy evidence extraction, seven deterministic tests and CI coverage. Retained alias failures split into 86 wrong-source-start observations and two declaration-prefix divergences; preserve historical Docker failures without rerunning code or promoting weights.
 
 - Documented the next frozen alias-copy start/exit and Docker first-failure diagnostic protocol; no new model results or checkpoint promotion.
