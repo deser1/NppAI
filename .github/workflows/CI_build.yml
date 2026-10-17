@@ -118,6 +118,9 @@ jobs:
     - name: Run identifier-copy curriculum contracts
       run: python -m unittest discover -s tests -p "test_copy_curriculum.py" -v
 
+    - name: Run protected sequential copy contracts
+      run: python -m unittest discover -s tests -p "test_protected_sequential.py" -v
+
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
