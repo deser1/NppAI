@@ -1,4 +1,7 @@
 ## Unreleased
+
+- Documented the next frozen alias-copy start/exit and Docker first-failure diagnostic protocol; no new model results or checkpoint promotion.
+
 - Measure protected-base copying: sequential mechanism retains all 4 initial exact hits and reaches 27/132 exposed development exact replies, versus 0/132 soft mixture and 3/4 retained. All 27 hits are natural-name views; renamed views remain 0/88 and Docker probes 0/6. Preserve repeated traces/bundles, source-cursor events and actual exported-base identity; no promotion.
 - Predeclare frozen-base soft-pointer versus sequential cursor/learned-exit training with full-code, original-hit retention and exposed Docker regression gates. Add explicit decoding-assistance disclosure, semantic bundle separation and causal/gradient tests; measurement pending, no promotion.
 - Measure frozen copy transitions and original-hit drift: 340 exact reply replays, 0/64 completed scaffolded names despite conditional gains, 15/16 first losses inside names and one in the body. Preserve four vocabulary/readout overrides, twelve vocabulary drifts and conditional exit-gate failures with raw reconstruction audits; no training or promotion.
