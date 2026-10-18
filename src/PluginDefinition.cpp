@@ -36,7 +36,7 @@
 #include "TelemetryManager.h"
 #include "menuCmdID.h"
 #include <atomic>
-#include <cwctype>
+#include <cctype>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -67,20 +67,18 @@ std::wstring Utf8ToUtf16(const std::string &utf8) {
 }
 
 bool IsPolishLanguage() {
-  TCHAR langFile[MAX_PATH] = {0};
-  ::SendMessage(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME, MAX_PATH,
-                (LPARAM)langFile);
-
-  std::basic_string<TCHAR> path(langFile);
-  for (auto &c : path) {
-#ifdef UNICODE
-    c = std::towlower(c);
-#else
-    c = std::tolower(c);
-#endif
-  }
-
-  return path.find(TEXT("polish.xml")) != std::basic_string<TCHAR>::npos;
+  // Unlike most Notepad++ text messages, this API explicitly returns char*,
+  // independent of UNICODE. Reading it as TCHAR corrupts language detection.
+  const auto required = ::SendMessageW(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME, 0, 0);
+  if (required <= 0 || required > 32767) return false;
+  std::string name(static_cast<std::size_t>(required) + 1, '\0');
+  const auto copied = ::SendMessageW(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME,
+      name.size(), reinterpret_cast<LPARAM>(&name[0]));
+  if (copied <= 0 || static_cast<std::size_t>(copied) >= name.size()) return false;
+  name.resize(static_cast<std::size_t>(copied));
+  std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return char(std::tolower(c)); });
+  const auto slash = name.find_last_of("/\\");
+  return name.substr(slash == std::string::npos ? 0 : slash+1) == "polish.xml";
 }
 
 std::wstring Loc(const std::wstring &pl, const std::wstring &en) {

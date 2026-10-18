@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Read the Notepad++ native-language filename through its documented char buffer contract, with exact Polish filename matching, instead of treating returned bytes as UTF-16.
+
 - Fix Unicode Notepad++ panel/prompt creation and selection append; expose actionable Polish connection errors and remove the unverified cloud-connected status. Preserve generated previews when validation is unconfigured while keeping Apply disabled.
 - Add authenticated readiness for the actual NppAI checkpoint, a checked own-model/Notepad++ launcher, minimal inference dependencies and Polish setup instructions. Release CI packages now include the validator beside each DLL.
 

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include <cwchar>
 
 #include "Notepad_plus_msgs.h"
 #include "PluginInterface.h"
@@ -39,9 +38,11 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    if (message == NPPM_GETNATIVELANGFILENAME && lParam && wParam >= 11) {
-        std::wcscpy(reinterpret_cast<wchar_t*>(lParam), L"polish.xml");
-        return TRUE;
+    if (message == NPPM_GETNATIVELANGFILENAME) {
+        if (!lParam) return 10;
+        if (wParam < 11) return 0;
+        std::memcpy(reinterpret_cast<char*>(lParam), "polish.xml", 11);
+        return 10;
     }
     if (message == NPPM_GETCURRENTSCINTILLA) {
         auto* hostProbe = reinterpret_cast<HostProbe*>(
