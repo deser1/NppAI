@@ -29,6 +29,9 @@ results are not improved by routing. Nothing executes generated code.
 
 ## One-time configuration
 
+Windows users can use the [step-by-step own NppAI model guide](notepad-setup-pl.md). `scripts/start_nppai.py` checks model readiness before launching an editor with shared session configuration. Interface localization does not report a live connection before a request is made.
+
+
 Start the inference service described in [model-backends](model-backends.md).
 Then set the following environment variables **before launching Notepad++**:
 

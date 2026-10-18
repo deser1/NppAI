@@ -1,0 +1,6 @@
+[
+  {"function": "silnia", "args": [0], "kwargs": {}, "expected": 1},
+  {"function": "silnia", "args": [1], "kwargs": {}, "expected": 1},
+  {"function": "silnia", "args": [5], "kwargs": {}, "expected": 120},
+  {"function": "silnia", "args": [10], "kwargs": {}, "expected": 3628800}
+]

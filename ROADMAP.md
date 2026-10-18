@@ -293,3 +293,5 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Diagnose frozen source transfer and signature termination: each trained arm selects the requested start in only 4/88 exposed alias replies; three correct starts override a correct vocabulary colon with copied prompt whitespace. Retain all 684 case labels and reconstruction tests; [diagnosis](docs/start-transfer-diagnostic.md). No new training or promotion.
 
 - [ ] Predeclare one isolated source-start scoring or signature-exit intervention; record full candidate readouts and retain complete-code/retention/functional gates.
+
+- [x] Fix Unicode input and Polish panel errors; provide checked own NppAI server startup, authenticated model readiness and Windows setup guide. Keep unvalidated proposals visible with Apply disabled; bundle the validator beside release DLLs.

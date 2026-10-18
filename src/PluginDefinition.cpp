@@ -36,7 +36,7 @@
 #include "TelemetryManager.h"
 #include "menuCmdID.h"
 #include <atomic>
-#include <cwctype>
+#include <cctype>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -67,20 +67,18 @@ std::wstring Utf8ToUtf16(const std::string &utf8) {
 }
 
 bool IsPolishLanguage() {
-  TCHAR langFile[MAX_PATH] = {0};
-  ::SendMessage(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME, MAX_PATH,
-                (LPARAM)langFile);
-
-  std::basic_string<TCHAR> path(langFile);
-  for (auto &c : path) {
-#ifdef UNICODE
-    c = std::towlower(c);
-#else
-    c = std::tolower(c);
-#endif
-  }
-
-  return path.find(TEXT("polish.xml")) != std::basic_string<TCHAR>::npos;
+  // Unlike most Notepad++ text messages, this API explicitly returns char*,
+  // independent of UNICODE. Reading it as TCHAR corrupts language detection.
+  const auto required = ::SendMessageW(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME, 0, 0);
+  if (required <= 0 || required > 32767) return false;
+  std::string name(static_cast<std::size_t>(required) + 1, '\0');
+  const auto copied = ::SendMessageW(nppData._nppHandle, NPPM_GETNATIVELANGFILENAME,
+      name.size(), reinterpret_cast<LPARAM>(&name[0]));
+  if (copied <= 0 || static_cast<std::size_t>(copied) >= name.size()) return false;
+  name.resize(static_cast<std::size_t>(copied));
+  std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) { return char(std::tolower(c)); });
+  const auto slash = name.find_last_of("/\\");
+  return name.substr(slash == std::string::npos ? 0 : slash+1) == "polish.xml";
 }
 
 std::wstring Loc(const std::wstring &pl, const std::wstring &en) {
@@ -92,6 +90,45 @@ std::string Loc(const std::string &pl, const std::string &en) {
 }
 
 namespace {
+std::string panelPromptUtf8() {
+  wchar_t buffer[4096]{};
+  const int length = GetWindowTextW(g_hEdit, buffer, 4096);
+  if (!length) return "";
+  const int bytes = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, buffer, length, nullptr, 0, nullptr, nullptr);
+  if (!bytes) throw std::runtime_error("Invalid Unicode prompt");
+  std::string result(bytes, '\0');
+  if (!WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS, buffer, length, &result[0], bytes, nullptr, nullptr))
+    throw std::runtime_error("Invalid Unicode prompt");
+  return result;
+}
+
+std::wstring generationErrorText(const std::string& error) {
+  if (error.find("Online model is not configured") == 0 ||
+      error.find("Local model unavailable; no permitted online backend") == 0)
+    return Loc(L"Brak modelu NppAI lub konfiguracji serwera. Uruchom scripts/start_nppai.py z --model i --notepad. Szczegóły: docs/notepad-setup-pl.md.",
+               L"NppAI model/server is not configured. Run scripts/start_nppai.py with --model and --notepad. See docs/notepad-setup-pl.md.");
+  if (error.find("Online model connection failed") == 0)
+    return Loc(L"Nie można połączyć się z serwerem NppAI lub upłynął limit czasu. Sprawdź, czy serwer działa, oraz NPPAI_GENERATION_URL. Uruchom Notepad++ ponownie przez scripts/start_nppai.py.",
+               L"Cannot reach NppAI or the request timed out. Check the server and NPPAI_GENERATION_URL. Restart Notepad++ through scripts/start_nppai.py.");
+  if (error.find("Online model returned HTTP 401") == 0 || error.find("Online model returned HTTP 403") == 0)
+    return Loc(L"Serwer NppAI odrzucił klucz. NPPAI_API_KEY musi być taki sam dla serwera i Notepad++. Uruchom oba ponownie przez scripts/start_nppai.py.",
+               L"NppAI rejected authentication. Server and Notepad++ need the same NPPAI_API_KEY. Restart both through scripts/start_nppai.py.");
+  if (error.find("Online model returned HTTP 503") == 0)
+    return Loc(L"Serwer NppAI działa, ale model jest niedostępny lub zajęty. Sprawdź NPPAI_INFERENCE_MODEL i okno serwera; model musi być zgodnym plikiem .nppai.",
+               L"NppAI is reachable, but the model is unavailable or busy. Check NPPAI_INFERENCE_MODEL and the server console; a compatible .nppai file is required.");
+  if (error.find("Online model returned HTTP 422") == 0)
+    return Loc(L"Zapytanie lub kontekst przekracza możliwości modelu NppAI. Skróć kontekst albo użyj zgodnego modelu z większym oknem kontekstu.",
+               L"The request/context exceeds NppAI model capacity. Reduce context or use a compatible model with a larger context window.");
+  if (error.find("Configure Python validation:") == 0)
+    return Loc(L"Odpowiedź NppAI jest w podglądzie. Aby włączyć Zastosuj, skonfiguruj walidację: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE i NPPAI_TEST_CASES. Instrukcja: docs/notepad-setup-pl.md.",
+               L"NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.");
+  if (error == "Validated generation currently requires a UTF-8 Python document")
+    return Loc(L"Zapisz plik Python (.py) w kodowaniu UTF-8 i spróbuj ponownie.", L"Save a Python (.py) file as UTF-8 and try again.");
+  if (error == "This validation profile supports Python (.py or @python-signature)")
+    return Loc(L"Zapisz dokument jako plik .py lub użyj @python-signature w pierwszej linii zapytania.",
+               L"Save the document as .py or use @python-signature on the first prompt line.");
+  return Utf8ToUtf16(error);
+}
 constexpr UINT ValidationStatusMessage = WM_APP + 61;
 constexpr UINT ValidationReadyMessage = WM_APP + 62;
 struct PendingGeneration {
@@ -167,7 +204,7 @@ void applyPendingGeneration() {
     SetWindowTextW(g_hStatusLabel, Loc(L"Zastosowano. Możesz cofnąć zmianę.", L"Applied. The change can be undone.").c_str());
     pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
   } catch (const std::exception& error) {
-    SetWindowTextW(g_hStatusLabel, Utf8ToUtf16(error.what()).c_str());
+    SetWindowTextW(g_hStatusLabel, generationErrorText(error.what()).c_str());
   }
 }
 }
@@ -180,12 +217,7 @@ void ExecuteAIGeneration() {
     return;
   }
   try {
-    wchar_t buffer[4096]{}; GetWindowTextW(g_hEdit, buffer, 4096);
-    const int utf8Size = WideCharToMultiByte(CP_UTF8, 0, buffer, -1, nullptr, 0, nullptr, nullptr);
-    if (utf8Size <= 1) return;
-    std::string task(utf8Size, '\0');
-    WideCharToMultiByte(CP_UTF8, 0, buffer, -1, &task[0], utf8Size, nullptr, nullptr);
-    task.resize(utf8Size - 1);
+    const auto task = panelPromptUtf8();
     if (task.empty()) return;
     pendingGeneration.reset(); EnableWindow(g_hApply, FALSE); EnableWindow(g_hReject, FALSE);
     const auto parsed = AIPromptPipeline::prepare(task, "");
@@ -212,8 +244,7 @@ void ExecuteAIGeneration() {
     if (pending->request.selectionStart > pending->request.selectionEnd || pending->request.selectionEnd > pending->request.original.size())
       throw std::runtime_error("Selection changed while capturing the document");
     pending->request.allowOnlineEscalation = AIManager::getInstance().mayEscalateOnline();
-    auto validator = std::make_shared<PythonValidationProcess>(
-        std::filesystem::path(getPluginDllDirectory()) / "sandbox_validate.py");
+    const auto validatorScript = std::filesystem::path(getPluginDllDirectory()) / "sandbox_validate.py";
     pending->epoch = ++generationEpoch;
     const auto epoch = pending->epoch;
     const HWND panel = g_hAIPanel;
@@ -222,8 +253,9 @@ void ExecuteAIGeneration() {
     SetWindowTextW(g_hBtn, Loc(L"Zatrzymaj", L"Stop").c_str());
     SetWindowTextW(g_hHistory, Loc(L"Generowanie propozycji; dokument pozostaje bez zmian.",
                                  L"Generating a proposal; the document remains unchanged.").c_str());
-    std::thread([pending = std::move(pending), validator, panel, epoch]() mutable {
+    std::thread([pending = std::move(pending), validatorScript, panel, epoch]() mutable {
       try {
+        std::shared_ptr<PythonValidationProcess> validator;
         if (!pending->request.path.empty()) {
           RAGManager::getInstance().loadDatabase(pending->request.path + ".rag_db");
           pending->request.context = RepositoryContext::limit(RAGManager::getInstance().retrieveContext(
@@ -245,7 +277,12 @@ void ExecuteAIGeneration() {
                     reason = status; online = status.find("Online:") == 0; postGenerationStatus(panel, epoch, status);
                   }, forceOnline);
               return GeneratedCandidate{code, online, reason};
-            }, [validator, cancelled](const std::string& code, bool tests) { return validator->run(code, tests, cancelled); },
+            }, [&validator, validatorScript, cancelled](const std::string& code, bool tests) {
+              // Keep a generated proposal visible even when validation is not
+              // configured. Validation failure still keeps Apply disabled.
+              if (!validator) validator = std::make_shared<PythonValidationProcess>(validatorScript);
+              return validator->run(code, tests, cancelled);
+            },
             cancelled, &progress);
       } catch (const std::exception& error) {
         pending->result.blocked = true; pending->result.error = error.what();
@@ -258,12 +295,17 @@ void ExecuteAIGeneration() {
   } catch (const std::exception& error) {
     isGenerating = false;
     SetWindowTextW(g_hBtn, Loc(L"Wygeneruj Kod AI", L"Generate AI Code").c_str());
-    SetWindowTextW(g_hStatusLabel, Utf8ToUtf16(error.what()).c_str());
-    SetWindowTextW(g_hHistory, Utf8ToUtf16(error.what()).c_str());
+    SetWindowTextW(g_hStatusLabel, generationErrorText(error.what()).c_str());
+    SetWindowTextW(g_hHistory, generationErrorText(error.what()).c_str());
   }
 }
 
 #ifdef NPPAI_TESTING
+extern "C" __declspec(dllexport) const char* panelPromptForTesting() {
+  static thread_local std::string result;
+  result = panelPromptUtf8();
+  return result.c_str();
+}
 extern "C" __declspec(dllexport) void stageBufferReviewForTesting(HWND editor, const char* replacement) {
   pendingGeneration = std::make_unique<PendingGeneration>();
   auto& pending = *pendingGeneration;
@@ -310,6 +352,12 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     SetWindowTextW(g_hHistory, Utf8ToUtf16(report).c_str());
     SetWindowTextW(g_hStatusLabel, Loc(result.ready() ? L"Sprawdź różnice i zastosuj lub odrzuć." : L"Walidacja niepotwierdzona. Dokument bez zmian.",
                                       result.ready() ? L"Review, then apply or reject." : L"Validation not confirmed. Document unchanged.").c_str());
+    if (!result.error.empty()) {
+      const auto message = generationErrorText(result.error);
+      SetWindowTextW(g_hStatusLabel, message.c_str());
+      const auto detailed = message + L"\r\n\r\n" + Utf8ToUtf16(report);
+      SetWindowTextW(g_hHistory, detailed.c_str());
+    }
     EnableWindow(g_hApply, result.ready()); EnableWindow(g_hReject, TRUE);
     return 0;
   }
@@ -317,8 +365,8 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     // Pole jawnej odpowiedzi AI na samej górze
     g_hHistory = CreateWindowExW(
         WS_EX_CLIENTEDGE, L"EDIT",
-        Loc(L"Panel odpowiedzi AI gotowy.\r\nTryb funkcji Python: wpisz @python-signature nazwa(argumenty) w pierwszej linii, a opis w kolejnej.\r\n",
-            L"AI response panel ready.\r\nPython function mode: enter @python-signature name(arguments) on the first line, then the task description.\r\n")
+        Loc(L"Panel odpowiedzi AI gotowy.\r\nSerwer własnego modelu: scripts/start_nppai.py --model PLIK.nppai --notepad notepad++.exe. Instrukcja: docs/notepad-setup-pl.md.\r\nTryb funkcji Python: wpisz @python-signature nazwa(argumenty) w pierwszej linii, a opis w kolejnej.\r\n",
+            L"AI response panel ready.\r\nOwn-model server: scripts/start_nppai.py --model FILE.nppai --notepad notepad++.exe. Guide: docs/notepad-setup-pl.md.\r\nPython function mode: enter @python-signature name(arguments) on the first line, then the task description.\r\n")
             .c_str(),
         WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOVSCROLL | ES_MULTILINE |
             ES_READONLY,
@@ -327,11 +375,12 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     SendMessage(g_hHistory, EM_SETLIMITTEXT, 1024 * 1024, 0);
 
     // Główne pole zapytania użytkownika
-    g_hEdit = CreateWindowExA(WS_EX_CLIENTEDGE, "EDIT", "",
+    g_hEdit = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"",
                               WS_CHILD | WS_VISIBLE | WS_BORDER |
                                   ES_AUTOVSCROLL | ES_MULTILINE | ES_WANTRETURN,
                               0, 0, 100, 100, hwnd, (HMENU)1, NULL, NULL);
 
+    SendMessageW(g_hEdit, EM_SETLIMITTEXT, 4095, 0);
     HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
     SendMessage(g_hHistory, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
     SendMessage(g_hEdit, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(TRUE, 0));
@@ -413,22 +462,22 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
     return 0;
   }
   }
-  return DefWindowProc(hwnd, msg, wParam, lParam);
+  return DefWindowProcW(hwnd, msg, wParam, lParam);
 }
 
 void InitAIPanel() {
   if (g_hAIPanel != NULL)
     return;
 
-  WNDCLASSA wc = {0};
+  WNDCLASSW wc = {0};
   wc.lpfnWndProc = AIPanelProc;
   wc.hInstance = GetModuleHandle(NULL);
-  wc.lpszClassName = "NppAI_PanelClass";
+  wc.lpszClassName = L"NppAI_PanelClass";
   wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
-  RegisterClassA(&wc);
+  RegisterClassW(&wc);
 
   g_hAIPanel =
-      CreateWindowExA(0, "NppAI_PanelClass", "NppAI - Chat",
+      CreateWindowExW(0, L"NppAI_PanelClass", L"NppAI - Chat",
                       WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 400,
                       200, nppData._nppHandle, NULL, wc.hInstance, NULL);
 
@@ -552,8 +601,8 @@ void UpdateLocalization() {
       }
     }
     if (g_hStatusLabel) {
-      SetWindowTextW(g_hStatusLabel, Loc(L"AI połączone z chmurą...",
-                                         L"AI connected to cloud...")
+      SetWindowTextW(g_hStatusLabel, Loc(L"NppAI gotowe. Połączenie z serwerem jest sprawdzane przy generowaniu.",
+                                         L"NppAI ready. Server connection is checked when generating.")
                                          .c_str());
     }
   }
@@ -615,16 +664,13 @@ void sendSelectionToChat() {
   }
 
   // Dodaj zaznaczony kod do pola textarea
-  std::string currentText;
-  int textLen = GetWindowTextLengthA(g_hEdit);
-  if (textLen > 0) {
-    std::vector<char> buf(textLen + 1);
-    GetWindowTextA(g_hEdit, buf.data(), textLen + 1);
-    currentText = std::string(buf.data()) + "\r\n";
-  }
-
-  std::string newText = currentText + prompt;
-  SetWindowTextA(g_hEdit, newText.c_str());
+  const int textLen = GetWindowTextLengthW(g_hEdit);
+  std::vector<wchar_t> buffer(static_cast<std::size_t>(textLen) + 1);
+  GetWindowTextW(g_hEdit, buffer.data(), textLen + 1);
+  std::wstring currentText(buffer.data());
+  if (!currentText.empty()) currentText += L"\r\n";
+  const auto newText = currentText + Utf8ToUtf16(prompt);
+  SetWindowTextW(g_hEdit, newText.c_str());
 
   // Ustaw kursor na samym początku by użytkownik wpisał polecenie
   SendMessage(g_hEdit, EM_SETSEL, 0, 0);

@@ -46,6 +46,14 @@ int main() {
               "infrastructure failure stops repairs immediately");
         generated = 0;
         result = ValidatedGeneration::run(request,
+            [&](const auto&, const auto&, bool) { ++generated; return GeneratedCandidate{"def silnia(n):\n    return 1\n", true}; },
+            [](const auto&, bool) -> AgentCommandResult { throw std::runtime_error("Configure Python validation: missing setup"); },
+            [] { return false; });
+        check(generated == 1 && result.blocked && !result.ready() &&
+              result.patch.unifiedDiff().find("+def silnia(n)") != std::string::npos,
+              "missing validator preserves the actual model proposal but cannot enable Apply");
+        generated = 0;
+        result = ValidatedGeneration::run(request,
             [&](const auto&, const auto&, bool) { ++generated; return GeneratedCandidate{"code", false}; },
             [](const auto&, bool) { return AgentCommandResult{0, "pass"}; }, [] { return true; });
         check(result.cancelled && generated == 0 && !result.ready(), "cancelled request never invokes a backend");
