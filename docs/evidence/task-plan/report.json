@@ -1,0 +1,2880 @@
+{
+  "schema_version": 1,
+  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+  "tokens_per_stage": 128,
+  "execution_status": "not_run",
+  "limits": "No training or functional execution. Exposed tasks are regression evidence only. Output-token ceilings do not equalize compute. Stage completion is not correctness.",
+  "total": 28,
+  "summary": {
+    "staged": {
+      "nonempty": 0,
+      "syntax_any_function": 0,
+      "requested_function": 0,
+      "reference_ast": 0,
+      "exact_response": 0,
+      "errors": 28
+    },
+    "direct_code_budget": {
+      "nonempty": 26,
+      "syntax_any_function": 13,
+      "requested_function": 0,
+      "reference_ast": 0,
+      "exact_response": 0,
+      "errors": 0
+    },
+    "direct_total_budget": {
+      "nonempty": 26,
+      "syntax_any_function": 13,
+      "requested_function": 0,
+      "reference_ast": 0,
+      "exact_response": 0,
+      "errors": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "test-add-13-2",
+      "prompt": "Define fn_add_13(a, b) in Python to return the sum of a and b.",
+      "reference": "def fn_add_13(a, b):\n    return a + b\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_add_13(a, b) in Python to return the sum of a and b.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "  (vext.strip()\n     reresuret.turn_0(vareturn return_0(x)\n",
+                  "generated_tokens": 60,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.08146000400006415,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_add_13(a, b) in Python to return the sum of a and b.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \"  (vext.strip()\\n     reresuret.turn_0(vareturn return_0(x)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 2.4936999921010283e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 60,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_add_13(a, b) in Python to return the sum of a and b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_add_0(al_mulup0(val  rn  restrn suluef ab\n",
+            "generated_tokens": 50,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_add_0(al_mulup0(val  rn  restrn suluef ab\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03577300200004174
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_add_13(a, b) in Python to return the sum of a and b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_add_0(al_mulup0(val  rn  restrn suluef ab\n",
+            "generated_tokens": 50,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_add_0(al_mulup0(val  rn  restrn suluef ab\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0333567940000421
+        }
+      }
+    },
+    {
+      "id": "test-subtract-13-2",
+      "prompt": "Define fn_subtract_13(a, b) in Python to return a minus b.",
+      "reference": "def fn_subtract_13(a, b):\n    return a - b\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_subtract_13(a, b) in Python to return a minus b.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0011237329999858048,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_subtract_13(a, b) in Python to return a minus b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_subtract_10(a, b):\n    return a - b\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_subtract_10(a, b):\n    return a - b\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.02703055500001028
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_subtract_13(a, b) in Python to return a minus b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_subtract_10(a, b):\n    return a - b\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_subtract_10(a, b):\n    return a - b\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.027061842000080105
+        }
+      }
+    },
+    {
+      "id": "test-multiply-13-2",
+      "prompt": "Define fn_multiply_13(a, b) in Python to return the product of a and b.",
+      "reference": "def fn_multiply_13(a, b):\n    return a * b\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_multiply_13(a, b) in Python to return the product of a and b.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0011722350000127335,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_multiply_13(a, b) in Python to return the product of a and b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_multiply_10(a, b):\n    return a * b\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_multiply_10(a, b):\n    return a * b\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.026732039999956214
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_multiply_13(a, b) in Python to return the product of a and b.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_multiply_10(a, b):\n    return a * b\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_multiply_10(a, b):\n    return a * b\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03236231400001088
+        }
+      }
+    },
+    {
+      "id": "test-square-13-2",
+      "prompt": "Define fn_square_13(x) in Python to return x squared.",
+      "reference": "def fn_square_13(x):\n    return x * x\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_square_13(x) in Python to return x squared.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " tueturn min(values)\n",
+                  "generated_tokens": 22,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.020009921999985636,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_square_13(x) in Python to return x squared.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" tueturn min(values)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.9128999952044978e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 22,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_square_13(x) in Python to return x squared.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_square_10(x):\n    return x * x\n",
+            "generated_tokens": 39,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_square_10(x):\n    return x * x\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.018376931000034347
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_square_13(x) in Python to return x squared.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_square_10(x):\n    return x * x\n",
+            "generated_tokens": 39,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_square_10(x):\n    return x * x\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.01957996299995557
+        }
+      }
+    },
+    {
+      "id": "test-negate-13-2",
+      "prompt": "Define fn_negate_13(x) in Python to return the negation of x.",
+      "reference": "def fn_negate_13(x):\n    return -x\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_negate_13(x) in Python to return the negation of x.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " min(values)\n",
+                  "generated_tokens": 14,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.01344526799994128,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_negate_13(x) in Python to return the negation of x.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" min(values)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.8586999999570253e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 14,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_negate_13(x) in Python to return the negation of x.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_negate_01(x):\n    return -x\n",
+            "generated_tokens": 36,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_negate_01(x):\n    return -x\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.01869747900002494
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_negate_13(x) in Python to return the negation of x.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_negate_01(x):\n    return -x\n",
+            "generated_tokens": 36,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_negate_01(x):\n    return -x\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.020306032999997115
+        }
+      }
+    },
+    {
+      "id": "test-absolute-13-2",
+      "prompt": "Define fn_absolute_13(x) in Python to return the absolute value of x.",
+      "reference": "def fn_absolute_13(x):\n    return abs(x)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_absolute_13(x) in Python to return the absolute value of x.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0009644860000435074,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_absolute_13(x) in Python to return the absolute value of x.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_absolute_10(x):\n    return abs(x)\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_absolute_10(x):\n    return abs(x)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.025146499999891603
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_absolute_13(x) in Python to return the absolute value of x.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_absolute_10(x):\n    return abs(x)\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_absolute_10(x):\n    return abs(x)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.024092601000006653
+        }
+      }
+    },
+    {
+      "id": "test-length-13-2",
+      "prompt": "Define fn_length_13(values) in Python to return the number of values.",
+      "reference": "def fn_length_13(values):\n    return len(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_length_13(values) in Python to return the number of values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "  muretet_alurn luret[teturn\n",
+                  "generated_tokens": 30,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.03325545299992427,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_length_13(values) in Python to return the number of values.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \"  muretet_alurn luret[teturn\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 2.0259999928384786e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 30,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_length_13(values) in Python to return the number of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_length_10(values):\n    return len(values)\n",
+            "generated_tokens": 50,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_length_10(values):\n    return len(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.031323716999963835
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_length_13(values) in Python to return the number of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_length_10(values):\n    return len(values)\n",
+            "generated_tokens": 50,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_length_10(values):\n    return len(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03066436500000691
+        }
+      }
+    },
+    {
+      "id": "test-total-13-2",
+      "prompt": "Define fn_total_13(values) in Python to return the sum of values.",
+      "reference": "def fn_total_13(values):\n    return sum(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_total_13(values) in Python to return the sum of values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0010038949999398028,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_total_13(values) in Python to return the sum of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_total_0(vargest_lues)\n   retures)\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_total_0(vargest_lues)\n   retures)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.02417402300000049
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_total_13(values) in Python to return the sum of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_total_0(vargest_lues)\n   retures)\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_total_0(vargest_lues)\n   retures)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.023423995000030118
+        }
+      }
+    },
+    {
+      "id": "test-largest-13-2",
+      "prompt": "Define fn_largest_13(values) in Python to return the maximum of nonempty values.",
+      "reference": "def fn_largest_13(values):\n    return max(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_largest_13(values) in Python to return the maximum of nonempty values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0010069699999348813,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_largest_13(values) in Python to return the maximum of nonempty values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_largest_10(values):\n    return max(values)\n",
+            "generated_tokens": 51,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_largest_10(values):\n    return max(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03490432800003873
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_largest_13(values) in Python to return the maximum of nonempty values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_largest_10(values):\n    return max(values)\n",
+            "generated_tokens": 51,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_largest_10(values):\n    return max(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03598107199991318
+        }
+      }
+    },
+    {
+      "id": "test-smallest-13-2",
+      "prompt": "Define fn_smallest_13(values) in Python to return the minimum of nonempty values.",
+      "reference": "def fn_smallest_13(values):\n    return min(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_smallest_13(values) in Python to return the minimum of nonempty values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " x(tesup(valuetureti(sq0(tuet.b):\n * 0(tualuetuetuetues)\n",
+                  "generated_tokens": 58,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.08507679499996357,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_smallest_13(values) in Python to return the minimum of nonempty values.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" x(tesup(valuetureti(sq0(tuet.b):\\n * 0(tualuetuetuetues)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.981900004466297e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 58,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_smallest_13(values) in Python to return the minimum of nonempty values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_smallest_01(values):\n    return min(values)\n",
+            "generated_tokens": 52,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_smallest_01(values):\n    return min(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.04122382699995342
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_smallest_13(values) in Python to return the minimum of nonempty values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_smallest_01(values):\n    return min(values)\n",
+            "generated_tokens": 52,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_smallest_01(values):\n    return min(values)\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.04044536900005369
+        }
+      }
+    },
+    {
+      "id": "test-reverse-13-2",
+      "prompt": "Define fn_reverse_13(text) in Python to return text reversed.",
+      "reference": "def fn_reverse_13(text):\n    return text[::-1]\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_reverse_13(text) in Python to return text reversed.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.000985496999987845,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_reverse_13(text) in Python to return text reversed.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_reverse_10(text):\n    return text[::-1]\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_reverse_10(text):\n    return text[::-1]\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03238754099993457
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_reverse_13(text) in Python to return text reversed.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_reverse_10(text):\n    return text[::-1]\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_reverse_10(text):\n    return text[::-1]\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.030841469000051802
+        }
+      }
+    },
+    {
+      "id": "test-lower-13-2",
+      "prompt": "Define fn_lower_13(text) in Python to return text in lowercase.",
+      "reference": "def fn_lower_13(text):\n    return text.lower()\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_lower_13(text) in Python to return text in lowercase.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0009688119999964329,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_lower_13(text) in Python to return text in lowercase.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_lower_10(text):\n    return text.lower()\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_lower_10(text):\n    return text.lower()\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.031150019000051543
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_lower_13(text) in Python to return text in lowercase.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_lower_10(text):\n    return text.lower()\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_lower_10(text):\n    return text.lower()\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.030662673000051655
+        }
+      }
+    },
+    {
+      "id": "test-upper-13-2",
+      "prompt": "Define fn_upper_13(text) in Python to return text in uppercase.",
+      "reference": "def fn_upper_13(text):\n    return text.upper()\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_upper_13(text) in Python to return text in uppercase.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0009816909999926793,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_upper_13(text) in Python to return text in uppercase.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_upper_10(text):\n    return text.upper()\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_upper_10(text):\n    return text.upper()\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03492157400000906
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_upper_13(text) in Python to return text in uppercase.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_upper_10(text):\n    return text.upper()\n",
+            "generated_tokens": 48,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_upper_10(text):\n    return text.upper()\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.032298368000056144
+        }
+      }
+    },
+    {
+      "id": "test-strip-13-2",
+      "prompt": "Define fn_strip_13(text) in Python to return text without leading or trailing whitespace.",
+      "reference": "def fn_strip_13(text):\n    return text.strip()\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_strip_13(text) in Python to return text without leading or trailing whitespace.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.00126803699993161,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_strip_13(text) in Python to return text without leading or trailing whitespace.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_strip_0():\n    rn   retuestrip()\n",
+            "generated_tokens": 41,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_strip_0():\n    rn   retuestrip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03066696899998078
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_strip_13(text) in Python to return text without leading or trailing whitespace.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_strip_0():\n    rn   retuestrip()\n",
+            "generated_tokens": 41,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_strip_0():\n    rn   retuestrip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03205069000000549
+        }
+      }
+    },
+    {
+      "id": "test-even-13-2",
+      "prompt": "Define fn_even_13(x) in Python to return whether x is even.",
+      "reference": "def fn_even_13(x):\n    return x % 2 == 0\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_even_13(x) in Python to return whether x is even.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " max(valuex)\n",
+                  "generated_tokens": 14,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.014325019000011707,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_even_13(x) in Python to return whether x is even.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" max(valuex)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 2.0090000020900334e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 14,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_even_13(x) in Python to return whether x is even.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.024452696000025753
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_even_13(x) in Python to return whether x is even.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+            "generated_tokens": 42,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_even_01(x):\n    return x % 2 == 0\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.024591323999970882
+        }
+      }
+    },
+    {
+      "id": "test-positive-13-2",
+      "prompt": "Define fn_positive_13(x) in Python to return whether x is positive.",
+      "reference": "def fn_positive_13(x):\n    return x > 0\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_positive_13(x) in Python to return whether x is positive.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0010904629999686222,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_positive_13(x) in Python to return whether x is positive.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_positive_10(x):\n    return x > 0\n",
+            "generated_tokens": 41,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_positive_10(x):\n    return x > 0\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.024447229000088555
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_positive_13(x) in Python to return whether x is positive.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fn_positive_10(x):\n    return x > 0\n",
+            "generated_tokens": 41,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fn_positive_10(x):\n    return x > 0\n",
+            "nonempty": true,
+            "syntax_any_function": true,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.02413988099999642
+        }
+      }
+    },
+    {
+      "id": "test-sort-0-0",
+      "prompt": "Implement fn_sort_00(values) returning a sorted copy of values.",
+      "reference": "def fn_sort_00(values):\n    return sorted(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Implement fn_sort_00(values) returning a sorted copy of values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0009145319999106505,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_sort_00(values) returning a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "defn_st_00(val_02(x):\n    return  tretuetuetuetuetuetur()\n",
+            "generated_tokens": 59,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "defn_st_00(val_02(x):\n    return  tretuetuetuetuetuetur()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03735903300002974
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_sort_00(values) returning a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "defn_st_00(val_02(x):\n    return  tretuetuetuetuetuetur()\n",
+            "generated_tokens": 59,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "defn_st_00(val_02(x):\n    return  tretuetuetuetuetuetur()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0377700049999703
+        }
+      }
+    },
+    {
+      "id": "test-sort-1-1",
+      "prompt": "Write Python function fn_sort_01(values). It must return a sorted copy of values.",
+      "reference": "def fn_sort_01(values):\n    return sorted(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Write Python function fn_sort_01(values). It must return a sorted copy of values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "  rga(valurn_0ureref return rn_0(ab\n",
+                  "generated_tokens": 37,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.04993725099996027,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Write Python function fn_sort_01(values). It must return a sorted copy of values.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \"  rga(valurn_0ureref return rn_0(ab\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.9438999970589066e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 37,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_sort_01(values). It must return a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "ddefn_l_0(valuen  lues):\n     ret_0(values)\n",
+            "generated_tokens": 45,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "ddefn_l_0(valuen  lues):\n     ret_0(values)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03170656700001473
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_sort_01(values). It must return a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "ddefn_l_0(valuen  lues):\n     ret_0(values)\n",
+            "generated_tokens": 45,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "ddefn_l_0(valuen  lues):\n     ret_0(values)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03086806900000738
+        }
+      }
+    },
+    {
+      "id": "test-sort-2-2",
+      "prompt": "Define fn_sort_02(values) in Python to return a sorted copy of values.",
+      "reference": "def fn_sort_02(values):\n    return sorted(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_sort_02(values) in Python to return a sorted copy of values.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "detes):\n",
+                  "generated_tokens": 9,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.00959402500006945,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_sort_02(values) in Python to return a sorted copy of values.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \"detes):\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.9780000002356246e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 9,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_sort_02(values) in Python to return a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def f f fn_stesetot_0(values):\n    return sum(valuestrip()\n",
+            "generated_tokens": 60,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def f f fn_stesetot_0(values):\n    return sum(valuestrip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.04225071600001229
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_sort_02(values) in Python to return a sorted copy of values.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def f f fn_stesetot_0(values):\n    return sum(valuestrip()\n",
+            "generated_tokens": 60,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def f f fn_stesetot_0(values):\n    return sum(valuestrip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.04130914400002439
+        }
+      }
+    },
+    {
+      "id": "test-unique-0-0",
+      "prompt": "Implement fn_unique_00(values) returning unique values preserving their order.",
+      "reference": "def fn_unique_00(values):\n    return list(dict.fromkeys(values))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Implement fn_unique_00(values) returning unique values preserving their order.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.001465221999978894,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_unique_00(values) returning unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "den_08(valengest):\n    return text.lower()\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "den_08(valengest):\n    return text.lower()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.030079724999950486
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_unique_00(values) returning unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "den_08(valengest):\n    return text.lower()\n",
+            "generated_tokens": 44,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "den_08(valengest):\n    return text.lower()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.030263319000027877
+        }
+      }
+    },
+    {
+      "id": "test-unique-1-1",
+      "prompt": "Write Python function fn_unique_01(values). It must return unique values preserving their order.",
+      "reference": "def fn_unique_01(values):\n    return list(dict.fromkeys(values))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Write Python function fn_unique_01(values). It must return unique values preserving their order.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " retrn_0(va0(t.b):\n    f trefn   rn_010(x):\ndeturn   b\n",
+                  "generated_tokens": 56,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.09603795900000023,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Write Python function fn_unique_01(values). It must return unique values preserving their order.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" retrn_0(va0(t.b):\\n    f trefn   rn_010(x):\\ndeturn   b\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 2.003899999181158e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 56,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_unique_01(values). It must return unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "dtrn  f fn refn b\n",
+            "generated_tokens": 19,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "dtrn  f fn refn b\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.014022297999986222
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_unique_01(values). It must return unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "dtrn  f fn refn b\n",
+            "generated_tokens": 19,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "dtrn  f fn refn b\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.013002769000081571
+        }
+      }
+    },
+    {
+      "id": "test-unique-2-2",
+      "prompt": "Define fn_unique_02(values) in Python to return unique values preserving their order.",
+      "reference": "def fn_unique_02(values):\n    return list(dict.fromkeys(values))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_unique_02(values) in Python to return unique values preserving their order.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0011263869999993403,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_unique_02(values) in Python to return unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "",
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0007360460000427338
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_unique_02(values) in Python to return unique values preserving their order.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "",
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0009058580000100847
+        }
+      }
+    },
+    {
+      "id": "test-join-0-0",
+      "prompt": "Implement fn_join_00(values) returning all strings in values joined together.",
+      "reference": "def fn_join_00(values):\n    return ''.join(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Implement fn_join_00(values) returning all strings in values joined together.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "",
+                  "generated_tokens": 1,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.0010275700000192955,
+                "error": "Model returned an empty stage"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 1,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Model returned an empty stage"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_join_00(values) returning all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fngen_len(vale_s)\n      rn  0\n",
+            "generated_tokens": 35,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fngen_len(vale_s)\n      rn  0\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.02101458900006037
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_join_00(values) returning all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def fngen_len(vale_s)\n      rn  0\n",
+            "generated_tokens": 35,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def fngen_len(vale_s)\n      rn  0\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0230443609999611
+        }
+      }
+    },
+    {
+      "id": "test-join-1-1",
+      "prompt": "Write Python function fn_join_01(values). It must return all strings in values joined together.",
+      "reference": "def fn_join_01(values):\n    return ''.join(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Write Python function fn_join_01(values). It must return all strings in values joined together.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": "   res):\n",
+                  "generated_tokens": 10,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.013788718999990124,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Write Python function fn_join_01(values). It must return all strings in values joined together.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \"   res):\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.6704000017853105e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 10,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_join_01(values). It must return all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "des):\n   f ren_0(veturetures)\n",
+            "generated_tokens": 31,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "des):\n   f ren_0(veturetures)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.022875308000038785
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_join_01(values). It must return all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "des):\n   f ren_0(veturetures)\n",
+            "generated_tokens": 31,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "des):\n   f ren_0(veturetures)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.02371738199997253
+        }
+      }
+    },
+    {
+      "id": "test-join-2-2",
+      "prompt": "Define fn_join_02(values) in Python to return all strings in values joined together.",
+      "reference": "def fn_join_02(values):\n    return ''.join(values)\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_join_02(values) in Python to return all strings in values joined together.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " turetet[turndetuen_08(ab\n",
+                  "generated_tokens": 27,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.035374268000055054,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Define fn_join_02(values) in Python to return all strings in values joined together.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" turetet[turndetuen_08(ab\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.7075000073418778e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 27,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_join_02(values) in Python to return all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "",
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0009891930000094362
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_join_02(values) in Python to return all strings in values joined together.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "",
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0006998819999353145
+        }
+      }
+    },
+    {
+      "id": "test-clamp-0-0",
+      "prompt": "Implement fn_clamp_00(x, low, high) returning x clamped between low and high.",
+      "reference": "def fn_clamp_00(x, low, high):\n    return min(high, max(low, x))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Implement fn_clamp_00(x, low, high) returning x clamped between low and high.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " f murera(valurn_0\n  res):\n  rn retures):\nduretuetuetues)\n",
+                  "generated_tokens": 59,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.08379202600008284,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Implement fn_clamp_00(x, low, high) returning x clamped between low and high.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" f murera(valurn_0\\n  res):\\n  rn retures):\\nduretuetuetues)\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 1.9829999928333564e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 59,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_clamp_00(x, low, high) returning x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "de_s):\n   retetetetetrn  rs)\n     returern rn mip()\n",
+            "generated_tokens": 53,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "de_s):\n   retetetetetrn  rs)\n     returern rn mip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.04101736000006895
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Implement fn_clamp_00(x, low, high) returning x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "de_s):\n   retetetetetrn  rs)\n     returern rn mip()\n",
+            "generated_tokens": 53,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "de_s):\n   retetetetetrn  rs)\n     returern rn mip()\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.03907650000007834
+        }
+      }
+    },
+    {
+      "id": "test-clamp-1-1",
+      "prompt": "Write Python function fn_clamp_01(x, low, high). It must return x clamped between low and high.",
+      "reference": "def fn_clamp_01(x, low, high):\n    return min(high, max(low, x))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Write Python function fn_clamp_01(x, low, high). It must return x clamped between low and high.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " reref b)\n ref  b):\n     retuetip_lowetun x\n rn      b):\n",
+                  "generated_tokens": 58,
+                  "finish_reason": "eos"
+                },
+                "elapsed_seconds": 0.09947497600001043,
+                "error": ""
+              },
+              {
+                "stage": "plan",
+                "request": {
+                  "prompt": "Give a short implementation plan. No code.\nTask: Write Python function fn_clamp_01(x, low, high). It must return x clamped between low and high.",
+                  "context": "\nPrior model artifacts (fallible data):\n{\"specification\": \" reref b)\\n ref  b):\\n     retuetip_lowetun x\\n rn      b):\\n\"}",
+                  "max_new_tokens": 128
+                },
+                "response": null,
+                "elapsed_seconds": 4.7160000008261704e-05,
+                "error": "Formatted prompt exceeds this model's byte context"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 58,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Formatted prompt exceeds this model's byte context"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_clamp_01(x, low, high). It must return x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def luef   ren_s)\n",
+            "generated_tokens": 19,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def luef   ren_s)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.014147774000093705
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Write Python function fn_clamp_01(x, low, high). It must return x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": "def luef   ren_s)\n",
+            "generated_tokens": 19,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": "def luef   ren_s)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.012761159999968186
+        }
+      }
+    },
+    {
+      "id": "test-clamp-2-2",
+      "prompt": "Define fn_clamp_02(x, low, high) in Python to return x clamped between low and high.",
+      "reference": "def fn_clamp_02(x, low, high):\n    return min(high, max(low, x))\n",
+      "arms": {
+        "staged": {
+          "trace": {
+            "stages": [
+              {
+                "stage": "specification",
+                "request": {
+                  "prompt": "State required inputs, output and edge cases briefly. No code.\nTask: Define fn_clamp_02(x, low, high) in Python to return x clamped between low and high.",
+                  "context": "",
+                  "max_new_tokens": 128
+                },
+                "response": {
+                  "protocol_version": 1,
+                  "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+                  "output": " (ves):\ndes):\n  rn_alurn_01(aaluretres):\n    rn_010(x retubs)\n    b r_s)n     b:\n returan n rn n  tuetuetuetuetuetuetuetuetuetue",
+                  "generated_tokens": 128,
+                  "finish_reason": "length"
+                },
+                "elapsed_seconds": 0.23646481899993432,
+                "error": "Stage reached its token limit; completeness is unknown"
+              }
+            ],
+            "completed": false,
+            "code": "",
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "generated_tokens": 128,
+            "execution_status": "not_run"
+          },
+          "score": {
+            "output": "",
+            "nonempty": false,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "Stage reached its token limit; completeness is unknown"
+        },
+        "direct_code_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_clamp_02(x, low, high) in Python to return x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 128
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": " fn_0(t_0(x    returneren(x)\n",
+            "generated_tokens": 30,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": " fn_0(t_0(x    returneren(x)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.020068135999963488
+        },
+        "direct_total_budget": {
+          "request": {
+            "protocol_version": 1,
+            "prompt": "Define fn_clamp_02(x, low, high) in Python to return x clamped between low and high.",
+            "context": "",
+            "assistant_prefix": "",
+            "max_new_tokens": 384
+          },
+          "response": {
+            "protocol_version": 1,
+            "model_id": "sha256:6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+            "output": " fn_0(t_0(x    returneren(x)\n",
+            "generated_tokens": 30,
+            "finish_reason": "eos"
+          },
+          "score": {
+            "output": " fn_0(t_0(x    returneren(x)\n",
+            "nonempty": true,
+            "syntax_any_function": false,
+            "requested_function": false,
+            "reference_ast": false,
+            "exact_response": false
+          },
+          "error": "",
+          "elapsed_seconds": 0.0198573039999701
+        }
+      }
+    }
+  ],
+  "dataset_sha256": "ff07d4db74c4c7d702f22bc65201c5b869db4dd8b9444d91112315a4f10476f4",
+  "dataset_path": "evaluation/instruction-v2/test.json",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+  },
+  "source_sha256": {
+    "staged_generation.py": "06f65bf14f184eabb75d966f6706797f4ad29b1fcf6802a9da3de6145da126ea",
+    "scripts/evaluate_task_plan.py": "6b99dc001f3c1adc359360073425aa6ed609f97eed8411828820406f1713f6df",
+    "model_backends.py": "5a40f8b91cf1c2afbbb54ca6bbe9214301fe7569b8d812c247f6afe27c842412",
+    "scripts/check_dense_runtime_parity.py": "a4bfd37c41bab48aeaf755f47fff14770d1aae067658552ee32d5e10e5e0b378",
+    "scripts/evaluate_staged_generation.py": "a8fba7588753f414cc9902a902b75a65919362e4c0b007c73107fbaf6c5d897d"
+  }
+}
