@@ -8,3 +8,6 @@ evaluation/copy-transition-v1.json text eol=lf
 evaluation/protected-sequential-v1.json text eol=lf
 # Recorded evidence hashes refer to exact LF bytes, including Windows checkouts.
 docs/evidence/** text eol=lf
+
+# Compressed diagnostic evidence must preserve exact bytes.
+docs/evidence/alias-oracle/raw-records.zip -text

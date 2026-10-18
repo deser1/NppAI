@@ -1,0 +1,12 @@
+{
+  "archive_sha256": "63dfb8bc112661a6ae461f36e41b33c3a63a79c826ff8fde957aef917581a69d",
+  "artifact_id": 12109073349,
+  "excluded": [
+    "frozen.nppaicopy"
+  ],
+  "note": "All JSON records and original file manifest retained byte-for-byte. Frozen model bytes remain in the original Actions artifact; their hash is retained.",
+  "records_sha256": "f6428b64db9f762066d1f67936a93efa79f71af7d14f5d93266517b5d2e65b7b",
+  "report_sha256": "1779b7d866807a519dde999b2eb5424937a1369180674781aada4640dcc58d41",
+  "run_id": 39055914603,
+  "source_commit": "c024951430da4ad747088db8dc15f1101170153e"
+}

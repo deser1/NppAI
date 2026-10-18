@@ -1,0 +1,53 @@
+name: Frozen alias oracle diagnostics
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feat/alias-oracle-diagnostic']
+    paths:
+      - '.github/workflows/alias-oracle.yml'
+      - 'scripts/alias_oracle_diagnostic.py'
+      - 'tests/test_alias_oracle_diagnostic.py'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      MKL_CBWR: COMPATIBLE
+      ATEN_CPU_CAPABILITY: default
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install pinned CPU runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' 'numpy==2.5.2' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'pydantic>=2.7,<3'
+      - name: Verify separate oracle controls and unchanged decoding
+        run: |
+          python -m unittest discover -s tests -p 'test_protected_sequential.py' -v
+          python -m unittest discover -s tests -p 'test_alias_oracle_diagnostic.py' -v
+      - name: Download pinned PR 198 trained checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api 'repos/${{ github.repository }}/actions/artifacts/12102426032/zip' > training.zip
+      - name: Resolve immutable isolated validator
+        run: |
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Replay baseline, repeat oracle interventions and run Docker probes
+        run: python scripts/alias_oracle_diagnostic.py --archive training.zip --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Require container cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: alias-oracle-diagnostic
+          path: measured/
+          retention-days: 14

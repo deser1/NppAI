@@ -276,4 +276,9 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Define frozen alias source-start/exit and Docker first-failure diagnostic with causal traces, assisted upper bounds and evidence gates; see [protocol](docs/alias-copy-failure-diagnostic.md). Design only.
 
 - [x] Implement and test read-only retained alias trace extraction: byte offsets, overlapping start/exit observations, historical Docker diagnostics; 86/88 alias replies select a wrong source start, two diverge before names.
-- [ ] Run pinned-checkpoint oracle-start/oracle-exit comparisons and fresh restricted Docker diagnostics; retained evidence extraction does not complete this gate.
+- [x] Run pinned-checkpoint oracle-start/oracle-exit comparisons and fresh restricted Docker diagnostics; all modes remain 0/6 functional.
+
+- [x] Implement frozen oracle-start, oracle-exit and combined diagnostic runner with exact baseline replay, raw readouts, repeat checks and restricted Docker probes.
+- [x] Measure and retain oracle diagnostic results; no autonomous improvement or promotion inferred from assisted results.
+
+- [x] Measured frozen oracle diagnostics: autonomous 27/132 exact development replies (0/88 aliases), start-only 57/132 (30/88), exit-only 29/132 (0/88), both 65/132 (36/88). Every mode remains 0/6 Docker. Baseline replay and same-host repeats passed; weights unchanged; assisted results only, no promotion.
