@@ -32,6 +32,12 @@ response replay: assisted training exact replies improve 16/96→86/96 while all
 still fails. See the [model quality development priorities](docs/model-quality-development.md)
 for data, identifier transfer, stage protection and test-feedback experiments.
 
+An [all-stage protection comparison](docs/all-stage-protection.md) now measures
+45/96 autonomous training exact replies with all-stage replay versus 10/96 with
+a frozen own planner and separate coder (initial 2/96). Both retain original
+direct/autonomous hits; frozen planning preserves every planner call. Regression
+exact replies remain zero, so neither path is enabled as the plugin default.
+
 ## Validated generation and automatic repair
 
 The plugin stages a proposal, checks Python syntax and authored function tests
