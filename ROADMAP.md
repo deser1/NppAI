@@ -288,4 +288,8 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Measured the paired source-start continuation: both cross-entropy and hard-negative arms reach 28/132 exposed development exact replies (1/88 aliases), retain all 14 prior original TRAIN exact hits and gain one, but remain 0/6 Docker. The margin provides no exact-reply benefit over matched control; retain failures and reject promotion.
 
-- [ ] Diagnose the remaining source-start transfer failures and name/signature termination on frozen recorded traces before choosing another training intervention.
+- [x] Diagnose the remaining source-start transfer failures and name/signature termination on frozen recorded traces before choosing another training intervention.
+
+- [x] Diagnose frozen source transfer and signature termination: each trained arm selects the requested start in only 4/88 exposed alias replies; three correct starts override a correct vocabulary colon with copied prompt whitespace. Retain all 684 case labels and reconstruction tests; [diagnosis](docs/start-transfer-diagnostic.md). No new training or promotion.
+
+- [ ] Predeclare one isolated source-start scoring or signature-exit intervention; record full candidate readouts and retain complete-code/retention/functional gates.

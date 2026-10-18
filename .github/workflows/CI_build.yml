@@ -136,6 +136,9 @@ jobs:
     - name: Audit start selection training evidence
       run: python -m unittest discover -s tests -p "test_start_selection_evidence.py" -v
 
+    - name: Frozen source transfer and termination diagnostics
+      run: python -m unittest discover -s tests -p "test_start_transfer_diagnostic.py" -v
+
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
