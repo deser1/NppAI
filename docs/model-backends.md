@@ -29,6 +29,9 @@ An optional `--context-file path` reads explicitly selected UTF-8 context.
 
 ## Run the service and online client
 
+For a checked Windows startup with one session key shared by the server and a fresh Notepad++ instance, see the [Polish setup guide](notepad-setup-pl.md) and `scripts/start_nppai.py`. `GET /api/v1/health` requires the API key and loads the actual NppAI checkpoint before reporting readiness. The launcher never substitutes an external model.
+
+
 Install the server dependencies in `requirements.txt`. Configure authentication
 and an explicit inference checkpoint before starting the service:
 

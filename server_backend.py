@@ -58,16 +58,30 @@ inference_lock = threading.Lock()
 inference_backend: DenseLocalBackend | None = None
 
 
+def configured_inference_backend() -> DenseLocalBackend:
+    """Called while inference admission is held; pin one NppAI checkpoint."""
+    global inference_backend
+    if inference_backend is None:
+        path = os.getenv("NPPAI_INFERENCE_MODEL")
+        if not path:
+            raise BackendUnavailable("Inference model is not configured")
+        inference_backend = DenseLocalBackend(path)
+    return inference_backend
+
+
 def generate_with_configured_model(payload: GenerationRequest) -> GenerationResponse:
     """Called with admission held; releases it even after client cancellation."""
-    global inference_backend
     try:
-        if inference_backend is None:
-            path = os.getenv("NPPAI_INFERENCE_MODEL")
-            if not path:
-                raise BackendUnavailable("Inference model is not configured")
-            inference_backend = DenseLocalBackend(path)
-        return inference_backend.generate(payload)
+        return configured_inference_backend().generate(payload)
+    finally:
+        inference_lock.release()
+
+
+def inspect_configured_model() -> dict:
+    try:
+        backend = configured_inference_backend()
+        return {"protocol_version": 1, "status": "ready", "backend": "nppai-dense-v2",
+                "model_id": backend.model_id, "context_bytes": backend.weights["context"]}
     finally:
         inference_lock.release()
 
@@ -212,6 +226,29 @@ async def run_training_process():
                 )
 
         training_task = asyncio.create_task(run())
+
+
+@app.get("/api/v1/health", tags=["Inference"])
+async def inference_health(
+    _: None = Depends(require_api_key),
+    __: None = Depends(enforce_rate_limit),
+):
+    """Readiness checks load the actual NppAI file; no generation/training."""
+    if not inference_lock.acquire(blocking=False):
+        raise HTTPException(status_code=503, detail="Inference is busy")
+    try:
+        future = asyncio.get_running_loop().run_in_executor(None, inspect_configured_model)
+    except BaseException:
+        inference_lock.release()
+        raise
+    try:
+        return await asyncio.shield(future)
+    except BackendUnavailable:
+        raise HTTPException(status_code=503, detail=
+            "NppAI model unavailable. Set NPPAI_INFERENCE_MODEL to a valid dense v2 byte .nppai file.") from None
+    except Exception:
+        logger.error("event=inference_readiness_failed")
+        raise HTTPException(status_code=500, detail="NppAI model readiness failed") from None
 
 
 @app.post("/api/v1/generate", response_model=GenerationResponse, tags=["Inference"])

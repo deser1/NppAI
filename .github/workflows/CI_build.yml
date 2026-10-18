@@ -35,26 +35,39 @@ jobs:
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
       run: ctest --test-dir build-tests -C Release --output-on-failure
 
+    - name: Bundle Python validator beside the release DLL
+      if: matrix.build_configuration == 'Release'
+      shell: pwsh
+      run: |
+        $pluginOutput = switch ('${{ matrix.build_platform }}') { 'x64' { 'bin64' } 'Win32' { 'bin' } 'ARM64' { 'arm64' } }
+        Copy-Item sandbox_validate.py (Join-Path $pluginOutput 'sandbox_validate.py')
+
     - name: Archive artifacts for x64
       if: matrix.build_platform == 'x64' && matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v7
       with:
           name: plugin_dll_x64
-          path: bin64\NppAI.dll
+          path: |
+            bin64/NppAI.dll
+            bin64/sandbox_validate.py
 
     - name: Archive artifacts for Win32
       if: matrix.build_platform == 'Win32' && matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v7
       with:
           name: plugin_dll_x86
-          path: bin\NppAI.dll
+          path: |
+            bin/NppAI.dll
+            bin/sandbox_validate.py
 
     - name: Archive artifacts for ARM64
       if: matrix.build_platform == 'ARM64' && matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v7
       with:
           name: plugin_dll_arm64
-          path: arm64\NppAI.dll
+          path: |
+            arm64/NppAI.dll
+            arm64/sandbox_validate.py
 
 
   backend-tests:
@@ -72,6 +85,9 @@ jobs:
 
     - name: Install backend test dependencies
       run: python -m pip install "fastapi>=0.115,<1" "pydantic>=2.7,<3" "numpy>=1.26,<3"
+
+    - name: Run own-model server setup and readiness tests
+      run: python -m unittest discover -s tests -p "test_nppai_setup.py" -v
 
     - name: Run model backend contract and transport tests
       run: python -m unittest discover -s tests -p "test_model_backends.py" -v

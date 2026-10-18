@@ -31,6 +31,8 @@ are 128 KiB and 512 newline characters per document/candidate. A successful
 validation means these configured cases passed, not general program correctness.
 No real-model success rate is claimed by the deterministic fixture tests.
 
+A proposal is now generated before validator setup is required. If the validator is missing, its actual response/diff remains visible and Apply stays disabled. See the [Windows own-model setup guide](notepad-setup-pl.md).
+
 ## Local setup (Windows, Docker Linux containers)
 
 Install Python and Docker Desktop with its Linux engine. Use a trusted runtime

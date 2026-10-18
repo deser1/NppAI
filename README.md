@@ -1,5 +1,7 @@
 # NppAI — Native AI Coding Assistant for Notepad++
 
+**Notepad++: polskie znaki i uruchomienie własnego modelu:** [instrukcja krok po kroku](docs/notepad-setup-pl.md). Serwer i wtyczkę uruchomisz przez `scripts/start_nppai.py` z plikiem autorskiego modelu `.nppai`.
+
 NppAI is an experimental AI coding assistant for Notepad++ built around a custom C++ inference engine and a Python/PyTorch training pipeline.
 
 The project focuses on **local inference, systems-level implementation, model formats, RAG, and developer tooling** rather than wrapping an external hosted AI API.

@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Fix Unicode Notepad++ panel/prompt creation and selection append; expose actionable Polish connection errors and remove the unverified cloud-connected status. Preserve generated previews when validation is unconfigured while keeping Apply disabled.
+- Add authenticated readiness for the actual NppAI checkpoint, a checked own-model/Notepad++ launcher, minimal inference dependencies and Polish setup instructions. Release CI packages now include the validator beside each DLL.
+
 - Normalize frozen transfer evidence identity paths to POSIX form so exact reconstruction matches on Windows and Linux; add a cross-platform path regression test.
 
 - Diagnose frozen source transfer and signature termination: each trained arm selects the requested start in only 4/88 exposed alias replies; three correct starts override a correct vocabulary colon with copied prompt whitespace. Retain all 684 case labels and reconstruction tests; [diagnosis](docs/start-transfer-diagnostic.md). No new training or promotion.

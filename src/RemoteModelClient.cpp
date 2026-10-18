@@ -15,7 +15,10 @@ std::wstring wide(const std::string& text) {
     MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, text.data(), int(text.size()), &value[0], size);
     return value;
 }
-void require(bool ok) { if (!ok) throw std::runtime_error("Online model connection failed"); }
+void require(bool ok) {
+    if (!ok) throw std::runtime_error("Online model connection failed (Windows error " +
+                                     std::to_string(GetLastError()) + "). Check the NppAI server and NPPAI_GENERATION_URL.");
+}
 }
 namespace RemoteModelClient {
 std::string generate(const std::string& endpoint, const std::string& key,

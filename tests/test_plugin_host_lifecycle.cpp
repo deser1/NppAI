@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <cwchar>
 
 #include "Notepad_plus_msgs.h"
 #include "PluginInterface.h"
@@ -38,6 +39,10 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    if (message == NPPM_GETNATIVELANGFILENAME && lParam && wParam >= 11) {
+        std::wcscpy(reinterpret_cast<wchar_t*>(lParam), L"polish.xml");
+        return TRUE;
+    }
     if (message == NPPM_GETCURRENTSCINTILLA) {
         auto* hostProbe = reinterpret_cast<HostProbe*>(
             GetWindowLongPtrW(hwnd, GWLP_USERDATA));
@@ -185,7 +190,7 @@ int wmain(int argc, wchar_t** argv) {
         setInfoForTesting(data);
     }
 
-    PFUNCPLUGINCMD selectionCommand = nullptr;
+    PFUNCPLUGINCMD selectionCommand = nullptr, panelCommand = nullptr;
     if (getFuncsArray) {
         int count = 0;
         FuncItem* functions = getFuncsArray(&count);
@@ -195,6 +200,7 @@ int wmain(int argc, wchar_t** argv) {
             ok &= check(functions[0]._pFunc != nullptr, "AI panel callback registered");
             ok &= check(functions[1]._pFunc != nullptr, "selection callback registered");
             selectionCommand = functions[1]._pFunc;
+            panelCommand = functions[0]._pFunc;
             ok &= check(functions[2]._pFunc != nullptr, "telemetry callback registered");
         }
     }
@@ -327,6 +333,50 @@ int wmain(int argc, wchar_t** argv) {
         mainProbe.readOnly = false; applyReview();
         ok &= check(mainProbe.documentText == "new\n" && mainProbe.undoBegins == 1 && mainProbe.undoEnds == 1,
                     "accepted unchanged snapshot applies as one undo action");
+    }
+
+    if (panelCommand && selectionCommand) {
+        panelCommand();
+        HWND panel = FindWindowExW(nppHost, nullptr, L"NppAI_PanelClass", nullptr);
+        HWND prompt = panel ? GetDlgItem(panel, 1) : nullptr;
+        HWND reject = panel ? GetDlgItem(panel, 6) : nullptr;
+        HWND status = panel ? GetDlgItem(panel, 4) : nullptr;
+        ok &= check(panel && prompt && reject && status, "real docked panel controls created");
+        if (panel && prompt && reject && status) {
+            KillTimer(panel, 2);
+            ok &= check(IsWindowUnicode(panel) && IsWindowUnicode(prompt), "panel and prompt use Unicode Win32 classes");
+            wchar_t text[8192]{};
+            GetWindowTextW(reject, text, 8192);
+            ok &= check(std::wstring(text) == L"Odrzuć", "Polish button caption round-trips exactly");
+            const std::wstring polish = L"wygeneruj kod na silnię — zażółć gęślą jaźń 😀";
+            SetWindowTextW(prompt, polish.c_str());
+            using ReadPrompt = const char* (__cdecl*)();
+            const auto readPrompt = reinterpret_cast<ReadPrompt>(GetProcAddress(plugin, "panelPromptForTesting"));
+            ok &= check(readPrompt && std::string(readPrompt()) == u8"wygeneruj kod na silnię — zażółć gęślą jaźń 😀",
+                        "real generation input preserves Polish and supplementary Unicode as UTF-8");
+            hostProbe.currentScintilla = 0;
+            mainProbe.selectedText = u8"wartość = \"Zażółć gęślą jaźń 😀\";";
+            mainProbe.selectionStart = 0;
+            mainProbe.selectionEnd = static_cast<int>(mainProbe.selectedText.size());
+            selectionCommand();
+            GetWindowTextW(prompt, text, 8192);
+            ok &= check(std::wstring(text).find(polish) != std::wstring::npos &&
+                        std::wstring(text).find(L"wartość = \"Zażółć gęślą jaźń 😀\";") != std::wstring::npos,
+                        "selection append preserves both Unicode prompt and UTF-8 source code");
+            // This host reports no UTF-8 document: a click must expose a clear
+            // Polish prerequisite error instead of leaving an Online label.
+            SendMessageW(panel, WM_COMMAND, 2, 0);
+            GetWindowTextW(status, text, 8192);
+            ok &= check(std::wstring(text).find(L"Zapisz plik Python") != std::wstring::npos,
+                        "generation prerequisite errors are visible in Polish");
+            SCNotification language{};
+            language.nmhdr.code = NPPN_NATIVELANGCHANGED;
+            beNotified(&language);
+            GetWindowTextW(status, text, 8192);
+            ok &= check(std::wstring(text).find(L"połączone z chmurą") == std::wstring::npos,
+                        "localization does not claim an untested cloud connection");
+            DestroyWindow(panel);
+        }
     }
 
     if (scintillaSecond) DestroyWindow(scintillaSecond);

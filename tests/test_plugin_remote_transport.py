@@ -100,6 +100,9 @@ def main(executable, dll_path):
             assert generate(b'@python-signature f(x)\nReturn x.', b'') == b'def f(x):\n    ok'
             assert seen[-1][2]['prompt'] == 'Implement f(x). Return x.'
             assert seen[-1][2]['assistant_prefix'] == 'def f(x):\n    '
+            polish = 'wygeneruj kod na silnię'
+            assert generate(polish.encode('utf-8'), b'') == b'ok'
+            assert seen[-1][2]['prompt'] == polish, 'Polish prompt was corrupted before HTTP transport'
             os.environ['NPPAI_PLUGIN_MODE'] = 'typo'
             before = len(seen)
             assert generate(b'task', b'').startswith(b'ERROR:')

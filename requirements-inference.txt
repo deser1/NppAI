@@ -1,0 +1,5 @@
+# NppAI dense v2 inference service; PyTorch is needed only for training.
+fastapi>=0.115,<1
+numpy>=1.26,<3
+uvicorn[standard]>=0.30,<1
+pydantic>=2.7,<3
