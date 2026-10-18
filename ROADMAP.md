@@ -282,3 +282,10 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Measure and retain oracle diagnostic results; no autonomous improvement or promotion inferred from assisted results.
 
 - [x] Measured frozen oracle diagnostics: autonomous 27/132 exact development replies (0/88 aliases), start-only 57/132 (30/88), exit-only 29/132 (0/88), both 65/132 (36/88). Every mode remains 0/6 Docker. Baseline replay and same-host repeats passed; weights unchanged; assisted results only, no promotion.
+
+- [x] Predeclare a paired source-start continuation: frozen vocabulary and exit, identical 256 TRAIN batches, source cross entropy versus a fixed hard-negative margin penalty. Exact repeats, original-hit retention and separate Docker gates; [protocol](docs/start-selection-training.md). Measurement completed below; no promotion.
+- [x] Measure and audit the paired start-selection continuation before any further mechanism change.
+
+- [x] Measured the paired source-start continuation: both cross-entropy and hard-negative arms reach 28/132 exposed development exact replies (1/88 aliases), retain all 14 prior original TRAIN exact hits and gain one, but remain 0/6 Docker. The margin provides no exact-reply benefit over matched control; retain failures and reject promotion.
+
+- [ ] Diagnose the remaining source-start transfer failures and name/signature termination on frozen recorded traces before choosing another training intervention.

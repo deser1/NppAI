@@ -130,6 +130,12 @@ jobs:
     - name: Audit retained oracle evidence
       run: python -m unittest discover -s tests -p "test_alias_oracle_evidence.py" -v
 
+    - name: Source start training protocol
+      run: python -m unittest discover -s tests -p "test_start_selection_training.py" -v
+
+    - name: Audit start selection training evidence
+      run: python -m unittest discover -s tests -p "test_start_selection_evidence.py" -v
+
     - name: Run namespace and teacher-retention contracts
       run: python -m unittest discover -s tests -p "test_namespace_retention.py" -v
 
