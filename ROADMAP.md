@@ -34,8 +34,9 @@ Recent RAG regression work:
 ## Staged task planning
 
 - [x] Add an opt-in own-model specification/plan/code runner, exact stage traces, two direct controls and failure tests; measure the frozen dense-v2 checkpoint on all 28 exposed test tasks. Completed staged replies: **0/28**; 14 empty specifications, one token-limit failure and 13 plan-context overflows. No training or promotion. See [task-plan generation](docs/task-plan-generation.md).
-- [ ] Author and review training-only specification/plan/code examples; freeze new held-out tasks and a direct-generation retention control before training.
-- [ ] Train the own model for the stage protocol with sufficient context; require functional execution and retention evidence before promotion.
+- [x] Author 96 training-only specification/plan/code records, freeze 12 new synthetic prompt records (six English/Polish tasks) and a paired direct-generation control. See [stage-protocol training](docs/staged-protocol-training.md).
+- [x] Run the own-model paired 1024-update pilot with 1024-byte context and full traces; local new-task exact replies remain 0/12 and direct memorization is 14/16 in the mixture versus 16/16 in control; both retain all 10 initial exact hits. Docker execution in every inference arm remains 0/12, with all 12 authored reference controls passing. No checkpoint promotion.
+- [ ] Pass complete-code functional quality, stage-format and original-hit retention gates before promoting staged weights.
 - [ ] Integrate successful staged generation with existing plugin validation/repair and visible stage events, preserving guarded Apply and cancellation.
 
 ## Next

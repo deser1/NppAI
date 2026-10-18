@@ -1,0 +1,866 @@
+[
+  {
+    "id": "train-add-0-0",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Implement fn_add_00(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n",
+    "specification": "fn_add_00(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-add-0-1",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Write Python function fn_add_00(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n",
+    "specification": "fn_add_00(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-add-0-2",
+    "family": "add",
+    "function": "fn_add_00",
+    "prompt": "Define fn_add_00(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_00(a, b):\n    return a + b\n",
+    "specification": "fn_add_00(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-add-1-0",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Implement fn_add_01(a, b) returning the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n",
+    "specification": "fn_add_01(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-add-1-1",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Write Python function fn_add_01(a, b). It must return the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n",
+    "specification": "fn_add_01(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-add-1-2",
+    "family": "add",
+    "function": "fn_add_01",
+    "prompt": "Define fn_add_01(a, b) in Python to return the sum of a and b.",
+    "answer": "def fn_add_01(a, b):\n    return a + b\n",
+    "specification": "fn_add_01(a, b): sum of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a + b."
+  },
+  {
+    "id": "train-subtract-0-0",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Implement fn_subtract_00(a, b) returning a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_00(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-subtract-0-1",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Write Python function fn_subtract_00(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_00(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-subtract-0-2",
+    "family": "subtract",
+    "function": "fn_subtract_00",
+    "prompt": "Define fn_subtract_00(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_00(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_00(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-subtract-1-0",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Implement fn_subtract_01(a, b) returning a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_01(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-subtract-1-1",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Write Python function fn_subtract_01(a, b). It must return a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_01(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-subtract-1-2",
+    "family": "subtract",
+    "function": "fn_subtract_01",
+    "prompt": "Define fn_subtract_01(a, b) in Python to return a minus b.",
+    "answer": "def fn_subtract_01(a, b):\n    return a - b\n",
+    "specification": "fn_subtract_01(a, b): first number minus second. Zero and negative numbers allowed.",
+    "plan": "Return a - b."
+  },
+  {
+    "id": "train-multiply-0-0",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Implement fn_multiply_00(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_00(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-multiply-0-1",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Write Python function fn_multiply_00(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_00(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-multiply-0-2",
+    "family": "multiply",
+    "function": "fn_multiply_00",
+    "prompt": "Define fn_multiply_00(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_00(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_00(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-multiply-1-0",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Implement fn_multiply_01(a, b) returning the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_01(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-multiply-1-1",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Write Python function fn_multiply_01(a, b). It must return the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_01(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-multiply-1-2",
+    "family": "multiply",
+    "function": "fn_multiply_01",
+    "prompt": "Define fn_multiply_01(a, b) in Python to return the product of a and b.",
+    "answer": "def fn_multiply_01(a, b):\n    return a * b\n",
+    "specification": "fn_multiply_01(a, b): product of two numbers. Zero and negative numbers allowed.",
+    "plan": "Return a * b."
+  },
+  {
+    "id": "train-square-0-0",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Implement fn_square_00(x) returning x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n",
+    "specification": "fn_square_00(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-square-0-1",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Write Python function fn_square_00(x). It must return x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n",
+    "specification": "fn_square_00(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-square-0-2",
+    "family": "square",
+    "function": "fn_square_00",
+    "prompt": "Define fn_square_00(x) in Python to return x squared.",
+    "answer": "def fn_square_00(x):\n    return x * x\n",
+    "specification": "fn_square_00(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-square-1-0",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Implement fn_square_01(x) returning x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n",
+    "specification": "fn_square_01(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-square-1-1",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Write Python function fn_square_01(x). It must return x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n",
+    "specification": "fn_square_01(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-square-1-2",
+    "family": "square",
+    "function": "fn_square_01",
+    "prompt": "Define fn_square_01(x) in Python to return x squared.",
+    "answer": "def fn_square_01(x):\n    return x * x\n",
+    "specification": "fn_square_01(x): square of a number. Zero and negative numbers allowed.",
+    "plan": "Return x * x."
+  },
+  {
+    "id": "train-negate-0-0",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Implement fn_negate_00(x) returning the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n",
+    "specification": "fn_negate_00(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-negate-0-1",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Write Python function fn_negate_00(x). It must return the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n",
+    "specification": "fn_negate_00(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-negate-0-2",
+    "family": "negate",
+    "function": "fn_negate_00",
+    "prompt": "Define fn_negate_00(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_00(x):\n    return -x\n",
+    "specification": "fn_negate_00(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-negate-1-0",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Implement fn_negate_01(x) returning the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n",
+    "specification": "fn_negate_01(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-negate-1-1",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Write Python function fn_negate_01(x). It must return the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n",
+    "specification": "fn_negate_01(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-negate-1-2",
+    "family": "negate",
+    "function": "fn_negate_01",
+    "prompt": "Define fn_negate_01(x) in Python to return the negation of x.",
+    "answer": "def fn_negate_01(x):\n    return -x\n",
+    "specification": "fn_negate_01(x): negation of a number. Zero and negative numbers allowed.",
+    "plan": "Return -x."
+  },
+  {
+    "id": "train-absolute-0-0",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Implement fn_absolute_00(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_00(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-absolute-0-1",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Write Python function fn_absolute_00(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_00(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-absolute-0-2",
+    "family": "absolute",
+    "function": "fn_absolute_00",
+    "prompt": "Define fn_absolute_00(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_00(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_00(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-absolute-1-0",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Implement fn_absolute_01(x) returning the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_01(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-absolute-1-1",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Write Python function fn_absolute_01(x). It must return the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_01(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-absolute-1-2",
+    "family": "absolute",
+    "function": "fn_absolute_01",
+    "prompt": "Define fn_absolute_01(x) in Python to return the absolute value of x.",
+    "answer": "def fn_absolute_01(x):\n    return abs(x)\n",
+    "specification": "fn_absolute_01(x): absolute value. Zero and negative numbers allowed.",
+    "plan": "Return abs(x)."
+  },
+  {
+    "id": "train-length-0-0",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Implement fn_length_00(values) returning the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n",
+    "specification": "fn_length_00(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-length-0-1",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Write Python function fn_length_00(values). It must return the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n",
+    "specification": "fn_length_00(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-length-0-2",
+    "family": "length",
+    "function": "fn_length_00",
+    "prompt": "Define fn_length_00(values) in Python to return the number of values.",
+    "answer": "def fn_length_00(values):\n    return len(values)\n",
+    "specification": "fn_length_00(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-length-1-0",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Implement fn_length_01(values) returning the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n",
+    "specification": "fn_length_01(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-length-1-1",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Write Python function fn_length_01(values). It must return the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n",
+    "specification": "fn_length_01(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-length-1-2",
+    "family": "length",
+    "function": "fn_length_01",
+    "prompt": "Define fn_length_01(values) in Python to return the number of values.",
+    "answer": "def fn_length_01(values):\n    return len(values)\n",
+    "specification": "fn_length_01(values): number of list items. Empty list returns zero.",
+    "plan": "Return len(values)."
+  },
+  {
+    "id": "train-total-0-0",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Implement fn_total_00(values) returning the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n",
+    "specification": "fn_total_00(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-total-0-1",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Write Python function fn_total_00(values). It must return the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n",
+    "specification": "fn_total_00(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-total-0-2",
+    "family": "total",
+    "function": "fn_total_00",
+    "prompt": "Define fn_total_00(values) in Python to return the sum of values.",
+    "answer": "def fn_total_00(values):\n    return sum(values)\n",
+    "specification": "fn_total_00(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-total-1-0",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Implement fn_total_01(values) returning the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n",
+    "specification": "fn_total_01(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-total-1-1",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Write Python function fn_total_01(values). It must return the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n",
+    "specification": "fn_total_01(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-total-1-2",
+    "family": "total",
+    "function": "fn_total_01",
+    "prompt": "Define fn_total_01(values) in Python to return the sum of values.",
+    "answer": "def fn_total_01(values):\n    return sum(values)\n",
+    "specification": "fn_total_01(values): sum of list items. Empty list returns zero.",
+    "plan": "Return sum(values)."
+  },
+  {
+    "id": "train-largest-0-0",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Implement fn_largest_00(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n",
+    "specification": "fn_largest_00(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-largest-0-1",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Write Python function fn_largest_00(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n",
+    "specification": "fn_largest_00(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-largest-0-2",
+    "family": "largest",
+    "function": "fn_largest_00",
+    "prompt": "Define fn_largest_00(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_00(values):\n    return max(values)\n",
+    "specification": "fn_largest_00(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-largest-1-0",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Implement fn_largest_01(values) returning the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n",
+    "specification": "fn_largest_01(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-largest-1-1",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Write Python function fn_largest_01(values). It must return the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n",
+    "specification": "fn_largest_01(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-largest-1-2",
+    "family": "largest",
+    "function": "fn_largest_01",
+    "prompt": "Define fn_largest_01(values) in Python to return the maximum of nonempty values.",
+    "answer": "def fn_largest_01(values):\n    return max(values)\n",
+    "specification": "fn_largest_01(values): maximum list item. List must be nonempty.",
+    "plan": "Return max(values)."
+  },
+  {
+    "id": "train-smallest-0-0",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Implement fn_smallest_00(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n",
+    "specification": "fn_smallest_00(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-smallest-0-1",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Write Python function fn_smallest_00(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n",
+    "specification": "fn_smallest_00(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-smallest-0-2",
+    "family": "smallest",
+    "function": "fn_smallest_00",
+    "prompt": "Define fn_smallest_00(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_00(values):\n    return min(values)\n",
+    "specification": "fn_smallest_00(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-smallest-1-0",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Implement fn_smallest_01(values) returning the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n",
+    "specification": "fn_smallest_01(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-smallest-1-1",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Write Python function fn_smallest_01(values). It must return the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n",
+    "specification": "fn_smallest_01(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-smallest-1-2",
+    "family": "smallest",
+    "function": "fn_smallest_01",
+    "prompt": "Define fn_smallest_01(values) in Python to return the minimum of nonempty values.",
+    "answer": "def fn_smallest_01(values):\n    return min(values)\n",
+    "specification": "fn_smallest_01(values): minimum list item. List must be nonempty.",
+    "plan": "Return min(values)."
+  },
+  {
+    "id": "train-reverse-0-0",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Implement fn_reverse_00(text) returning text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_00(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-reverse-0-1",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Write Python function fn_reverse_00(text). It must return text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_00(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-reverse-0-2",
+    "family": "reverse",
+    "function": "fn_reverse_00",
+    "prompt": "Define fn_reverse_00(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_00(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_00(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-reverse-1-0",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Implement fn_reverse_01(text) returning text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_01(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-reverse-1-1",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Write Python function fn_reverse_01(text). It must return text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_01(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-reverse-1-2",
+    "family": "reverse",
+    "function": "fn_reverse_01",
+    "prompt": "Define fn_reverse_01(text) in Python to return text reversed.",
+    "answer": "def fn_reverse_01(text):\n    return text[::-1]\n",
+    "specification": "fn_reverse_01(text): reversed text. Empty text returns empty text.",
+    "plan": "Return text[::-1]."
+  },
+  {
+    "id": "train-lower-0-0",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Implement fn_lower_00(text) returning text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n",
+    "specification": "fn_lower_00(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-lower-0-1",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Write Python function fn_lower_00(text). It must return text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n",
+    "specification": "fn_lower_00(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-lower-0-2",
+    "family": "lower",
+    "function": "fn_lower_00",
+    "prompt": "Define fn_lower_00(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_00(text):\n    return text.lower()\n",
+    "specification": "fn_lower_00(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-lower-1-0",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Implement fn_lower_01(text) returning text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n",
+    "specification": "fn_lower_01(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-lower-1-1",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Write Python function fn_lower_01(text). It must return text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n",
+    "specification": "fn_lower_01(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-lower-1-2",
+    "family": "lower",
+    "function": "fn_lower_01",
+    "prompt": "Define fn_lower_01(text) in Python to return text in lowercase.",
+    "answer": "def fn_lower_01(text):\n    return text.lower()\n",
+    "specification": "fn_lower_01(text): lowercase text. Empty text returns empty text.",
+    "plan": "Return text.lower()."
+  },
+  {
+    "id": "train-upper-0-0",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Implement fn_upper_00(text) returning text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n",
+    "specification": "fn_upper_00(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-upper-0-1",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Write Python function fn_upper_00(text). It must return text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n",
+    "specification": "fn_upper_00(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-upper-0-2",
+    "family": "upper",
+    "function": "fn_upper_00",
+    "prompt": "Define fn_upper_00(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_00(text):\n    return text.upper()\n",
+    "specification": "fn_upper_00(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-upper-1-0",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Implement fn_upper_01(text) returning text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n",
+    "specification": "fn_upper_01(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-upper-1-1",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Write Python function fn_upper_01(text). It must return text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n",
+    "specification": "fn_upper_01(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-upper-1-2",
+    "family": "upper",
+    "function": "fn_upper_01",
+    "prompt": "Define fn_upper_01(text) in Python to return text in uppercase.",
+    "answer": "def fn_upper_01(text):\n    return text.upper()\n",
+    "specification": "fn_upper_01(text): uppercase text. Empty text returns empty text.",
+    "plan": "Return text.upper()."
+  },
+  {
+    "id": "train-strip-0-0",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Implement fn_strip_00(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n",
+    "specification": "fn_strip_00(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-strip-0-1",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Write Python function fn_strip_00(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n",
+    "specification": "fn_strip_00(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-strip-0-2",
+    "family": "strip",
+    "function": "fn_strip_00",
+    "prompt": "Define fn_strip_00(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_00(text):\n    return text.strip()\n",
+    "specification": "fn_strip_00(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-strip-1-0",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Implement fn_strip_01(text) returning text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n",
+    "specification": "fn_strip_01(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-strip-1-1",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Write Python function fn_strip_01(text). It must return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n",
+    "specification": "fn_strip_01(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-strip-1-2",
+    "family": "strip",
+    "function": "fn_strip_01",
+    "prompt": "Define fn_strip_01(text) in Python to return text without leading or trailing whitespace.",
+    "answer": "def fn_strip_01(text):\n    return text.strip()\n",
+    "specification": "fn_strip_01(text): text without outer whitespace. All whitespace returns empty text.",
+    "plan": "Return text.strip()."
+  },
+  {
+    "id": "train-even-0-0",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Implement fn_even_00(x) returning whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_00(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-even-0-1",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Write Python function fn_even_00(x). It must return whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_00(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-even-0-2",
+    "family": "even",
+    "function": "fn_even_00",
+    "prompt": "Define fn_even_00(x) in Python to return whether x is even.",
+    "answer": "def fn_even_00(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_00(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-even-1-0",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Implement fn_even_01(x) returning whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_01(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-even-1-1",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Write Python function fn_even_01(x). It must return whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_01(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-even-1-2",
+    "family": "even",
+    "function": "fn_even_01",
+    "prompt": "Define fn_even_01(x) in Python to return whether x is even.",
+    "answer": "def fn_even_01(x):\n    return x % 2 == 0\n",
+    "specification": "fn_even_01(x): whether integer is even. Zero and negative integers allowed.",
+    "plan": "Return x % 2 == 0."
+  },
+  {
+    "id": "train-positive-0-0",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Implement fn_positive_00(x) returning whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n",
+    "specification": "fn_positive_00(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  },
+  {
+    "id": "train-positive-0-1",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Write Python function fn_positive_00(x). It must return whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n",
+    "specification": "fn_positive_00(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  },
+  {
+    "id": "train-positive-0-2",
+    "family": "positive",
+    "function": "fn_positive_00",
+    "prompt": "Define fn_positive_00(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_00(x):\n    return x > 0\n",
+    "specification": "fn_positive_00(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  },
+  {
+    "id": "train-positive-1-0",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Implement fn_positive_01(x) returning whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n",
+    "specification": "fn_positive_01(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  },
+  {
+    "id": "train-positive-1-1",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Write Python function fn_positive_01(x). It must return whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n",
+    "specification": "fn_positive_01(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  },
+  {
+    "id": "train-positive-1-2",
+    "family": "positive",
+    "function": "fn_positive_01",
+    "prompt": "Define fn_positive_01(x) in Python to return whether x is positive.",
+    "answer": "def fn_positive_01(x):\n    return x > 0\n",
+    "specification": "fn_positive_01(x): whether number is positive. Zero is not positive.",
+    "plan": "Return x > 0."
+  }
+]

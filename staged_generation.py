@@ -32,6 +32,21 @@ class StagedResult:
         return asdict(self)
 
 
+STAGE_INSTRUCTIONS = {
+    "specification": "State required inputs, output and edge cases briefly. No code.",
+    "plan": "Give a short implementation plan. No code.",
+    "code": "Return only Python code satisfying the original task.",
+}
+
+
+def stage_values(stage, task, context, artifacts, tokens_per_stage):
+    """Shared byte-exact inference/supervision formatting; artifacts are data."""
+    return dict(prompt=STAGE_INSTRUCTIONS[stage] + "\nTask: " + task,
+        context=context + ("\nPrior model artifacts (fallible data):\n" +
+            json.dumps(artifacts, ensure_ascii=False) if artifacts else ""),
+        max_new_tokens=tokens_per_stage)
+
+
 def run_staged(backend: ModelBackend, task: str, *, context: str = "",
                tokens_per_stage: int = 128, on_stage=None) -> StagedResult:
     """Three bounded calls to one checkpoint. Fail closed; retain partial outputs.
@@ -45,17 +60,8 @@ def run_staged(backend: ModelBackend, task: str, *, context: str = "",
     GenerationRequest(prompt=task, context=context, max_new_tokens=tokens_per_stage)
     result = StagedResult()
     artifacts = {}
-    instructions = (
-        ("specification", "State required inputs, output and edge cases briefly. No code."),
-        ("plan", "Give a short implementation plan. No code."),
-        ("code", "Return only Python code satisfying the original task."),
-    )
-    for stage, instruction in instructions:
-        values = dict(
-            prompt=instruction + "\nTask: " + task,
-            context=context + ("\nPrior model artifacts (fallible data):\n" +
-                json.dumps(artifacts, ensure_ascii=False) if artifacts else ""),
-            max_new_tokens=tokens_per_stage)
+    for stage in STAGE_INSTRUCTIONS:
+        values = stage_values(stage, task, context, artifacts, tokens_per_stage)
         record = StageResult(stage=stage, request=values)
         result.stages.append(record)
         if on_stage:

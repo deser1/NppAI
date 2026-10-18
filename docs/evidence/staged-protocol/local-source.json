@@ -1,0 +1,37 @@
+{
+  "archive_sha256": "183fdf10be2753c1490778961b1c69c0063ebb438d7f5533856366472d1f61b9",
+  "members": {
+    "local0/direct/exposed_v2.json": "a3fe6562110dbe539bb6cc9c94c51ada5791ec4f74a295cb9c864d1c17ea79e8",
+    "local0/direct/new_synthetic.json": "2e4017827f6f00f37e6cba589e8f5fa6ca6226ff410fc0d0e0d9a1d720c78553",
+    "local0/direct/trace.json": "c46409271cd6596946c90bc9e06373b220963288b5a0bde11c7a7958e49784c0",
+    "local0/direct/training_probe.json": "590cec67b6954701f0bf5cc9240abeceb02c68028f13bb36f4bc041bb7c22d9b",
+    "local0/staged_mix/exposed_v2.json": "955aa820551382197b4e025f76e36af7f792ce05d82b09ddb7634aa5baf966dd",
+    "local0/staged_mix/new_synthetic.json": "52c25ee66b9cd851b9f57b6d6333c49ac342b7dd48d85a8e38e6ed6410582b1e",
+    "local0/staged_mix/trace.json": "d61ee99ac29e3ba050cae1a71d85827d6caad61b9b292b55595d91a89955c5b8",
+    "local0/staged_mix/training_probe.json": "24fc8ca1477aa7b3098724272f17a3aec51eda005a91f49247dfab3717e3e998",
+    "local0/training-report.json": "eccc7ca208baf315657c86580800fc289875d14a318eafff257818c72619104e",
+    "local1/direct/exposed_v2.json": "2e34a4a9641b1aff472af8ba0b771b358219a37a3b256fceae7b96f5e512a186",
+    "local1/direct/new_synthetic.json": "f21ffb45d370505fa452589db596bbf41ed458fa5edb3e868132bff6bafec2c1",
+    "local1/direct/runtime-parity.json": "ea51a6d786eb86dbde859a73f6f656ff1ecde84ce9157337cdb22410f9fa986d",
+    "local1/direct/trace.json": "c46409271cd6596946c90bc9e06373b220963288b5a0bde11c7a7958e49784c0",
+    "local1/direct/training_probe.json": "bc1841cb2f6b54d019be5c1cd31d2b9451ea2665c96edb0ef43d575726a4428b",
+    "local1/staged_mix/exposed_v2.json": "6768caa02464fddcd055ea592f935101ba30f157b835c740811c546221279ac6",
+    "local1/staged_mix/new_synthetic.json": "041f16f8bb87534707624e540bd46f3b1cbaa5d346222d9caa5d42c2f747cc59",
+    "local1/staged_mix/runtime-parity.json": "3c605ebb65887245b63b72fe117354ddb62482c6395001f8a869b73d5e18ad15",
+    "local1/staged_mix/trace.json": "d61ee99ac29e3ba050cae1a71d85827d6caad61b9b292b55595d91a89955c5b8",
+    "local1/staged_mix/training_probe.json": "ff6ef5a6db2ea42b3037cf8a9a7685fb41ff1e797b0fe43ae053cd63df433f26",
+    "local1/training-report.json": "fed6e2b6ad299d1d437c317a1bf3b9f5c4aac7b29b521f72f51367bcc74a9bb3"
+  },
+  "same_host_checkpoints_byte_equal": {
+    "direct": {
+      "equal": true,
+      "sha256": "14053463569d60e828a7d9bddfa3bbeff9025f59c06c5e3aa927ef90e372d476"
+    },
+    "staged_mix": {
+      "equal": true,
+      "sha256": "4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd"
+    }
+  },
+  "training_budget_per_arm": 1024,
+  "execution_status": "not_run"
+}

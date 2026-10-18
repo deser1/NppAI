@@ -1,0 +1,31 @@
+{
+  "run_id": 39162359982,
+  "source_commit": "bca97bb90750dc218653452c2c5ba685071bd6fc",
+  "artifact_id": 12149182157,
+  "artifact_name": "nppai-staged-protocol-pilot",
+  "artifact_sha256": "3c0fdbacc37bb2826bca7051a041d9e0a092213dea8f729a97f03d5347d3d7b2",
+  "retained_records_sha256": "8caf45845b7e12a60b3b14dc807ba40ad57969220b0914b2b8120a816d31a778",
+  "members": {
+    "direct/exposed_v2.json": "f81d30732b9dcbaf010e14309ac950c4a19ce662143121d2a763e0a85e9ae198",
+    "direct/functional.json": "2ef2ce11685c199d7a08488f465f80b245fd289b21df3288475b444d6cb4658f",
+    "direct/new_synthetic.json": "b992f98900f2dae5965aec061e2a2fcfe930ea0c82d384f02b7bdfeafcbe8a78",
+    "direct/runtime-parity.json": "ea51a6d786eb86dbde859a73f6f656ff1ecde84ce9157337cdb22410f9fa986d",
+    "direct/trace.json": "c46409271cd6596946c90bc9e06373b220963288b5a0bde11c7a7958e49784c0",
+    "direct/training_probe.json": "c001cbdd8362e33ad258b2c8fc4fea4e01c04bc1bab326956643a19a66c3db99",
+    "staged_mix/exposed_v2.json": "6bcc53925899a5f2dcf1675ad250b46ed17a895cda67d736cda1ac7fee98f599",
+    "staged_mix/functional.json": "66d99deffb26b522af84a817173e3971509a5cc174504e8b8dc9ad2e6239d97c",
+    "staged_mix/new_synthetic.json": "d491d985fd4d37377d399c26635830425da435ec68e0aa78e5c22e104823e603",
+    "staged_mix/runtime-parity.json": "3c605ebb65887245b63b72fe117354ddb62482c6395001f8a869b73d5e18ad15",
+    "staged_mix/trace.json": "d61ee99ac29e3ba050cae1a71d85827d6caad61b9b292b55595d91a89955c5b8",
+    "staged_mix/training_probe.json": "acaa66d43cef700f580022456989c5ef88d704f79c0182864ec58bf8f7840bcc",
+    "training-report.json": "c638c256bc94a52be0a61fec49258ec46bd491d94fadc5ea5927be3c7178e5ad"
+  },
+  "checkpoint_sha256": {
+    "direct": "14053463569d60e828a7d9bddfa3bbeff9025f59c06c5e3aa927ef90e372d476",
+    "staged_mix": "4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd"
+  },
+  "same_bytes_as_both_local_checkpoints": true,
+  "execution_status": "docker",
+  "generated_new_task_passes_per_arm": 0,
+  "new_task_denominator": 12
+}

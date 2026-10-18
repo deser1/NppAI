@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "source_train_sha256": "cb9a1b49326370b607e6a640eea73d09c9b03eea44970b2602c528fb2813f98d",
+  "limits": "Authored correlated synthetic templates; new names/wording, six tasks repeated in English/Polish. Families have prior project exposure. Not an independent general coding benchmark.",
+  "protocol": {
+    "seed": 42,
+    "steps_per_arm": 1024,
+    "batch_size": 4,
+    "context_bytes": 1024,
+    "stage_token_budget": 128,
+    "learning_rate": 0.001,
+    "gradient_clip": 1.0,
+    "arms": [
+      "direct",
+      "staged_mix"
+    ],
+    "staged_mix": "one direct, specification, plan, code example per update; rotate assignment across identical sampled base tasks",
+    "selection": "first two distinct names per train family; retain original wording variants",
+    "initial_model_sha256": "6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+    "context_expansion": "preserve original 256 positions; initialize remaining positions once from seed42; identical expanded state for both arms",
+    "promotion": false
+  },
+  "files": {
+    "train.json": {
+      "sha256": "da67af2b8a9eb3b5f089e1d63bf73a54826c81879c72b47412ca051a91d92080",
+      "count": 96
+    },
+    "new-evaluation.json": {
+      "sha256": "72916e5d0a4ca4fbb061beaa30f9a95141fafb5ede94905fdd2ecefffcfed140",
+      "count": 12
+    }
+  }
+}
