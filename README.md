@@ -401,3 +401,5 @@ Measured frozen oracle diagnostics: autonomous 27/132 exact development replies 
 Predeclare a paired source-start continuation: frozen vocabulary and exit, identical 256 TRAIN batches, source cross entropy versus a fixed hard-negative margin penalty. Exact repeats, original-hit retention and separate Docker gates; [protocol](docs/start-selection-training.md). Measurement completed below; no promotion.
 
 Measured the paired source-start continuation: both cross-entropy and hard-negative arms reach 28/132 exposed development exact replies (1/88 aliases), retain all 14 prior original TRAIN exact hits and gain one, but remain 0/6 Docker. The margin provides no exact-reply benefit over matched control; retain failures and reject promotion.
+
+Diagnose frozen source transfer and signature termination: each trained arm selects the requested start in only 4/88 exposed alias replies; three correct starts override a correct vocabulary colon with copied prompt whitespace. Retain all 684 case labels and reconstruction tests; [diagnosis](docs/start-transfer-diagnostic.md). No new training or promotion.
