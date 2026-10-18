@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "source_artifact": 12149182157,
+  "coder_artifact": 12152565374,
+  "initial_checkpoint": "4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd",
+  "frozen_coder_checkpoint": "236cf897531431972120ce29a6272812dc593f187883ed06d34a9b7b99dfda76",
+  "seed": 43,
+  "steps": 512,
+  "batch_size": 4,
+  "learning_rate": 0.0003,
+  "context_bytes": 1024,
+  "output_tokens_per_stage": 128,
+  "arms": ["initial", "all_stage_replay", "frozen_planner_coder"],
+  "policy": "One new all-stage continuation: one direct/specification/plan/code target per update, rotating over the identical seed43 base-task schedule used by the original 512-update coder. Frozen route uses original planner for specification/plan and pinned previously trained replay coder for code and direct replies. No inference reference assistance except explicitly separate gold-code training probes.",
+  "promotion": false,
+  "limits": "96 correlated training cases; inspected regression validation and bilingual suite. Frozen route loads two checkpoints and reuses historical coder training, whereas unified all-stage replay loads one. Objective allocation, token exposure, memory and compute differ. No prompt/budget tuning on evaluation."
+}

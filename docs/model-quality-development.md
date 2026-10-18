@@ -19,6 +19,13 @@ dwa wcześniejsze trafienia, a istniejące zadania spoza treningu nadal mają
 0 poprawnych pełnych odpowiedzi. Dopasowanie do treningu i samodzielne rozwiązanie
 nowego problemu muszą pozostać oddzielnymi miarami.
 
+[Porównanie ochrony etapów](all-stage-protection.md) dało następnie 45/96
+samodzielnych odpowiedzi treningowych dla powtórek wszystkich etapów oraz 10/96
+dla zamrożonego planującego z osobnym koderem (początkowo 2/96). Oba zachowują
+wcześniejsze trafienia całego procesu, lecz tylko zamrożenie chroni wszystkie
+surowe artefakty planowania. Zbiory regresyjne nadal nie pokazują poprawnych
+pełnych odpowiedzi; to postęp dopasowania treningowego, nie dowód generalizacji.
+
 ## Priorytety i kryteria decyzji
 
 | Kolejność | Co rozwijać | Dlaczego / jak zmierzyć |
