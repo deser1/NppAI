@@ -21,6 +21,11 @@ updates; measured Docker execution passes **0/12** new prompt records in every
 inference arm. Models
 remain experimental and are not selected as the plugin default.
 
+A [frozen training-only stage diagnosis](docs/stage-failure-diagnostic.md) finds
+2/96 autonomous versus 16/96 exact replies with authored specification/plan,
+while direct generation reaches 88/96 on the same mixture checkpoint. These
+assisted training diagnostics do not improve the 0/12 new-task quality result.
+
 ## Validated generation and automatic repair
 
 The plugin stages a proposal, checks Python syntax and authored function tests
