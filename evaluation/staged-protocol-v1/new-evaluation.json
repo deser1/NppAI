@@ -1,0 +1,446 @@
+[
+  {
+    "id": "new-sum-en",
+    "family": "sum",
+    "function": "suma",
+    "prompt": "Implement suma(a, b) in Python returning the sum of a and b.",
+    "answer": "def suma(a, b):\n    return a + b\n",
+    "cases": [
+      {
+        "function": "suma",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "suma",
+        "args": [
+          -3,
+          5
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "suma",
+        "args": [
+          8,
+          9
+        ],
+        "kwargs": {},
+        "expected": 17
+      }
+    ]
+  },
+  {
+    "id": "new-sum-pl",
+    "family": "sum",
+    "function": "suma",
+    "prompt": "Napisz w Pythonie funkcję suma(a, b) zwracającą sumę a i b.",
+    "answer": "def suma(a, b):\n    return a + b\n",
+    "cases": [
+      {
+        "function": "suma",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "suma",
+        "args": [
+          -3,
+          5
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "suma",
+        "args": [
+          8,
+          9
+        ],
+        "kwargs": {},
+        "expected": 17
+      }
+    ]
+  },
+  {
+    "id": "new-absolute-en",
+    "family": "absolute",
+    "function": "modul",
+    "prompt": "Implement modul(x) in Python returning the absolute value of x.",
+    "answer": "def modul(x):\n    return abs(x)\n",
+    "cases": [
+      {
+        "function": "modul",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "modul",
+        "args": [
+          -7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "modul",
+        "args": [
+          4
+        ],
+        "kwargs": {},
+        "expected": 4
+      }
+    ]
+  },
+  {
+    "id": "new-absolute-pl",
+    "family": "absolute",
+    "function": "modul",
+    "prompt": "Napisz w Pythonie funkcję modul(x) zwracającą wartość bezwzględną x.",
+    "answer": "def modul(x):\n    return abs(x)\n",
+    "cases": [
+      {
+        "function": "modul",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "modul",
+        "args": [
+          -7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "modul",
+        "args": [
+          4
+        ],
+        "kwargs": {},
+        "expected": 4
+      }
+    ]
+  },
+  {
+    "id": "new-total-en",
+    "family": "total",
+    "function": "razem",
+    "prompt": "Implement razem(values) in Python returning the sum of values; empty list returns zero.",
+    "answer": "def razem(values):\n    return sum(values)\n",
+    "cases": [
+      {
+        "function": "razem",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            1,
+            -2,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 8
+      }
+    ]
+  },
+  {
+    "id": "new-total-pl",
+    "family": "total",
+    "function": "razem",
+    "prompt": "Napisz w Pythonie funkcję razem(values) zwracającą sumę values; pusta lista daje zero.",
+    "answer": "def razem(values):\n    return sum(values)\n",
+    "cases": [
+      {
+        "function": "razem",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            1,
+            -2,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 8
+      }
+    ]
+  },
+  {
+    "id": "new-even-en",
+    "family": "even",
+    "function": "parzysta",
+    "prompt": "Implement parzysta(x) in Python returning whether integer x is even, including zero and negative integers.",
+    "answer": "def parzysta(x):\n    return x % 2 == 0\n",
+    "cases": [
+      {
+        "function": "parzysta",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -3
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": true
+      }
+    ]
+  },
+  {
+    "id": "new-even-pl",
+    "family": "even",
+    "function": "parzysta",
+    "prompt": "Napisz w Pythonie funkcję parzysta(x) zwracającą czy liczba całkowita x jest parzysta, także dla zera i liczb ujemnych.",
+    "answer": "def parzysta(x):\n    return x % 2 == 0\n",
+    "cases": [
+      {
+        "function": "parzysta",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -3
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": true
+      }
+    ]
+  },
+  {
+    "id": "new-factorial-en",
+    "family": "factorial",
+    "function": "silnia",
+    "prompt": "Implement silnia(n) in Python returning factorial of nonnegative integer n; zero gives one.",
+    "answer": "def silnia(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n",
+    "cases": [
+      {
+        "function": "silnia",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          5
+        ],
+        "kwargs": {},
+        "expected": 120
+      },
+      {
+        "function": "silnia",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "new-factorial-pl",
+    "family": "factorial",
+    "function": "silnia",
+    "prompt": "Napisz w Pythonie funkcję silnia(n) zwracającą silnię nieujemnej liczby całkowitej n; dla zera zwróć jeden.",
+    "answer": "def silnia(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n",
+    "cases": [
+      {
+        "function": "silnia",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          5
+        ],
+        "kwargs": {},
+        "expected": 120
+      },
+      {
+        "function": "silnia",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "new-positive_sum-en",
+    "family": "positive_sum",
+    "function": "dodatnie",
+    "prompt": "Implement dodatnie(values) in Python returning the sum of positive values; ignore zero and negatives; empty list gives zero.",
+    "answer": "def dodatnie(values):\n    return sum(x for x in values if x > 0)\n",
+    "cases": [
+      {
+        "function": "dodatnie",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "new-positive_sum-pl",
+    "family": "positive_sum",
+    "function": "dodatnie",
+    "prompt": "Napisz w Pythonie funkcję dodatnie(values) zwracającą sumę dodatnich elementów values; pomiń zero i ujemne; pusta lista daje zero.",
+    "answer": "def dodatnie(values):\n    return sum(x for x in values if x > 0)\n",
+    "cases": [
+      {
+        "function": "dodatnie",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  }
+]

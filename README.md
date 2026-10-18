@@ -15,6 +15,11 @@ against two direct-generation controls. The first frozen 256-byte-context model
 completed **0/28** staged tasks; no new weights or plugin mode are promoted.
 See [runner, raw measurements and training gates](docs/task-plan-generation.md).
 
+A paired [stage-protocol training pilot](docs/staged-protocol-training.md) now
+adds authored training targets and 1024-byte context. Both arms receive 1024
+updates; initial local results still fail new-task code-quality gates. Models
+remain experimental and are not selected as the plugin default.
+
 ## Validated generation and automatic repair
 
 The plugin stages a proposal, checks Python syntax and authored function tests

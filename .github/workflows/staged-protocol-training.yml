@@ -1,0 +1,68 @@
+name: Own-model staged protocol training pilot
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/staged-protocol-training.yml'
+      - 'scripts/build_stage_dataset.py'
+      - 'scripts/train_staged_protocol.py'
+      - 'scripts/audit_staged_pilot.py'
+      - 'evaluation/staged-protocol-v1/**'
+      - 'tests/test_stage_training*.py'
+      - 'staged_generation.py'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  train-and-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.15'
+      - name: Install fixed own-model CPU runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.5.2' 'pydantic>=2.7,<3' 'fastapi>=0.115,<1'
+      - name: Check data isolation, masking, context expansion and real gradients
+        run: |
+          python -m unittest discover -s tests -p 'test_stage_training*.py' -v
+          python -m unittest discover -s tests -p 'test_task_plan_generation.py' -v
+      - name: Download exact own-model initialization
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api 'repos/${{ github.repository }}/actions/artifacts/11775752592/zip' > initial.zip
+      - name: Verify archive and extract exact checkpoint
+        run: |
+          python - <<'PY'
+          import hashlib, zipfile
+          from pathlib import Path
+          raw=Path('initial.zip').read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=='80649135c7a910742984a48fd8c60aff2bf58da9579f6457f18f3e99e61575c2'
+          with zipfile.ZipFile('initial.zip') as z:
+              raw=z.read('NppAI-broader-instruction.nppai')
+          assert hashlib.sha256(raw).hexdigest()=='6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac'
+          Path('initial.nppai').write_bytes(raw)
+          PY
+      - name: Resolve isolated functional validator
+        run: |
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Train both frozen-budget arms and evaluate complete outputs
+        run: python scripts/train_staged_protocol.py --initial-model initial.nppai --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Audit raw outputs, task schedules and denominators
+        run: python scripts/audit_staged_pilot.py measured
+      - name: Require validator cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-staged-protocol-pilot
+          path: measured/
+          retention-days: 14

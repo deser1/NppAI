@@ -11,3 +11,7 @@ docs/evidence/** text eol=lf
 
 # Compressed diagnostic evidence must preserve exact bytes.
 docs/evidence/alias-oracle/raw-records.zip -text
+
+# Frozen staged-protocol inputs use exact canonical LF bytes.
+evaluation/staged-protocol-v1/** text eol=lf
+docs/evidence/staged-protocol/*.zip -text
