@@ -17,7 +17,8 @@ See [runner, raw measurements and training gates](docs/task-plan-generation.md).
 
 A paired [stage-protocol training pilot](docs/staged-protocol-training.md) now
 adds authored training targets and 1024-byte context. Both arms receive 1024
-updates; initial local results still fail new-task code-quality gates. Models
+updates; measured Docker execution passes **0/12** new prompt records in every
+inference arm. Models
 remain experimental and are not selected as the plugin default.
 
 ## Validated generation and automatic repair

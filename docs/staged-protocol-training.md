@@ -115,3 +115,25 @@ Local records: [archive](evidence/staged-protocol/local-records.zip) and
 archive and run `python scripts/audit_staged_pilot.py PATH/local1` for an offline
 raw-score, stage-input, denominator and paired-schedule reconstruction. Weights
 are supplied by the dedicated Actions artifact, not this evidence archive.
+
+## Measured isolated execution on CI
+
+Run [39162359982](https://github.com/deser1/NppAI/actions/runs/39162359982)
+completed both training arms, runtime checks, functional execution and offline
+audit. **All 12 authored reference controls passed**, and the known incorrect
+candidate failed as required. Generated new-task functional passes are **0/12 in
+every inference arm of both models**. The model checkpoints match both local
+runs byte for byte on this observed allocation; this is not a general portability
+certification.
+
+Retained [CI records](evidence/staged-protocol/ci-records.zip) and
+[source/member/checkpoint hashes](evidence/staged-protocol/ci-source.json) include
+all raw Docker source/diagnostics and the immutable image identity. Extract and
+run `python scripts/audit_staged_pilot.py PATH_TO_EXTRACTED_CI_RECORDS` to recompute
+scores and denominators without executing code.
+
+Download both experimental models and full records from
+[the pilot artifact](https://github.com/deser1/NppAI/actions/runs/39162359982/artifacts/12149182157).
+The model files are `direct/experimental.nppai` and
+`staged_mix/experimental.nppai`. Both remain research checkpoints; these measured
+results fail the deployment quality gate.

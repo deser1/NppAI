@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Add authored training-only stage supervision, a frozen six-task bilingual evaluation suite and paired 1024-update own-model training with 1024-byte context. Retain stage/direct controls, initialization/schedule hashes, token/loss traces, exported-runtime readouts and isolated Docker validation in a dedicated workflow. Initial local new-task exact responses remain 0/12; no default model promotion. See [pilot](docs/staged-protocol-training.md).
+- Add authored training-only stage supervision, a frozen six-task bilingual evaluation suite and paired 1024-update own-model training with 1024-byte context. Retain stage/direct controls, initialization/schedule hashes, token/loss traces, exported-runtime readouts and isolated Docker validation in a dedicated workflow. New-task exact and isolated functional passes remain 0/12 in every inference arm, with 12/12 authored reference controls passing; retain raw CI diagnostics and both model hashes. No default model promotion. See [pilot](docs/staged-protocol-training.md).
 
 - Add experimental own-model specification → plan → code orchestration, per-stage traces and a paired evaluator with final-code/aggregate-budget controls. Frozen dense-v2 measurement completes 0/28 exposed tasks (14 empty specifications, one token-limit failure, 13 context overflows); preserve raw evidence, no training, production integration or model promotion. See [task-plan generation](docs/task-plan-generation.md).
 
