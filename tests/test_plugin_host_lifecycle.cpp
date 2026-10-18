@@ -8,6 +8,7 @@
 #include "Scintilla.h"
 
 namespace {
+HWND nativeLanguageHost = nullptr;
 struct HostProbe {
     int currentScintilla = 0;
 };
@@ -38,7 +39,7 @@ bool check(bool condition, const char* message) {
 }
 
 LRESULT CALLBACK HostWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    if (message == NPPM_GETNATIVELANGFILENAME) {
+    if (hwnd == nativeLanguageHost && message == NPPM_GETNATIVELANGFILENAME) {
         if (!lParam) return 10;
         if (wParam < 11) return 0;
         std::memcpy(reinterpret_cast<char*>(lParam), "polish.xml", 11);
@@ -173,6 +174,7 @@ int wmain(int argc, wchar_t** argv) {
 
     HINSTANCE instance = GetModuleHandleW(nullptr);
     HWND nppHost = createHostWindow(instance, L"NppAI_Test_NppHost");
+    nativeLanguageHost = nppHost;
     HWND scintillaMain = createHostWindow(instance, L"NppAI_Test_ScintillaMain");
     HWND scintillaSecond = createHostWindow(instance, L"NppAI_Test_ScintillaSecond");
     HostProbe hostProbe{};
