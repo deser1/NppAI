@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add experimental own-model specification → plan → code orchestration, per-stage traces and a paired evaluator with final-code/aggregate-budget controls. Frozen dense-v2 measurement completes 0/28 exposed tasks (14 empty specifications, one token-limit failure, 13 context overflows); preserve raw evidence, no training, production integration or model promotion. See [task-plan generation](docs/task-plan-generation.md).
+
 - Read the Notepad++ native-language filename through its documented char buffer contract, with exact Polish filename matching, instead of treating returned bytes as UTF-16.
 
 - Fix Unicode Notepad++ panel/prompt creation and selection append; expose actionable Polish connection errors and remove the unverified cloud-connected status. Preserve generated previews when validation is unconfigured while keeping Apply disabled.

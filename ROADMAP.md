@@ -31,6 +31,13 @@ Recent RAG regression work:
 - [x] Replace regex-based JSONL field extraction with a bounded structural JSON reader for evaluation fixtures, including malformed-record and duplicate top-level field rejection (PR pending CI)
 - [ ] Evaluate a maintained JSON library for full schema validation and broader reuse
 
+## Staged task planning
+
+- [x] Add an opt-in own-model specification/plan/code runner, exact stage traces, two direct controls and failure tests; measure the frozen dense-v2 checkpoint on all 28 exposed test tasks. Completed staged replies: **0/28**; 14 empty specifications, one token-limit failure and 13 plan-context overflows. No training or promotion. See [task-plan generation](docs/task-plan-generation.md).
+- [ ] Author and review training-only specification/plan/code examples; freeze new held-out tasks and a direct-generation retention control before training.
+- [ ] Train the own model for the stage protocol with sufficient context; require functional execution and retention evidence before promotion.
+- [ ] Integrate successful staged generation with existing plugin validation/repair and visible stage events, preserving guarded Apply and cancellation.
+
 ## Next
 
 - [x] Add executable standalone local/online/hybrid generation backends and an authenticated inference service using the same dense v2 runtime. See [model-backends](docs/model-backends.md).

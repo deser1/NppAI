@@ -8,6 +8,13 @@ The project focuses on **local inference, systems-level implementation, model fo
 
 > **Project status:** experimental / active development. Model quality, performance and deployment characteristics are still being validated.
 
+## Experimental task planning
+
+An opt-in own-model runner now measures **specification → short plan → code**
+against two direct-generation controls. The first frozen 256-byte-context model
+completed **0/28** staged tasks; no new weights or plugin mode are promoted.
+See [runner, raw measurements and training gates](docs/task-plan-generation.md).
+
 ## Validated generation and automatic repair
 
 The plugin stages a proposal, checks Python syntax and authored function tests

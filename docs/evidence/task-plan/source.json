@@ -1,0 +1,11 @@
+{
+  "source_run": 38314121142,
+  "artifact_id": 11775752592,
+  "artifact_name": "nppai-broader-instruction-v2",
+  "archive_sha256": "80649135c7a910742984a48fd8c60aff2bf58da9579f6457f18f3e99e61575c2",
+  "model_sha256": "6a49081e1d94e85d31efe6bdf2a4e3d9e4d7b06bb381c492de3a98d1300ed9ac",
+  "report_sha256": "029b94b1f1d6c1e6eccfd2fd71e99f20a73d7536d4635d724905ddccea801432",
+  "same_host_repeat_equal_excluding_elapsed_seconds": true,
+  "training_performed": false,
+  "generated_source_executed": false
+}
