@@ -89,6 +89,9 @@ jobs:
     - name: Run own-model server setup and readiness tests
       run: python -m unittest discover -s tests -p "test_nppai_setup.py" -v
 
+    - name: Run stage-failure intervention and audit tests
+      run: python -m unittest discover -s tests -p "test_stage_failure_diagnostic.py" -v
+
     - name: Run stage-training data isolation tests
       run: python -m unittest discover -s tests -p "test_stage_training_data.py" -v
 
