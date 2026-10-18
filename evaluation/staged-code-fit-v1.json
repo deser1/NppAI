@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "source_artifact": 12149182157,
+  "source_checkpoint": "4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd",
+  "seed": 43,
+  "steps_per_arm": 512,
+  "batch_size": 4,
+  "learning_rate": 0.0003,
+  "gradient_clip_norm": 1.0,
+  "context_bytes": 1024,
+  "arms": ["code_only", "code_with_direct_replay"],
+  "policy": "Identical 4-base-record schedule and initialization. code_only: four staged-code targets with authored train priors. replay: two staged-code and two direct targets, rotating positions. Correct authored training code, no generated-target acceptance or reference inference assistance in autonomous mode.",
+  "training": "All existing 96 staged-protocol-v1 train records; no new targets or held-out optimization.",
+  "evaluation": "Before/after direct, autonomous and gold-prior code on all 96 training records; after both arms, exposed v2 validation and existing bilingual 12-prompt suite. Docker on bilingual suite; four fixed exported-runtime readouts per arm.",
+  "selection": "Final fixed-budget checkpoints only; no early stopping or budget/prompt tuning using evaluation.",
+  "promotion": false,
+  "limits": "One seed, correlated synthetic training and previously inspected regression tasks. Equal steps and batch sizes do not equalize staged-code exposure, sequence length, target bytes or compute. Gold-prior generation is assisted. No production default selection."
+}

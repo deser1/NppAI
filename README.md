@@ -26,6 +26,12 @@ A [frozen training-only stage diagnosis](docs/stage-failure-diagnostic.md) finds
 while direct generation reaches 88/96 on the same mixture checkpoint. These
 assisted training diagnostics do not improve the 0/12 new-task quality result.
 
+A [fixed staged-code fitting experiment](docs/staged-code-fit.md) measures direct
+response replay: assisted training exact replies improve 16/96→86/96 while all
+88 original direct hits are retained (96/96 total). Autonomous stage retention
+still fails. See the [model quality development priorities](docs/model-quality-development.md)
+for data, identifier transfer, stage protection and test-feedback experiments.
+
 ## Validated generation and automatic repair
 
 The plugin stages a proposal, checks Python syntax and authored function tests

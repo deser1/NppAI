@@ -89,6 +89,9 @@ jobs:
     - name: Run own-model server setup and readiness tests
       run: python -m unittest discover -s tests -p "test_nppai_setup.py" -v
 
+    - name: Run staged-code replay and retention accounting tests
+      run: python -m unittest discover -s tests -p "test_staged_code_fit.py" -v
+
     - name: Run stage-failure intervention and audit tests
       run: python -m unittest discover -s tests -p "test_stage_failure_diagnostic.py" -v
 
