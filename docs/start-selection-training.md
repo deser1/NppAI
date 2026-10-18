@@ -1,6 +1,6 @@
 # Source-start selection: fixed paired continuation
 
-Status: protocol and implementation frozen before measurement. No new results.
+Status: fixed protocol measured and audited; margin intervention rejected for promotion.
 
 The frozen oracle readout found 30/88 exact exposed alias replies with supplied
 start positions versus 0/88 autonomous, and 36/88 with both interventions; all
@@ -59,4 +59,56 @@ python -m unittest discover -s tests -p test_start_selection_training.py -v
 python scripts/start_selection_training.py --archive training.zip --output measured --image sha256:LOCAL_IMAGE_ID
 ```
 
-Dedicated workflow: `.github/workflows/start-selection.yml`. Results pending.
+Dedicated workflow: `.github/workflows/start-selection.yml`. Measured results follow.
+
+## Measured results
+
+Run [39133059499](https://github.com/deser1/NppAI/actions/runs/39133059499)
+on source `70e74edd32a14c8d3cc390cfa31f4da91b403987` passed initialization
+replay, both full training repetitions, exported checkpoint equality,
+autonomous response repeats and unchanged base/exit/evaluation checks.
+
+| Arm | Exact development | Exact aliases | Original TRAIN retained | Docker |
+| --- | ---: | ---: | ---: | ---: |
+| Initialization | 27/132 | 0/88 | 14/14 | 0/6 |
+| Source cross entropy | 28/132 | 1/88 | 14/14, +1 new | 0/6 |
+| Additional hard-negative margin | 28/132 | 1/88 | 14/14, +1 new | 0/6 |
+
+Both arms' only exact development alias is `test-smallest-13-2` in test/renamed.
+Both retain 11/64 exact new TRAIN-family probe replies. Wrong source-start
+observations fall from 86/88 to 82/88 exposed alias replies in both arms;
+two replies still diverge before the name. These observations are from raw
+retained events; corrected source starts alone do not establish exact code.
+The treatment changes some outputs but does not improve the declared exact
+reply or functional outcome against control. No tuning or promotion follows.
+
+The functional outputs still include missing callables, invalid syntax and an
+empty reply. Full source/diagnostics remain in the retained report. The margin
+arm additionally emits `def t below_31(values): ...`, a syntax failure, so a
+small aggregate change must not be described as reliable code generation.
+
+## Retained evidence
+
+`docs/evidence/start-selection/raw-records.zip` preserves all original JSON and
+JSONL members: complete replies/events, every-update traces for both runs of
+both arms, complete report and original file manifest. `retention.json` pins the
+original artifact and retained ZIP SHA-256 identities and excluded checkpoint
+hashes. Original artifact 12139425244 has archive SHA-256
+`3aaa698c87ab4e28967151b5100e4ef489509f33155c3dabe0adf28a383d3784`.
+
+The importer verifies original ZIP CRC and every file digest, byte equality of
+repeated exported bundles/traces, and actual frozen base/exit bytes inside the
+exported bundles. Binary weight bytes remain in the original expiring Actions
+artifact; retained hashes cannot recreate expired weights. Offline audit checks
+all train batch hashes and loss parts, frozen parameter identities, both trace
+repeats, all response metrics, original-hit retention and functional totals.
+It does not rerun inference, optimizer updates or Docker.
+
+```sh
+python scripts/audit_start_selection.py
+python -m unittest discover -s tests -p test_start_selection_evidence.py -v
+```
+
+Conclusion: retain the fixed negative comparison and diagnose residual start
+transfer/termination failures on frozen traces before another mechanism change.
+Independent broader evaluation remains reserved for a frozen qualifying candidate.
