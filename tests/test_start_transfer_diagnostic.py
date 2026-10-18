@@ -1,5 +1,5 @@
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import shutil
 import tempfile
 import unittest
@@ -9,6 +9,12 @@ DIRECTORY = diagnostic.ROOT/'docs/evidence/start-transfer'
 
 
 class SourceLocationTests(unittest.TestCase):
+    def test_source_identity_keys_match_across_platforms(self):
+        for kind, root in ((PureWindowsPath, 'C:/repo'), (PurePosixPath, '/repo')):
+            base = kind(root)
+            self.assertEqual(diagnostic.evidence_key(base/'docs/evidence/source.json', base),
+                             'docs/evidence/source.json')
+
     def test_inside_word_and_repeated_requested_name(self):
         self.assertEqual(diagnostic.source_location('Define aa(x).', 11, 'aa'),
                          {'category': 'inside_other_identifier', 'token': 'Define', 'token_offset': 3})

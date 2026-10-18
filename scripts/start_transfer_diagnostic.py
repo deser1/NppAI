@@ -15,6 +15,10 @@ p = source.p
 ROOT = source.ROOT
 
 
+def evidence_key(path, root):
+    return path.relative_to(root).as_posix()
+
+
 def identifier_part(character):
     return ('a'+character).isidentifier()
 
@@ -99,7 +103,7 @@ def build():
     stages = {'initial': initial, **{a: r['after'] for a, r in report['arms'].items()}}
     result = {'version': 1, 'mode': 'audited_retained_evidence_only', 'promotion': False,
               'inputs': fingerprints,
-              'source_sha256': {str(path.relative_to(ROOT)): p.quality.digest(path.read_bytes()) for path in (
+              'source_sha256': {evidence_key(path, ROOT): p.quality.digest(path.read_bytes()) for path in (
                   ROOT/'docs/evidence/start-selection/retention.json',
                   ROOT/'docs/evidence/protected-sequential/manifest.json')},
               'limits': ['Observational labels of retained cursor/output bytes; no new inference or training.',
