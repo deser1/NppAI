@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Prepare v0.5.0-rc.2 with the review display fix, real own-model request/review recording and recording/report hash checks. Package service instructions from the selected candidate manifest. Keep the unchanged research model's 0/12 limitation explicit; no model promotion or functional-success claim.
+
 - Fix collapsed generated diffs in the Win32 review control by normalizing LF/CRLF/CR to CRLF only for display. Preserve actual model/patch bytes. Add a real native EDIT-control test covering Unicode, mixed endings, line count and idempotence, plus current-package actual generation/recording in the portable editor check.
 
 - Add a real released-plugin demo: verify published x64/service/model/editor hashes, request actual Polish generation, require model HTTP 200 and plugin review, retain raw UI events/GIF, and require Apply disabled without validation. No substituted output, generated-code execution, functional-success claim or checkpoint promotion.

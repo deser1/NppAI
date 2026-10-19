@@ -138,6 +138,7 @@ jobs:
           Copy-Item source/staged_mix/experimental.nppai candidate-companion/NppAI-research-staged-mix.nppai
           Copy-Item docs/research-model-card.md candidate-companion/MODEL_CARD.md
           Copy-Item portable-smoke/report.json candidate-companion/installation-report.json
+          Copy-Item portable-smoke/notepad-live-demo.gif candidate-companion/notepad-live-demo.gif
       - uses: actions/upload-artifact@v4
         with:
           name: candidate-companion

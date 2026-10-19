@@ -15,3 +15,7 @@ docs/evidence/alias-oracle/raw-records.zip -text
 # Frozen staged-protocol inputs use exact canonical LF bytes.
 evaluation/staged-protocol-v1/** text eol=lf
 docs/evidence/staged-protocol/*.zip -text
+
+# Actual window recordings and raw service logs are hashed as downloaded.
+docs/evidence/released-demo/* -text
+docs/evidence/current-package-demo/* -text

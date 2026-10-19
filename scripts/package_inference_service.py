@@ -12,16 +12,20 @@ FILES = (
     'docs/notepad-setup-pl.md', 'docs/model-format.md', 'docs/validated-generation.md',
     'docs/automatic-plugin-mode.md', 'docs/research-model-card.md',
     'examples/silnia-validation-cases.json', 'examples/python-validation-cases.json',
-    'docs/releases/v0.5.0-rc.1.md', 'license.txt',
+    'license.txt',
 )
 
 
 def package(destination):
     payload = {name: (ROOT / name).read_bytes() for name in FILES}
+    notes = json.loads((ROOT/'release/candidate.json').read_bytes())['notes']
+    if Path(notes).parent != Path('docs/releases'):
+        raise ValueError('Invalid packaged release notes path')
+    payload[notes] = (ROOT/notes).read_bytes()
     for name, raw in payload.items():
         if name.endswith('.py'):
             compile(raw, name, 'exec')
-    payload['README.md'] = payload['docs/releases/v0.5.0-rc.1.md']
+    payload['README.md'] = payload[notes]
     payload['SOURCE_MANIFEST.json'] = (json.dumps({
         'purpose': 'Inference only; training endpoints have no trainer bundled.',
         'files': {name: hashlib.sha256(raw).hexdigest() for name, raw in payload.items()}

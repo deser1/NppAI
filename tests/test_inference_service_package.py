@@ -36,8 +36,16 @@ class InferenceServicePackageTests(unittest.TestCase):
                 (root/name).write_bytes(name.encode())
                 report[field] = hashlib.sha256(name.encode()).hexdigest()
             report['health'] = {'status': 'ready', 'model_id': 'sha256:'+report['model_sha256']}
+            (root/'notepad-live-demo.gif').write_bytes(b'fixture recording')
+            report['live_generation_demo'] = dict(completed=True,model_http_response_200=True,
+                apply_disabled=True,review_uses_crlf=True,
+                recording_sha256=hashlib.sha256(b'fixture recording').hexdigest())
             (root/'installation-report.json').write_text(json.dumps(report))
             verify_installation(root)
+            (root/'notepad-live-demo.gif').write_bytes(b'another recording')
+            with self.assertRaises(ValueError):
+                verify_installation(root)
+            (root/'notepad-live-demo.gif').write_bytes(b'fixture recording')
             (root/'NppAI-x64.zip').write_bytes(b'different build')
             with self.assertRaises(ValueError):
                 verify_installation(root)

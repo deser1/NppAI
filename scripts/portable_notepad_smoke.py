@@ -198,6 +198,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
                 'model_http_response_200':True,'apply_disabled':True,
                 'validation_configured':False,'functional_success_claimed':False,
                 'recording_scrolls_history_to_end':True,
+                'review_uses_crlf':'\n' not in history.replace('\r\n',''),
                 'proposal':inspect_review_syntax(history),
                 'recording':'notepad-live-demo.gif' if recording else None}
     finally:
@@ -256,6 +257,8 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                 if button not in ('Generate AI Code','Wygeneruj Kod AI'):raise RuntimeError('Unexpected generation button text: '+button)
                 if ui.api.IsWindowEnabled(controls[5]):raise RuntimeError('Apply enabled without validation')
                 demo=exercise_generation(ui,main,panel,controls,editor,output,record) if exercise else None
+                if demo and record:
+                    demo['recording_sha256']=hashlib.sha256((output/'notepad-live-demo.gif').read_bytes()).hexdigest()
                 report={'editor_archive_sha256':hashlib.sha256(editor_zip.read_bytes()).hexdigest(),
                     'package_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),
                     'model_sha256':hashlib.sha256(model.read_bytes()).hexdigest(),
