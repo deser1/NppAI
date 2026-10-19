@@ -1,5 +1,11 @@
 # Release readiness: current plugin preview
 
+The [v0.5.0-rc.1 candidate](releases/v0.5.0-rc.1.md) adds a separately packaged
+inference service and unchanged research checkpoint. Its main-branch publication
+requires package/portable-editor success, report-to-asset hash agreement and
+successful CI_build on the exact commit. PR checks upload previews only.
+This experimental candidate preserves the model-quality and manual-test limitations.
+
 The latest published v0.4.0 release predates automatic routing, validated review,
 the current Unicode panel and checked own-model setup. Current branch builds
 must be verified before preparing a new release. No model-quality gate is waived.
