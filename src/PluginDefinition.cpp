@@ -66,6 +66,21 @@ std::wstring Utf8ToUtf16(const std::string &utf8) {
   return utf16;
 }
 
+// Standard multiline EDIT controls require CRLF. Keep model/patch bytes
+// unchanged and normalize only the text displayed in the review control.
+void setReviewHistory(const std::wstring& text) {
+  std::wstring display;
+  display.reserve(text.size());
+  for (std::size_t i = 0; i < text.size(); ++i) {
+    if (text[i] == L'\r') {
+      display += L"\r\n";
+      if (i + 1 < text.size() && text[i + 1] == L'\n') ++i;
+    } else if (text[i] == L'\n') display += L"\r\n";
+    else display += text[i];
+  }
+  SetWindowTextW(g_hHistory, display.c_str());
+}
+
 bool IsPolishLanguage() {
   // Unlike most Notepad++ text messages, this API explicitly returns char*,
   // independent of UNICODE. Reading it as TCHAR corrupts language detection.
@@ -306,6 +321,9 @@ extern "C" __declspec(dllexport) const char* panelPromptForTesting() {
   result = panelPromptUtf8();
   return result.c_str();
 }
+extern "C" __declspec(dllexport) void setReviewHistoryForTesting(const char* report) {
+  setReviewHistory(Utf8ToUtf16(report));
+}
 extern "C" __declspec(dllexport) void stageBufferReviewForTesting(HWND editor, const char* replacement) {
   pendingGeneration = std::make_unique<PendingGeneration>();
   auto& pending = *pendingGeneration;
@@ -349,14 +367,14 @@ LRESULT CALLBACK AIPanelProc(HWND hwnd, UINT msg, WPARAM wParam,
       report += "Attempt " + std::to_string(attempt.attempt) + ": " + attempt.diagnostics + "\r\n";
     report += result.repair.validation.build.diagnostics + "\r\n" + result.repair.validation.tests.diagnostics + "\r\n";
     report += result.patch.unifiedDiff();
-    SetWindowTextW(g_hHistory, Utf8ToUtf16(report).c_str());
+    setReviewHistory(Utf8ToUtf16(report));
     SetWindowTextW(g_hStatusLabel, Loc(result.ready() ? L"Sprawdź różnice i zastosuj lub odrzuć." : L"Walidacja niepotwierdzona. Dokument bez zmian.",
                                       result.ready() ? L"Review, then apply or reject." : L"Validation not confirmed. Document unchanged.").c_str());
     if (!result.error.empty()) {
       const auto message = generationErrorText(result.error);
       SetWindowTextW(g_hStatusLabel, message.c_str());
       const auto detailed = message + L"\r\n\r\n" + Utf8ToUtf16(report);
-      SetWindowTextW(g_hHistory, detailed.c_str());
+      setReviewHistory(detailed);
     }
     EnableWindow(g_hApply, result.ready()); EnableWindow(g_hReject, TRUE);
     return 0;

@@ -317,5 +317,7 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 
 - [x] Package an inference-only service and launcher without requiring a repository checkout.
 - [x] Define a separate pinned research-model asset/card and installation report identity checks.
-- [ ] Pass final real-editor test with the extracted service ZIP and publish the experimental candidate after exact-commit CI.
+- [x] Pass final real-editor test with the extracted service ZIP and publish the experimental candidate after exact-commit CI: [v0.5.0-rc.1](https://github.com/deser1/NppAI/releases/tag/v0.5.0-rc.1).
+- [x] Retain a real released-plugin request/review recording, explicitly without a functional-success claim; [evidence and display defect](docs/live-generation-demo.md).
+- [ ] Publish v0.5.0-rc.2 with readable review lines and the actual candidate recording after final source CI and report/asset checks.
 - [ ] Manually verify Windows upgrade, Docker Desktop and validated GUI Apply; record a real task demonstration once a model passes its functional gate.

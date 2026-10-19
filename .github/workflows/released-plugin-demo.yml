@@ -1,0 +1,54 @@
+name: Released plugin live generation demo
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/released-plugin-demo.yml'
+      - 'scripts/portable_notepad_smoke.py'
+      - 'docs/live-generation-demo.md'
+      - 'tests/test_live_demo_review.py'
+permissions:
+  contents: read
+jobs:
+  live-demo:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download and verify actual published assets
+        shell: pwsh
+        run: |
+          $base = 'https://github.com/deser1/NppAI/releases/download/v0.5.0-rc.1'
+          $assets = @{
+            'NppAI-x64.zip' = '13e7506cba9985ef91546a01c72834cd1930c72dbf8769e43a87898b8de55abf'
+            'NppAI-service.zip' = 'bd41aa361324e4b76ac3d5f2c73a29f9c43c9ddfa9a41594c59fb082ec8f8a28'
+            'NppAI-research-staged-mix.nppai' = '4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd'
+          }
+          foreach ($name in $assets.Keys) {
+            Invoke-WebRequest "$base/$name" -OutFile $name
+            if ((Get-FileHash $name -Algorithm SHA256).Hash.ToLower() -ne $assets[$name]) { throw "Asset digest mismatch: $name" }
+          }
+          Invoke-WebRequest 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.8.1/npp.8.9.8.1.portable.x64.zip' -OutFile editor.zip
+          if ((Get-FileHash editor.zip -Algorithm SHA256).Hash.ToLower() -ne 'beddf5548e75c97930d1575ba1c7d113e6e2b33d0a200310e734ca08e225f414') { throw 'Editor digest mismatch' }
+          Expand-Archive NppAI-service.zip service
+      - name: Install inference and actual window recording dependencies
+        run: python -m pip install -r service/requirements-inference.txt 'pillow>=10,<14'
+      - name: Verify actual review parsing and no execution contract
+        run: python -m unittest tests.test_live_demo_review -v
+      - name: Record actual Polish request and unvalidated review
+        run: >-
+          python scripts/portable_notepad_smoke.py --editor-zip editor.zip
+          --package NppAI-x64.zip --model NppAI-research-staged-mix.nppai
+          --service-zip NppAI-service.zip --output released-demo
+          --exercise-generation --record-gif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nppai-released-live-demo
+          path: released-demo/
+          retention-days: 90

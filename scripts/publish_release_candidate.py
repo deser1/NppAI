@@ -40,6 +40,11 @@ def verify_installation(assets):
             raise ValueError('Installation report does not match release asset: '+name)
     if report['health'].get('model_id') != 'sha256:'+report['model_sha256'] or report['health'].get('status') != 'ready':
         raise ValueError('Readiness does not match the supplied checkpoint')
+    demo=report.get('live_generation_demo',{})
+    if not all(demo.get(key) is True for key in ('completed','model_http_response_200','apply_disabled','review_uses_crlf')):
+        raise ValueError('Real generation/readable review evidence is missing')
+    if demo.get('recording_sha256') != hashlib.sha256((assets/'notepad-live-demo.gif').read_bytes()).hexdigest():
+        raise ValueError('Published recording differs from the measured demo')
 
 
 def publish():
@@ -63,7 +68,7 @@ def publish():
             raise RuntimeError('An existing tag is not the exact checked commit')
     assets = sorted(p for p in Path('candidate-assets').iterdir() if p.is_file())
     expected = {'NppAI-x64.zip', 'NppAI-x86.zip', 'NppAI-arm64.zip', 'NppAI-service.zip',
-                'NppAI-research-staged-mix.nppai', 'MODEL_CARD.md', 'installation-report.json'}
+                'NppAI-research-staged-mix.nppai', 'MODEL_CARD.md', 'installation-report.json', 'notepad-live-demo.gif'}
     if {p.name for p in assets} != expected:
         raise ValueError('Candidate asset set differs from checked inputs')
     verify_installation(Path('candidate-assets'))
