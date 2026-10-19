@@ -100,12 +100,27 @@ def wait_for(find,process,timeout=45):
     raise TimeoutError('Expected Notepad++ UI did not become ready')
 
 
-def run(editor_zip,package,model,output):
+def verify_service(root):
+    manifest=json.loads((root/'SOURCE_MANIFEST.json').read_bytes())
+    for name,expected in manifest['files'].items():
+        path=(root/name).resolve()
+        if not path.is_relative_to(root.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest()!=expected:
+            raise ValueError('Packaged service source changed: '+name)
+    for name in ('server_backend.py','model_backends.py','scripts/start_nppai.py','scripts/check_dense_runtime_parity.py','requirements-inference.txt'):
+        if name not in manifest['files']:raise ValueError('Missing service runtime: '+name)
+    return manifest
+
+
+def run(editor_zip,package,model,output,service_zip=None):
     if os.name!='nt':raise RuntimeError('Real portable editor smoke requires Windows')
     output.mkdir(parents=True,exist_ok=True)
     inspect_package(package,load_dll=True,current=True)
     with tempfile.TemporaryDirectory(prefix='nppai-clean-install-') as directory:
         root=Path(directory);editor_dir=root/'editor';editor_dir.mkdir();expand(editor_zip,editor_dir)
+        service_root=ROOT
+        if service_zip:
+            service_root=root/'service';service_root.mkdir();expand(service_zip,service_root)
+            verify_service(service_root)
         binary=editor_dir/'notepad++.exe'
         if not binary.is_file():raise ValueError('Portable editor layout differs')
         unpack=root/'package';unpack.mkdir();expand(package,unpack)
@@ -117,13 +132,14 @@ def run(editor_zip,package,model,output):
         with socket.socket() as socket_probe:
             socket_probe.bind(('127.0.0.1',0));port=socket_probe.getsockname()[1]
         environment=connection_environment(model,port)
+        environment.pop('PYTHONPATH',None)
         # A missing Docker configuration must keep Apply disabled in this test.
         for key in ('NPPAI_VALIDATION_IMAGE','NPPAI_TEST_CASES'):
             environment.pop(key,None)
         document=root/'smoke.py';document.write_bytes(b'')
         ui=WindowsUI();editor=None
         with (output/'server.log').open('w',encoding='utf-8') as log:
-            server=subprocess.Popen([sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)],cwd=ROOT,env=environment,stdout=log,stderr=log)
+            server=subprocess.Popen([sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)],cwd=service_root,env=environment,stdout=log,stderr=log)
             try:
                 health=wait_ready(server,port,environment['NPPAI_API_KEY'])
                 editor=subprocess.Popen([str(binary),'-multiInst','-nosession',str(document)],env=environment)
@@ -145,6 +161,8 @@ def run(editor_zip,package,model,output):
                 report={'editor_archive_sha256':hashlib.sha256(editor_zip.read_bytes()).hexdigest(),
                     'package_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),
                     'model_sha256':hashlib.sha256(model.read_bytes()).hexdigest(),
+                    'service_archive_sha256':hashlib.sha256(service_zip.read_bytes()).hexdigest() if service_zip else None,
+                    'service_from_extracted_package':bool(service_zip),
                     'health':health,'plugin_menu':list(path),'panel_class':ui.cls(panel),
                     'polish_prompt_round_trip':True,'button_text':button,'apply_disabled_without_validation':True,
                     'scope':'Fresh portable install, real server/model readiness and real panel controls. No generated-code quality, Docker Desktop or upgrade verification.'}
@@ -161,4 +179,5 @@ def run(editor_zip,package,model,output):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('editor-zip','package','model','output'):p.add_argument('--'+name,type=Path,required=True)
-    a=p.parse_args();run(a.editor_zip,a.package,a.model,a.output)
+    p.add_argument('--service-zip',type=Path)
+    a=p.parse_args();run(a.editor_zip,a.package,a.model,a.output,a.service_zip)

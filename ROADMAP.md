@@ -312,3 +312,10 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [ ] Predeclare one isolated source-start scoring or signature-exit intervention; record full candidate readouts and retain complete-code/retention/functional gates.
 
 - [x] Fix Unicode input and Polish panel errors; provide checked own NppAI server startup, authenticated model readiness and Windows setup guide. Keep unvalidated proposals visible with Apply disabled; bundle the validator beside release DLLs.
+
+## Installation candidate v0.5.0-rc.1
+
+- [x] Package an inference-only service and launcher without requiring a repository checkout.
+- [x] Define a separate pinned research-model asset/card and installation report identity checks.
+- [ ] Pass final real-editor test with the extracted service ZIP and publish the experimental candidate after exact-commit CI.
+- [ ] Manually verify Windows upgrade, Docker Desktop and validated GUI Apply; record a real task demonstration once a model passes its functional gate.

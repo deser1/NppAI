@@ -19,6 +19,11 @@ The online backend can be your own NppAI server on the same computer. An externa
 
 ## Try the plugin on Windows
 
+The installation prerelease is described in [v0.5.0-rc.1 notes](docs/releases/v0.5.0-rc.1.md).
+When published, it provides plugin packages, a standalone service ZIP and an
+explicitly experimental model. Download them from [Releases](https://github.com/deser1/NppAI/releases).
+The research model still fails the functional quality gate; this is an integration preview.
+
 1. Download the architecture-matched plugin artifact from a [successful current CI build](https://github.com/deser1/NppAI/actions/workflows/CI_build.yml). Put **NppAI.dll and sandbox_validate.py** in `Notepad++/plugins/NppAI/`.
 2. Check out this repository separately for the inference service and launcher. Use Python 3.12+ and a compatible **dense v2, 256-byte-vocabulary** `.nppai` checkpoint.
 3. From the repository root:
