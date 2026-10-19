@@ -17,6 +17,10 @@ An independent C++ inference engine, custom model format and Python training pip
 
 The online backend can be your own NppAI server on the same computer. An external hosted AI account is not required.
 
+A [live generation demonstration](docs/live-generation-demo.md) records the
+actual released plugin sending a Polish request to the own-model service and
+showing its unvalidated review. It does not claim successful generated code.
+
 ## Try the plugin on Windows
 
 The installation prerelease is described in [v0.5.0-rc.1 notes](docs/releases/v0.5.0-rc.1.md).

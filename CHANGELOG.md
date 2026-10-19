@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add a real released-plugin demo: verify published x64/service/model/editor hashes, request actual Polish generation, require model HTTP 200 and plugin review, retain raw UI events/GIF, and require Apply disabled without validation. No substituted output, generated-code execution, functional-success claim or checkpoint promotion.
+
 - Prepare experimental v0.5.0-rc.1 with three plugin architectures, a standalone inference-service ZIP, pinned research checkpoint/model card, installation report and SHA-256 checksums. Launch the service from the extracted ZIP in real portable Notepad++ CI. Candidate publication on the manifest's main merge requires successful exact-commit CI and verifies installation report/asset identities; existing release assets are never overwritten. No model promotion or stable-quality claim.
 
 - Compare all-stage replay against frozen own-model planning with a separately trained coder. Local autonomous training exact reaches45/96 versus 10/96 from 2/96, with all88 original direct and both autonomous hits retained; only the frozen route preserves every raw planner call. Add explicit stage-role checkpoint guards, retention audits and isolated functional workflow. Regression exact remains zero, no production default or checkpoint promotion. See [comparison](docs/all-stage-protection.md).

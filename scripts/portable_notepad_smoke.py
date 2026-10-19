@@ -51,6 +51,9 @@ class WindowsUI:
             'GetDlgCtrlID':([wintypes.HWND],ctypes.c_int),
             'IsWindowUnicode':([wintypes.HWND],wintypes.BOOL),
             'IsWindowEnabled':([wintypes.HWND],wintypes.BOOL),
+            'ShowWindow':([wintypes.HWND,ctypes.c_int],wintypes.BOOL),
+            'SetForegroundWindow':([wintypes.HWND],wintypes.BOOL),
+            'GetWindowRect':([wintypes.HWND,ctypes.POINTER(wintypes.RECT)],wintypes.BOOL),
             'SendMessageTimeoutW':([wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM,wintypes.UINT,wintypes.UINT,ctypes.POINTER(ctypes.c_size_t)],ctypes.c_size_t)}
         for name,(args,result) in signatures.items():
             fn=getattr(self.api,name);fn.argtypes=args;fn.restype=result
@@ -111,7 +114,70 @@ def verify_service(root):
     return manifest
 
 
-def run(editor_zip,package,model,output,service_zip=None):
+class WindowRecording:
+    """Sample the actual CI editor window; do not synthesize or annotate frames."""
+    def __init__(self,ui,window,path):
+        self.ui,self.window,self.path=ui,window,path
+        self.frames=[];self.times=[]
+
+    def capture(self):
+        from PIL import ImageGrab
+        rect=wintypes.RECT()
+        if not self.ui.api.GetWindowRect(self.window,ctypes.byref(rect)):
+            raise RuntimeError('Cannot locate demo editor window')
+        frame=ImageGrab.grab(bbox=(rect.left,rect.top,rect.right,rect.bottom))
+        if frame.width<100 or frame.height<100 or not any(high>low for low,high in frame.getextrema()):
+            raise RuntimeError('Editor capture is empty or unavailable')
+        self.frames.append(frame);self.times.append(time.monotonic())
+
+    def save(self):
+        if len(self.frames)<2:raise RuntimeError('No actual recording frames')
+        durations=[max(100,round((b-a)*1000)) for a,b in zip(self.times,self.times[1:])]+[3000]
+        self.frames[0].save(self.path,save_all=True,append_images=self.frames[1:],
+                            duration=durations,loop=0,optimize=False)
+
+
+def exercise_generation(ui,main,panel,controls,editor,output,record=False):
+    ui.api.ShowWindow(main,3);ui.api.SetForegroundWindow(main)
+    recording=WindowRecording(ui,main,output/'notepad-live-demo.gif') if record else None
+    before=ui.text(controls[3]);events=[]
+    def sample():
+        events.append({'elapsed_seconds':round(time.monotonic()-start,3),
+                       'status':ui.text(controls[4]),'history':ui.text(controls[3]),
+                       'apply_enabled':bool(ui.api.IsWindowEnabled(controls[5]))})
+        if recording:recording.capture()
+    start=time.monotonic();time.sleep(1);sample()
+    if not ui.api.PostMessageW(panel,0x111,2,controls[2]):
+        raise RuntimeError('Cannot request actual generation')
+    completed=False
+    try:
+        while time.monotonic()-start<90:
+            if editor.poll() is not None:raise RuntimeError('Editor exited during generation')
+            time.sleep(1);sample()
+            if events[-1]['apply_enabled']:
+                raise RuntimeError('Unvalidated generated output enabled Apply')
+            if events[-1]['history']!=before and ui.api.IsWindowEnabled(controls[6]):
+                completed=True;break
+        if not completed:raise TimeoutError('Actual generation did not reach review')
+        # A changed history alone could be a connection error. Require a real
+        # response/repair review and corroborate the HTTP request in server.log.
+        history=events[-1]['history']
+        if 'Candidates validated:' not in history:
+            raise RuntimeError('Generation did not reach the proposal/validation report')
+        if not any('POST /api/v1/generate HTTP/1.1" 200' in line for line in (output/'server.log').read_text(encoding='utf-8').splitlines()):
+            raise RuntimeError('No successful real model HTTP response observed')
+        return {'completed':True,'task':ui.text(controls[1]),'events':events,
+                'review':history,'status':events[-1]['status'],
+                'model_http_response_200':True,'apply_disabled':True,
+                'validation_configured':False,'functional_success_claimed':False,
+                'recording':'notepad-live-demo.gif' if recording else None}
+    finally:
+        (output/'generation-events.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        if recording:
+            recording.capture();recording.save()
+
+
+def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=False):
     if os.name!='nt':raise RuntimeError('Real portable editor smoke requires Windows')
     output.mkdir(parents=True,exist_ok=True)
     inspect_package(package,load_dll=True,current=True)
@@ -151,13 +217,14 @@ def run(editor_zip,package,model,output,service_zip=None):
                 if not ui.api.PostMessageW(main,0x111,command_id,0):raise RuntimeError('Cannot open NppAI panel')
                 panel=wait_for(lambda:next((h for h in ui.windows(main) if ui.cls(h)=='NppAI_PanelClass'),None),editor)
                 controls={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
-                if not all(key in controls for key in (1,2,3,5,6)):raise RuntimeError('Panel controls missing')
+                if not all(key in controls for key in (1,2,3,4,5,6)):raise RuntimeError('Panel controls missing')
                 task='@python-signature silnia(n)\r\nWygeneruj kod na silnię. Zażółć gęślą jaźń.'
                 if not ui.api.IsWindowUnicode(controls[1]) or not ui.set_text(controls[1],task):raise RuntimeError('Unicode prompt field unavailable')
                 if ui.text(controls[1])!=task:raise RuntimeError('Polish prompt round trip failed')
                 button=ui.text(controls[2])
                 if button not in ('Generate AI Code','Wygeneruj Kod AI'):raise RuntimeError('Unexpected generation button text: '+button)
                 if ui.api.IsWindowEnabled(controls[5]):raise RuntimeError('Apply enabled without validation')
+                demo=exercise_generation(ui,main,panel,controls,editor,output,record) if exercise else None
                 report={'editor_archive_sha256':hashlib.sha256(editor_zip.read_bytes()).hexdigest(),
                     'package_sha256':hashlib.sha256(package.read_bytes()).hexdigest(),
                     'model_sha256':hashlib.sha256(model.read_bytes()).hexdigest(),
@@ -166,6 +233,7 @@ def run(editor_zip,package,model,output,service_zip=None):
                     'health':health,'plugin_menu':list(path),'panel_class':ui.cls(panel),
                     'polish_prompt_round_trip':True,'button_text':button,'apply_disabled_without_validation':True,
                     'scope':'Fresh portable install, real server/model readiness and real panel controls. No generated-code quality, Docker Desktop or upgrade verification.'}
+                if demo:report['live_generation_demo']=demo
                 (output/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
                 print(json.dumps(report,indent=2,ensure_ascii=False))
             finally:
@@ -180,4 +248,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('editor-zip','package','model','output'):p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--service-zip',type=Path)
-    a=p.parse_args();run(a.editor_zip,a.package,a.model,a.output,a.service_zip)
+    p.add_argument('--exercise-generation',action='store_true')
+    p.add_argument('--record-gif',action='store_true')
+    a=p.parse_args()
+    if a.record_gif and not a.exercise_generation:p.error('--record-gif requires --exercise-generation')
+    run(a.editor_zip,a.package,a.model,a.output,a.service_zip,a.exercise_generation,a.record_gif)
