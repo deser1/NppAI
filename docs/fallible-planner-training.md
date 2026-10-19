@@ -49,3 +49,20 @@ directly and autonomously. The control checkpoint exactly reproduces the prior
 measured coder hash on this local allocation. This is a narrow training-context
 adaptation with a regression, not new-task improvement. There is no promotion.
 Local functional execution is `not_run`; the dedicated CI job measures it in Docker.
+
+## Measured Docker execution
+
+[CI run 39308872235](https://github.com/deser1/NppAI/actions/runs/39308872235)
+reproduced both local checkpoint hashes and training counts. All 12 authored
+reference programs passed and the deliberately incorrect control failed.
+Both coder arms still passed **0/12** bilingual functional probes, directly and
+autonomously. This confirms the negative quality result; it does not promote
+either model. Models, raw responses, priors, losses and execution diagnostics:
+[measured artifact](https://github.com/deser1/NppAI/actions/runs/39308872235/artifacts/12214563700).
+
+Checkpoint SHA-256:
+- Authored priors: `236cf897531431972120ce29a6272812dc593f187883ed06d34a9b7b99dfda76`
+- Observed priors: `f3ea63a2b54d34238a323ef36f76cb312b1325f1de5e40c7b3d42dca8c232d8b`
+
+Artifacts expire after 14 days. Observed equality on these allocations does not
+certify cross-environment training reproducibility.
