@@ -84,7 +84,8 @@ class WindowsUI:
 
     def scroll_to_end(self,hwnd):
         result=ctypes.c_size_t()
-        for message,wparam,lparam in ((0xB1,-1,-1),(0xB7,0,0)):
+        end=len(self.text(hwnd).encode('utf-16-le'))//2
+        for message,wparam,lparam in ((0xB1,end,end),(0xB6,0,32767),(0xB7,0,0)):
             if not self.api.SendMessageTimeoutW(hwnd,message,wparam,lparam,2,3000,ctypes.byref(result)):
                 raise RuntimeError('Cannot reveal actual response end')
 
