@@ -1,0 +1,20 @@
+[
+  {
+    "elapsed_seconds": 1.016,
+    "status": "Review and validate before applying",
+    "history": "AI response panel ready.\r\nOwn-model server: scripts/start_nppai.py --model FILE.nppai --notepad notepad++.exe. Guide: docs/notepad-setup-pl.md.\r\nPython function mode: enter @python-signature name(arguments) on the first line, then the task description.\r\n",
+    "apply_enabled": false
+  },
+  {
+    "elapsed_seconds": 2.047,
+    "status": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.",
+    "history": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.\r\n\r\nValidation failed/blocked. Apply disabled.\r\nCandidates validated: 1/3\r\nCandidate 1: Online: local model unavailable\r\nConfigure Python validation: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE, NPPAI_TEST_CASES\r\n\r\n\r\n--- a/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n+++ b/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n@@ -1,0 +1,4 @@\n+def silnia(n):\n+    f  letab\n+Ren mbet_s):\n+\n",
+    "apply_enabled": false
+  },
+  {
+    "elapsed_seconds": 3.094,
+    "status": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.",
+    "history": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.\r\n\r\nValidation failed/blocked. Apply disabled.\r\nCandidates validated: 1/3\r\nCandidate 1: Online: local model unavailable\r\nConfigure Python validation: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE, NPPAI_TEST_CASES\r\n\r\n\r\n--- a/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n+++ b/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n@@ -1,0 +1,4 @@\n+def silnia(n):\n+    f  letab\n+Ren mbet_s):\n+\n",
+    "apply_enabled": false
+  }
+]

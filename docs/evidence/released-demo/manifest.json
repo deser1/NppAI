@@ -1,0 +1,12 @@
+{
+  "source_run": "https://github.com/deser1/NppAI/actions/runs/39320118532",
+  "artifact_id": 12217839572,
+  "release": "v0.5.0-rc.1",
+  "archive_sha256": "4d7334a556ae3a60875cf4cae3cf4927d269b2e307181b2dc6b0efa9de7e92d9",
+  "files": {
+    "notepad-live-demo.gif": "ab04b7ff83fb4cde548150c61c10e722f1deab87ece1d4ef84fcd4a3317db3fe",
+    "report.json": "401292add78399ca706eb6860f0d3570f3e604280b2fffaa5f10fceda83c9944",
+    "generation-events.json": "8c92310f2f788fb884607e879a623eba1200ddac69537be57a9107c1b7ea76fb",
+    "server.log": "07ffcafb540902bd62819df9ee5a26aa9aca8b9bba3688304c50ffe0c28d9d82"
+  }
+}

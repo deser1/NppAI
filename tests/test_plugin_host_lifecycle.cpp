@@ -349,6 +349,20 @@ int wmain(int argc, wchar_t** argv) {
             KillTimer(panel, 2);
             ok &= check(IsWindowUnicode(panel) && IsWindowUnicode(prompt), "panel and prompt use Unicode Win32 classes");
             wchar_t text[8192]{};
+            HWND history = GetDlgItem(panel, 3);
+            using SetHistory = void (__cdecl*)(const char*);
+            const auto setHistory = reinterpret_cast<SetHistory>(GetProcAddress(plugin, "setReviewHistoryForTesting"));
+            ok &= check(history && setHistory, "real review display test seam exists");
+            if (history && setHistory) {
+                setHistory(u8"Zażółć\n+def silnia(n):\r\n+    return 1\r");
+                GetWindowTextW(history, text, 8192);
+                const std::wstring expected = L"Zażółć\r\n+def silnia(n):\r\n+    return 1\r\n";
+                ok &= check(std::wstring(text) == expected && SendMessageW(history, EM_GETLINECOUNT, 0, 0) == 4,
+                            "mixed LF/CRLF/CR review renders separate Unicode lines without doubling");
+                setHistory(u8"Zażółć\r\n+def silnia(n):\r\n+    return 1\r\n");
+                GetWindowTextW(history, text, 8192);
+                ok &= check(std::wstring(text) == expected, "already-normalized review remains unchanged");
+            }
             GetWindowTextW(reject, text, 8192);
             ok &= check(std::wstring(text) == L"Odrzuć", "Polish button caption round-trips exactly");
             const std::wstring polish = L"wygeneruj kod na silnię — zażółć gęślą jaźń 😀";

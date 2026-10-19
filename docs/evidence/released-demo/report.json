@@ -1,0 +1,67 @@
+{
+  "editor_archive_sha256": "beddf5548e75c97930d1575ba1c7d113e6e2b33d0a200310e734ca08e225f414",
+  "package_sha256": "13e7506cba9985ef91546a01c72834cd1930c72dbf8769e43a87898b8de55abf",
+  "model_sha256": "4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd",
+  "service_archive_sha256": "bd41aa361324e4b76ac3d5f2c73a29f9c43c9ddfa9a41594c59fb082ec8f8a28",
+  "service_from_extracted_package": true,
+  "health": {
+    "protocol_version": 1,
+    "status": "ready",
+    "backend": "nppai-dense-v2",
+    "model_id": "sha256:4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd",
+    "context_bytes": 1024
+  },
+  "plugin_menu": [
+    "Plugins",
+    "NppAI",
+    "Pokaż Panel AI"
+  ],
+  "panel_class": "NppAI_PanelClass",
+  "polish_prompt_round_trip": true,
+  "button_text": "Generate AI Code",
+  "apply_disabled_without_validation": true,
+  "scope": "Fresh portable install, real server/model readiness and real panel controls. No generated-code quality, Docker Desktop or upgrade verification.",
+  "live_generation_demo": {
+    "completed": true,
+    "task": "@python-signature silnia(n)\r\nWygeneruj kod na silnię dla nieujemnej liczby całkowitej n. Zwróć wynik.",
+    "events": [
+      {
+        "elapsed_seconds": 1.016,
+        "status": "Review and validate before applying",
+        "history": "AI response panel ready.\r\nOwn-model server: scripts/start_nppai.py --model FILE.nppai --notepad notepad++.exe. Guide: docs/notepad-setup-pl.md.\r\nPython function mode: enter @python-signature name(arguments) on the first line, then the task description.\r\n",
+        "apply_enabled": false
+      },
+      {
+        "elapsed_seconds": 2.047,
+        "status": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.",
+        "history": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.\r\n\r\nValidation failed/blocked. Apply disabled.\r\nCandidates validated: 1/3\r\nCandidate 1: Online: local model unavailable\r\nConfigure Python validation: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE, NPPAI_TEST_CASES\r\n\r\n\r\n--- a/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n+++ b/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n@@ -1,0 +1,4 @@\n+def silnia(n):\n+    f  letab\n+Ren mbet_s):\n+\n",
+        "apply_enabled": false
+      },
+      {
+        "elapsed_seconds": 3.094,
+        "status": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.",
+        "history": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.\r\n\r\nValidation failed/blocked. Apply disabled.\r\nCandidates validated: 1/3\r\nCandidate 1: Online: local model unavailable\r\nConfigure Python validation: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE, NPPAI_TEST_CASES\r\n\r\n\r\n--- a/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n+++ b/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n@@ -1,0 +1,4 @@\n+def silnia(n):\n+    f  letab\n+Ren mbet_s):\n+\n",
+        "apply_enabled": false
+      }
+    ],
+    "review": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.\r\n\r\nValidation failed/blocked. Apply disabled.\r\nCandidates validated: 1/3\r\nCandidate 1: Online: local model unavailable\r\nConfigure Python validation: NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE, NPPAI_TEST_CASES\r\n\r\n\r\n--- a/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n+++ b/C:\\Users\\runneradmin\\AppData\\Local\\Temp\\nppai-clean-install-38d4q090\\smoke.py\n@@ -1,0 +1,4 @@\n+def silnia(n):\n+    f  letab\n+Ren mbet_s):\n+\n",
+    "status": "NppAI response is in the preview. To enable Apply, configure NPPAI_VALIDATION_PYTHON, NPPAI_VALIDATION_IMAGE and NPPAI_TEST_CASES. See docs/notepad-setup-pl.md.",
+    "model_http_response_200": true,
+    "apply_disabled": true,
+    "validation_configured": false,
+    "functional_success_claimed": false,
+    "recording_scrolls_history_to_end": true,
+    "proposal": {
+      "code": "def silnia(n):\n    f  letab\nRen mbet_s):\n\n",
+      "syntax": {
+        "passed": false,
+        "error": "unmatched ')'",
+        "line": 3,
+        "execution": "not_run",
+        "functional_pass": "not_measured"
+      },
+      "source": "actual_plugin_insertion_diff"
+    },
+    "recording": "notepad-live-demo.gif"
+  }
+}

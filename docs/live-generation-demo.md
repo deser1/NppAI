@@ -25,3 +25,25 @@ Download `nppai-released-live-demo` from the workflow run to inspect the GIF,
 report, event trace and service log. A service failure, missing real response,
 review timeout, unavailable screen capture or enabled Apply fails the workflow;
 those failures are not relabeled as model success.
+
+## Observed release behavior, 19 October 2026
+
+[Measured run 39320118532](https://github.com/deser1/NppAI/actions/runs/39320118532)
+received a real model response and reached review with Apply disabled. The actual
+insertion was `def silnia(n):` followed by invalid model text; AST parsing failed
+at line 3 (`unmatched ')'`). No generated program was executed or applied.
+The signature was supplied by the application, not learned by the model.
+
+The recording also exposed a display bug: the released Win32 history control
+collapses LF-only diff lines. The current fix normalizes display text to CRLF,
+without changing the actual model response or patch. Native control tests and
+current-package recording check the corrected path separately.
+
+Historical release recording (shows the display defect, not successful code):
+
+![Actual released-plugin request and blocked review](evidence/released-demo/notepad-live-demo.gif)
+
+[Raw report](evidence/released-demo/report.json),
+[UI event trace](evidence/released-demo/generation-events.json),
+[service log](evidence/released-demo/server.log) and
+[source/file hashes](evidence/released-demo/manifest.json) are retained in Git.
