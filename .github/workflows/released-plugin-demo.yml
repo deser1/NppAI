@@ -6,6 +6,7 @@ on:
       - '.github/workflows/released-plugin-demo.yml'
       - 'scripts/portable_notepad_smoke.py'
       - 'docs/live-generation-demo.md'
+      - 'tests/test_live_demo_review.py'
 permissions:
   contents: read
 jobs:
@@ -37,6 +38,8 @@ jobs:
           Expand-Archive NppAI-service.zip service
       - name: Install inference and actual window recording dependencies
         run: python -m pip install -r service/requirements-inference.txt 'pillow>=10,<14'
+      - name: Verify actual review parsing and no execution contract
+        run: python -m unittest tests.test_live_demo_review -v
       - name: Record actual Polish request and unvalidated review
         run: >-
           python scripts/portable_notepad_smoke.py --editor-zip editor.zip

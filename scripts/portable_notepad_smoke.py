@@ -4,6 +4,7 @@ Runs only in an isolated Windows CI directory. It does not validate code quality
 Docker Desktop setup, upgrades, or the user's existing editor installation.
 """
 import argparse
+import ast
 import ctypes
 from ctypes import wintypes
 import hashlib
@@ -143,6 +144,24 @@ class WindowRecording:
                             duration=durations,loop=0,optimize=False)
 
 
+def inspect_review_syntax(history):
+    """Read the empty-document diff; parse model output without executing it."""
+    marker=history.find('\n@@ ')
+    if marker<0:raise ValueError('Review has no actual generated diff')
+    lines=history[marker:].splitlines()[2:]
+    if not lines or any(line and not line.startswith('+') for line in lines):
+        raise ValueError('Expected an insertion into the empty demo document')
+    code='\n'.join(line[1:] for line in lines if line.startswith('+'))+'\n'
+    if not code.strip():raise ValueError('Actual demo proposal is empty')
+    try:
+        ast.parse(code)
+        syntax={'passed':True,'execution':'not_run','functional_pass':'not_measured'}
+    except SyntaxError as error:
+        syntax={'passed':False,'error':error.msg,'line':error.lineno,
+                'execution':'not_run','functional_pass':'not_measured'}
+    return {'code':code,'syntax':syntax,'source':'actual_plugin_insertion_diff'}
+
+
 def exercise_generation(ui,main,panel,controls,editor,output,record=False):
     ui.api.ShowWindow(main,3);ui.api.SetForegroundWindow(main)
     recording=WindowRecording(ui,main,output/'notepad-live-demo.gif') if record else None
@@ -178,6 +197,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
                 'model_http_response_200':True,'apply_disabled':True,
                 'validation_configured':False,'functional_success_claimed':False,
                 'recording_scrolls_history_to_end':True,
+                'proposal':inspect_review_syntax(history),
                 'recording':'notepad-live-demo.gif' if recording else None}
     finally:
         (output/'generation-events.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

@@ -9,6 +9,9 @@ It opens a fresh disposable editor, types a Polish factorial request, sends the
 real Generate command, and waits for the plugin's proposal/validation review.
 The test requires an actual HTTP 200 model response in the service log. It retains
 the task, time-stamped UI status/history events, final review and raw window GIF.
+It extracts the empty-document insertion diff and parses its Python syntax with
+`ast.parse`, without executing the proposal. Syntax validity is distinct from a
+functional pass; the model's actual code and parse error are preserved.
 Frames come from the real test editor; no model output is substituted and no
 success captions are added. The GIF samples the live window about once a second.
 
