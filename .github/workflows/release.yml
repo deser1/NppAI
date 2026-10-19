@@ -1,12 +1,21 @@
 name: Release plugin packages
 
 on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/release.yml'
+      - 'scripts/portable_notepad_smoke.py'
+      - 'scripts/smoke_release_package.py'
+      - 'docs/release-readiness.md'
+      - 'README.md'
+      - 'tests/test_current_release_package.py'
   push:
     tags:
       - "v*"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   package:
@@ -31,6 +40,9 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v3
 
+      - name: Test current package contract
+        run: python -m unittest tests.test_current_release_package -v
+
       - name: Build release DLL
         working-directory: vs.proj\
         run: msbuild NppAI.vcxproj /m /p:configuration=Release /p:platform="${{ matrix.platform }}"
@@ -46,7 +58,11 @@ jobs:
           Copy-Item "sandbox_validate.py" "$packageRoot\sandbox_validate.py"
           New-Item -ItemType Directory -Force "$packageRoot\docs", "$packageRoot\examples" | Out-Null
           Copy-Item "docs\validated-generation.md" "$packageRoot\docs\validated-generation.md"
+          foreach ($doc in @('notepad-setup-pl.md','model-format.md','automatic-plugin-mode.md','model-backends.md','release-readiness.md','fallible-planner-training.md')) {
+            Copy-Item "docs\$doc" "$packageRoot\docs\$doc"
+          }
           Copy-Item "examples\python-validation-cases.json" "$packageRoot\examples\python-validation-cases.json"
+          Copy-Item "examples\silnia-validation-cases.json" "$packageRoot\examples\silnia-validation-cases.json"
           Compress-Archive -Path "release\\${{ matrix.package }}" -DestinationPath "release\\${{ matrix.package }}.zip"
 
       - name: Upload package artifact
@@ -62,11 +78,65 @@ jobs:
         run: |
           $load = @()
           if ('${{ matrix.platform }}' -eq 'x64') { $load = @('--load-dll') }
-          python scripts/smoke_release_package.py "release/${{ matrix.package }}.zip" @load
+          python scripts/smoke_release_package.py "release/${{ matrix.package }}.zip" --current @load
           if ($LASTEXITCODE -ne 0) { throw 'Release ZIP smoke test failed' }
 
-      - name: Attach package to GitHub release
+  portable-editor:
+    needs: package
+    runs-on: windows-2022
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: NppAI-x64
+          path: package
+      - name: Install inference-only service dependencies
+        run: python -m pip install -r requirements-inference.txt
+      - name: Download pinned portable editor and own checkpoint
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.ref_name }}" "release\\${{ matrix.package }}.zip" --clobber
+        run: |
+          Invoke-WebRequest 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.8.1/npp.8.9.8.1.portable.x64.zip' -OutFile editor.zip
+          if ((Get-FileHash editor.zip -Algorithm SHA256).Hash.ToLower() -ne 'beddf5548e75c97930d1575ba1c7d113e6e2b33d0a200310e734ca08e225f414') { throw 'Portable editor digest mismatch' }
+          gh api 'repos/${{ github.repository }}/actions/artifacts/12149182157/zip' > source.zip
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned checkpoint download failed' }
+          Expand-Archive source.zip -DestinationPath source
+          if ((Get-FileHash source/staged_mix/experimental.nppai -Algorithm SHA256).Hash.ToLower() -ne '4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd') { throw 'Own model digest mismatch' }
+      - name: Fresh install, actual server readiness and real panel Unicode
+        run: >-
+          python scripts/portable_notepad_smoke.py --editor-zip editor.zip
+          --package package/NppAI-x64.zip --model source/staged_mix/experimental.nppai
+          --output portable-smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portable-notepad-smoke
+          path: portable-smoke/
+
+  publish:
+    needs: [package, portable-editor]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: NppAI-*
+          path: release
+          merge-multiple: true
+      - name: Attach only verified packages to the existing release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release upload "${{ github.ref_name }}" release/*.zip --clobber

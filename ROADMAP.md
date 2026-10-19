@@ -46,6 +46,10 @@ Recent RAG regression work:
 
 ## Next
 
+- [x] Add a fixed paired coder experiment using retained model-generated training priors versus authored priors, frozen planner identity and per-case retention. Local autonomous training exact 10/96 -> 32/96, but assisted-hit retention falls 16/16 -> 6/16 and regression exact stays 0/16 and 0/12. See [fallible planner training](docs/fallible-planner-training.md); no promotion.
+- [x] Prepare current-package dependency checks and a real portable Notepad++ x64 fresh-install workflow with authenticated own-model readiness, Unicode panel checks and disabled Apply without validation. See [release readiness](docs/release-readiness.md); actual workflow result and manual upgrade/Docker Desktop gates remain separate.
+- [x] Shorten the main README for first-time reviewers and preserve detailed experimental history in [project details](docs/project-details.md).
+
 - [x] Add executable standalone local/online/hybrid generation backends and an authenticated inference service using the same dense v2 runtime. See [model-backends](docs/model-backends.md).
 - [x] Integrate automatic local/online selection with plugin generation, context checks, empty-local fallback and visible decision reasons. See [automatic-plugin-mode](docs/automatic-plugin-mode.md).
 - [x] Connect plugin generation to a Python syntax/test profile, at most three candidates, diagnostic repairs, permitted online escalation, diff review and guarded editor Apply/Reject. See [validated-generation](docs/validated-generation.md).
