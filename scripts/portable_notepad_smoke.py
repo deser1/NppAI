@@ -81,6 +81,12 @@ class WindowsUI:
         text=ctypes.create_unicode_buffer(value);result=ctypes.c_size_t()
         return bool(self.api.SendMessageTimeoutW(hwnd,0xC,0,ctypes.cast(text,ctypes.c_void_p).value,2,3000,ctypes.byref(result)) and result.value)
 
+    def scroll_to_end(self,hwnd):
+        result=ctypes.c_size_t()
+        for message,wparam,lparam in ((0xB1,-1,-1),(0xB7,0,0)):
+            if not self.api.SendMessageTimeoutW(hwnd,message,wparam,lparam,2,3000,ctypes.byref(result)):
+                raise RuntimeError('Cannot reveal actual response end')
+
     def cls(self,hwnd):
         text=ctypes.create_unicode_buffer(256);self.api.GetClassNameW(hwnd,text,len(text));return text.value
 
@@ -166,10 +172,12 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
             raise RuntimeError('Generation did not reach the proposal/validation report')
         if not any('POST /api/v1/generate HTTP/1.1" 200' in line for line in (output/'server.log').read_text(encoding='utf-8').splitlines()):
             raise RuntimeError('No successful real model HTTP response observed')
+        ui.scroll_to_end(controls[3]);time.sleep(1);sample()
         return {'completed':True,'task':ui.text(controls[1]),'events':events,
                 'review':history,'status':events[-1]['status'],
                 'model_http_response_200':True,'apply_disabled':True,
                 'validation_configured':False,'functional_success_claimed':False,
+                'recording_scrolls_history_to_end':True,
                 'recording':'notepad-live-demo.gif' if recording else None}
     finally:
         (output/'generation-events.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
