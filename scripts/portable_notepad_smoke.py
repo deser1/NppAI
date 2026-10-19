@@ -219,6 +219,8 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                 controls={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
                 if not all(key in controls for key in (1,2,3,4,5,6)):raise RuntimeError('Panel controls missing')
                 task='@python-signature silnia(n)\r\nWygeneruj kod na silnię. Zażółć gęślą jaźń.'
+                if exercise:
+                    task='@python-signature silnia(n)\r\nWygeneruj kod na silnię dla nieujemnej liczby całkowitej n. Zwróć wynik.'
                 if not ui.api.IsWindowUnicode(controls[1]) or not ui.set_text(controls[1],task):raise RuntimeError('Unicode prompt field unavailable')
                 if ui.text(controls[1])!=task:raise RuntimeError('Polish prompt round trip failed')
                 button=ui.text(controls[2])
