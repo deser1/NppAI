@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "source_artifact": 12149182157,
+  "steps": 512,
+  "seed": 43,
+  "batch_size": 4,
+  "learning_rate": 0.0003,
+  "context_bytes": 1024,
+  "arms": ["authored_priors", "observed_priors"],
+  "policy": "Both coders initialize from the same staged model. Same base indices and 50% direct replay; only code conditioning changes where a complete bounded observed training-only prior exists. Missing priors use an explicitly counted authored fallback. Planner weights never change. Equal updates do not equal input tokens or compute.",
+  "promotion": false,
+  "evaluation": "Existing exposed validation and bilingual regressions, read after both fits. No new independent held-out quality claim. Functional execution requires isolated Docker and passing reference/incorrect controls."
+}

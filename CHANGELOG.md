@@ -204,6 +204,13 @@
 
 # Changelog
 
+## Unreleased — readiness and fallible-planner measurement
+
+- Add matched 512-update coder training with actual frozen training-only planner artifacts, explicit authored fallbacks and per-case retention; keep negative quality results visible.
+- Add real portable Notepad++ installation/readiness/Unicode smoke for current ZIP packages and require it before tag-triggered release attachment.
+- Include the current validator, Polish setup guide and factorial cases in candidate packages; check dependencies and validator syntax.
+- Make release packaging available as a PR/manual preview without publishing; shorten README and retain the full research overview.
+
 ## Unreleased
 
 - Add smoke checks for published release ZIPs and the production x64 DLL exports.

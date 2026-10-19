@@ -8,9 +8,11 @@ import os
 from pathlib import Path
 import tempfile
 import zipfile
+import json
+import py_compile
 
 
-def inspect_package(package, load_dll=False):
+def inspect_package(package, load_dll=False, current=False):
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)
         with zipfile.ZipFile(package) as archive:
@@ -26,6 +28,12 @@ def inspect_package(package, load_dll=False):
         for name in ("README.md", "model-format.md"):
             if not (dll.parent / name).is_file():
                 raise ValueError("missing package documentation: " + name)
+        if current:
+            for name in ("sandbox_validate.py", "docs/notepad-setup-pl.md", "docs/release-readiness.md",
+                         "examples/silnia-validation-cases.json"):
+                if not (dll.parent/name).is_file():raise ValueError("missing current package dependency: "+name)
+            py_compile.compile(str(dll.parent/'sandbox_validate.py'),cfile=str(root/'validator.pyc'),doraise=True)
+            json.loads((dll.parent/'examples/silnia-validation-cases.json').read_text(encoding='utf-8'))
         if load_dll:
             if os.name != "nt" or ctypes.sizeof(ctypes.c_void_p) != 8:
                 raise ValueError("DLL load requires 64-bit Windows Python")
@@ -52,6 +60,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("package")
     parser.add_argument("--load-dll", action="store_true")
+    parser.add_argument("--current", action="store_true")
     args = parser.parse_args()
-    inspect_package(args.package, args.load_dll)
+    inspect_package(args.package, args.load_dll,args.current)
     print("Release ZIP smoke test passed")
