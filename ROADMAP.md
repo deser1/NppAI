@@ -37,7 +37,7 @@ Recent RAG regression work:
 - [x] Author 96 training-only specification/plan/code records, freeze 12 new synthetic prompt records (six English/Polish tasks) and a paired direct-generation control. See [stage-protocol training](docs/staged-protocol-training.md).
 - [x] Run the own-model paired 1024-update pilot with 1024-byte context and full traces; local new-task exact replies remain 0/12 and direct memorization is 14/16 in the mixture versus 16/16 in control; both retain all 10 initial exact hits. Docker execution in every inference arm remains 0/12, with all 12 authored reference controls passing. No checkpoint promotion.
 - [x] Diagnose frozen stages on all 96 training records: mixture direct 88/96, autonomous 2/96, gold specification 12/96, both gold priors 16/96. Fifty of 80 failed staged-code conditional sequences first fail inside the function name. Saved source losses differ at updates 1/2 despite equal initialization/schedules; no causal numerical localization or promotion. See [stage diagnosis](docs/stage-failure-diagnostic.md).
-- [x] Run paired 512-update staged-code fitting: code-only assisted exact92/96 but direct51/96; replay assisted86/96 and direct96/96, retaining all88 original direct hits. Both lose the two original autonomous hits; regression exact remains0/16 and0/12. No promotion. See [code fitting](docs/staged-code-fit.md).
+- [x] Run paired 512-update staged-code fitting: code-only assisted exact92/96 but direct51/96; replay assisted86/96 and direct96/96, retaining all 88 original direct hits. Both lose the two original autonomous hits; regression exact remains0/16 and0/12. No promotion. See [code fitting](docs/staged-code-fit.md).
 - [x] Compare fixed 512-update all-stage replay with a frozen own planner and pinned 512-update coder: autonomous training exact 45/96 versus 10/96 from 2/96, both retain original 88 direct and 2 autonomous hits. Frozen planner preserves all raw prior calls; unified replay loses two original specs, one plan and four assisted-code hits. Regression exact remains0/16 and0/12. See [stage protection](docs/all-stage-protection.md); no promotion.
 - [ ] Measure identifier/argument transfer and coding with actual fallible planner artifacts using training-only data; freeze new task splits and require functional gains with original-hit retention before production routing.
 - [ ] Build a diverse reviewed bilingual task/repair bank with separated program families and name/argument/wording tests; follow the [quality priorities](docs/model-quality-development.md).
@@ -319,5 +319,13 @@ NppAI prioritizes local inference, measurable correctness, reproducible benchmar
 - [x] Define a separate pinned research-model asset/card and installation report identity checks.
 - [x] Pass final real-editor test with the extracted service ZIP and publish the experimental candidate after exact-commit CI: [v0.5.0-rc.1](https://github.com/deser1/NppAI/releases/tag/v0.5.0-rc.1).
 - [x] Retain a real released-plugin request/review recording, explicitly without a functional-success claim; [evidence and display defect](docs/live-generation-demo.md).
-- [ ] Publish v0.5.0-rc.2 with readable review lines and the actual candidate recording after final source CI and report/asset checks.
-- [ ] Manually verify Windows upgrade, Docker Desktop and validated GUI Apply; record a real task demonstration once a model passes its functional gate.
+- [x] Publish [v0.5.0-rc.2](https://github.com/deser1/NppAI/releases/tag/v0.5.0-rc.2) with readable review lines and actual candidate recording after source CI and report/asset checks.
+- [ ] Manually verify Windows upgrade and Docker Desktop + validated GUI Apply/Undo; [executable check](scripts/windows_validated_smoke.ps1).
+- [x] Record an actual own-model task whose exact response passed the isolated functional gate; [recording and limitations](docs/factorial-model-repair.md#verified-release-and-demonstration).
+
+## Bounded factorial repair
+
+- [x] Publish [model-factorial-v1](https://github.com/deser1/NppAI/releases/tag/model-factorial-v1) with source-bound weights, matching standalone service, model card, actual editor recording, raw evidence and checksums.
+- [x] Preserve all 88 prior direct hits in both raw readout and the actual production profile; reach 96/96 original training replies.
+- [x] Pass 12/12 alternative-description configurations, 2/2 reproductions and 4/4 Polish TRAIN probes in Docker. Keep the 2/4 new-name failure visible. These are exposed narrow development tasks.
+- [ ] Establish broader independent task/name generalization and complete the unverified Windows checks before a stable/general-purpose model claim.

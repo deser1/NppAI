@@ -5,6 +5,57 @@ This work repairs one concrete failure: the Polish request
 The previous released checkpoint and its published 0/12 functional result stay
 unchanged and available.
 
+## Verified release and demonstration
+
+Published on 26 October 2026: [model-factorial-v1](https://github.com/deser1/NppAI/releases/tag/model-factorial-v1).
+The exact source is [`af3e532`](https://github.com/deser1/NppAI/commit/af3e5325b06256f1d0cd448b939ed4d20e28edba).
+[Main CI](https://github.com/deser1/NppAI/actions/runs/40414350060) passed 9/9 jobs;
+[training, Docker, actual editor and publication](https://github.com/deser1/NppAI/actions/runs/40414350103)
+all passed. Downloaded assets were checked against the release checksums.
+
+| Measurement | Released own model | Meaning |
+| --- | --- | --- |
+| Alternative factorial description | 12/12 | One authored development description × 2 names × 3 parameters × 2 request modes |
+| Earlier error reproductions | 2/2 | Exposed development cases |
+| Plain Polish requests | 4/4 | Training memorization probes, including the recorded request |
+| New function names | 2/4 | One of two names still fails in both request modes |
+| Original direct replies | 88/96 →96/96 | All 88 prior exact hits retained in both raw readout and the actual production profile |
+| Old weights with the new profile | 0/12 alternative-description rows | The decoder alone did not repair the task |
+
+The functional rows execute actual emitted code in restricted Linux Docker
+containers on inputs 0, 1, 2, 5, 10, 15, 20, with separate correct-reference and
+incorrect-candidate controls. These are narrow exposed factorial development
+measurements. They do not replace the earlier bilingual multi-task 0/12 result
+or establish general coding competence.
+
+The actual window recording uses the public rc.2 x64 plugin, the extracted new
+service package and the model from this release:
+
+![Actual Notepad++ own-model request and review](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/notepad-live-demo.gif)
+
+Request: `wygeneruj kod na silnię`. Exact returned code from the
+[installation report](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/installation-report.json):
+
+```python
+def silnia(n):
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    return result
+```
+
+The report retains the exact raw response and the literal legacy diff projection
+separately; that view adds a final display line. Apply is disabled in the
+recording because that hosted Windows check has no local Docker validator.
+**Windows Docker Desktop + validated GUI Apply/Undo and upgrade remain
+unverified.** The full-path script below is prepared for that environment.
+
+Model SHA-256: `f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229`.
+[Qualified measurements](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/qualified-report.json),
+[complete raw evidence](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/model-evidence.zip),
+[model card](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/MODEL_CARD.md) and
+[checksums](https://github.com/deser1/NppAI/releases/download/model-factorial-v1/SHA256SUMS-model.txt) are permanent release assets.
+
 ## Reproducible measurement
 
 `scripts/factorial_repair.py` initializes from the SHA-pinned rc.2 own dense v2
@@ -102,7 +153,7 @@ No fixture validator or prewritten proposal substitutes for this check.
 
 ## Try the model release
 
-When qualified main publication succeeds, download the model and matching
+Download the published model and matching
 service ZIP from [model-factorial-v1](https://github.com/deser1/NppAI/releases/tag/model-factorial-v1).
 Follow its MODEL_CARD.md and checksums. The explicit launcher options are
 `--prompt-bytes 256 --python-functions`; this profile routes the plugin through
