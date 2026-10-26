@@ -19,3 +19,6 @@ docs/evidence/staged-protocol/*.zip -text
 # Actual window recordings and raw service logs are hashed as downloaded.
 docs/evidence/released-demo/* -text
 docs/evidence/current-package-demo/* -text
+
+# Measured rejected factorial pilots contain exact raw reports and traces.
+docs/evidence/factorial-repair/*.zip -text

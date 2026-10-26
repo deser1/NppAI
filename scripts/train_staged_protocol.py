@@ -80,10 +80,11 @@ class TorchBackend:
     """FP32 greedy readout with the same formatting, EOS and budget as dense local."""
     def __init__(self, model, model_id):
         self.model, self.model_id = model.eval(), model_id
+        self.prompt_bytes = 0
 
     def generate(self, payload):
         import torch
-        tokens = list((format_prompt(payload) + payload.assistant_prefix).encode('utf-8'))
+        tokens = list((format_prompt(payload, self.prompt_bytes) + payload.assistant_prefix).encode('utf-8'))
         if len(tokens) > self.model.max_seq_len:
             raise ValueError("Formatted prompt exceeds this model's byte context")
         output = bytearray(payload.assistant_prefix.encode('utf-8'))

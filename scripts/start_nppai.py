@@ -18,7 +18,7 @@ class NoRedirect(request.HTTPRedirectHandler):
         return None
 
 
-def connection_environment(model, port, existing=None):
+def connection_environment(model, port, existing=None, *, prompt_bytes=0, python_functions=False):
     path = Path(model).expanduser().resolve(strict=True)
     if not path.is_file() or path.suffix.lower() != '.nppai':
         raise ValueError('Wskaz wyeksportowany model NppAI .nppai (nie .pth ani archiwum).')
@@ -29,6 +29,13 @@ def connection_environment(model, port, existing=None):
     environment.update(NPPAI_INFERENCE_MODEL=str(path), NPPAI_PLUGIN_MODE='auto',
                        NPPAI_ALLOW_REMOTE='1', NPPAI_API_KEY=secrets.token_urlsafe(32),
                        NPPAI_GENERATION_URL=f'http://127.0.0.1:{port}/api/v1/generate')
+    if type(prompt_bytes) is not int or prompt_bytes < 0:
+        raise ValueError("Invalid prompt byte boundary")
+    environment.pop("NPPAI_PROMPT_BYTES", None)
+    environment.pop("NPPAI_PYTHON_FUNCTIONS", None)
+    if prompt_bytes: environment["NPPAI_PROMPT_BYTES"] = str(prompt_bytes)
+    if python_functions: environment["NPPAI_PYTHON_FUNCTIONS"] = "1"
+    if prompt_bytes or python_functions: environment["NPPAI_PLUGIN_MODE"] = "online"
     return environment
 
 
@@ -67,8 +74,8 @@ def wait_ready(server, port, key, timeout=60):
     raise RuntimeError('Uplynal czas startu NppAI. Sprawdz plik modelu i komunikaty serwera.')
 
 
-def run(model, port=8000, notepad=None):
-    environment = connection_environment(model, port)
+def run(model, port=8000, notepad=None, *, prompt_bytes=0, python_functions=False):
+    environment = connection_environment(model, port, prompt_bytes=prompt_bytes, python_functions=python_functions)
     editor = Path(notepad).expanduser().resolve(strict=True) if notepad else None
     if editor and not editor.is_file():
         raise ValueError('Nie znaleziono pliku notepad++.exe.')
@@ -80,6 +87,10 @@ def run(model, port=8000, notepad=None):
                                '--host', '127.0.0.1', '--port', str(port)], cwd=ROOT, env=environment)
     try:
         health = wait_ready(server, port, environment['NPPAI_API_KEY'])
+        if prompt_bytes and health.get("prompt_bytes") != prompt_bytes:
+            raise RuntimeError("Server prompt boundary mismatch")
+        if python_functions and health.get("decode_profile") != "python_function_beam8":
+            raise RuntimeError("Server decode profile mismatch")
         print('NppAI gotowy:', health['model_id'], flush=True)
         print('Kontekst modelu (bajty):', health['context_bytes'], flush=True)
         print('Serwer:', environment['NPPAI_GENERATION_URL'], flush=True)
@@ -106,9 +117,11 @@ def main():
     parser.add_argument('--model', type=Path, required=True, help='Wyeksportowany autorski model NppAI .nppai')
     parser.add_argument('--notepad', type=Path, help='Sciezka do notepad++.exe; startuje nowa instancje')
     parser.add_argument('--port', type=int, default=8000)
+    parser.add_argument('--prompt-bytes', type=int, default=0)
+    parser.add_argument('--python-functions', action='store_true')
     args = parser.parse_args()
     try:
-        run(args.model, args.port, args.notepad)
+        run(args.model, args.port, args.notepad, prompt_bytes=args.prompt_bytes, python_functions=args.python_functions)
     except KeyboardInterrupt:
         print('\nSerwer NppAI zatrzymany.')
     except (OSError, ValueError, RuntimeError) as exc:

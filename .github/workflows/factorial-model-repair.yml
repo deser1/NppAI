@@ -1,0 +1,124 @@
+name: Bounded factorial model repair
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/factorial-model-repair.yml'
+      - 'python_function_decoding.py'
+      - 'model_backends.py'
+      - 'server_backend.py'
+      - 'scripts/factorial_repair.py'
+      - 'scripts/qualify_factorial_repair.py'
+      - 'scripts/publish_factorial_model.py'
+      - 'scripts/portable_notepad_smoke.py'
+      - 'scripts/start_nppai.py'
+      - 'scripts/package_inference_service.py'
+      - 'tests/test_factorial_repair.py'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/factorial-model-repair.yml'
+      - 'scripts/factorial_repair.py'
+      - 'python_function_decoding.py'
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.3.5' 'pydantic>=2.7,<3' 'fastapi>=0.115,<1'
+      - run: python -m unittest discover -s tests -p test_factorial_repair.py -v
+      - name: Fetch pinned own checkpoint and prepare isolated validator
+        run: |
+          curl -fL https://github.com/deser1/NppAI/releases/download/v0.5.0-rc.2/NppAI-research-staged-mix.nppai -o initial.nppai
+          docker pull python:3.12-slim
+          printf 'NPPAI_VALIDATION_IMAGE=%s\n' "$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Real optimization and Docker execution of actual model outputs
+        run: python scripts/factorial_repair.py --source initial.nppai --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Require bounded functional improvement and retention
+        run: python scripts/qualify_factorial_repair.py measured
+      - name: Require Docker cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: factorial-measured
+          path: measured/
+          retention-days: 90
+  actual-plugin:
+    needs: measure
+    runs-on: windows-2022
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: factorial-measured
+          path: measured
+      - name: Prepare real published plugin and portable editor
+        shell: pwsh
+        run: |
+          Invoke-WebRequest 'https://github.com/deser1/NppAI/releases/download/v0.5.0-rc.2/NppAI-x64.zip' -OutFile NppAI-x64.zip
+          if ((Get-FileHash NppAI-x64.zip -Algorithm SHA256).Hash.ToLower() -ne 'faac23fa483cf9a80da4406ebc8a21a7ec55d27f7da8972e9980b3b1a2d09848') { throw 'Plugin identity mismatch' }
+          Invoke-WebRequest 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.8.1/npp.8.9.8.1.portable.x64.zip' -OutFile editor.zip
+          if ((Get-FileHash editor.zip -Algorithm SHA256).Hash.ToLower() -ne 'beddf5548e75c97930d1575ba1c7d113e6e2b33d0a200310e734ca08e225f414') { throw 'Editor identity mismatch' }
+      - run: python -m pip install -r requirements-inference.txt 'pillow>=10,<14'
+      - run: python scripts/package_inference_service.py NppAI-factorial-service.zip --readme measured/MODEL_CARD.md
+      - name: Request actual own-model code from the real editor
+        run: >-
+          python scripts/portable_notepad_smoke.py --editor-zip editor.zip
+          --package NppAI-x64.zip --model measured/NppAI-factorial.nppai
+          --service-zip NppAI-factorial-service.zip --output plugin-evidence
+          --prompt-bytes 256 --python-functions --plain-task --exercise-generation --record-gif
+      - name: Bind actual review to Docker-tested output and packaged model
+        run: python scripts/publish_factorial_model.py --verify-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: factorial-plugin-evidence
+          path: |
+            plugin-evidence/
+            NppAI-factorial-service.zip
+          retention-days: 90
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [measure, actual-plugin]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: factorial-measured
+          path: measured
+      - uses: actions/download-artifact@v4
+        with:
+          name: factorial-plugin-evidence
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'pydantic>=2.7,<3'
+      - name: Publish only exact green main and qualified measured assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/publish_factorial_model.py

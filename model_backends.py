@@ -38,10 +38,16 @@ class ModelBackend(Protocol):
     def generate(self, payload: GenerationRequest) -> GenerationResponse: ...
 
 
-def format_prompt(payload: GenerationRequest) -> str:
+def format_prompt(payload: GenerationRequest, prompt_bytes: int = 0) -> str:
     prefix = ("[SYSTEM]: Kontekst poprzednich modyfikacji dla tego pliku:\n"
               + payload.context + "\n\n") if payload.context else ""
-    return prefix + "[USER]: " + payload.prompt + "\n[AI]:\n"
+    text = prefix + "[USER]: " + payload.prompt + "\n"
+    if prompt_bytes:
+        padding = prompt_bytes - len((text + "[AI]:\n").encode("utf-8"))
+        if padding < 0:
+            raise ValueError("Task exceeds fixed prompt boundary")
+        text += " " * padding
+    return text + "[AI]:\n"
 
 
 class DenseLocalBackend:
@@ -50,7 +56,8 @@ class DenseLocalBackend:
     The same runtime is used locally and by the HTTP service. Load a backend
     once; replace/restart it explicitly when changing checkpoints.
     """
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: str, *, prompt_bytes: int = 0, python_functions: bool = False):
+        self.prompt_bytes, self.python_functions = prompt_bytes, python_functions
         from scripts.check_dense_runtime_parity import load_weights
         try:
             path = Path(model_path)
@@ -59,6 +66,8 @@ class DenseLocalBackend:
             self.model_id = "sha256:" + hashlib.sha256(raw).hexdigest()
         except (OSError, ValueError) as exc:
             raise BackendUnavailable("Cannot load dense v2 checkpoint") from exc
+        if type(prompt_bytes) is not int or not 0 <= prompt_bytes < self.weights["context"]:
+            raise ValueError("Invalid prompt byte boundary")
         import numpy as np
         w = self.weights
         arrays = [w["embedding"], w["position"], w["norm"], w["output"]]
@@ -69,8 +78,11 @@ class DenseLocalBackend:
     def generate(self, payload: GenerationRequest) -> GenerationResponse:
         import numpy as np
         from scripts.check_dense_runtime_parity import numpy_logits
+        if self.python_functions:
+            from python_function_decoding import generate
+            return generate(self, payload)
         # Do not silently drop the user's task to fit a tiny context window.
-        tokens = list((format_prompt(payload) + payload.assistant_prefix).encode("utf-8"))
+        tokens = list((format_prompt(payload, self.prompt_bytes) + payload.assistant_prefix).encode("utf-8"))
         if len(tokens) > self.weights["context"]:
             raise ValueError("Formatted prompt exceeds this model's byte context")
         output = bytearray(payload.assistant_prefix.encode("utf-8"))

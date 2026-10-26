@@ -133,3 +133,16 @@ class LauncherTests(unittest.TestCase):
         with patch.object(launcher, 'readiness', side_effect=missing):
             with self.assertRaisesRegex(RuntimeError, 'model unavailable'):
                 launcher.wait_ready(server, 8000, 'key')
+
+class RepairProfileTests(unittest.TestCase):
+    def test_launcher_profile_forces_measured_service_and_clears_stale_settings(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'model.nppai';checkpoint(path)
+            env=launcher.connection_environment(path,8123,{},prompt_bytes=64,python_functions=True)
+            self.assertEqual(env['NPPAI_PLUGIN_MODE'],'online')
+            self.assertEqual(env['NPPAI_PROMPT_BYTES'],'64')
+            self.assertEqual(env['NPPAI_PYTHON_FUNCTIONS'],'1')
+            fresh=launcher.connection_environment(path,8123,env)
+            self.assertNotIn('NPPAI_PROMPT_BYTES',fresh)
+            self.assertNotIn('NPPAI_PYTHON_FUNCTIONS',fresh)
+            self.assertEqual(fresh['NPPAI_PLUGIN_MODE'],'auto')
