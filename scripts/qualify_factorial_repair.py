@@ -26,7 +26,10 @@ def qualify(root):
     if repair['reproduction-']['passed']!=2 or repair['plain-']['passed']!=4 or repair['wording-']['passed']<8:raise ValueError('Bounded functional repair gate failed')
     retained=r['retention']
     if len(retained)!=96 or any(v['before']==v['answer'] and v['after']!=v['answer'] for v in retained):raise ValueError('Original direct hit lost')
+    old=json.loads((ROOT/'evaluation/staged-protocol-v1/train.json').read_bytes())
+    if r['old_replay_sha256']!=sha(ROOT/'evaluation/staged-protocol-v1/train.json') or [(v['id'],v['answer']) for v in retained]!=[(v['id'],v['answer']) for v in old]:raise ValueError('Original retention set changed')
     before=sum(v['before']==v['answer'] for v in retained);after=sum(v['after']==v['answer'] for v in retained)
+    if before!=88:raise ValueError('Pinned initialization no longer reproduces88 original hits')
     summary=dict(model_sha256=r['model_sha256'],functional=totals,original_direct=dict(before=before,after=after,total=96),gate='passed',scope='Bounded factorial repair; no stable/general-coding promotion',windows_docker_apply_undo='not_verified')
     (root/'qualified-report.json').write_text(json.dumps(summary,indent=2)+'\n')
     card=f'''# NppAI factorial repair — experimental
@@ -52,7 +55,9 @@ exact hit lost. This measures memorization retention, not unseen accuracy.
 Plain Polish requests are also training probes. Wording and new-name rows are
 authored/exposed development probes; one seed, one narrow operation family.
 The generic search decoder can still produce syntactically valid wrong code.
-Configured task tests remain mandatory before Apply. These results replace no
+Configured task tests remain mandatory before Apply. The optional fixed-boundary
+profile rejects tasks plus context longer than256 UTF-8 bytes, without truncation;
+long repair feedback may therefore be rejected. These results replace no
 previous public0/12 benchmark result and do not establish general code quality.
 
 ## Windows quick start

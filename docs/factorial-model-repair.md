@@ -20,7 +20,9 @@ only generic AST, requested declaration and name-binding checks. It may prefill
 an explicit, unambiguous requested function header. It cannot access factorial
 algorithms, reference answers or test cases. Structurally valid wrong functions
 are still possible. Unchanged/default backends keep their existing greedy
-format and behavior.
+format and behavior. The fixed-boundary profile rejects formatted task/context
+longer than256 UTF-8 bytes rather than truncating it; long repair feedback may
+therefore be unavailable in this experimental profile.
 
 The report preserves old greedy output, original weights with the new profile,
 repaired greedy output and repaired

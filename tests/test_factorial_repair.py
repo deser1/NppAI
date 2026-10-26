@@ -59,3 +59,17 @@ class RepairTests(unittest.TestCase):
             response=generate(backend,payload)
         self.assertEqual(response.output,header+'return n\n')
         self.assertEqual(response.finish_reason,'eos')
+
+class PublicationGateTests(unittest.TestCase):
+    def test_missing_docker_or_changed_identity_cannot_qualify(self):
+        import json
+        from scripts.factorial_repair import sha
+        from scripts.qualify_factorial_repair import qualify
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            for name in ('NppAI-factorial.nppai','protocol.json','trace.json'):(root/name).write_bytes(b'fixture')
+            report=dict(model_sha256=sha(root/'NppAI-factorial.nppai'),protocol_sha256=sha(root/'protocol.json'),trace_sha256=sha(root/'trace.json'),protocol=dict(source_sha256=__import__('scripts.factorial_repair',fromlist=['SOURCE']).SOURCE,updates=4096),readout_weights_unchanged=True,parity=[dict(passed=True)]*3)
+            (root/'report.json').write_text(json.dumps(report))
+            with self.assertRaisesRegex(ValueError,'Docker'):qualify(root)
+            (root/'NppAI-factorial.nppai').write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'Checkpoint'):qualify(root)

@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import random
 import sys
@@ -89,7 +90,7 @@ def run(source,output,image=None):
     model.eval();path=output/'NppAI-factorial.nppai';export_to_bin(model,str(path))
     (output/'trace.json').write_text(json.dumps(trace)+'\n')
     weights_before=state_digest(model)
-    report=dict(protocol=protocol,model_sha256=sha(path),trace_sha256=sha(output/'trace.json'),protocol_sha256=sha(output/'protocol.json'),old_replay_sha256=sha(ROOT/'evaluation/staged-protocol-v1/train.json'),torch=torch.__version__,readouts={},promotion=False,limitations='Authored and previously exposed factorial probes; one seed; no broad code-generation claim. Plain Polish prompts are training memorization probes. New names measured separately.')
+    report=dict(source_commit=os.getenv('GITHUB_SHA'),source_files={p:sha(ROOT/p) for p in ('scripts/factorial_repair.py','python_function_decoding.py','model_backends.py','sandbox_validate.py','train_nppai.py')},protocol=protocol,model_sha256=sha(path),trace_sha256=sha(output/'trace.json'),protocol_sha256=sha(output/'protocol.json'),old_replay_sha256=sha(ROOT/'evaluation/staged-protocol-v1/train.json'),torch=torch.__version__,readouts={},promotion=False,limitations='Authored and previously exposed factorial probes; one seed; no broad code-generation claim. Plain Polish prompts are training memorization probes. New names measured separately.')
     for arm,backend in [('initial',TorchBackend(initial,'source')),('initial_profile',DenseLocalBackend(str(source),prompt_bytes=WIDTH,python_functions=True)),('repair_raw',TorchBackend(model,'repair')),('repair',DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True))]:
         rows=[]
         for row in evaluation+[r for r in training if r['id'].startswith('plain-')]:

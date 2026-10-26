@@ -22,6 +22,7 @@ try {
     $python = "$root/venv/Scripts/python.exe"
     & $python -m pip install -r requirements-inference.txt 'pillow>=10,<14'
     if ($LASTEXITCODE) { throw 'Dependency install failed' }
+    $env:NPPAI_DOCKER_HOST = 'npipe:////./pipe/docker_engine'
     docker --host npipe:////./pipe/docker_engine pull python:3.12-slim
     if ($LASTEXITCODE) { throw 'Docker Desktop Linux image unavailable' }
     $image = docker --host npipe:////./pipe/docker_engine image inspect python:3.12-slim --format '{{.Id}}'

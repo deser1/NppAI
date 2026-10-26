@@ -17,6 +17,8 @@ def verify():
     summary=qualify(Path('measured'))
     report=json.loads(Path('plugin-evidence/report.json').read_bytes())
     raw=json.loads(Path('measured/report.json').read_bytes())
+    if raw.get('source_commit')!=os.environ.get('GITHUB_SHA'):raise ValueError('Measured source commit mismatch')
+    if any(sha(ROOT/name)!=digest for name,digest in raw.get('source_files',{}).items()) or not raw.get('source_files'):raise ValueError('Measured source files changed')
     expected=next(r for r in raw['readouts']['repair'] if r['id']=='plain-0')
     demo=report['live_generation_demo']
     if not expected.get('functional_pass') or demo['proposal']['code']!=expected['output']:raise ValueError('Actual plugin differs from Docker-tested model output')
