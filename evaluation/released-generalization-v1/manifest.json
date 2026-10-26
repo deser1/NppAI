@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "checkpoint_sha256": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+  "tasks_sha256": "3bc308fd49b531f99bd843f1074ddd67405ca93ec2b8b1e19b8da2f2718b5e8d",
+  "tasks": 40,
+  "arms": {
+    "released_profile": {
+      "prompt_bytes": 256,
+      "python_functions": true
+    },
+    "legacy_greedy": {
+      "prompt_bytes": 0,
+      "python_functions": false
+    }
+  },
+  "max_attempts": 1,
+  "reference_access": "Docker controls only; never generation input",
+  "scope": "Fresh post-checkpoint authored probes; family independence from all historical data is not established. After first readout this becomes an exposed regression suite.",
+  "promotion": false
+}

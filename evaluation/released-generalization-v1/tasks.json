@@ -1,0 +1,2416 @@
+[
+  {
+    "id": "running_max-0-en",
+    "group": "new_operations",
+    "family": "running_max",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_running_max_amber(items). Return the running maximum of an integer list. Empty input gives [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_running_max_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_running_max_amber(items):\n    result = []\n    for value in items:\n        result.append(value if not result else max(value, result[-1]))\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            3,
+            1,
+            5,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          3,
+          5,
+          5
+        ]
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            -4,
+            -7,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -4,
+          -4,
+          -2
+        ]
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            2,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "running_max-0-pl",
+    "group": "new_operations",
+    "family": "running_max",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_running_max_amber(items). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_running_max_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_running_max_amber(items):\n    result = []\n    for value in items:\n        result.append(value if not result else max(value, result[-1]))\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            3,
+            1,
+            5,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          3,
+          5,
+          5
+        ]
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            -4,
+            -7,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -4,
+          -4,
+          -2
+        ]
+      },
+      {
+        "function": "probe_running_max_amber",
+        "args": [
+          [
+            2,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "running_max-1-en",
+    "group": "new_operations",
+    "family": "running_max",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_running_max_violet(stream). Return the running maximum of an integer list. Empty input gives [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_running_max_violet",
+    "arguments": [
+      "stream"
+    ],
+    "reference": "def probe_running_max_violet(stream):\n    result = []\n    for value in stream:\n        result.append(value if not result else max(value, result[-1]))\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            3,
+            1,
+            5,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          3,
+          5,
+          5
+        ]
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            -4,
+            -7,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -4,
+          -4,
+          -2
+        ]
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            2,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "running_max-1-pl",
+    "group": "new_operations",
+    "family": "running_max",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_running_max_violet(stream). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_running_max_violet",
+    "arguments": [
+      "stream"
+    ],
+    "reference": "def probe_running_max_violet(stream):\n    result = []\n    for value in stream:\n        result.append(value if not result else max(value, result[-1]))\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            3,
+            1,
+            5,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          3,
+          5,
+          5
+        ]
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            -4,
+            -7,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -4,
+          -4,
+          -2
+        ]
+      },
+      {
+        "function": "probe_running_max_violet",
+        "args": [
+          [
+            2,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adjacent_differences-0-en",
+    "group": "new_operations",
+    "family": "adjacent_differences",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_adjacent_differences_amber(items). Return each integer minus its preceding item. Lists shorter than two give [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_adjacent_differences_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_adjacent_differences_amber(items):\n    return [items[i] - items[i - 1] for i in range(1, len(items))]\n",
+    "cases": [
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            2,
+            5,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          -4
+        ]
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            -3,
+            -8,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -5,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adjacent_differences-0-pl",
+    "group": "new_operations",
+    "family": "adjacent_differences",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_adjacent_differences_amber(items). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_adjacent_differences_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_adjacent_differences_amber(items):\n    return [items[i] - items[i - 1] for i in range(1, len(items))]\n",
+    "cases": [
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            2,
+            5,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          -4
+        ]
+      },
+      {
+        "function": "probe_adjacent_differences_amber",
+        "args": [
+          [
+            -3,
+            -8,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -5,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adjacent_differences-1-en",
+    "group": "new_operations",
+    "family": "adjacent_differences",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_adjacent_differences_violet(samples). Return each integer minus its preceding item. Lists shorter than two give [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_adjacent_differences_violet",
+    "arguments": [
+      "samples"
+    ],
+    "reference": "def probe_adjacent_differences_violet(samples):\n    return [samples[i] - samples[i - 1] for i in range(1, len(samples))]\n",
+    "cases": [
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            2,
+            5,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          -4
+        ]
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            -3,
+            -8,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -5,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "id": "adjacent_differences-1-pl",
+    "group": "new_operations",
+    "family": "adjacent_differences",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_adjacent_differences_violet(samples). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_adjacent_differences_violet",
+    "arguments": [
+      "samples"
+    ],
+    "reference": "def probe_adjacent_differences_violet(samples):\n    return [samples[i] - samples[i - 1] for i in range(1, len(samples))]\n",
+    "cases": [
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            2,
+            5,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          -4
+        ]
+      },
+      {
+        "function": "probe_adjacent_differences_violet",
+        "args": [
+          [
+            -3,
+            -8,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -5,
+          7
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stable_unique-0-en",
+    "group": "new_operations",
+    "family": "stable_unique",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_stable_unique_amber(items). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_stable_unique_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_stable_unique_amber(items):\n    result = []\n    for value in items:\n        if value not in result:\n            result.append(value)\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            3,
+            1,
+            3,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -1,
+          0
+        ]
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stable_unique-0-pl",
+    "group": "new_operations",
+    "family": "stable_unique",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_stable_unique_amber(items). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_stable_unique_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_stable_unique_amber(items):\n    result = []\n    for value in items:\n        if value not in result:\n            result.append(value)\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            3,
+            1,
+            3,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -1,
+          0
+        ]
+      },
+      {
+        "function": "probe_stable_unique_amber",
+        "args": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stable_unique-1-en",
+    "group": "new_operations",
+    "family": "stable_unique",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_stable_unique_violet(entries). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_stable_unique_violet",
+    "arguments": [
+      "entries"
+    ],
+    "reference": "def probe_stable_unique_violet(entries):\n    result = []\n    for value in entries:\n        if value not in result:\n            result.append(value)\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            3,
+            1,
+            3,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -1,
+          0
+        ]
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stable_unique-1-pl",
+    "group": "new_operations",
+    "family": "stable_unique",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_stable_unique_violet(entries). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_stable_unique_violet",
+    "arguments": [
+      "entries"
+    ],
+    "reference": "def probe_stable_unique_violet(entries):\n    result = []\n    for value in entries:\n        if value not in result:\n            result.append(value)\n    return result\n",
+    "cases": [
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            3,
+            1,
+            3,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            -1,
+            0,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          -1,
+          0
+        ]
+      },
+      {
+        "function": "probe_stable_unique_violet",
+        "args": [
+          [
+            4,
+            4,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          4
+        ]
+      }
+    ]
+  },
+  {
+    "id": "parentheses_balance-0-en",
+    "group": "new_operations",
+    "family": "parentheses_balance",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_parentheses_balance_amber(text). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_parentheses_balance_amber",
+    "arguments": [
+      "text"
+    ],
+    "reference": "def probe_parentheses_balance_amber(text):\n    depth = 0\n    for char in text:\n        depth += 1 if char == \"(\" else -1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "cases": [
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "(())()"
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          ")("
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "(()"
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "())("
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "parentheses_balance-0-pl",
+    "group": "new_operations",
+    "family": "parentheses_balance",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_parentheses_balance_amber(text). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_parentheses_balance_amber",
+    "arguments": [
+      "text"
+    ],
+    "reference": "def probe_parentheses_balance_amber(text):\n    depth = 0\n    for char in text:\n        depth += 1 if char == \"(\" else -1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "cases": [
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "(())()"
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          ")("
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "(()"
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_amber",
+        "args": [
+          "())("
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "parentheses_balance-1-en",
+    "group": "new_operations",
+    "family": "parentheses_balance",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_parentheses_balance_violet(symbols). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_parentheses_balance_violet",
+    "arguments": [
+      "symbols"
+    ],
+    "reference": "def probe_parentheses_balance_violet(symbols):\n    depth = 0\n    for char in symbols:\n        depth += 1 if char == \"(\" else -1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "cases": [
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "(())()"
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          ")("
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "(()"
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "())("
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "parentheses_balance-1-pl",
+    "group": "new_operations",
+    "family": "parentheses_balance",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_parentheses_balance_violet(symbols). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_parentheses_balance_violet",
+    "arguments": [
+      "symbols"
+    ],
+    "reference": "def probe_parentheses_balance_violet(symbols):\n    depth = 0\n    for char in symbols:\n        depth += 1 if char == \"(\" else -1\n        if depth < 0:\n            return False\n    return depth == 0\n",
+    "cases": [
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "(())()"
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          ")("
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "(()"
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "probe_parentheses_balance_violet",
+        "args": [
+          "())("
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "rotate_left-0-en",
+    "group": "new_operations",
+    "family": "rotate_left",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_rotate_left_amber(items). Move the first list item to the end. Return a new list; empty input gives [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_rotate_left_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_rotate_left_amber(items):\n    return items[1:] + items[:1]\n",
+    "cases": [
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            -2,
+            0,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          0,
+          -2,
+          -2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rotate_left-0-pl",
+    "group": "new_operations",
+    "family": "rotate_left",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_rotate_left_amber(items). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_rotate_left_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_rotate_left_amber(items):\n    return items[1:] + items[:1]\n",
+    "cases": [
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_amber",
+        "args": [
+          [
+            -2,
+            0,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          0,
+          -2,
+          -2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rotate_left-1-en",
+    "group": "new_operations",
+    "family": "rotate_left",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_rotate_left_violet(queue). Move the first list item to the end. Return a new list; empty input gives [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_rotate_left_violet",
+    "arguments": [
+      "queue"
+    ],
+    "reference": "def probe_rotate_left_violet(queue):\n    return queue[1:] + queue[:1]\n",
+    "cases": [
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            -2,
+            0,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          0,
+          -2,
+          -2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rotate_left-1-pl",
+    "group": "new_operations",
+    "family": "rotate_left",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_rotate_left_violet(queue). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+      "max_new_tokens": 256
+    },
+    "function": "probe_rotate_left_violet",
+    "arguments": [
+      "queue"
+    ],
+    "reference": "def probe_rotate_left_violet(queue):\n    return queue[1:] + queue[:1]\n",
+    "cases": [
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": []
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "function": "probe_rotate_left_violet",
+        "args": [
+          [
+            -2,
+            0,
+            -2
+          ]
+        ],
+        "kwargs": {},
+        "expected": [
+          0,
+          -2,
+          -2
+        ]
+      }
+    ]
+  },
+  {
+    "id": "count_runs-0-en",
+    "group": "new_operations",
+    "family": "count_runs",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_count_runs_amber(items). Count runs of equal adjacent integers. An empty list has zero runs.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_count_runs_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_count_runs_amber(items):\n    return sum(i == 0 or value != items[i - 1] for i, value in enumerate(items))\n",
+    "cases": [
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            5
+          ]
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            1,
+            1,
+            2,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            -1,
+            -1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      }
+    ]
+  },
+  {
+    "id": "count_runs-0-pl",
+    "group": "new_operations",
+    "family": "count_runs",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_count_runs_amber(items). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_count_runs_amber",
+    "arguments": [
+      "items"
+    ],
+    "reference": "def probe_count_runs_amber(items):\n    return sum(i == 0 or value != items[i - 1] for i, value in enumerate(items))\n",
+    "cases": [
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            5
+          ]
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            1,
+            1,
+            2,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            -1,
+            -1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "probe_count_runs_amber",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      }
+    ]
+  },
+  {
+    "id": "count_runs-1-en",
+    "group": "new_operations",
+    "family": "count_runs",
+    "language": "en",
+    "request": {
+      "prompt": "Implement probe_count_runs_violet(values). Count runs of equal adjacent integers. An empty list has zero runs.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_count_runs_violet",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def probe_count_runs_violet(values):\n    return sum(i == 0 or value != values[i - 1] for i, value in enumerate(values))\n",
+    "cases": [
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            5
+          ]
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            1,
+            1,
+            2,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            -1,
+            -1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      }
+    ]
+  },
+  {
+    "id": "count_runs-1-pl",
+    "group": "new_operations",
+    "family": "count_runs",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz funkcję probe_count_runs_violet(values). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+      "max_new_tokens": 256
+    },
+    "function": "probe_count_runs_violet",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def probe_count_runs_violet(values):\n    return sum(i == 0 or value != values[i - 1] for i, value in enumerate(values))\n",
+    "cases": [
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            5
+          ]
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            1,
+            1,
+            2,
+            2,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            -1,
+            -1,
+            0,
+            0,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "probe_count_runs_violet",
+        "args": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      }
+    ]
+  },
+  {
+    "id": "factorial-amber_product-en",
+    "group": "factorial_transfer",
+    "family": "factorial",
+    "language": "en",
+    "request": {
+      "prompt": "Implement amber_product(count). Return the product of positive integers no larger than the input; for zero use one.",
+      "max_new_tokens": 256
+    },
+    "function": "amber_product",
+    "arguments": [
+      "count"
+    ],
+    "reference": "def amber_product(count):\n    result = 1\n    for value in range(2, count + 1):\n        result *= value\n    return result\n",
+    "cases": [
+      {
+        "function": "amber_product",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          2
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          6
+        ],
+        "kwargs": {},
+        "expected": 720
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "factorial-amber_product-pl",
+    "group": "factorial_transfer",
+    "family": "factorial",
+    "language": "pl",
+    "request": {
+      "prompt": "Implement amber_product(count). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+      "max_new_tokens": 256
+    },
+    "function": "amber_product",
+    "arguments": [
+      "count"
+    ],
+    "reference": "def amber_product(count):\n    result = 1\n    for value in range(2, count + 1):\n        result *= value\n    return result\n",
+    "cases": [
+      {
+        "function": "amber_product",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          2
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          6
+        ],
+        "kwargs": {},
+        "expected": 720
+      },
+      {
+        "function": "amber_product",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "factorial-violet_product-en",
+    "group": "factorial_transfer",
+    "family": "factorial",
+    "language": "en",
+    "request": {
+      "prompt": "Implement violet_product(limit). Return the product of positive integers no larger than the input; for zero use one.",
+      "max_new_tokens": 256
+    },
+    "function": "violet_product",
+    "arguments": [
+      "limit"
+    ],
+    "reference": "def violet_product(limit):\n    result = 1\n    for value in range(2, limit + 1):\n        result *= value\n    return result\n",
+    "cases": [
+      {
+        "function": "violet_product",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          2
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          6
+        ],
+        "kwargs": {},
+        "expected": 720
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "factorial-violet_product-pl",
+    "group": "factorial_transfer",
+    "family": "factorial",
+    "language": "pl",
+    "request": {
+      "prompt": "Implement violet_product(limit). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+      "max_new_tokens": 256
+    },
+    "function": "violet_product",
+    "arguments": [
+      "limit"
+    ],
+    "reference": "def violet_product(limit):\n    result = 1\n    for value in range(2, limit + 1):\n        result *= value\n    return result\n",
+    "cases": [
+      {
+        "function": "violet_product",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          2
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          6
+        ],
+        "kwargs": {},
+        "expected": 720
+      },
+      {
+        "function": "violet_product",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "new-sum-en",
+    "group": "exposed_bilingual_regression",
+    "family": "sum",
+    "language": "en",
+    "request": {
+      "prompt": "Implement suma(a, b) in Python returning the sum of a and b.",
+      "max_new_tokens": 256
+    },
+    "function": "suma",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "reference": "def suma(a, b):\n    return a + b\n",
+    "cases": [
+      {
+        "function": "suma",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "suma",
+        "args": [
+          -3,
+          5
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "suma",
+        "args": [
+          8,
+          9
+        ],
+        "kwargs": {},
+        "expected": 17
+      }
+    ]
+  },
+  {
+    "id": "new-sum-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "sum",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję suma(a, b) zwracającą sumę a i b.",
+      "max_new_tokens": 256
+    },
+    "function": "suma",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "reference": "def suma(a, b):\n    return a + b\n",
+    "cases": [
+      {
+        "function": "suma",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "suma",
+        "args": [
+          -3,
+          5
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "suma",
+        "args": [
+          8,
+          9
+        ],
+        "kwargs": {},
+        "expected": 17
+      }
+    ]
+  },
+  {
+    "id": "new-absolute-en",
+    "group": "exposed_bilingual_regression",
+    "family": "absolute",
+    "language": "en",
+    "request": {
+      "prompt": "Implement modul(x) in Python returning the absolute value of x.",
+      "max_new_tokens": 256
+    },
+    "function": "modul",
+    "arguments": [
+      "x"
+    ],
+    "reference": "def modul(x):\n    return abs(x)\n",
+    "cases": [
+      {
+        "function": "modul",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "modul",
+        "args": [
+          -7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "modul",
+        "args": [
+          4
+        ],
+        "kwargs": {},
+        "expected": 4
+      }
+    ]
+  },
+  {
+    "id": "new-absolute-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "absolute",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję modul(x) zwracającą wartość bezwzględną x.",
+      "max_new_tokens": 256
+    },
+    "function": "modul",
+    "arguments": [
+      "x"
+    ],
+    "reference": "def modul(x):\n    return abs(x)\n",
+    "cases": [
+      {
+        "function": "modul",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "modul",
+        "args": [
+          -7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "modul",
+        "args": [
+          4
+        ],
+        "kwargs": {},
+        "expected": 4
+      }
+    ]
+  },
+  {
+    "id": "new-total-en",
+    "group": "exposed_bilingual_regression",
+    "family": "total",
+    "language": "en",
+    "request": {
+      "prompt": "Implement razem(values) in Python returning the sum of values; empty list returns zero.",
+      "max_new_tokens": 256
+    },
+    "function": "razem",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def razem(values):\n    return sum(values)\n",
+    "cases": [
+      {
+        "function": "razem",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            1,
+            -2,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 8
+      }
+    ]
+  },
+  {
+    "id": "new-total-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "total",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję razem(values) zwracającą sumę values; pusta lista daje zero.",
+      "max_new_tokens": 256
+    },
+    "function": "razem",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def razem(values):\n    return sum(values)\n",
+    "cases": [
+      {
+        "function": "razem",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            1,
+            -2,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 3
+      },
+      {
+        "function": "razem",
+        "args": [
+          [
+            8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 8
+      }
+    ]
+  },
+  {
+    "id": "new-even-en",
+    "group": "exposed_bilingual_regression",
+    "family": "even",
+    "language": "en",
+    "request": {
+      "prompt": "Implement parzysta(x) in Python returning whether integer x is even, including zero and negative integers.",
+      "max_new_tokens": 256
+    },
+    "function": "parzysta",
+    "arguments": [
+      "x"
+    ],
+    "reference": "def parzysta(x):\n    return x % 2 == 0\n",
+    "cases": [
+      {
+        "function": "parzysta",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -3
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": true
+      }
+    ]
+  },
+  {
+    "id": "new-even-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "even",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję parzysta(x) zwracającą czy liczba całkowita x jest parzysta, także dla zera i liczb ujemnych.",
+      "max_new_tokens": 256
+    },
+    "function": "parzysta",
+    "arguments": [
+      "x"
+    ],
+    "reference": "def parzysta(x):\n    return x % 2 == 0\n",
+    "cases": [
+      {
+        "function": "parzysta",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -3
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "parzysta",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": true
+      }
+    ]
+  },
+  {
+    "id": "new-factorial-en",
+    "group": "exposed_bilingual_regression",
+    "family": "factorial",
+    "language": "en",
+    "request": {
+      "prompt": "Implement silnia(n) in Python returning factorial of nonnegative integer n; zero gives one.",
+      "max_new_tokens": 256
+    },
+    "function": "silnia",
+    "arguments": [
+      "n"
+    ],
+    "reference": "def silnia(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n",
+    "cases": [
+      {
+        "function": "silnia",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          5
+        ],
+        "kwargs": {},
+        "expected": 120
+      },
+      {
+        "function": "silnia",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "new-factorial-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "factorial",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję silnia(n) zwracającą silnię nieujemnej liczby całkowitej n; dla zera zwróć jeden.",
+      "max_new_tokens": 256
+    },
+    "function": "silnia",
+    "arguments": [
+      "n"
+    ],
+    "reference": "def silnia(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n",
+    "cases": [
+      {
+        "function": "silnia",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          1
+        ],
+        "kwargs": {},
+        "expected": 1
+      },
+      {
+        "function": "silnia",
+        "args": [
+          5
+        ],
+        "kwargs": {},
+        "expected": 120
+      },
+      {
+        "function": "silnia",
+        "args": [
+          10
+        ],
+        "kwargs": {},
+        "expected": 3628800
+      }
+    ]
+  },
+  {
+    "id": "new-positive_sum-en",
+    "group": "exposed_bilingual_regression",
+    "family": "positive_sum",
+    "language": "en",
+    "request": {
+      "prompt": "Implement dodatnie(values) in Python returning the sum of positive values; ignore zero and negatives; empty list gives zero.",
+      "max_new_tokens": 256
+    },
+    "function": "dodatnie",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def dodatnie(values):\n    return sum(x for x in values if x > 0)\n",
+    "cases": [
+      {
+        "function": "dodatnie",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "new-positive_sum-pl",
+    "group": "exposed_bilingual_regression",
+    "family": "positive_sum",
+    "language": "pl",
+    "request": {
+      "prompt": "Napisz w Pythonie funkcję dodatnie(values) zwracającą sumę dodatnich elementów values; pomiń zero i ujemne; pusta lista daje zero.",
+      "max_new_tokens": 256
+    },
+    "function": "dodatnie",
+    "arguments": [
+      "values"
+    ],
+    "reference": "def dodatnie(values):\n    return sum(x for x in values if x > 0)\n",
+    "cases": [
+      {
+        "function": "dodatnie",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "dodatnie",
+        "args": [
+          [
+            -8
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  }
+]
