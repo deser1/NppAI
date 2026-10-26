@@ -75,7 +75,10 @@ def configured_inference_backend() -> DenseLocalBackend:
             raise BackendUnavailable("Invalid NPPAI_PYTHON_FUNCTIONS")
         if width: options["prompt_bytes"] = width
         if profile == "1": options["python_functions"] = True
-        inference_backend = DenseLocalBackend(path, **options)
+        try:
+            inference_backend = DenseLocalBackend(path, **options)
+        except ValueError as exc:
+            raise BackendUnavailable("Invalid inference profile: " + str(exc)) from None
     return inference_backend
 
 

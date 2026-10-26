@@ -22,7 +22,8 @@ algorithms, reference answers or test cases. Structurally valid wrong functions
 are still possible. Unchanged/default backends keep their existing greedy
 format and behavior.
 
-The report preserves old greedy output, repaired greedy output and repaired
+The report preserves old greedy output, original weights with the new profile,
+repaired greedy output and repaired
 production NumPy decoding independently. It includes18 authored development
 probes:12 alternative-wording, four new-name, two reproduction rows. These are
 exposed development probes, not a blind benchmark. Four simple Polish prompts

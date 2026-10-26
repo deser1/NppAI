@@ -51,6 +51,7 @@ class WindowsUI:
             'PostMessageW':([wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM],wintypes.BOOL),
             'GetDlgCtrlID':([wintypes.HWND],ctypes.c_int),
             'IsWindowUnicode':([wintypes.HWND],wintypes.BOOL),
+            'IsWindowVisible':([wintypes.HWND],wintypes.BOOL),
             'IsWindowEnabled':([wintypes.HWND],wintypes.BOOL),
             'ShowWindow':([wintypes.HWND,ctypes.c_int],wintypes.BOOL),
             'SetForegroundWindow':([wintypes.HWND],wintypes.BOOL),
@@ -230,7 +231,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False,valida
         applied=False
         if validated:
             if not events[-1]['apply_enabled']:raise RuntimeError('Actual Docker validation did not enable Apply')
-            scintilla=next((h for h in ui.windows(main) if ui.cls(h)=='Scintilla'),None)
+            scintilla=next((h for h in ui.windows(main) if ui.cls(h)=='Scintilla' and ui.api.IsWindowVisible(h)),None)
             if not scintilla or ui.document(scintilla)!=b'':raise RuntimeError('Smoke buffer changed before Apply')
             if not ui.api.PostMessageW(panel,0x111,5,controls[5]):raise RuntimeError('Apply command failed')
             expected=proposal['code'].encode('utf-8')
@@ -324,7 +325,7 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                     'service_from_extracted_package':bool(service_zip),
                     'health':health,'plugin_menu':list(path),'panel_class':ui.cls(panel),
                     'polish_prompt_round_trip':True,'button_text':button,'apply_disabled_without_validation':not bool(validation_image),
-                    'scope':'Fresh portable install, real server/model readiness and real panel controls. No generated-code quality, Docker Desktop or upgrade verification.'}
+                    'scope':('Fresh portable install, actual local Docker validation and real GUI Apply/Undo. No upgrade verification.' if validation_image else 'Fresh portable install, real server/model readiness and real panel controls. No Docker Desktop, validated Apply/Undo or upgrade verification.')}
                 if demo:report['live_generation_demo']=demo
                 (output/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
                 print(json.dumps(report,indent=2,ensure_ascii=False))

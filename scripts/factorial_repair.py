@@ -90,7 +90,7 @@ def run(source,output,image=None):
     (output/'trace.json').write_text(json.dumps(trace)+'\n')
     weights_before=state_digest(model)
     report=dict(protocol=protocol,model_sha256=sha(path),trace_sha256=sha(output/'trace.json'),protocol_sha256=sha(output/'protocol.json'),old_replay_sha256=sha(ROOT/'evaluation/staged-protocol-v1/train.json'),torch=torch.__version__,readouts={},promotion=False,limitations='Authored and previously exposed factorial probes; one seed; no broad code-generation claim. Plain Polish prompts are training memorization probes. New names measured separately.')
-    for arm,backend in [('initial',TorchBackend(initial,'source')),('repair_raw',TorchBackend(model,'repair')),('repair',DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True))]:
+    for arm,backend in [('initial',TorchBackend(initial,'source')),('initial_profile',DenseLocalBackend(str(source),prompt_bytes=WIDTH,python_functions=True)),('repair_raw',TorchBackend(model,'repair')),('repair',DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True))]:
         rows=[]
         for row in evaluation+[r for r in training if r['id'].startswith('plain-')]:
             payload=GenerationRequest(**row['request'])
@@ -101,7 +101,7 @@ def run(source,output,image=None):
             item=dict(id=row['id'],request=row['request'],output=generated,exact=generated==row['answer'],cases=row['cases'],source_sha256=hashlib.sha256(generated.encode()).hexdigest())
             if image:
                 import sandbox_validate
-                code,diagnostics=sandbox_validate.validate(generated,'tests',row['cases'],image)
+                code,diagnostics=(sandbox_validate.validate(generated,'tests',row['cases'],image) if generated.strip() else (1,'Empty candidate; no execution'))
                 if code not in (0,1):raise RuntimeError('Docker unavailable: '+diagnostics)
                 item.update(functional_pass=code==0,diagnostics=diagnostics)
             rows.append(item)

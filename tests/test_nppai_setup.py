@@ -146,3 +146,15 @@ class RepairProfileTests(unittest.TestCase):
             self.assertNotIn('NPPAI_PROMPT_BYTES',fresh)
             self.assertNotIn('NPPAI_PYTHON_FUNCTIONS',fresh)
             self.assertEqual(fresh['NPPAI_PLUGIN_MODE'],'auto')
+
+class RepairReadinessTests(unittest.IsolatedAsyncioTestCase):
+    async def test_actual_profile_identity_and_invalid_configuration(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'model.nppai';checkpoint(path)
+            for boundary,status in [('64',200),('128',503),('-1',503),('invalid',503)]:
+                with patch.dict(os.environ,{'NPPAI_API_KEY':'test-key','NPPAI_INFERENCE_MODEL':str(path),'NPPAI_PROMPT_BYTES':boundary,'NPPAI_PYTHON_FUNCTIONS':'1'}),patch.object(server_backend,'inference_backend',None):
+                    actual,body,_=await call_app(b'','0',extra_headers={'X-API-Key':'test-key'},path='/api/v1/health',method='GET')
+                    self.assertEqual(actual,status)
+                    if status==200:
+                        self.assertEqual(json.loads(body)['prompt_bytes'],64)
+                        self.assertEqual(json.loads(body)['decode_profile'],'python_function_beam8')
