@@ -129,10 +129,11 @@ def run(source,output,image=None):
         print(arm,'exact',sum(r['exact'] for r in rows),'/',len(rows),flush=True)
     baseline=TorchReadout(initial,'source');repaired=TorchReadout(model,'repair')
     retained=[]
+    production=DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True)
     for row in old:
         p=GenerationRequest(prompt=row['prompt'],max_new_tokens=128)
-        a=baseline.generate(p).output;b=repaired.generate(p).output
-        retained.append(dict(id=row['id'],before=a,after=b,answer=row['answer'],before_exact=a==row['answer'],after_exact=b==row['answer']))
+        a=baseline.generate(p).output;b=repaired.generate(p).output;c=production.generate(p).output
+        retained.append(dict(id=row['id'],before=a,after=b,production=c,answer=row['answer'],before_exact=a==row['answer'],after_exact=b==row['answer'],production_exact=c==row['answer']))
     report['retention']=retained
     # Actual runtime/Torch greedy parity on the user reproduction, independent of beam.
     numpy_raw=DenseLocalBackend(str(path),prompt_bytes=WIDTH)

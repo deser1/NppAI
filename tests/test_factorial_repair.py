@@ -73,3 +73,24 @@ class PublicationGateTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'Docker'):qualify(root)
             (root/'NppAI-factorial.nppai').write_bytes(b'changed')
             with self.assertRaisesRegex(ValueError,'Checkpoint'):qualify(root)
+
+    def test_production_profile_regression_blocks_release_even_when_raw_is_retained(self):
+        import hashlib,json
+        from scripts.factorial_repair import SOURCE,ROOT,dataset,sha
+        from scripts.qualify_factorial_repair import qualify
+        train,ev=dataset();expected=ev+[r for r in train if r['id'].startswith('plain-')]
+        old=json.loads((ROOT/'evaluation/staged-protocol-v1/train.json').read_bytes())
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            for name in ('NppAI-factorial.nppai','protocol.json','trace.json'):(root/name).write_bytes(b'gate fixture')
+            report=dict(model_sha256=sha(root/'NppAI-factorial.nppai'),protocol_sha256=sha(root/'protocol.json'),trace_sha256=sha(root/'trace.json'),protocol=dict(source_sha256=SOURCE,updates=4096),readout_weights_unchanged=True,parity=[dict(passed=True)]*3,validator_image='sha256:'+'0'*64,positive_controls=[0]*18,negative_control=1,
+                old_replay_sha256=sha(ROOT/'evaluation/staged-protocol-v1/train.json'),
+                readouts={'repair':[dict(id=r['id'],request=r['request'],cases=r['cases'],output=r['answer'],source_sha256=hashlib.sha256(r['answer'].encode()).hexdigest(),functional_pass=True) for r in expected]},
+                retention=[dict(id=r['id'],answer=r['answer'],before=r['answer'] if i<88 else 'failed',after=r['answer'],production=r['answer']) for i,r in enumerate(old)])
+            import copy
+            report['readouts']={arm:copy.deepcopy(report['readouts']['repair']) for arm in ('initial','initial_profile','repair_raw','repair')}
+            (root/'report.json').write_text(json.dumps(report))
+            self.assertEqual(qualify(root)['original_direct']['production_after'],96)
+            report['retention'][0]['production']='regressed'
+            (root/'report.json').write_text(json.dumps(report))
+            with self.assertRaisesRegex(ValueError,'hit lost'):qualify(root)

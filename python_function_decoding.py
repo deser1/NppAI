@@ -65,10 +65,39 @@ class CachedLogits:
     def next_depth(self):self.previous,self.current=self.current,{}
 
 
+def legacy_function(backend,payload,signature):
+    """Preserve complete value-returning functions in the original format.
+
+    Selection uses generic structure and the requested declaration only, never
+    operation names, reference answers, test cases or task-specific bodies.
+    """
+    if signature is None:return None
+    import numpy as np
+    from model_backends import GenerationResponse,format_prompt
+    tokens=list((format_prompt(payload)+payload.assistant_prefix).encode('utf-8'))
+    if len(tokens)>backend.weights['context']:raise ValueError('Formatted prompt exceeds model context')
+    logits=CachedLogits(backend.weights);output=bytearray(payload.assistant_prefix.encode('utf-8'))
+    for count in range(1,payload.max_new_tokens+1):
+        values=logits(tokens)
+        if not np.isfinite(values).all():raise RuntimeError('Non-finite model logits')
+        token=int(values.argmax());logits.next_depth()
+        if token==0:
+            code=output.decode('utf-8',errors='replace')
+            if acceptable(code,signature):
+                f=next(n for n in ast.parse(code).body if isinstance(n,ast.FunctionDef))
+                if any(isinstance(n,ast.Return) and n.value is not None for n in f.body):
+                    return GenerationResponse(model_id=backend.model_id,output=code,generated_tokens=count,finish_reason='eos')
+            return None
+        output.append(token);tokens.append(token)
+    return None
+
+
 def generate(backend,payload):
     import numpy as np
     from model_backends import GenerationResponse,format_prompt
     header,signature=declaration(payload)
+    legacy=legacy_function(backend,payload,signature)
+    if legacy is not None:return legacy
     prefix=list((format_prompt(payload,backend.prompt_bytes)+header).encode())
     if len(prefix)>backend.weights['context']:raise ValueError('Formatted prompt exceeds model context')
     logits=CachedLogits(backend.weights)

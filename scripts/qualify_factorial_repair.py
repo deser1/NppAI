@@ -16,6 +16,7 @@ def qualify(root):
     if not r.get('readout_weights_unchanged') or not all(v['passed'] for v in r['parity']) or len(r['parity'])!=3:raise ValueError('Runtime parity/identity missing')
     if not r.get('validator_image','').startswith('sha256:') or r.get('positive_controls')!=[0]*18 or r.get('negative_control')!=1:raise ValueError('Real Docker validator controls missing')
     train,ev=dataset();expected=ev+[v for v in train if v['id'].startswith('plain-')]
+    if set(r['readouts'])!={'initial','initial_profile','repair_raw','repair'}:raise ValueError('Readout arm set changed')
     totals={}
     for arm,rows in r['readouts'].items():
         if [v['id'] for v in rows]!=[v['id'] for v in expected]:raise ValueError('Incomplete readout')
@@ -25,12 +26,13 @@ def qualify(root):
     repair=totals['repair']
     if repair['reproduction-']['passed']!=2 or repair['plain-']['passed']!=4 or repair['wording-']['passed']<8:raise ValueError('Bounded functional repair gate failed')
     retained=r['retention']
-    if len(retained)!=96 or any(v['before']==v['answer'] and v['after']!=v['answer'] for v in retained):raise ValueError('Original direct hit lost')
+    if len(retained)!=96 or any(v['before']==v['answer'] and (v['after']!=v['answer'] or v.get('production')!=v['answer']) for v in retained):raise ValueError('Original direct hit lost')
     old=json.loads((ROOT/'evaluation/staged-protocol-v1/train.json').read_bytes())
     if r['old_replay_sha256']!=sha(ROOT/'evaluation/staged-protocol-v1/train.json') or [(v['id'],v['answer']) for v in retained]!=[(v['id'],v['answer']) for v in old]:raise ValueError('Original retention set changed')
     before=sum(v['before']==v['answer'] for v in retained);after=sum(v['after']==v['answer'] for v in retained)
+    production=sum(v.get('production')==v['answer'] for v in retained)
     if before!=88:raise ValueError('Pinned initialization no longer reproduces88 original hits')
-    summary=dict(model_sha256=r['model_sha256'],functional=totals,original_direct=dict(before=before,after=after,total=96),gate='passed',scope='Bounded factorial repair; no stable/general-coding promotion',windows_docker_apply_undo='not_verified')
+    summary=dict(model_sha256=r['model_sha256'],functional=totals,original_direct=dict(before=before,after=after,production_after=production,total=96),gate='passed',scope='Bounded factorial repair; no stable/general-coding promotion',windows_docker_apply_undo='not_verified')
     (root/'qualified-report.json').write_text(json.dumps(summary,indent=2)+'\n')
     card=f'''# NppAI factorial repair — experimental
 
@@ -40,7 +42,10 @@ batch8 (four original direct examples and four factorial examples), AdamW0.0003.
 prompt boundary. Optional width8 neural beam search uses generic AST/signature
 and name-binding checks. An unambiguous requested function declaration may be
 prefilled mechanically; all algorithm/body bytes come from model logits.
-No test answers or algorithm templates are used by the decoder.
+No test answers or algorithm templates are used by the decoder. For an explicit
+requested declaration, the profile first accepts a complete, structurally valid,
+value-returning greedy function in the legacy format. Otherwise it uses aligned
+neural beam search. The route does not recognize particular operation names.
 
 Model SHA-256: `{r['model_sha256']}`.
 
@@ -50,14 +55,16 @@ Docker-tested result counts (raw outputs/cases/controls in report.json):
 {json.dumps(totals,indent=2)}
 ```
 
-Original direct training probes: {before}/96 before, {after}/96 after, no original
-exact hit lost. This measures memorization retention, not unseen accuracy.
-Plain Polish requests are also training probes. Wording and new-name rows are
+Original direct training probes: {before}/96 before, {after}/96 after in raw
+legacy readout, {production}/96 after in the actual production profile. No
+original exact hit is lost in either readout. This measures memorization retention, not unseen accuracy.
+Plain Polish requests are also training probes. The12 wording rows repeat one
+authored description across two names, three parameters and two request modes. Wording and new-name rows are
 authored/exposed development probes; one seed, one narrow operation family.
 The generic search decoder can still produce syntactically valid wrong code.
-Configured task tests remain mandatory before Apply. The optional fixed-boundary
-profile rejects tasks plus context longer than256 UTF-8 bytes, without truncation;
-long repair feedback may therefore be rejected. These results replace no
+Configured task tests remain mandatory before Apply. The aligned branch rejects tasks plus context longer than256 UTF-8 bytes,
+without truncation; long repair feedback may therefore be rejected if the
+legacy-format route cannot return a complete valid function. These results replace no
 previous public0/12 benchmark result and do not establish general code quality.
 
 ## Windows quick start
