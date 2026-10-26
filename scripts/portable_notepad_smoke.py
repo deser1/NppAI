@@ -353,8 +353,10 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                 path,command_id=wait_for(command,editor)
                 if not ui.api.PostMessageW(main,0x111,command_id,0):raise RuntimeError('Cannot open NppAI panel')
                 panel=wait_for(lambda:next((h for h in ui.windows(main) if ui.cls(h)=='NppAI_PanelClass'),None),editor)
-                controls={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
-                if not all(key in controls for key in (1,2,3,4,5,6)):raise RuntimeError('Panel controls missing')
+                def ready_controls():
+                    found={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
+                    return found if all(key in found for key in (1,2,3,4,5,6)) else None
+                controls=wait_for(ready_controls,editor)
                 task='@python-signature silnia(n)\r\nWygeneruj kod na silnię. Zażółć gęślą jaźń.'
                 if exercise:
                     task='@python-signature silnia(n)\r\nWygeneruj kod na silnię dla nieujemnej liczby całkowitej n. Zwróć wynik.'
