@@ -11,11 +11,30 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from model_backends import GenerationRequest, DenseLocalBackend, format_prompt
-from scripts.train_staged_protocol import TorchBackend
+from model_backends import GenerationRequest, GenerationResponse, DenseLocalBackend, format_prompt
 
 SOURCE='4859ad69e93ff2ca80d8951bca617476d118f8ef127abc4b313b8d2f0671c6fd'
 WIDTH=256
+
+
+class TorchReadout:
+    """Greedy FP32 control readout for this repair, isolated from past pilots."""
+    def __init__(self,model,model_id):
+        self.model,self.model_id,self.prompt_bytes=model.eval(),model_id,0
+
+    def generate(self,payload):
+        import torch
+        tokens=list((format_prompt(payload,self.prompt_bytes)+payload.assistant_prefix).encode('utf-8'))
+        if len(tokens)>self.model.max_seq_len:raise ValueError('Formatted prompt exceeds model context')
+        output=bytearray(payload.assistant_prefix.encode('utf-8'));reason='length'
+        with torch.no_grad():
+            for count in range(1,payload.max_new_tokens+1):
+                values=self.model(torch.tensor([tokens[-self.model.max_seq_len:]]))[0,-1]
+                if not torch.isfinite(values).all():raise RuntimeError('Non-finite logits')
+                token=int(values.argmax())
+                if token==0:reason='eos';break
+                tokens.append(token);output.append(token)
+        return GenerationResponse(model_id=self.model_id,output=output.decode('utf-8',errors='replace'),generated_tokens=count,finish_reason=reason)
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -91,7 +110,7 @@ def run(source,output,image=None):
     (output/'trace.json').write_text(json.dumps(trace)+'\n')
     weights_before=state_digest(model)
     report=dict(source_commit=os.getenv('GITHUB_SHA'),source_files={p:sha(ROOT/p) for p in ('scripts/factorial_repair.py','python_function_decoding.py','model_backends.py','sandbox_validate.py','train_nppai.py')},protocol=protocol,model_sha256=sha(path),trace_sha256=sha(output/'trace.json'),protocol_sha256=sha(output/'protocol.json'),old_replay_sha256=sha(ROOT/'evaluation/staged-protocol-v1/train.json'),torch=torch.__version__,readouts={},promotion=False,limitations='Authored and previously exposed factorial probes; one seed; no broad code-generation claim. Plain Polish prompts are training memorization probes. New names measured separately.')
-    for arm,backend in [('initial',TorchBackend(initial,'source')),('initial_profile',DenseLocalBackend(str(source),prompt_bytes=WIDTH,python_functions=True)),('repair_raw',TorchBackend(model,'repair')),('repair',DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True))]:
+    for arm,backend in [('initial',TorchReadout(initial,'source')),('initial_profile',DenseLocalBackend(str(source),prompt_bytes=WIDTH,python_functions=True)),('repair_raw',TorchReadout(model,'repair')),('repair',DenseLocalBackend(str(path),prompt_bytes=WIDTH,python_functions=True))]:
         rows=[]
         for row in evaluation+[r for r in training if r['id'].startswith('plain-')]:
             payload=GenerationRequest(**row['request'])
@@ -108,7 +127,7 @@ def run(source,output,image=None):
             rows.append(item)
         report['readouts'][arm]=rows
         print(arm,'exact',sum(r['exact'] for r in rows),'/',len(rows),flush=True)
-    baseline=TorchBackend(initial,'source');repaired=TorchBackend(model,'repair')
+    baseline=TorchReadout(initial,'source');repaired=TorchReadout(model,'repair')
     retained=[]
     for row in old:
         p=GenerationRequest(prompt=row['prompt'],max_new_tokens=128)
@@ -117,7 +136,7 @@ def run(source,output,image=None):
     report['retention']=retained
     # Actual runtime/Torch greedy parity on the user reproduction, independent of beam.
     numpy_raw=DenseLocalBackend(str(path),prompt_bytes=WIDTH)
-    aligned=TorchBackend(model,'repair');aligned.prompt_bytes=WIDTH
+    aligned=TorchReadout(model,'repair');aligned.prompt_bytes=WIDTH
     report['parity']=[dict(id=r['id'],passed=numpy_raw.generate(GenerationRequest(**r['request'])).output==aligned.generate(GenerationRequest(**r['request'])).output) for r in evaluation[-2:]+[training[-4]]]
     report['readout_weights_unchanged']=state_digest(model)==weights_before
     if image:

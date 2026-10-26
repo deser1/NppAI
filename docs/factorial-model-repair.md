@@ -63,6 +63,12 @@ pilot. It failed the intended wording gate and was not published. The final
 protocol expands description coverage and uses4096 updates. This is a second
 attempt on exposed development tasks, not an independent confirmation.
 
+The historical staged-protocol training workflow still references an expired
+GitHub Actions initialization artifact (`11775752592`, HTTP410 on26Oct2026).
+Its old experiment cannot currently be rerun without restoring those exact
+source weights. This repair leaves that pilot unchanged and has its own trainer
+using the permanent, SHA-pinned rc.2 model release.
+
 ## Windows demonstration and remaining check
 
 The `Bounded factorial model repair` workflow records actual generation in the
