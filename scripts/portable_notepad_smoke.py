@@ -156,6 +156,54 @@ def verify_service(root):
     return manifest
 
 
+def model_review_projection(code):
+    """Reproduce the released DLL's line rendering, including its EOF sentinel."""
+    lines=code.split('\n')
+    if code.endswith('\n'):lines.pop()
+    if not code:lines=[]
+    lines=[line[:-1] if line.endswith('\r') else line for line in lines]
+    if code.endswith('\n') and (not lines or lines[-1]!=''):lines.append('')
+    return '\n'.join(lines)+'\n'
+
+
+def capture_server(output,service_root,port):
+    """Observe actual returned model responses; forward the same response object.
+
+    Test-only bootstrap: production service sources and generation stay intact.
+    No API key is recorded. Captures let us compare exact bytes independently
+    of the released DLL's ambiguous trailing-newline diff rendering.
+    """
+    bootstrap=output/'capture-server.py'
+    capture=output/'model-responses.jsonl'
+    capture.unlink(missing_ok=True)
+    program = ('import sys, json\nfrom pathlib import Path\n'
+        + 'sys.path.insert(0, '+repr(str(service_root.resolve()))+')\n'
+        + 'import uvicorn, server_backend\n'
+        + 'original = server_backend.generate_with_configured_model\n'
+        + 'def observed(payload):\n'
+        + '    response = original(payload)\n'
+        + '    with Path('+repr(str(capture.resolve()))+').open("a", encoding="utf-8", newline="\\n") as f:\n'
+        + '        f.write(json.dumps({"request": payload.model_dump(), "response": response.model_dump()}, ensure_ascii=False)+"\\n")\n'
+        + '    return response\n'
+        + 'server_backend.generate_with_configured_model = observed\n'
+        + 'uvicorn.run(server_backend.app, host="127.0.0.1", port='+str(port)+')\n')
+    compile(program,str(bootstrap),'exec')
+    bootstrap.write_text(program,encoding='utf-8')
+    return bootstrap
+
+
+def bind_captured_proposal(proposal,capture):
+    rows=[json.loads(line) for line in capture.read_text(encoding='utf-8').splitlines()]
+    if not rows:raise ValueError('No actual model response captured')
+    actual=rows[-1]
+    code=actual['response']['output']
+    if proposal['code']!=model_review_projection(code):raise ValueError('Plugin review differs from actual model response')
+    # Keep the literal display projection as evidence; preserve exact model bytes.
+    proposal.update(review_code=proposal['code'],code=code,source='actual_returned_model_response_and_plugin_diff',
+                    model_id=actual['response']['model_id'],request=actual['request'])
+    return proposal
+
+
 class WindowRecording:
     """Sample the actual CI editor window; do not synthesize or annotate frames."""
     def __init__(self,ui,window,path):
@@ -227,7 +275,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False,valida
         if not any('POST /api/v1/generate HTTP/1.1" 200' in line for line in (output/'server.log').read_text(encoding='utf-8').splitlines()):
             raise RuntimeError('No successful real model HTTP response observed')
         ui.scroll_to_end(controls[3]);time.sleep(1);sample()
-        proposal=inspect_review_syntax(history)
+        proposal=bind_captured_proposal(inspect_review_syntax(history),output/'model-responses.jsonl')
         applied=False
         if validated:
             if not events[-1]['apply_enabled']:raise RuntimeError('Actual Docker validation did not enable Apply')
@@ -291,7 +339,8 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
         document=root/'smoke.py';document.write_bytes(b'')
         ui=WindowsUI();editor=None
         with (output/'server.log').open('w',encoding='utf-8') as log:
-            server=subprocess.Popen([sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)],cwd=service_root,env=environment,stdout=log,stderr=log)
+            command=([sys.executable,str(capture_server(output,service_root,port).resolve())] if exercise else [sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)])
+            server=subprocess.Popen(command,cwd=service_root,env=environment,stdout=log,stderr=log)
             try:
                 health=wait_ready(server,port,environment['NPPAI_API_KEY'])
                 if prompt_bytes and health.get("prompt_bytes") != prompt_bytes:raise RuntimeError("Prompt recipe mismatch")

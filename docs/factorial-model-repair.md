@@ -44,6 +44,9 @@ The CI publication gate requires:
 - A real portable Notepad++ window sends the Polish request to the packaged
   service. Its readable review bytes must equal the actual Docker-tested
   candidate, and model/service/recording identities must match the evidence.
+  A test-only server bootstrap records the actual returned response unchanged;
+  the literal legacy diff rendering is retained separately, including its extra
+  displayed final line. This avoids inferring exact model bytes from the diff.
 - Exact merged-main CI succeeds before a new experimental model release.
 
 These are narrow release criteria, not general correctness criteria. Generated

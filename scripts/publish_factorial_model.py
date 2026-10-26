@@ -21,6 +21,10 @@ def verify():
     if any(sha(ROOT/name)!=digest for name,digest in raw.get('source_files',{}).items()) or not raw.get('source_files'):raise ValueError('Measured source files changed')
     expected=next(r for r in raw['readouts']['repair'] if r['id']=='plain-0')
     demo=report['live_generation_demo']
+    proposal=demo['proposal']
+    if proposal.get('model_id')!=report['health']['model_id']:raise ValueError('Actual response model mismatch')
+    request=proposal.get('request',{})
+    if request.get('prompt')!=expected['request']['prompt'] or request.get('context')!='' or request.get('assistant_prefix')!='':raise ValueError('Actual plugin request differs from measured task')
     if not expected.get('functional_pass') or demo['proposal']['code']!=expected['output']:raise ValueError('Actual plugin differs from Docker-tested model output')
     if report['model_sha256']!=summary['model_sha256'] or report['health']['model_id']!='sha256:'+summary['model_sha256']:raise ValueError('GUI model mismatch')
     if report['health'].get('prompt_bytes')!=256 or report['health'].get('decode_profile')!='python_function_beam8':raise ValueError('GUI recipe mismatch')
