@@ -133,3 +133,28 @@ class LauncherTests(unittest.TestCase):
         with patch.object(launcher, 'readiness', side_effect=missing):
             with self.assertRaisesRegex(RuntimeError, 'model unavailable'):
                 launcher.wait_ready(server, 8000, 'key')
+
+class RepairProfileTests(unittest.TestCase):
+    def test_launcher_profile_forces_measured_service_and_clears_stale_settings(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'model.nppai';checkpoint(path)
+            env=launcher.connection_environment(path,8123,{},prompt_bytes=64,python_functions=True)
+            self.assertEqual(env['NPPAI_PLUGIN_MODE'],'online')
+            self.assertEqual(env['NPPAI_PROMPT_BYTES'],'64')
+            self.assertEqual(env['NPPAI_PYTHON_FUNCTIONS'],'1')
+            fresh=launcher.connection_environment(path,8123,env)
+            self.assertNotIn('NPPAI_PROMPT_BYTES',fresh)
+            self.assertNotIn('NPPAI_PYTHON_FUNCTIONS',fresh)
+            self.assertEqual(fresh['NPPAI_PLUGIN_MODE'],'auto')
+
+class RepairReadinessTests(unittest.IsolatedAsyncioTestCase):
+    async def test_actual_profile_identity_and_invalid_configuration(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/'model.nppai';checkpoint(path)
+            for boundary,status in [('64',200),('128',503),('-1',503),('invalid',503)]:
+                with patch.dict(os.environ,{'NPPAI_API_KEY':'test-key','NPPAI_INFERENCE_MODEL':str(path),'NPPAI_PROMPT_BYTES':boundary,'NPPAI_PYTHON_FUNCTIONS':'1'}),patch.object(server_backend,'inference_backend',None):
+                    actual,body,_=await call_app(b'','0',extra_headers={'X-API-Key':'test-key'},path='/api/v1/health',method='GET')
+                    self.assertEqual(actual,status)
+                    if status==200:
+                        self.assertEqual(json.loads(body)['prompt_bytes'],64)
+                        self.assertEqual(json.loads(body)['decode_profile'],'python_function_beam8')

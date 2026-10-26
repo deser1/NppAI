@@ -21,6 +21,11 @@ A [live generation demonstration](https://github.com/deser1/NppAI/blob/main/docs
 actual released plugin sending a Polish request to the own-model service and
 showing its unvalidated review. It does not claim successful generated code.
 
+A [bounded factorial repair](docs/factorial-model-repair.md) adds reproducible
+training, raw/decoded measurements, isolated functional gates and a real-editor
+comparison. Its separate experimental model release is conditional on these
+gates; it does not establish general code-generation quality.
+
 ## Try the plugin on Windows
 
 The current installation candidate is described in [v0.5.0-rc.2 notes](docs/releases/v0.5.0-rc.2.md).

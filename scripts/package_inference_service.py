@@ -7,7 +7,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = (
-    'server_backend.py', 'model_backends.py', 'requirements-inference.txt',
+    'python_function_decoding.py', 'server_backend.py', 'model_backends.py', 'requirements-inference.txt',
     'scripts/start_nppai.py', 'scripts/check_dense_runtime_parity.py',
     'docs/notepad-setup-pl.md', 'docs/model-format.md', 'docs/validated-generation.md',
     'docs/automatic-plugin-mode.md', 'docs/research-model-card.md',
@@ -16,7 +16,7 @@ FILES = (
 )
 
 
-def package(destination):
+def package(destination, readme=None):
     payload = {name: (ROOT / name).read_bytes() for name in FILES}
     notes = json.loads((ROOT/'release/candidate.json').read_bytes())['notes']
     if Path(notes).parent != Path('docs/releases'):
@@ -25,7 +25,7 @@ def package(destination):
     for name, raw in payload.items():
         if name.endswith('.py'):
             compile(raw, name, 'exec')
-    payload['README.md'] = payload[notes]
+    payload['README.md'] = Path(readme).read_bytes() if readme else payload[notes]
     payload['SOURCE_MANIFEST.json'] = (json.dumps({
         'purpose': 'Inference only; training endpoints have no trainer bundled.',
         'files': {name: hashlib.sha256(raw).hexdigest() for name, raw in payload.items()}
@@ -39,4 +39,6 @@ def package(destination):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('destination', type=Path)
-    package(parser.parse_args().destination)
+    parser.add_argument('--readme', type=Path)
+    args = parser.parse_args()
+    package(args.destination, args.readme)

@@ -65,7 +65,20 @@ def configured_inference_backend() -> DenseLocalBackend:
         path = os.getenv("NPPAI_INFERENCE_MODEL")
         if not path:
             raise BackendUnavailable("Inference model is not configured")
-        inference_backend = DenseLocalBackend(path)
+        options = {}
+        try:
+            width = int(os.getenv("NPPAI_PROMPT_BYTES", "0"))
+        except ValueError:
+            raise BackendUnavailable("Invalid NPPAI_PROMPT_BYTES") from None
+        profile = os.getenv("NPPAI_PYTHON_FUNCTIONS", "0")
+        if profile not in ("0", "1"):
+            raise BackendUnavailable("Invalid NPPAI_PYTHON_FUNCTIONS")
+        if width: options["prompt_bytes"] = width
+        if profile == "1": options["python_functions"] = True
+        try:
+            inference_backend = DenseLocalBackend(path, **options)
+        except ValueError as exc:
+            raise BackendUnavailable("Invalid inference profile: " + str(exc)) from None
     return inference_backend
 
 
@@ -81,7 +94,9 @@ def inspect_configured_model() -> dict:
     try:
         backend = configured_inference_backend()
         return {"protocol_version": 1, "status": "ready", "backend": "nppai-dense-v2",
-                "model_id": backend.model_id, "context_bytes": backend.weights["context"]}
+                "model_id": backend.model_id, "context_bytes": backend.weights["context"],
+                "prompt_bytes": getattr(backend, "prompt_bytes", 0),
+                "decode_profile": "python_function_beam8" if getattr(backend, "python_functions", False) else "greedy"}
     finally:
         inference_lock.release()
 

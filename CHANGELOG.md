@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Add a bounded own-model factorial repair protocol, optional fixed prompt boundary and generic neural beam decoder, raw retention/parity evidence, Docker functional gates, actual packaged-service editor recording, and an exact-green-main experimental model publisher. Add an executable Windows Docker Desktop Apply/Undo check; that environment and upgrade remain unverified. Preserve the rejected local pilot.
+
+
 - Prepare v0.5.0-rc.2 with the review display fix, real own-model request/review recording and recording/report hash checks. Package service instructions from the selected candidate manifest. Keep the unchanged research model's 0/12 limitation explicit; no model promotion or functional-success claim.
 
 - Fix collapsed generated diffs in the Win32 review control by normalizing LF/CRLF/CR to CRLF only for display. Preserve actual model/patch bytes. Add a real native EDIT-control test covering Unicode, mixed endings, line count and idempotence, plus current-package actual generation/recording in the portable editor check.

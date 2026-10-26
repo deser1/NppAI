@@ -19,3 +19,13 @@ docs/evidence/staged-protocol/*.zip -text
 # Actual window recordings and raw service logs are hashed as downloaded.
 docs/evidence/released-demo/* -text
 docs/evidence/current-package-demo/* -text
+
+# Measured rejected factorial pilots contain exact raw reports and traces.
+docs/evidence/factorial-repair/*.zip -text
+
+# Source identities are compared between Linux measurement and Windows UI jobs.
+scripts/factorial_repair.py text eol=lf
+python_function_decoding.py text eol=lf
+model_backends.py text eol=lf
+sandbox_validate.py text eol=lf
+train_nppai.py text eol=lf

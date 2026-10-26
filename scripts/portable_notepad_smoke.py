@@ -51,6 +51,7 @@ class WindowsUI:
             'PostMessageW':([wintypes.HWND,wintypes.UINT,wintypes.WPARAM,wintypes.LPARAM],wintypes.BOOL),
             'GetDlgCtrlID':([wintypes.HWND],ctypes.c_int),
             'IsWindowUnicode':([wintypes.HWND],wintypes.BOOL),
+            'IsWindowVisible':([wintypes.HWND],wintypes.BOOL),
             'IsWindowEnabled':([wintypes.HWND],wintypes.BOOL),
             'ShowWindow':([wintypes.HWND,ctypes.c_int],wintypes.BOOL),
             'SetForegroundWindow':([wintypes.HWND],wintypes.BOOL),
@@ -89,6 +90,39 @@ class WindowsUI:
             if not self.api.SendMessageTimeoutW(hwnd,message,wparam,lparam,2,3000,ctypes.byref(result)):
                 raise RuntimeError('Cannot reveal actual response end')
 
+    def message(self, hwnd, message, wparam=0, lparam=0):
+        result=ctypes.c_size_t()
+        if not self.api.SendMessageTimeoutW(hwnd,message,wparam,lparam,2,3000,ctypes.byref(result)):
+            raise RuntimeError('Editor message timed out')
+        return result.value
+
+    def document(self, hwnd):
+        kernel=ctypes.WinDLL('kernel32',use_last_error=True)
+        declarations={
+            'OpenProcess':([wintypes.DWORD,wintypes.BOOL,wintypes.DWORD],wintypes.HANDLE),
+            'VirtualAllocEx':([wintypes.HANDLE,ctypes.c_void_p,ctypes.c_size_t,wintypes.DWORD,wintypes.DWORD],ctypes.c_void_p),
+            'ReadProcessMemory':([wintypes.HANDLE,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_size_t,ctypes.POINTER(ctypes.c_size_t)],wintypes.BOOL),
+            'VirtualFreeEx':([wintypes.HANDLE,ctypes.c_void_p,ctypes.c_size_t,wintypes.DWORD],wintypes.BOOL),
+            'CloseHandle':([wintypes.HANDLE],wintypes.BOOL)}
+        for name,(args,result) in declarations.items():
+            fn=getattr(kernel,name);fn.argtypes=args;fn.restype=result
+        size=self.message(hwnd,2006)+1 # SCI_GETLENGTH
+        if size>131073:raise ValueError('Unexpected smoke document size')
+        process=kernel.OpenProcess(0x0008|0x0010,False,self.pid(hwnd))
+        if not process:raise RuntimeError('Cannot inspect owned editor process')
+        address=None
+        try:
+            address=kernel.VirtualAllocEx(process,None,size,0x1000|0x2000,4)
+            if not address:raise RuntimeError('Cannot allocate editor read buffer')
+            self.message(hwnd,2182,size,address) # SCI_GETTEXT
+            data=ctypes.create_string_buffer(size);read=ctypes.c_size_t()
+            if not kernel.ReadProcessMemory(process,address,data,size,ctypes.byref(read)) or read.value!=size:
+                raise RuntimeError('Cannot read editor buffer')
+            return data.raw[:-1]
+        finally:
+            if address:kernel.VirtualFreeEx(process,address,0,0x8000)
+            kernel.CloseHandle(process)
+
     def cls(self,hwnd):
         text=ctypes.create_unicode_buffer(256);self.api.GetClassNameW(hwnd,text,len(text));return text.value
 
@@ -120,6 +154,54 @@ def verify_service(root):
     for name in ('server_backend.py','model_backends.py','scripts/start_nppai.py','scripts/check_dense_runtime_parity.py','requirements-inference.txt'):
         if name not in manifest['files']:raise ValueError('Missing service runtime: '+name)
     return manifest
+
+
+def model_review_projection(code):
+    """Reproduce the released DLL's line rendering, including its EOF sentinel."""
+    lines=code.split('\n')
+    if code.endswith('\n'):lines.pop()
+    if not code:lines=[]
+    lines=[line[:-1] if line.endswith('\r') else line for line in lines]
+    if code.endswith('\n') and (not lines or lines[-1]!=''):lines.append('')
+    return '\n'.join(lines)+'\n'
+
+
+def capture_server(output,service_root,port):
+    """Observe actual returned model responses; forward the same response object.
+
+    Test-only bootstrap: production service sources and generation stay intact.
+    No API key is recorded. Captures let us compare exact bytes independently
+    of the released DLL's ambiguous trailing-newline diff rendering.
+    """
+    bootstrap=output/'capture-server.py'
+    capture=output/'model-responses.jsonl'
+    capture.unlink(missing_ok=True)
+    program = ('import sys, json\nfrom pathlib import Path\n'
+        + 'sys.path.insert(0, '+repr(str(service_root.resolve()))+')\n'
+        + 'import uvicorn, server_backend\n'
+        + 'original = server_backend.generate_with_configured_model\n'
+        + 'def observed(payload):\n'
+        + '    response = original(payload)\n'
+        + '    with Path('+repr(str(capture.resolve()))+').open("a", encoding="utf-8", newline="\\n") as f:\n'
+        + '        f.write(json.dumps({"request": payload.model_dump(), "response": response.model_dump()}, ensure_ascii=False)+"\\n")\n'
+        + '    return response\n'
+        + 'server_backend.generate_with_configured_model = observed\n'
+        + 'uvicorn.run(server_backend.app, host="127.0.0.1", port='+str(port)+')\n')
+    compile(program,str(bootstrap),'exec')
+    bootstrap.write_text(program,encoding='utf-8')
+    return bootstrap
+
+
+def bind_captured_proposal(proposal,capture):
+    rows=[json.loads(line) for line in capture.read_text(encoding='utf-8').splitlines()]
+    if not rows:raise ValueError('No actual model response captured')
+    actual=rows[-1]
+    code=actual['response']['output']
+    if proposal['code']!=model_review_projection(code):raise ValueError('Plugin review differs from actual model response')
+    # Keep the literal display projection as evidence; preserve exact model bytes.
+    proposal.update(review_code=proposal['code'],code=code,source='actual_returned_model_response_and_plugin_diff',
+                    model_id=actual['response']['model_id'],request=actual['request'])
+    return proposal
 
 
 class WindowRecording:
@@ -163,7 +245,7 @@ def inspect_review_syntax(history):
     return {'code':code,'syntax':syntax,'source':'actual_plugin_insertion_diff'}
 
 
-def exercise_generation(ui,main,panel,controls,editor,output,record=False):
+def exercise_generation(ui,main,panel,controls,editor,output,record=False,validated=False):
     ui.api.ShowWindow(main,3);ui.api.SetForegroundWindow(main)
     recording=WindowRecording(ui,main,output/'notepad-live-demo.gif') if record else None
     before=ui.text(controls[3]);events=[]
@@ -180,7 +262,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
         while time.monotonic()-start<90:
             if editor.poll() is not None:raise RuntimeError('Editor exited during generation')
             time.sleep(1);sample()
-            if events[-1]['apply_enabled']:
+            if events[-1]['apply_enabled'] and not validated:
                 raise RuntimeError('Unvalidated generated output enabled Apply')
             if events[-1]['history']!=before and ui.api.IsWindowEnabled(controls[6]):
                 completed=True;break
@@ -193,13 +275,27 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
         if not any('POST /api/v1/generate HTTP/1.1" 200' in line for line in (output/'server.log').read_text(encoding='utf-8').splitlines()):
             raise RuntimeError('No successful real model HTTP response observed')
         ui.scroll_to_end(controls[3]);time.sleep(1);sample()
+        proposal=bind_captured_proposal(inspect_review_syntax(history),output/'model-responses.jsonl')
+        applied=False
+        if validated:
+            if not events[-1]['apply_enabled']:raise RuntimeError('Actual Docker validation did not enable Apply')
+            scintilla=next((h for h in ui.windows(main) if ui.cls(h)=='Scintilla' and ui.api.IsWindowVisible(h)),None)
+            if not scintilla or ui.document(scintilla)!=b'':raise RuntimeError('Smoke buffer changed before Apply')
+            if not ui.api.PostMessageW(panel,0x111,5,controls[5]):raise RuntimeError('Apply command failed')
+            expected=proposal['code'].encode('utf-8')
+            wait_for(lambda:ui.document(scintilla)==expected,editor)
+            if recording:recording.capture()
+            ui.message(scintilla,2176) # SCI_UNDO
+            wait_for(lambda:ui.document(scintilla)==b'',editor)
+            if recording:recording.capture()
+            applied=True
         return {'completed':True,'task':ui.text(controls[1]),'events':events,
                 'review':history,'status':events[-1]['status'],
-                'model_http_response_200':True,'apply_disabled':True,
-                'validation_configured':False,'functional_success_claimed':False,
+                'model_http_response_200':True,'apply_disabled':not validated,'validated_apply_undo':applied,
+                'validation_configured':validated,'functional_success_claimed':validated,
                 'recording_scrolls_history_to_end':True,
                 'review_uses_crlf':'\n' not in history.replace('\r\n',''),
-                'proposal':inspect_review_syntax(history),
+                'proposal':proposal,
                 'recording':'notepad-live-demo.gif' if recording else None}
     finally:
         (output/'generation-events.json').write_text(json.dumps(events,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
@@ -207,7 +303,7 @@ def exercise_generation(ui,main,panel,controls,editor,output,record=False):
             recording.capture();recording.save()
 
 
-def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=False):
+def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=False, prompt_bytes=0, python_functions=False, plain_task=False, validation_image=None):
     if os.name!='nt':raise RuntimeError('Real portable editor smoke requires Windows')
     output.mkdir(parents=True,exist_ok=True)
     inspect_package(package,load_dll=True,current=True)
@@ -227,17 +323,28 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
         if not (destination/'sandbox_validate.py').is_file():raise ValueError('Current validator helper missing')
         with socket.socket() as socket_probe:
             socket_probe.bind(('127.0.0.1',0));port=socket_probe.getsockname()[1]
-        environment=connection_environment(model,port)
+        environment=connection_environment(model,port,prompt_bytes=prompt_bytes,python_functions=python_functions)
         environment.pop('PYTHONPATH',None)
         # A missing Docker configuration must keep Apply disabled in this test.
         for key in ('NPPAI_VALIDATION_IMAGE','NPPAI_TEST_CASES'):
             environment.pop(key,None)
+        if validation_image:
+            import sandbox_validate
+            cases,_=sandbox_validate.load_cases(ROOT/'examples/silnia-validation-cases.json')
+            for code,expected in [('def silnia(n):\n    import math\n    return math.factorial(n)\n',0),('def silnia(n):\n    return 1\n',1)]:
+                status,diagnostic=sandbox_validate.validate(code,'tests',cases,validation_image)
+                if status!=expected:raise RuntimeError('Local Docker control failed: '+diagnostic)
+            environment.update(NPPAI_VALIDATION_IMAGE=validation_image,NPPAI_TEST_CASES=str((ROOT/'examples/silnia-validation-cases.json').resolve()),NPPAI_VALIDATION_PYTHON=sys.executable)
+
         document=root/'smoke.py';document.write_bytes(b'')
         ui=WindowsUI();editor=None
         with (output/'server.log').open('w',encoding='utf-8') as log:
-            server=subprocess.Popen([sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)],cwd=service_root,env=environment,stdout=log,stderr=log)
+            command=([sys.executable,str(capture_server(output,service_root,port).resolve())] if exercise else [sys.executable,'-m','uvicorn','server_backend:app','--host','127.0.0.1','--port',str(port)])
+            server=subprocess.Popen(command,cwd=service_root,env=environment,stdout=log,stderr=log)
             try:
                 health=wait_ready(server,port,environment['NPPAI_API_KEY'])
+                if prompt_bytes and health.get("prompt_bytes") != prompt_bytes:raise RuntimeError("Prompt recipe mismatch")
+                if python_functions and health.get("decode_profile") != "python_function_beam8":raise RuntimeError("Decode profile mismatch")
                 editor=subprocess.Popen([str(binary),'-multiInst','-nosession',str(document)],env=environment)
                 main=wait_for(lambda:next((h for h in ui.windows() if ui.pid(h)==editor.pid and ui.cls(h)=='Notepad++'),None),editor)
                 def command():
@@ -246,17 +353,20 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                 path,command_id=wait_for(command,editor)
                 if not ui.api.PostMessageW(main,0x111,command_id,0):raise RuntimeError('Cannot open NppAI panel')
                 panel=wait_for(lambda:next((h for h in ui.windows(main) if ui.cls(h)=='NppAI_PanelClass'),None),editor)
-                controls={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
-                if not all(key in controls for key in (1,2,3,4,5,6)):raise RuntimeError('Panel controls missing')
+                def ready_controls():
+                    found={ui.api.GetDlgCtrlID(h):h for h in ui.windows(panel)}
+                    return found if all(key in found for key in (1,2,3,4,5,6)) else None
+                controls=wait_for(ready_controls,editor)
                 task='@python-signature silnia(n)\r\nWygeneruj kod na silnię. Zażółć gęślą jaźń.'
                 if exercise:
                     task='@python-signature silnia(n)\r\nWygeneruj kod na silnię dla nieujemnej liczby całkowitej n. Zwróć wynik.'
+                if plain_task:task='wygeneruj kod na silnię'
                 if not ui.api.IsWindowUnicode(controls[1]) or not ui.set_text(controls[1],task):raise RuntimeError('Unicode prompt field unavailable')
                 if ui.text(controls[1])!=task:raise RuntimeError('Polish prompt round trip failed')
                 button=ui.text(controls[2])
                 if button not in ('Generate AI Code','Wygeneruj Kod AI'):raise RuntimeError('Unexpected generation button text: '+button)
                 if ui.api.IsWindowEnabled(controls[5]):raise RuntimeError('Apply enabled without validation')
-                demo=exercise_generation(ui,main,panel,controls,editor,output,record) if exercise else None
+                demo=exercise_generation(ui,main,panel,controls,editor,output,record,bool(validation_image)) if exercise else None
                 if demo and record:
                     demo['recording_sha256']=hashlib.sha256((output/'notepad-live-demo.gif').read_bytes()).hexdigest()
                 report={'editor_archive_sha256':hashlib.sha256(editor_zip.read_bytes()).hexdigest(),
@@ -265,8 +375,8 @@ def run(editor_zip,package,model,output,service_zip=None,exercise=False,record=F
                     'service_archive_sha256':hashlib.sha256(service_zip.read_bytes()).hexdigest() if service_zip else None,
                     'service_from_extracted_package':bool(service_zip),
                     'health':health,'plugin_menu':list(path),'panel_class':ui.cls(panel),
-                    'polish_prompt_round_trip':True,'button_text':button,'apply_disabled_without_validation':True,
-                    'scope':'Fresh portable install, real server/model readiness and real panel controls. No generated-code quality, Docker Desktop or upgrade verification.'}
+                    'polish_prompt_round_trip':True,'button_text':button,'apply_disabled_without_validation':not bool(validation_image),
+                    'scope':('Fresh portable install, actual local Docker validation and real GUI Apply/Undo. No upgrade verification.' if validation_image else 'Fresh portable install, real server/model readiness and real panel controls. No Docker Desktop, validated Apply/Undo or upgrade verification.')}
                 if demo:report['live_generation_demo']=demo
                 (output/'report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
                 print(json.dumps(report,indent=2,ensure_ascii=False))
@@ -284,6 +394,11 @@ if __name__=='__main__':
     p.add_argument('--service-zip',type=Path)
     p.add_argument('--exercise-generation',action='store_true')
     p.add_argument('--record-gif',action='store_true')
+    p.add_argument('--prompt-bytes',type=int,default=0)
+    p.add_argument('--python-functions',action='store_true')
+    p.add_argument('--plain-task',action='store_true')
+    p.add_argument('--validation-image',help='Optional local immutable Docker Desktop image ID; exercise real Apply/Undo')
     a=p.parse_args()
+    if a.validation_image and not (a.exercise_generation and a.plain_task):p.error('--validation-image requires --exercise-generation --plain-task')
     if a.record_gif and not a.exercise_generation:p.error('--record-gif requires --exercise-generation')
-    run(a.editor_zip,a.package,a.model,a.output,a.service_zip,a.exercise_generation,a.record_gif)
+    run(a.editor_zip,a.package,a.model,a.output,a.service_zip,a.exercise_generation,a.record_gif,a.prompt_bytes,a.python_functions,a.plain_task,a.validation_image)
