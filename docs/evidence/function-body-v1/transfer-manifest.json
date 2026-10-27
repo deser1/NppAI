@@ -1,0 +1,305 @@
+{
+  "head_commit": "cd23ab3cea3d10484ff466701bed7abb47c778a2",
+  "tested_merge_commit": "6a1911b98f840807a00583c4ee0033f24aa09575",
+  "run_id": 40454058194,
+  "artifact_id": 12712280906,
+  "original_artifact_sha256": "0fb4d121960a90d33668e6b984f341df724dc11bb51ae9166d8df0b275f5231d",
+  "archive_sha256": "bd6c5abf8404235f80996986e0f0bae1ecd592e294dcc5d907874b19184459c6",
+  "files": {
+    "report.json": "8b34e523fe1c43acda948299bf8a3ba05b7de605b663a5a917bf7f7f2033087f",
+    "training.json": "92e61da5677a0c53ef8d1c64579a98035e3e9bddb0151c8e17279ddf7285391c",
+    "schedule.json": "290ff9c4b6533508b835958e7987b12dd1a753505776cc37090fd56cedec30d1",
+    "replay_control/trace.json": "61d5daafcc7279327b944407d215a18231c26fec89a857918bfe52f2db93b293",
+    "diverse_bodies/trace.json": "4cdbc4b84dd48ae397ad5651d7106212a8d2af762c9614643891ad241ad48f6f",
+    "transfer-diagnostic.json": "0f722ba22ca0d85752f7821790e1dda9d2369962dafa5cf7de9fa35388858799"
+  },
+  "models": {
+    "replay_control": "915b7b594df3efcd32d0acba8591fe6147e86adb551593c42650f55b81518ed6",
+    "diverse_bodies": "0f2e884e02a8a5f786251c2c2d43777c672409803cd830269e71092b8e80d060"
+  },
+  "models_in_archive": false,
+  "summary": {
+    "source": {
+      "name0-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 6,
+        "signature": 6,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 6,
+        "signature": 6,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 2,
+        "signature": 2,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 2,
+        "signature": 2,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 5,
+        "signature": 5,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 5,
+        "signature": 5,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "replay_control": {
+      "name0-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 0,
+        "signature": 0,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 0,
+        "signature": 0,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 5,
+        "signature": 5,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 5,
+        "signature": 5,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "diverse_bodies": {
+      "name0-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name0-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 10,
+        "functional_measured": 12,
+        "functional_passed": 10,
+        "generation_errors": 0
+      },
+      "name0-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 8,
+        "signature": 8,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 7,
+        "signature": 7,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 6,
+        "signature": 6,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 7,
+        "signature": 7,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 1,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-wording1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 1,
+        "signature": 1,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    }
+  },
+  "decision": {
+    "status": "rejected",
+    "reasons": [
+      "development functional minimum not reached",
+      "no strict functional improvement over source and replay control",
+      "lost prior factorial hit: name-policz_silnie-signature",
+      "lost prior factorial hit: name-policz_silnie-plain"
+    ],
+    "eligible_for_fresh_evaluation": false,
+    "promotion": false
+  },
+  "scope": "Post-hoc exposed orthogonal grid: names/arguments/wording, one alias pair per family; no independent claim"
+}

@@ -137,3 +137,64 @@ rewritten. Every actual output, timing, failure and cell count is retained.
 This is exposed-data diagnosis, not a fresh benchmark, model selection or proof
 that any unmeasured family is supported. It will identify which isolated input
 changes destroy the learned bodies before another training recipe is chosen.
+
+Changing a name or argument also changes byte lengths/positions in these views.
+The grid isolates an input field, not a unique internal neural mechanism. It
+cannot by itself distinguish learned-name dependence, variable copying and
+absolute-position sensitivity. Any follow-up must predeclare those controls,
+retain earlier hits and preserve the independent-evaluation boundary.
+
+## Measured orthogonal diagnostic
+
+[Run 40454058194](https://github.com/deser1/NppAI/actions/runs/40454058194)
+completed the repeated fixed training, original gate and all 288 diagnostic model
+responses. Both CI runs exported the same two model hashes and reproduced the
+pilot counts; the separate local run differs in bytes, as disclosed above.
+All **96 positive controls passed** and all **96 constant-None controls failed**.
+The evidence/source/model/weight-retention audits and Docker cleanup passed.
+
+The table reports actual functional passes. Each row contains 12 correlated
+views (six families × English/Polish); 0 means a known field and 1 a changed field.
+
+| New name | New arguments | New wording | Source | Replay control | Diverse bodies |
+| --- | --- | --- | --- | --- | --- |
+| 0 | 0 | 0 | 0/12 | 0/12 | 12/12 |
+| 0 | 0 | 1 | 0/12 | 0/12 | 10/12 |
+| 0 | 1 | 0 | 0/12 | 0/12 | 0/12 |
+| 0 | 1 | 1 | 0/12 | 0/12 | 0/12 |
+| 1 | 0 | 0 | 0/12 | 0/12 | 0/12 |
+| 1 | 0 | 1 | 0/12 | 0/12 | 0/12 |
+| 1 | 1 | 0 | 0/12 | 0/12 | 0/12 |
+| 1 | 1 | 1 | 0/12 | 0/12 | 0/12 |
+
+The model transfers to ten new descriptions while the familiar signature stays
+fixed, but fails every tested view with a new function name or argument names.
+This localizes input sensitivity; it does not prove a unique internal cause.
+Familiar function names contain family hints, so wording-only success also does
+not establish that the model used the instruction semantics rather than its
+known signature. The 12 all-known successes are training probes, not new-task
+accuracy. Do not present 22/96 as independent problem-solving accuracy.
+
+The repeated pilot still fails its predeclared 0/24 development and 20/22→18/22
+factorial-retention gates. The diagnostic does not waive those failures or
+promote the model. No new independent benchmark is consumed.
+
+[Transfer evidence manifest](evidence/function-body-v1/transfer-manifest.json)
+and [complete raw JSON, schedules and traces](evidence/function-body-v1/transfer.zip)
+preserve the exact downloaded bytes independently of Actions retention.
+The original artifact is
+[12712280906](https://github.com/deser1/NppAI/actions/runs/40454058194/artifacts/12712280906),
+SHA-256 `0fb4d121960a90d33668e6b984f341df724dc11bb51ae9166d8df0b275f5231d`.
+It also contains both rejected model binaries, which are omitted from the git
+archive. Retained-evidence tests rebuild the full grid and scores from raw replies.
+
+## Follow-up boundary
+
+Before another continuation, predeclare neutral function names shared across
+operations, matched-length name/argument controls and explicit byte-position
+controls. Keep replay and the per-case retention gates, including the two lost
+factorial aliases. Do not add the exposed grid/24 development rows or the older
+40-task evaluation to training. A new candidate must pass development and
+retention before a later independently authored functional measurement.
+The present result does not justify another unchanged-recipe scale-up or
+production staged-generation routing.
