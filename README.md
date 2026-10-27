@@ -68,6 +68,7 @@ remain available and retain their reported failures.
 
 | Evidence | Observed result | Meaning |
 | --- | --- | --- |
+| [Broader released-model evaluation](docs/released-model-generalization.md) | Production profile 1/40; legacy greedy 0/40. New operation views 0/24; additional factorial names 0/4; exposed bilingual regression 1/12 | Frozen released checkpoint, actual restricted Docker execution; no general-purpose promotion |
 | [Factorial repair](docs/factorial-model-repair.md) | 12/12 configurations of one development description; reproductions 2/2, Polish TRAIN probes 4/4; new names 2/4. Original training replies 96/96 in the actual production profile, all prior 88 hits retained | Narrow authored factorial tasks; no general-coding quality claim |
 | [Functional pilot](https://github.com/deser1/NppAI/actions/runs/39162359982), 12 bilingual prompt records | 0/12 generated programs passed in every measured arm; 12/12 authored controls passed | The validator worked; this checkpoint failed the new-task quality gate |
 | [All-stage replay](https://github.com/deser1/NppAI/blob/main/docs/all-stage-protection.md) | 45/96 autonomous training matches, up from 2/96; regression matches remain 0/16 and 0/12 | Better training fit does not establish generalization |
@@ -85,7 +86,7 @@ cmake --build build --config Release
 ctest --test-dir build -C Release --output-on-failure
 ```
 
-The release-package and portable-editor checks are described in [release readiness](docs/release-readiness.md). Interactive installation/update behavior, supported editor versions and real task quality must be verified before a stable release.
+The release-package and portable-editor checks are described in [release readiness](docs/release-readiness.md) and the [stable checklist](docs/stable-readiness.md). Interactive installation/update behavior, supported editor versions and real task quality must be verified before a stable release.
 
 ## Explore the project
 

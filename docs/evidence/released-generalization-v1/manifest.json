@@ -1,0 +1,11 @@
+{
+  "run_id": 40423348120,
+  "artifact_id": 12698397769,
+  "archive_sha256": "d60366912b8dc2714f45b206b0639676a67fa1b89de273edcaa6b7b2870eb27f",
+  "report_sha256": "b5c4afa2fd960c8fca3a7e1692abaed68378123ccc9dc0716ba1dbececfb891b",
+  "checkpoint_sha256": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+  "tasks_sha256": "3bc308fd49b531f99bd843f1074ddd67405ca93ec2b8b1e19b8da2f2718b5e8d",
+  "scope": "One frozen post-release measurement; fresh rows become exposed after readout; no model promotion",
+  "head_commit": "8e2dac40772fc542fd676c5e03b1924725ee3acc",
+  "tested_merge_commit": "36bd46630a795db9203f59ce9601883857ab2fce"
+}

@@ -29,3 +29,7 @@ python_function_decoding.py text eol=lf
 model_backends.py text eol=lf
 sandbox_validate.py text eol=lf
 train_nppai.py text eol=lf
+
+# Released-checkpoint protocol and task hashes must survive Windows checkout.
+evaluation/released-generalization-v1/** text eol=lf
+scripts/evaluate_released_model.py text eol=lf

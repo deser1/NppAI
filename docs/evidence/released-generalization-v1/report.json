@@ -1,0 +1,2260 @@
+{
+  "checkpoint_sha256": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+  "manifest_sha256": "9d98d9db9853eec47bb3170784c5b277cdfcae66a523718e3f7bd36acad5040f",
+  "tasks_sha256": "3bc308fd49b531f99bd843f1074ddd67405ca93ec2b8b1e19b8da2f2718b5e8d",
+  "source_commit": "36bd46630a795db9203f59ce9601883857ab2fce",
+  "source_sha256": {
+    "scripts/evaluate_released_model.py": "c1df7723d5fee145ffedd61a3535992a3fc23822dd3e27916b6768189ce6b4db",
+    "model_backends.py": "dcc7afaec1839b662f138b96a489295b88af5fb8aa1b4894c071a72b0652234a",
+    "python_function_decoding.py": "b716076ccb1a25e53e29530ec076a9859806f9e69b0bb2be72d9e98d5b02b2bc",
+    "sandbox_validate.py": "71d7723f211ca304f76b706886830a0383aa4a2c12294afa28efcb35de905766"
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "numpy": "2.3.5",
+    "system": "Linux"
+  },
+  "validator_image": "sha256:3a1b98be05abc7ac60c8712a943688620a602c3e0e6bfbc567afbeabe2085b28",
+  "controls": {
+    "positive": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "negative": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "arms": {
+    "released_profile": {
+      "settings": {
+        "prompt_bytes": 256,
+        "python_functions": true
+      },
+      "rows": [
+        {
+          "id": "running_max-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "running_max",
+          "request": {
+            "prompt": "Implement probe_running_max_amber(items). Return the running maximum of an integer list. Empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_running_max_amber(items):\n    1",
+          "output_sha256": "91e0400035bc5dd510dfb0e445e7737f6f329153936333c9f53beefe1bc3e8c8",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 2,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.188096649000002,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected [], got None\n"
+        },
+        {
+          "id": "running_max-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "running_max",
+          "request": {
+            "prompt": "Napisz funkcję probe_running_max_amber(items). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_running_max_amber(items):\n    inx):\n",
+          "output_sha256": "328572059c525f2de15d7b7cf42765bf9ff8f9c1d2f78df555b240a2409d5e23",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 7,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.23193138999999974,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    inx):\n       ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "running_max-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "running_max",
+          "request": {
+            "prompt": "Implement probe_running_max_violet(stream). Return the running maximum of an integer list. Empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_running_max_violet(stream):\n    for for\n",
+          "output_sha256": "c3576de7f756c8a38974864d1835db7fc496c624ef8a888086208472df747fe4",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 9,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22450974400000234,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    for for\n        ^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "running_max-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "running_max",
+          "request": {
+            "prompt": "Napisz funkcję probe_running_max_violet(stream). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_running_max_violet(stream):\n    for ran range(2, 1):\n",
+          "output_sha256": "4539e6e28dfa07511338144f0fcd8d1bd1c0dc8cabf5be910d52c9c8842e6533",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 22,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21895815800000662,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    for ran range(2, 1):\n            ^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "adjacent_differences-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Implement probe_adjacent_differences_amber(items). Return each integer minus its preceding item. Lists shorter than two give [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_adjacent_differences_amber(items):\n    1\n",
+          "output_sha256": "b576cbf42642e143710bdebe51be3856570137fd552d072e7a4fd5fc68ab413f",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 3,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.012678495000002954,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected [], got None\n"
+        },
+        {
+          "id": "adjacent_differences-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Napisz funkcję probe_adjacent_differences_amber(items). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_adjacent_differences_amber(items):\n    ange():\n",
+          "output_sha256": "7560a216e2f9c517fea9b9de892570a9a206a4f0b68b294de547d234956d3b2c",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 9,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22093996699999252,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    ange():\n          ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "adjacent_differences-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Implement probe_adjacent_differences_violet(samples). Return each integer minus its preceding item. Lists shorter than two give [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_adjacent_differences_violet(samples):\n    nge(2, 1):\n",
+          "output_sha256": "cf6651cd48149dc52a98aba52441bb79a0c914117e0e4b47ec0c9537a9955f6b",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 12,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22383880299999248,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    nge(2, 1):\n             ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "adjacent_differences-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Napisz funkcję probe_adjacent_differences_violet(samples). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_adjacent_differences_violet(samples):\n    nge(2, 1):\n",
+          "output_sha256": "cf6651cd48149dc52a98aba52441bb79a0c914117e0e4b47ec0c9537a9955f6b",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 12,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22209817899999962,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    nge(2, 1):\n             ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "stable_unique-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Implement probe_stable_unique_amber(items). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_stable_unique_amber(items):\n    for ran ran ficzbanult   +     1):\n          return    return rn  result\n",
+          "output_sha256": "01529fb1bc1c29015b336542f82b7e60584cc7dfd59ac115d25ce6ccb36680ad",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 74,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22552336299999354,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    for ran ran ficzbanult   +     1):\n                                    ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "stable_unique-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Napisz funkcję probe_stable_unique_amber(items). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_stable_unique_amber(items):\n    fob\n",
+          "output_sha256": "43446423bd4bc95cd121ca7852b39044b164a61cd29a150c73f28e4aed8c0e3f",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 5,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22230860799999164,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 12, in <module>\nAssertionError: case 1: candidate failed: Traceback (most recent call last):\n  File \"<string>\", line 7, in <module>\n  File \"candidate.py\", line 2, in probe_stable_unique_amber\nNameError: name 'fob' is not defined\n\n"
+        },
+        {
+          "id": "stable_unique-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Implement probe_stable_unique_violet(entries). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_stable_unique_violet(entries):\n    ingesult + 1):\n       +   +               return f  ret\n",
+          "output_sha256": "16c78d7b78a7b490a4f2100e868137b89f464f956bd09de157dec1840bf20066",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 57,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21231978200000867,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    ingesult + 1):\n                ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "stable_unique-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Napisz funkcję probe_stable_unique_violet(entries). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_stable_unique_violet(entries):\n    in in ran *=  1):\n",
+          "output_sha256": "6cad7556c8602af9740b62251aeb81e51fd84cc257d2194d6245f373b3adbf7c",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 19,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22182422499999177,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    in in ran *=  1):\n                   ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "parentheses_balance-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Implement probe_parentheses_balance_amber(text). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_parentheses_balance_amber(text):\n    1\n",
+          "output_sha256": "e713e493990a527e64d4304421a1260ec9374dd09db09689c8266a04835c7696",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 3,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.049159840999990934,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected True, got None\n"
+        },
+        {
+          "id": "parentheses_balance-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Napisz funkcję probe_parentheses_balance_amber(text). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_parentheses_balance_amber(text):\n    in i\n",
+          "output_sha256": "6327f0d47b6361e8a514e1dab8ccc401c5e00d0ce78b8475438a1bbb54d6492c",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 6,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2225566729999997,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    in i\n    ^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "parentheses_balance-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Implement probe_parentheses_balance_violet(symbols). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_parentheses_balance_violet(symbols):\n    rangeva):\n",
+          "output_sha256": "f8677e6edcf5158fb6b3ea497105438c9bc1b43cf8e28a829e90c0c7e4353ec1",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 11,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21873282699999663,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    rangeva):\n           ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "parentheses_balance-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Napisz funkcję probe_parentheses_balance_violet(symbols). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_parentheses_balance_violet(symbols):\n    ran b):\n",
+          "output_sha256": "7845219094d9aad4c4b822776cbcd0b4b47b5da11b22c650c7f3264dfb3d939d",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 9,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21985916100000225,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    ran b):\n         ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "rotate_left-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Implement probe_rotate_left_amber(items). Move the first list item to the end. Return a new list; empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_rotate_left_amber(items):\n    1",
+          "output_sha256": "489cc66289bb68cb680ee3307249eed36a9ec1a0f77ed2b3d3057e96600daad0",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 2,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.09350129099999549,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected [], got None\n"
+        },
+        {
+          "id": "rotate_left-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Napisz funkcję probe_rotate_left_amber(items). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_rotate_left_amber(items):\n    in i inge(i inge(2, sult  1):::\n      i\n",
+          "output_sha256": "517ba75afbf9ed42d4f9b6e9a6b93edda6eb1bd1d7f0933c2ae8e10ad944f0c5",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 41,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22132539000000406,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    in i inge(i inge(2, sult  1):::\n    ^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "rotate_left-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Implement probe_rotate_left_violet(queue). Move the first list item to the end. Return a new list; empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_rotate_left_violet(queue):\n    i in range(2, n + 1):\n + 1):::\n",
+          "output_sha256": "89ddb5841fb9a0164dc739ea51f7d1efbefcbe97380dd044f45daffac1d0039b",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 32,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21604247599999837,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    i in range(2, n + 1):\n                        ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "rotate_left-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Napisz funkcję probe_rotate_left_violet(queue). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_rotate_left_violet(queue):\n    i i inge(range(2, 1):\n + 1):::\n",
+          "output_sha256": "f036eaac00aba0b221640f061c65633cc3c38a31d01b8e4044bc60f9e1baf72e",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 32,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2165871690000074,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    i i inge(range(2, 1):\n      ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "count_runs-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Implement probe_count_runs_amber(items). Count runs of equal adjacent integers. An empty list has zero runs.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_count_runs_amber(items):\n     1",
+          "output_sha256": "928311e835f650fd37eed240e1cfc42aeb56ce5aefd1c6923eaf856309c1bc0e",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 3,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.11447020100000316,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 0, got None\n"
+        },
+        {
+          "id": "count_runs-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Napisz funkcję probe_count_runs_amber(items). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_count_runs_amber(items):\n     in i in ranget",
+          "output_sha256": "148bcedfed9c4b54fb63527af0e46635674012bfb125b8a0d7122f372aabbf58",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 16,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2154443010000051,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    in i in ranget\n    ^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "count_runs-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Implement probe_count_runs_violet(values). Count runs of equal adjacent integers. An empty list has zero runs.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_count_runs_violet(values):\n    i in ran range(2, n fo        t 1)::\n",
+          "output_sha256": "174b5aa61a87783d360aab4d295963b22a40238beb8203f777a5eb18f4617177",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 38,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2191288329999992,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    i in ran range(2, n fo        t 1)::\n             ^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "count_runs-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Napisz funkcję probe_count_runs_violet(values). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+            "max_new_tokens": 256
+          },
+          "output": "def probe_count_runs_violet(values):\n     for i in range(x 1):\n",
+          "output_sha256": "e1ab97381f02d2e5530c26ead74ed2824738d006616ddd17992da7bd9713d3b4",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 23,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22183626000000345,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    for i in range(x 1):\n                   ^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+        },
+        {
+          "id": "factorial-amber_product-en",
+          "group": "factorial_transfer",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement amber_product(count). Return the product of positive integers no larger than the input; for zero use one.",
+            "max_new_tokens": 256
+          },
+          "output": "def amber_product(count):\n     ar = 1\n",
+          "output_sha256": "9a90f9997d46fd9945cb5329d3ea9393f03524baf76c295b3e421d39aab54ac3",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 9,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.09804586599999254,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 1, got None\n"
+        },
+        {
+          "id": "factorial-amber_product-pl",
+          "group": "factorial_transfer",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement amber_product(count). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "def amber_product(count):\n     result =  i    for i in n + 1):\n liczba + 1):\n          retult ret\n",
+          "output_sha256": "7fe382114b59985e8c63653246ad7cb18ddf461ca60bcd183788c10ab56948bd",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 69,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21767857800000456,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    result =  i    for i in n + 1):\n                                 ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "factorial-violet_product-en",
+          "group": "factorial_transfer",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement violet_product(limit). Return the product of positive integers no larger than the input; for zero use one.",
+            "max_new_tokens": 256
+          },
+          "output": "def violet_product(limit):\n    1\n",
+          "output_sha256": "bd1f4018713c4ec4bc4356a227c528967d02db817dd998091b9d6a5cf0965983",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 3,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.08456856200000118,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 1, got None\n"
+        },
+        {
+          "id": "factorial-violet_product-pl",
+          "group": "factorial_transfer",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement violet_product(limit). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "def violet_product(limit):\n        1\n",
+          "output_sha256": "6408f04629a0175865693171b6b801972a64739ae3b9e4840c0a2bcdc39caef6",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 7,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.08496757899999352,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 1, got None\n"
+        },
+        {
+          "id": "new-sum-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "sum",
+          "request": {
+            "prompt": "Implement suma(a, b) in Python returning the sum of a and b.",
+            "max_new_tokens": 256
+          },
+          "output": "def suma(a, b):\n        result result =  i    forange(2, i\n",
+          "output_sha256": "ceac74a753e76f6cbdd9653a032b195cf653b5e79fd493459b38cdb08c8a468a",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 40,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.21606213199999047,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    result result =  i    forange(2, i\n           ^^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-sum-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "sum",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję suma(a, b) zwracającą sumę a i b.",
+            "max_new_tokens": 256
+          },
+          "output": "def suma(a, b):\n      ifonsult result =  i    ie(k ran):\n",
+          "output_sha256": "cbcbb488cbd98a63d33b03ddb50db8acc4c2ac8dec1217bb6e62e9f6bfd590e7",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 38,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.22254882800000075,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    ifonsult result =  i    ie(k ran):\n             ^^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-absolute-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "absolute",
+          "request": {
+            "prompt": "Implement modul(x) in Python returning the absolute value of x.",
+            "max_new_tokens": 256
+          },
+          "output": "def modul(x):\n          rea  =   1",
+          "output_sha256": "05688877a85174e7862650553b45a80a64b6cffe1874cba2df6530a0ca01cf2d",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 17,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.08508537400000193,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 0, got None\n"
+        },
+        {
+          "id": "new-absolute-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "absolute",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję modul(x) zwracającą wartość bezwzględną x.",
+            "max_new_tokens": 256
+          },
+          "output": "def modul(x):\n        ifo = 1\n",
+          "output_sha256": "cd707e71527e893f13b0bc5740eba2037213fb42f9db5c9948fb7e6d7e5e44c0",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 13,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.10358656100000019,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 0, got None\n"
+        },
+        {
+          "id": "new-total-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "total",
+          "request": {
+            "prompt": "Implement razem(values) in Python returning the sum of values; empty list returns zero.",
+            "max_new_tokens": 256
+          },
+          "output": "def razem(values):\n        result = 1\n",
+          "output_sha256": "9f862482112ba828a3129a7dc9ea377c26e59400a3b156a785b90d80ad07826e",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 16,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.09868610700000602,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 0, got None\n"
+        },
+        {
+          "id": "new-total-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "total",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję razem(values) zwracającą sumę values; pusta lista daje zero.",
+            "max_new_tokens": 256
+          },
+          "output": "def razem(values):\n     result    = 1\n",
+          "output_sha256": "b80c7644ee41cc7f2b858b692e1e32243b6f717e55ed05bf03f55dad19948881",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 16,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.09166621299999633,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 0, got None\n"
+        },
+        {
+          "id": "new-even-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "even",
+          "request": {
+            "prompt": "Implement parzysta(x) in Python returning whether integer x is even, including zero and negative integers.",
+            "max_new_tokens": 256
+          },
+          "output": "def parzysta(x):\n       rea  = 1\n",
+          "output_sha256": "f8978a95455bc03ef6113caaa4ef108d07d605c51ed67bbc6b9c8a50effa4525",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 13,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.11108366500000955,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected True, got None\n"
+        },
+        {
+          "id": "new-even-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "even",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję parzysta(x) zwracającą czy liczba całkowita x jest parzysta, także dla zera i liczb ujemnych.",
+            "max_new_tokens": 256
+          },
+          "output": "def parzysta(x):\n         result = 1\n",
+          "output_sha256": "a96d13cac2fa63d7962c9427731655f9f6b83810fc8c6ec241ed95874a3b2aeb",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 17,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.11246000799999933,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected True, got None\n"
+        },
+        {
+          "id": "new-factorial-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement silnia(n) in Python returning factorial of nonnegative integer n; zero gives one.",
+            "max_new_tokens": 256
+          },
+          "output": "def silnia(n):\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result\n",
+          "output_sha256": "51ab75dc5c4c0a47c5142d0205fd11c7e8fc92b799f750defec6adcf2202e5a6",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 80,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.06970530000000963,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 0,
+          "diagnostics": "tests passed (4 authored cases configured)"
+        },
+        {
+          "id": "new-factorial-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję silnia(n) zwracającą silnię nieujemnej liczby całkowitej n; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "def silnia(n):\n    result = 1\n  ",
+          "output_sha256": "c1260eb0eadd4ed382c90a7121c21a0f1d519e6d65c084cb05a254415b1e05d8",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 14,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.12657224199999462,
+          "metrics": {
+            "nonempty": true,
+            "syntax": true,
+            "signature": true
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 15, in <module>\nAssertionError: case 1: expected 1, got None\n"
+        },
+        {
+          "id": "new-positive_sum-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "positive_sum",
+          "request": {
+            "prompt": "Implement dodatnie(values) in Python returning the sum of positive values; ignore zero and negatives; empty list gives zero.",
+            "max_new_tokens": 256
+          },
+          "output": "def dodatnie(values):\n    n 1\n = ",
+          "output_sha256": "64e08528fe89eb8d4c820ea74e068cac448cfc0849aacc68559b8b9df965f970",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 8,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2113067669999964,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    n 1\n      ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-positive_sum-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "positive_sum",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję dodatnie(values) zwracającą sumę dodatnich elementów values; pomiń zero i ujemne; pusta lista daje zero.",
+            "max_new_tokens": 256
+          },
+          "output": "def dodatnie(values):\n    = 1\n = = 1\n i esult\n",
+          "output_sha256": "66b4cd70c8c68973285f44c2df8cd499b94e4edae2f13b92d81a238bf7a2481e",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 21,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.2118860030000036,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 2\n    = 1\n    ^\nSyntaxError: invalid syntax\n"
+        }
+      ],
+      "weights_unchanged": true,
+      "summary": {
+        "exposed_bilingual_regression": {
+          "total": 12,
+          "syntax": 8,
+          "signature": 8,
+          "functional_passed": 1,
+          "functional_measured": 12,
+          "generation_errors": 0
+        },
+        "factorial_transfer": {
+          "total": 4,
+          "syntax": 3,
+          "signature": 3,
+          "functional_passed": 0,
+          "functional_measured": 4,
+          "generation_errors": 0
+        },
+        "new_operations": {
+          "total": 24,
+          "syntax": 6,
+          "signature": 6,
+          "functional_passed": 0,
+          "functional_measured": 24,
+          "generation_errors": 0
+        }
+      }
+    },
+    "legacy_greedy": {
+      "settings": {
+        "prompt_bytes": 0,
+        "python_functions": false
+      },
+      "rows": [
+        {
+          "id": "running_max-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "running_max",
+          "request": {
+            "prompt": "Implement probe_running_max_amber(items). Return the running maximum of an integer list. Empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006566330000055132,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "running_max-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "running_max",
+          "request": {
+            "prompt": "Napisz funkcję probe_running_max_amber(items). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "de_000(valth_0(van  f  b):\n",
+          "output_sha256": "1ebcfaf34787d0133e751f3dbecc78184d174aef7ca96f4e5ea8430f31779555",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 28,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.01638703799999064,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    de_000(valth_0(van  f  b):\n                   ^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+        },
+        {
+          "id": "running_max-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "running_max",
+          "request": {
+            "prompt": "Implement probe_running_max_violet(stream). Return the running maximum of an integer list. Empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008188689999997223,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "running_max-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "running_max",
+          "request": {
+            "prompt": "Napisz funkcję probe_running_max_violet(stream). Zwróć listę kolejnych maksimów prefiksów listy liczb całkowitych. Dla pustej listy zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "den ault",
+          "output_sha256": "6df8952cd05d97f252592d031df291d65ea473020a07cf9bcfc3ea97f7b65404",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 9,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.005230494999992175,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    den ault\n        ^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "adjacent_differences-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Implement probe_adjacent_differences_amber(items). Return each integer minus its preceding item. Lists shorter than two give [].",
+            "max_new_tokens": 256
+          },
+          "output": " ma, bsuresuerip():\n  retern fn fowegeret rsulnin retuenesurngeture ==  o ult %   o in n * biennuref ivalu):\n",
+          "output_sha256": "b233b6a450530889f437ce56c756b8a732cde8ee58de11a1aa434b968f4bd651",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 110,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.07421250000000157,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    ma, bsuresuerip():\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "adjacent_differences-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Napisz funkcję probe_adjacent_differences_amber(items). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "d  sulrisuluplisulowem f fn_0(li  an_  sulin  = ,  bbsure):\n",
+          "output_sha256": "b720c570ace994578f7dd09f233829c1463ffaccc171365056dd62b94ece0f17",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 61,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.04758435600000155,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    d  sulrisuluplisulowem f fn_0(li  an_  sulin  = ,  bbsure):\n       ^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "adjacent_differences-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Implement probe_adjacent_differences_violet(samples). Return each integer minus its preceding item. Lists shorter than two give [].",
+            "max_new_tokens": 256
+          },
+          "output": " suregalturee_0(valrestrefn  f ",
+          "output_sha256": "aa5cf0daa42c9099bceeb91266be2ea553e9b06d2f4117bc2cc810d0844bcb70",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 32,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.01706034900000475,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    suregalturee_0(valrestrefn  f \nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "adjacent_differences-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "adjacent_differences",
+          "request": {
+            "prompt": "Napisz funkcję probe_adjacent_differences_violet(samples). Zwróć różnice kolejnych elementów: bieżący minus poprzedni. Dla mniej niż dwóch elementów zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "des000(alicz  fn f f desuefn_( fn_00\ndes)\n",
+          "output_sha256": "31edd83df514cb7cfad7cbce476dabd6b7ad8d4772d1ba764127e213e851212a",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 43,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.030914086999999313,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    des000(alicz  fn f f desuefn_( fn_00\n           ^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+        },
+        {
+          "id": "stable_unique-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Implement probe_stable_unique_amber(items). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008540620000019317,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "stable_unique-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Napisz funkcję probe_stable_unique_amber(items). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0007605899999987287,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "stable_unique-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Implement probe_stable_unique_violet(entries). Remove duplicate integers, keeping the first occurrence order. Return a list.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006216310000013436,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "stable_unique-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "stable_unique",
+          "request": {
+            "prompt": "Napisz funkcję probe_stable_unique_violet(entries). Usuń powtórzenia liczb z listy, zachowując kolejność pierwszych wystąpień. Zwróć listę.",
+            "max_new_tokens": 256
+          },
+          "output": "  reralen f fovaluluesup f f efictululurern_0(ven fn_tur_0(va fn b\n",
+          "output_sha256": "e19ef02123f620345fb064da0841cc9b6d35cafb2697af9b6370ba27bfe198e9",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 68,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.047090277999998875,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    reralen f fovaluluesup f f efictululurern_0(ven fn_tur_0(va fn b\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "parentheses_balance-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Implement probe_parentheses_balance_amber(text). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008698359999925742,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "parentheses_balance-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Napisz funkcję probe_parentheses_balance_amber(text). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+            "max_new_tokens": 256
+          },
+          "output": "des):\n t it f zeant f lurn_surn surn a== lubef f sulure_01(vgeen   sure1(rarn   i an r:\n licz_0\n",
+          "output_sha256": "4a6fe4cbe95ab202fbfddbac49ef4d684059202d4b86d81945d05aee3e2d6c0c",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 97,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.07643144599998664,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    des):\n       ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "parentheses_balance-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Implement probe_parentheses_balance_violet(symbols). Return whether a string of only ( and ) is balanced. Empty string is balanced.",
+            "max_new_tokens": 256
+          },
+          "output": " resingtur1(valtulues):\n",
+          "output_sha256": "51620b05da352bc34af3638f0da1d1e7272dedef7283507da7a575956302e0fc",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 25,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.013087808999998174,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    resingtur1(valtulues):\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "parentheses_balance-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "parentheses_balance",
+          "request": {
+            "prompt": "Napisz funkcję probe_parentheses_balance_violet(symbols). Sprawdź poprawne sparowanie nawiasów w tekście zawierającym tylko ( i ). Pusty tekst jest poprawny.",
+            "max_new_tokens": 256
+          },
+          "output": "(2 rn_0(tulurilure uenesurn  f f (v):\n =  rn s(2, f  re_bee):\n",
+          "output_sha256": "2c4ac3fcb0909e56e01380b3e3d01fb9671cbb3e308de0ac23211cbd82ebf483",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 63,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.045661807000001886,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    (2 rn_0(tulurilure uenesurn  f f (v):\n     ^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+        },
+        {
+          "id": "rotate_left-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Implement probe_rotate_left_amber(items). Move the first list item to the end. Return a new list; empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008264499999910413,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "rotate_left-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Napisz funkcję probe_rotate_left_amber(items). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.000682843000006983,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "rotate_left-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Implement probe_rotate_left_violet(queue). Move the first list item to the end. Return a new list; empty input gives [].",
+            "max_new_tokens": 256
+          },
+          "output": " 1(v\n",
+          "output_sha256": "50167054632a49554a356a7b0d37de70ae7f11d5a0fcb9d6447c547078fcdfce",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 6,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.002865554999999631,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    1(v\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "rotate_left-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "rotate_left",
+          "request": {
+            "prompt": "Napisz funkcję probe_rotate_left_violet(queue). Przenieś pierwszy element listy na koniec. Zwróć nową listę; dla pustej zwróć [].",
+            "max_new_tokens": 256
+          },
+          "output": "des):\n",
+          "output_sha256": "009982186f033282e978a0dc94cd340ab3c65e2add4808b2682055a615458fcc",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 7,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.003994373000011819,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    des):\n       ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "count_runs-0-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Implement probe_count_runs_amber(items). Count runs of equal adjacent integers. An empty list has zero runs.",
+            "max_new_tokens": 256
+          },
+          "output": "  lresurn mages)\n",
+          "output_sha256": "a169c8d9b9989e5da4db564c186c5581cf959af17ac9372c806ed56f8e56d322",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 18,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.008001664999994773,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    lresurn mages)\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "count_runs-0-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Napisz funkcję probe_count_runs_amber(items). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008343119999949522,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "count_runs-1-en",
+          "group": "new_operations",
+          "language": "en",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Implement probe_count_runs_violet(values). Count runs of equal adjacent integers. An empty list has zero runs.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006097119999992628,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "count_runs-1-pl",
+          "group": "new_operations",
+          "language": "pl",
+          "family": "count_runs",
+          "request": {
+            "prompt": "Napisz funkcję probe_count_runs_violet(values). Policz serie sąsiadujących jednakowych liczb. Pusta lista ma zero serii.",
+            "max_new_tokens": 256
+          },
+          "output": "des):\n",
+          "output_sha256": "009982186f033282e978a0dc94cd340ab3c65e2add4808b2682055a615458fcc",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 7,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0033805439999952114,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    des):\n       ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "factorial-amber_product-en",
+          "group": "factorial_transfer",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement amber_product(count). Return the product of positive integers no larger than the input; for zero use one.",
+            "max_new_tokens": 256
+          },
+          "output": "dern  1(valtue(a n tengttuern smipe(va aultulut  ip11):\n",
+          "output_sha256": "b24087afd20eef03f7c27d9dddee43c07e5f2e849e4aa9b6d8d5ae41e38cea6d",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 57,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.029231752000001165,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    dern  1(valtue(a n tengttuern smipe(va aultulut  ip11):\n          ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "factorial-amber_product-pl",
+          "group": "factorial_transfer",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement amber_product(count). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0007751030000093806,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "factorial-violet_product-en",
+          "group": "factorial_transfer",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement violet_product(limit). Return the product of positive integers no larger than the input; for zero use one.",
+            "max_new_tokens": 256
+          },
+          "output": "detamin  fn_luewetuarerstren stueturer sult\ndef * orn(van bin alor esurn(2, rn alul(xtef    = in  (ves):\n",
+          "output_sha256": "7ff9d6c6184d4ba7c8e6e69cba5201c7c7256c1cca98e40d7619e40d19de3937",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 106,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.06478318499999602,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    detamin  fn_luewetuarerstren stueturer sult\n             ^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "factorial-violet_product-pl",
+          "group": "factorial_transfer",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement violet_product(limit). Pomnóż dodatnie liczby całkowite nieprzekraczające argumentu; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "detu,  ma rnulues):\ndef matum i\n sult\ndefovalulues):\nd retuturn  rn * resumulisultultultub\n",
+          "output_sha256": "c4b743627db9c3c628dbb31fb1dba60cb037bb8a6248f50da5cd17961ee240c1",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 92,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.05621270899999331,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    detu,  ma rnulues):\n                     ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "new-sum-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "sum",
+          "request": {
+            "prompt": "Implement suma(a, b) in Python returning the sum of a and b.",
+            "max_new_tokens": 256
+          },
+          "output": "def f f fn_00(values):\n    return a + 0(va, b):\n",
+          "output_sha256": "1107b25c476d258d99dcb34ad4cbd128438125735fe81891c03f20070a06d6ea",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 49,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.014769313000002171,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    def f f fn_00(values):\n          ^\nSyntaxError: expected '('\n"
+        },
+        {
+          "id": "new-sum-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "sum",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję suma(a, b) zwracającą sumę a i b.",
+            "max_new_tokens": 256
+          },
+          "output": "def f ffngt_suly_langest_0000(-x  r re_00(va  rn  x):\nd  mur\n  lurn mi resurturn rn n  *b):\n",
+          "output_sha256": "303094b7231ad31ef432b862a631c68b4cb40b22ed3ec8c2228a0ec1bd4e0ff3",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 93,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.03605712799999594,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    def f ffngt_suly_langest_0000(-x  r re_00(va  rn  x):\n          ^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: expected '('\n"
+        },
+        {
+          "id": "new-absolute-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "absolute",
+          "request": {
+            "prompt": "Implement modul(x) in Python returning the absolute value of x.",
+            "max_new_tokens": 256
+          },
+          "output": "defn_rabste_re_00(x):\n    returetureturest.lip(xtureltetures)\n",
+          "output_sha256": "551e4e23e2f7d46e217a934eace02327ff73dcca2d310c004c0293901cdca8ea",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 63,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.02117620500000328,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    defn_rabste_re_00(x):\n                        ^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-absolute-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "absolute",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję modul(x) zwracającą wartość bezwzględną x.",
+            "max_new_tokens": 256
+          },
+          "output": "de_sulurgeturn riva, xtureturn_00upalurabs(x):\n b\n",
+          "output_sha256": "2f4a1713929824a7fec8b39d6b3778b07e181c6476699d479b2a22d6fb7738a3",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 51,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.018067623000007416,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    de_sulurgeturn riva, xtureturn_00upalurabs(x):\n                   ^^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-total-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "total",
+          "request": {
+            "prompt": "Implement razem(values) in Python returning the sum of values; empty list returns zero.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006699130000100695,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "new-total-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "total",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję razem(values) zwracającą sumę values; pusta lista daje zero.",
+            "max_new_tokens": 256
+          },
+          "output": " f b):\n    return a * b\n",
+          "output_sha256": "ef51c24278aba028012c74cad6b746b330f92737e7600c1c93a97dfd14635ec2",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 25,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.009076582000005828,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    f b):\nIndentationError: unexpected indent\n"
+        },
+        {
+          "id": "new-even-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "even",
+          "request": {
+            "prompt": "Implement parzysta(x) in Python returning whether integer x is even, including zero and negative integers.",
+            "max_new_tokens": 256
+          },
+          "output": "den *  xt tea:\n",
+          "output_sha256": "390b5874d44eb7782a1beb8120577d917c17338c381d2ef9abb0de87c37f4b7a",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 16,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0069580269999960365,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    den *  xt tea:\n              ^^^\nSyntaxError: invalid syntax\n"
+        },
+        {
+          "id": "new-even-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "even",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję parzysta(x) zwracającą czy liczba całkowita x jest parzysta, także dla zera i liczb ujemnych.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008906770000010056,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "new-factorial-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "factorial",
+          "request": {
+            "prompt": "Implement silnia(n) in Python returning factorial of nonnegative integer n; zero gives one.",
+            "max_new_tokens": 256
+          },
+          "output": "def fn_larges):\n    rn   000(etetueturesuet.",
+          "output_sha256": "b67355b56bb5ca1b63c3dcff7f85dac7a5db3992033d508b4e7a76aa91f6f8d0",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 45,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.018652076999998712,
+          "metrics": {
+            "nonempty": true,
+            "syntax": false,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n  File \"candidate.py\", line 1\n    def fn_larges):\n                 ^\nSyntaxError: unmatched ')'\n"
+        },
+        {
+          "id": "new-factorial-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "factorial",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję silnia(n) zwracającą silnię nieujemnej liczby całkowitej n; dla zera zwróć jeden.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0008248470000040697,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "new-positive_sum-en",
+          "group": "exposed_bilingual_regression",
+          "language": "en",
+          "family": "positive_sum",
+          "request": {
+            "prompt": "Implement dodatnie(values) in Python returning the sum of positive values; ignore zero and negatives; empty list gives zero.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006256870000100889,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        },
+        {
+          "id": "new-positive_sum-pl",
+          "group": "exposed_bilingual_regression",
+          "language": "pl",
+          "family": "positive_sum",
+          "request": {
+            "prompt": "Napisz w Pythonie funkcję dodatnie(values) zwracającą sumę dodatnich elementów values; pomiń zero i ujemne; pusta lista daje zero.",
+            "max_new_tokens": 256
+          },
+          "output": "",
+          "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "response_model_id": "sha256:f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+          "response": {
+            "generated_tokens": 1,
+            "finish_reason": "eos"
+          },
+          "error": null,
+          "elapsed_seconds": 0.0006443850000010798,
+          "metrics": {
+            "nonempty": false,
+            "syntax": true,
+            "signature": false
+          },
+          "functional_status": 1,
+          "diagnostics": "Empty generated candidate"
+        }
+      ],
+      "weights_unchanged": true,
+      "summary": {
+        "exposed_bilingual_regression": {
+          "total": 12,
+          "syntax": 5,
+          "signature": 0,
+          "functional_passed": 0,
+          "functional_measured": 12,
+          "generation_errors": 0
+        },
+        "factorial_transfer": {
+          "total": 4,
+          "syntax": 1,
+          "signature": 0,
+          "functional_passed": 0,
+          "functional_measured": 4,
+          "generation_errors": 0
+        },
+        "new_operations": {
+          "total": 24,
+          "syntax": 10,
+          "signature": 0,
+          "functional_passed": 0,
+          "functional_measured": 24,
+          "generation_errors": 0
+        }
+      }
+    }
+  },
+  "complete": true,
+  "promotion": false,
+  "scope": "Fresh post-checkpoint authored probes; family independence from all historical data is not established. After first readout this becomes an exposed regression suite.",
+  "attempts": 1
+}
