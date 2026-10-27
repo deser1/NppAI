@@ -95,6 +95,8 @@ jobs:
     - name: Test orthogonal body-transfer diagnostic controls
       run: python -m unittest discover -s tests -p "test_body_transfer_diagnostic.py" -v
 
+    - name: Test neutral binding protocol and positional controls
+      run: python -m unittest discover -s tests -p "test_neutral_binding.py" -v
     - name: Test function-body bank isolation and training gates
       run: python -m unittest discover -s tests -p "test_function_body_training.py" -v
 

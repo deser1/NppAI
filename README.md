@@ -95,3 +95,5 @@ The release-package and portable-editor checks are described in [release readine
 - [Detailed overview and research history](https://github.com/deser1/NppAI/blob/main/docs/project-details.md)
 - [Roadmap](https://github.com/deser1/NppAI/blob/main/ROADMAP.md) and [changelog](https://github.com/deser1/NppAI/blob/main/CHANGELOG.md)
 - [Contributing](https://github.com/deser1/NppAI/blob/main/CONTRIBUTING.md), [security](https://github.com/deser1/NppAI/blob/main/SECURITY.md) and [license](https://github.com/deser1/NppAI/blob/main/license.txt)
+
+The next controlled model experiment uses neutral names shared across operations, matched-length binding views and paired prompt-position training; see the [predeclared protocol](docs/neutral-binding-training.md). Results remain separate from released-model capability.

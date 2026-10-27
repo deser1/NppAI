@@ -12,7 +12,8 @@ The [stable checklist](docs/stable-readiness.md) records concrete evidence and b
 - [x] Freeze a paired body-training pilot with 144 bilingual training records, 24 development transfer records, replay control and per-case retention gates; see [protocol](docs/function-body-training.md).
 - [x] Execute the fixed pilot: diverse training probes 12/12, original replies 96/96, development 0/24 and factorial retention 20/22 -> 18/22; reject promotion and retain raw CI evidence.
 - [x] Measure the exposed 96-probe grid per model: diverse known controls 12/12 and new wording 10/12, but changed names/arguments 0/12 in each cell; source/control 0/96. Retain all 288 raw outputs and Docker controls.
-- [ ] Predeclare a neutral-name, matched-length/byte-position binding intervention with reviewed training-only data and original/factorial retention; do not train on exposed diagnosis/evaluation rows.
+- [x] Predeclare a neutral-name, matched-length/byte-position binding intervention with reviewed training-only data and original/factorial retention; see [protocol](docs/neutral-binding-training.md).
+- [ ] Execute the fixed neutral-name/position comparison, audit all raw outputs and retain results before choosing further model changes.
 - [ ] Improve complete function bodies and identifier/argument transfer on reviewed training/development data; retain earlier correct replies. Do not train on the released evaluation suite.
 - [ ] Freeze the next candidate before a new independent functional evaluation; report first-pass, repair, latency and failure categories.
 - [ ] Demonstrate functional staged-generation gains and retain direct/specification/plan/code hits before plugin routing.
