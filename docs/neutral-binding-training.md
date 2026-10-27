@@ -100,3 +100,76 @@ python scripts/neutral_binding_training.py --phase audit --source source.nppai -
 The image must be a locally available immutable `sha256:` Docker ID. The
 protocol and implementation are committed before the first training run;
 measured results, including rejection, will be recorded separately afterwards.
+
+## Measured result: 27 October 2026
+
+[Run 40459046953](https://github.com/deser1/NppAI/actions/runs/40459046953)
+completed both fixed 1024-update arms, all **264 positive** and **120 negative**
+Docker controls, actual model execution, the full evidence audit and cleanup.
+Every positive passed and every negative failed. All source original/factorial
+hits were retained by both candidates. All 24 completed PR checks passed, with
+one optional review skipped, before [PR #218](https://github.com/deser1/NppAI/pull/218)
+was merged. This is a measured development result, not a model release.
+
+Each cell below has 12 correlated views, six families × English/Polish. Zero
+means a familiar field, one a changed field; `shift1` adds eight leading spaces.
+All fields have matched byte lengths except the separately labeled long cells.
+
+| Cell | Source | Fixed position | Position jitter |
+| --- | --- | --- | --- |
+| name0-args0-shift0 (training control) | 0/12 | 12/12 | 11/12 |
+| name0-args0-shift1 | 0/12 | 2/12 | 12/12 |
+| name0-args1-shift0 | 0/12 | 0/12 | 0/12 |
+| name0-args1-shift1 | 0/12 | 0/12 | 0/12 |
+| name1-args0-shift0 | 0/12 | 12/12 | 12/12 |
+| name1-args0-shift1 | 0/12 | 2/12 | 12/12 |
+| name1-args1-shift0 | 0/12 | 0/12 | 0/12 |
+| name1-args1-shift1 | 0/12 | 0/12 | 0/12 |
+| Longer name, familiar arguments | 0/12 | 0/12 | 0/12 |
+| Longer arguments, familiar name | 0/12 | 0/12 | 0/12 |
+
+| Gate/retention | Source | Fixed position | Position jitter |
+| --- | --- | --- | --- |
+| Primary both-new identifier views, functional | 0/24 | 0/24 | 0/24 |
+| Twelve training probes, exact | 0/12 | 12/12 | 11/12 |
+| Original direct replies, exact | 96/96 | 96/96 | 96/96 |
+| Factorial exposed probes, functional | 20/22 | 20/22 | 20/22 |
+
+The paired intervention improves the two shifted, familiar-argument cells from
+2/12 to 12/12. Equal-length new function names also pass with familiar arguments.
+This is a local improvement in input-position robustness; it does not establish
+arbitrary-name or arbitrary-argument competence. Header assistance remains
+mechanical. Both candidates fail the longer-name cell and every new-argument
+cell. The jitter candidate also loses one new training-control success relative
+to fixed position: Polish sum of squares returns the count of negative values.
+Earlier source original/factorial retention is nevertheless complete.
+
+The predeclared primary gate remains **0/24**, so the candidate is **rejected**
+for fresh evaluation. No released weights, decoder, plugin routing, tag or release
+asset is changed. Do not aggregate the cells into independent problem-solving
+accuracy; one cell repeats training requests and all views reuse six operations.
+The longer-name failure remains confounded by name identity and byte length.
+
+Raw failed outputs include `def task_dd(ee, ff): return abs(aa - bb)` and
+`def task_dd(ee): return max(0, aa)`, while other rows return the `sum` callable.
+These illustrate remaining body binding and operation/output failures, not a
+complete causal diagnosis. The next step is a frozen read-only categorization
+of all new-argument failures, followed by one predeclared binding intervention
+with unchanged retention gates. An unchanged positional-training scale-up is
+not justified by these results.
+
+[Manifest](evidence/neutral-binding-v1/manifest.json) and
+[complete raw JSON/schedules/traces](evidence/neutral-binding-v1/raw.zip) retain
+unmodified CI bytes in git. The original
+[artifact 12713922590](https://github.com/deser1/NppAI/actions/runs/40459046953/artifacts/12713922590)
+has SHA-256 `ee7ec18378d7c3b34965a965230588a4469cc56edb919f2d192c40768d06a3ba`.
+It also contains both candidate binaries, omitted from the git archive and
+subject to 90-day Actions retention. Their identities are retained permanently:
+
+- Fixed position: `6de739e62087033338717507ff7cf880026705db105d0b678847d5eec78d6919`.
+- Position jitter: `b0bfd7fb5102dd927eaf21bdec78d4944568745d96519d2c90bcb5eff713e25a`.
+
+The retained-evidence test reconstructs all groups, raw scores, cell counts,
+control outcomes, schedules, model/source identities and the failed gate. A
+separate local audit of the downloaded full artifact also passed. No cross-host
+training repeat or bitwise reproducibility is claimed.

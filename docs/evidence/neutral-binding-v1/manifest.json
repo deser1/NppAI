@@ -1,0 +1,509 @@
+{
+  "version": 1,
+  "run_id": 40459046953,
+  "artifact_id": 12713922590,
+  "original_artifact_sha256": "ee7ec18378d7c3b34965a965230588a4469cc56edb919f2d192c40768d06a3ba",
+  "source_head": "c470155261743693f3d58893084ea3681771863c",
+  "tested_merge_commit": "af1da8395fb0dce45b3e9f17969322c85b271ab1",
+  "archive_sha256": "4041377af392990d44d02d6b2fa74a72ba81c6f193715ae5ee9a3a2606259aa9",
+  "files": {
+    "report.json": "5840decb71ac4f05673de796263ff6ec6846f8186ab12abafbecc884e51fde9f",
+    "training.json": "92afc14fc74185ea20cf0520adeb7c96ea078850c8d7350a3efa01af85374282",
+    "schedule.json": "fccbf6844b8d03a6f3a2028e6fc13e42038d451cd11f70c12f9f4b92278b4c42",
+    "fixed_position/trace.json": "e5100cdea596229ab7d6cddbc0eced2b8b8467291783f8e40e8c0c604378d8b0",
+    "position_jitter/trace.json": "7aafdd9d77329fade9962b29c41288b036ec53b325871dd1eadff557bbca3345"
+  },
+  "models": {
+    "source": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+    "fixed_position": "6de739e62087033338717507ff7cf880026705db105d0b678847d5eec78d6919",
+    "position_jitter": "b0bfd7fb5102dd927eaf21bdec78d4944568745d96519d2c90bcb5eff713e25a"
+  },
+  "summary": {
+    "source": {
+      "development": {
+        "total": 120,
+        "nonempty": 120,
+        "syntax": 93,
+        "signature": 93,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 120,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 22,
+        "functional_passed": 20,
+        "generation_errors": 0
+      }
+    },
+    "fixed_position": {
+      "development": {
+        "total": 120,
+        "nonempty": 120,
+        "syntax": 97,
+        "signature": 97,
+        "value_return": 77,
+        "exact": 28,
+        "functional_measured": 120,
+        "functional_passed": 28,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 22,
+        "functional_passed": 20,
+        "generation_errors": 0
+      }
+    },
+    "position_jitter": {
+      "development": {
+        "total": 120,
+        "nonempty": 120,
+        "syntax": 113,
+        "signature": 113,
+        "value_return": 96,
+        "exact": 47,
+        "functional_measured": 120,
+        "functional_passed": 47,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 11,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 22,
+        "functional_passed": 20,
+        "generation_errors": 0
+      }
+    }
+  },
+  "cells": {
+    "source": {
+      "long-args": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "long-name": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 9,
+        "signature": 9,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 9,
+        "signature": 9,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 9,
+        "signature": 9,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 8,
+        "signature": 8,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 11,
+        "signature": 11,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "fixed_position": {
+      "long-args": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 7,
+        "signature": 7,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "long-name": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name0-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 10,
+        "exact": 2,
+        "functional_measured": 12,
+        "functional_passed": 2,
+        "generation_errors": 0
+      },
+      "name0-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 10,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 8,
+        "signature": 8,
+        "value_return": 7,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name1-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 8,
+        "exact": 2,
+        "functional_measured": 12,
+        "functional_passed": 2,
+        "generation_errors": 0
+      },
+      "name1-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 8,
+        "signature": 8,
+        "value_return": 6,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "position_jitter": {
+      "long-args": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 8,
+        "signature": 8,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "long-name": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 9,
+        "signature": 9,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 11,
+        "functional_measured": 12,
+        "functional_passed": 11,
+        "generation_errors": 0
+      },
+      "name0-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name0-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name0-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args0-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name1-args0-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 12,
+        "functional_passed": 12,
+        "generation_errors": 0
+      },
+      "name1-args1-shift0": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "name1-args1-shift1": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 0,
+        "functional_measured": 12,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    }
+  },
+  "decision": {
+    "status": "rejected",
+    "reasons": [
+      "development functional minimum not reached",
+      "no strict functional improvement over source and matched fixed-position control"
+    ],
+    "eligible_for_fresh_evaluation": false,
+    "promotion": false
+  },
+  "scope": "Unmodified CI JSON only; no candidate binaries. Correlated development; 12 unshifted known controls are training requests, not independent accuracy."
+}
