@@ -90,3 +90,50 @@ python scripts/function_body_training.py --phase audit \
 Python 3.12 Docker image. Without `--image`, only readout/structural evidence is
 recorded and gate status remains `not_measured`. Generated code never executes
 on the host. Results will be added after the frozen run, including failures.
+
+## First measured result
+
+[Run 40426278674](https://github.com/deser1/NppAI/actions/runs/40426278674)
+executed the frozen recipe and actual restricted Docker tests. All 168 authored
+reference controls passed; all 24 negative controls failed. The audit passed.
+
+| Measurement | Source | Replay control | Diverse bodies |
+| --- | --- | --- | --- |
+| Development functional | 0/24 | 0/24 | 0/24 |
+| Fixed training probe exact | 0/12 | 0/12 | 12/12 |
+| Original direct exact | 96/96 | 96/96 | 96/96 |
+| Exposed factorial functional | 20/22 | 20/22 | 18/22 |
+
+The diverse arm learned the 12 measured training probes but did not transfer to
+jointly changed names, arguments and wording. It also lost both production
+`policz_silnie` rows (plain and signature-assisted). The declared gate therefore
+**rejects** this candidate. No weights or decoder are promoted and no fresh
+independent suite is consumed. Rejected weights do not enter plugin routing.
+
+[Evidence manifest](evidence/function-body-v1/manifest.json) and
+[raw metadata, schedules and traces](evidence/function-body-v1/pilot.zip) preserve
+the unmodified CI JSON bytes in git. The original Actions artifact additionally
+contains both exported models. These rejected candidate binaries remain research
+artifacts with finite retention; source initialization is a permanent release.
+
+A separate local run used the same recipe and produced the same structural
+counts and original/factorial exact counts, but **different model hashes**.
+[Local-only summary](evidence/function-body-v1/local-readout-summary.json) retains
+that fact; it does not assert Docker functional results. This is not cross-host
+bitwise training certification. CI identities remain the primary functional evidence.
+
+## Next diagnosis: exposed orthogonal transfer grid
+
+The initial development changes three factors together. A post-hoc diagnostic
+now holds the task family fixed and crosses known/new function name, known/new
+arguments and known/new wording independently: eight cells × six families ×
+English/Polish = **96 probes per model**. It uses one known/development alias pair
+per family. The all-known cell reproduces 12 training requests exactly.
+
+All three fixed models use the unchanged production decoding profile. Each grid
+probe has a restricted-Docker positive and negative control. Authored reference
+ASTs are renamed only to construct controls; generated model code is never
+rewritten. Every actual output, timing, failure and cell count is retained.
+This is exposed-data diagnosis, not a fresh benchmark, model selection or proof
+that any unmeasured family is supported. It will identify which isolated input
+changes destroy the learned bodies before another training recipe is chosen.

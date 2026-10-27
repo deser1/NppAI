@@ -1,0 +1,152 @@
+{
+  "scope": "Local structural readout only; no Docker execution, no functional claim",
+  "models": {
+    "replay_control": "86496eea09524fd3b70d39212ca657a69582067c8e1764e908a9eba2209654f4",
+    "diverse_bodies": "d9862e70f7e5bb8165e92338c688a96ba97fcc1f070a92f4ad7f89003af1aff5"
+  },
+  "summary": {
+    "source": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 6,
+        "signature": 6,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "replay_control": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 7,
+        "signature": 7,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    },
+    "diverse_bodies": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 18,
+        "exact": 18,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      }
+    }
+  },
+  "decision": {
+    "status": "not_measured",
+    "eligible_for_fresh_evaluation": false,
+    "promotion": false
+  }
+}

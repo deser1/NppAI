@@ -7,6 +7,9 @@ on:
       - 'evaluation/function-body-v1/**'
       - 'scripts/function_body_training.py'
       - 'tests/test_function_body_training.py'
+      - 'scripts/diagnose_body_transfer.py'
+      - 'tests/test_body_transfer_diagnostic.py'
+      - 'tests/test_body_training_evidence.py'
 permissions:
   contents: read
 jobs:
@@ -26,6 +29,8 @@ jobs:
           python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
           python -m pip install 'numpy==2.3.5' 'pydantic>=2.7,<3'
       - run: python -m unittest discover -s tests -p test_function_body_training.py -v
+      - run: python -m unittest discover -s tests -p test_body_transfer_diagnostic.py -v
+      - run: python -m unittest discover -s tests -p test_body_training_evidence.py -v
       - name: Fetch the published initialization and isolated validator
         run: |
           curl -fL https://github.com/deser1/NppAI/releases/download/model-factorial-v1/NppAI-factorial.nppai -o source.nppai
@@ -38,6 +43,10 @@ jobs:
         run: python scripts/function_body_training.py --phase measure --source source.nppai --output measured --image "$NPPAI_VALIDATION_IMAGE"
       - name: Audit provenance, raw failures and per-case retention
         run: python scripts/function_body_training.py --phase audit --source source.nppai --output measured
+      - name: Diagnose exposed name, argument and wording transfer separately
+        run: python scripts/diagnose_body_transfer.py --source source.nppai --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Audit complete diagnostic grid
+        run: python scripts/diagnose_body_transfer.py --source source.nppai --output measured --audit
       - name: Require Docker cleanup
         if: always()
         run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
