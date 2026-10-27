@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Predeclare neutral-name binding and matched prompt-position training with identical replay, byte-position controls, restricted Docker readout and strict prior-hit retention; no model promotion.
+- Execute the predeclared neutral-name/position continuation with identical replay and real Docker controls. Jitter improves shifted familiar-argument cells 2/12→12/12; equal-length new names pass 12/12, but both-new-name/argument primary views remain 0/24. Both arms retain original 96/96 and factorial 20/22. Preserve all raw CI results, hashes, schedules and traces with integrity tests; reject promotion and leave production weights unchanged.
 
 - Freeze a fixed paired function-body training pilot: six authored families, 144 bilingual training records, 24 separately named/worded development rows, replay control, 1024 updates per arm and full original/factorial retention gates. Measured Docker development 0/24 in all three models; diverse training exact 12/12 and original exact 96/96, but factorial retention falls 20/22 to 18/22. Reject the candidate and preserve raw CI evidence. Measure the separate exposed 96-probe orthogonal transfer diagnostic per model: known controls 12/12, new wording alone 10/12, but new name alone and new arguments alone 0/12; all combined changes also fail. Source/control remain 0/96. Retain the exact complete CI matrix and new integrity regression coverage. No production weights or decoder change.
 

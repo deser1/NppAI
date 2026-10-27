@@ -96,4 +96,4 @@ The release-package and portable-editor checks are described in [release readine
 - [Roadmap](https://github.com/deser1/NppAI/blob/main/ROADMAP.md) and [changelog](https://github.com/deser1/NppAI/blob/main/CHANGELOG.md)
 - [Contributing](https://github.com/deser1/NppAI/blob/main/CONTRIBUTING.md), [security](https://github.com/deser1/NppAI/blob/main/SECURITY.md) and [license](https://github.com/deser1/NppAI/blob/main/license.txt)
 
-The next controlled model experiment uses neutral names shared across operations, matched-length binding views and paired prompt-position training; see the [predeclared protocol](docs/neutral-binding-training.md). Results remain separate from released-model capability.
+The [neutral-name/position experiment](docs/neutral-binding-training.md#measured-result-27-october-2026) improves shifted familiar-argument views from 2/12 to 12/12 and transfers equal-length new function names, while retaining all prior hits. New arguments remain 0/24 in the primary gate; the candidate is rejected and released weights are unchanged.

@@ -17,11 +17,21 @@ Diagnoza 96 wariantów dla każdego modelu rozdzieliła trzy zmiany: nazwy
 funkcji, argumentów i opisu. Przy znanej sygnaturze nowy opis dał 10/12
 funkcjonalnych trafień, lecz sama nowa nazwa i same nowe argumenty po 0/12.
 Zmieniają się również długości i pozycje bajtów, więc pomiar nie rozstrzyga
-jednej wewnętrznej przyczyny. Kolejny protokół powinien kontrolować długość,
-pozycję i wskazówki ukryte w nazwach funkcji. Zestaw ten jest już rozwojowy i ujawniony;
+jednej wewnętrznej przyczyny. Kolejne porównanie kontroluje długość,
+pozycję i wskazówki ukryte w nazwach funkcji; jego wynik opisano poniżej. Zestaw ten jest już rozwojowy i ujawniony;
 nie stanowi niezależnego testu. Samo dodanie epok lub kolejnych opisów nie ma
 jeszcze potwierdzonej skuteczności. Każdy kolejny eksperyment musi zachować
 wcześniejsze trafienia i udowodnić poprawę działającym kodem.
+
+Następne [porównanie neutralnych nazw i pozycji](neutral-binding-training.md)
+potwierdziło lokalny postęp: nazwy o tej samej długości, wspólne dla wszystkich
+operacji, przenoszą się przy znanych argumentach (12/12). Urozmaicenie pozycji
+polecenia poprawia przesunięte warianty ze znanymi argumentami z 2/12 do 12/12.
+Oba modele zachowują wszystkie pierwotne trafienia (96/96 i silnia 20/22),
+lecz nowe argumenty nadal dają 0/24 w głównym kryterium. Kandydat został
+odrzucony; te skorelowane warianty nie są niezależnym testem nowych problemów.
+Następny krok to klasyfikacja błędów wiązania zmiennych i wyboru operacji,
+a następnie jeden kontrolowany eksperyment z niezmienioną ochroną trafień.
 
 ## Co już wynika z pomiarów
 
@@ -57,11 +67,10 @@ pełnych odpowiedzi; to postęp dopasowania treningowego, nie dowód generalizac
 | 6 | Pojemność, tokenizacja i użyteczny kontekst | Po ustabilizowaniu danych porównać mały i większy model przy jawnym budżecie oraz tokenizer bajtowy i wariant z obsługą identyfikatorów. Mierzyć testy, RAM i czas; dłuższe okno bez odpowiednich danych nie jest dowodem lepszego rozumowania. |
 | 7 | Kontekst repozytorium i ograniczone działanie agenta | Najpierw testować, czy trafnie dobrany fragment kodu poprawia odpowiedź. Potem poprawki wielu plików, kompilacja i ograniczona naprawa. Zachować przegląd różnic i zweryfikowane Apply. |
 
-Najbliższy eksperyment powinien chronić planowanie i bezpośrednie odpowiedzi,
-podczas gdy koder uczy się osobno. Najprostsze porównanie to replay wszystkich
-czterech zadań kontra dwa własne checkpointy: zamrożony planujący i osobno uczony
-koder. To zwiększa wymagania pamięci i routingu, więc wymaga pomiaru całego procesu.
-Nie zakładamy z góry, że dwa modele wygrają z jednym.
+Porównanie ochrony etapów opisane powyżej zostało wykonane. Bieżąca kolejka
+w ROADMAP zaczyna się od pozostałych błędów argumentów w pełnych funkcjach.
+Postęp odporności na przesunięcia nie uzasadnia jeszcze wdrożenia planowania
+ani zwiększania liczby modeli w produkcyjnym routingu.
 
 ## Jak oceniać odpowiedź, a nie tylko stratę treningową
 

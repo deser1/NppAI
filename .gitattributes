@@ -46,3 +46,4 @@ scripts/neutral_binding_data.py text eol=lf
 scripts/neutral_binding_training.py text eol=lf
 scripts/check_dense_runtime_parity.py text eol=lf
 scripts/training_repro.py text eol=lf
+docs/evidence/neutral-binding-v1/*.zip -text
