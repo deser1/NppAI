@@ -4,6 +4,25 @@ Ocena dotyczy naszego autorskiego modelu i aktualnych pomiarów repozytorium.
 Nie wymaga zastąpienia NppAI zewnętrznym modelem. To plan eksperymentów, a nie
 obietnica, że każdy z nich poprawi wyniki.
 
+## Aktualny punkt odniesienia
+
+[Kontynuacja uczenia ciał funkcji](function-body-training.md) wykorzystała 144
+nowe autorskie przykłady z sześciu rodzin i osobny zestaw 24 wariantów
+rozwojowych. Kandydat odtwarza 12/12 mierzonych przykładów treningowych oraz
+zachowuje 96/96 wcześniejszych odpowiedzi, lecz nadal ma 0/24 funkcjonalnych
+trafień rozwojowych i traci dwa wcześniejsze trafienia silni (20/22 → 18/22).
+Wagi zostały odrzucone. Nie zastępują opublikowanego modelu.
+
+Diagnoza 96 wariantów dla każdego modelu rozdzieliła trzy zmiany: nazwy
+funkcji, argumentów i opisu. Przy znanej sygnaturze nowy opis dał 10/12
+funkcjonalnych trafień, lecz sama nowa nazwa i same nowe argumenty po 0/12.
+Zmieniają się również długości i pozycje bajtów, więc pomiar nie rozstrzyga
+jednej wewnętrznej przyczyny. Kolejny protokół powinien kontrolować długość,
+pozycję i wskazówki ukryte w nazwach funkcji. Zestaw ten jest już rozwojowy i ujawniony;
+nie stanowi niezależnego testu. Samo dodanie epok lub kolejnych opisów nie ma
+jeszcze potwierdzonej skuteczności. Każdy kolejny eksperyment musi zachować
+wcześniejsze trafienia i udowodnić poprawę działającym kodem.
+
 ## Co już wynika z pomiarów
 
 Model pilotażowy ma 180 544 parametry, dwie warstwy bloków i słownik 256 bajtów.

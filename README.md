@@ -68,6 +68,7 @@ remain available and retain their reported failures.
 
 | Evidence | Observed result | Meaning |
 | --- | --- | --- |
+| [Function-body continuation](docs/function-body-training.md) | Six-family pilot: original replies 96/96, development 0/24, factorial retention 20/22 → 18/22. Exposed diagnosis: familiar signatures/new wording 10/12; changed names or arguments 0/12 each | Candidate rejected; no production weights or decoder change |
 | [Broader released-model evaluation](docs/released-model-generalization.md) | Production profile 1/40; legacy greedy 0/40. New operation views 0/24; additional factorial names 0/4; exposed bilingual regression 1/12 | Frozen released checkpoint, actual restricted Docker execution; no general-purpose promotion |
 | [Factorial repair](docs/factorial-model-repair.md) | 12/12 configurations of one development description; reproductions 2/2, Polish TRAIN probes 4/4; new names 2/4. Original training replies 96/96 in the actual production profile, all prior 88 hits retained | Narrow authored factorial tasks; no general-coding quality claim |
 | [Functional pilot](https://github.com/deser1/NppAI/actions/runs/39162359982), 12 bilingual prompt records | 0/12 generated programs passed in every measured arm; 12/12 authored controls passed | The validator worked; this checkpoint failed the new-task quality gate |
