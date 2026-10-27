@@ -86,6 +86,9 @@ jobs:
     - name: Install backend test dependencies
       run: python -m pip install "fastapi>=0.115,<1" "pydantic>=2.7,<3" "numpy>=1.26,<3"
 
+    - name: Audit released-model evaluation and retained raw evidence
+      run: python -m unittest discover -s tests -p "test_released_model_evaluation.py" -v
+
     - name: Test bounded function decoder and runtime parity
       run: python -m unittest discover -s tests -p "test_factorial_repair.py" -v
 

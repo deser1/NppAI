@@ -43,6 +43,16 @@ class EvaluationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'bytes changed'):
                 load_suite(root)
 
+    def test_retained_ci_evidence_matches_raw_digest_and_complete_suite(self):
+        directory = SUITE.parents[1] / 'docs/evidence/released-generalization-v1'
+        metadata = json.loads((directory / 'manifest.json').read_bytes())
+        report = json.loads((directory / 'report.json').read_bytes())
+        self.assertEqual(sha(directory / 'report.json'), metadata['report_sha256'])
+        self.assertEqual(report['source_commit'], metadata['tested_merge_commit'])
+        self.assertTrue(audit(report, self.manifest, self.tasks))
+        self.assertEqual(report['arms']['released_profile']['summary']['new_operations']['functional_passed'], 0)
+        self.assertEqual(report['arms']['released_profile']['summary']['exposed_bilingual_regression']['functional_passed'], 1)
+
     def test_ast_success_does_not_mean_functional_success(self):
         task = self.tasks[0]
         wrong = 'def ' + task['function'] + '(' + task['arguments'][0] + '):\n    return None\n'

@@ -2,6 +2,19 @@
 
 This roadmap tracks the engineering milestones for NppAI as an experimental native AI coding assistant for Notepad++.
 
+## Active priorities
+
+This is the current work queue. Historical experiment questions below retain
+negative results and are not a second list of promised model capabilities.
+The [stable checklist](docs/stable-readiness.md) records concrete evidence and blockers.
+
+- [x] Freeze a broader paired evaluation of the published checkpoint: 24 bilingual/name/argument operation views, four factorial-transfer views and 12 exposed bilingual regressions; preserve all failures and isolate code execution. See [protocol/results](docs/released-model-generalization.md).
+- [ ] Improve complete function bodies and identifier/argument transfer on reviewed training/development data; retain earlier correct replies. Do not train on the released evaluation suite.
+- [ ] Freeze the next candidate before a new independent functional evaluation; report first-pass, repair, latency and failure categories.
+- [ ] Demonstrate functional staged-generation gains and retain direct/specification/plan/code hits before plugin routing.
+- [ ] Run interactive Windows Docker Desktop validation + GUI Apply/Undo, existing-installation upgrade/rollback and actual x86/ARM64 editor checks.
+- [x] Document tested compatibility, permanent released assets and a stable-release checklist, without claiming untested Windows/editor support.
+
 ## Completed
 
 - [x] Custom C++ inference engine and `.nppai` model format
@@ -27,8 +40,8 @@ Recent RAG regression work:
 
 - [x] JSONL escaped-string decoding and UTF-8 round-trip regression coverage (PR #123)
 - [x] Non-BMP Unicode / UTF-16 surrogate-pair round-trip regression coverage (PR #124)
-- [ ] Negative JSONL cases: malformed Unicode escapes, unpaired surrogates, and control characters (proposed regression tests; merge after CI)
-- [x] Replace regex-based JSONL field extraction with a bounded structural JSON reader for evaluation fixtures, including malformed-record and duplicate top-level field rejection (PR pending CI)
+- [x] Negative JSONL cases: malformed Unicode escapes, unpaired surrogates, and control characters; implemented in `tests/test_rag_repository_e2e.py` and run by the native repository end-to-end test.
+- [x] Replace regex-based JSONL field extraction with a bounded structural JSON reader for evaluation fixtures, including malformed-record and duplicate top-level field rejection (implemented; native end-to-end coverage)
 - [ ] Evaluate a maintained JSON library for full schema validation and broader reuse
 
 ## Staged task planning
@@ -176,7 +189,7 @@ Experimental evidence from PR #155 (measured 13 October 2026):
 - [x] Record the fixed three-arm attention/position comparison and artifact provenance in [the experiment report](docs/attention-architecture-experiment.md)
 - Original staged exact reference matching: single head 13/28, four absolute heads 14/28, four rotary heads 0/28; all arms score 0/28 on both novel wording probes
 - [ ] Demonstrate robustness to unseen instruction wording before checkpoint promotion
-- Continued four/eight-form training (PR #163) still scores 0/28 on both novel forms. A new [evaluation-only probe](docs/fresh-probe-v1.md) freezes 36 new name/argument task instances across 12 families and four correlated wording views per instance; model scores on it are pending.
+- Continued four/eight-form training (PR #163) still scores 0/28 on both novel forms. A new [evaluation-only probe](docs/fresh-probe-v1.md) freezes 36 new name/argument task instances across 12 families and four correlated wording views per instance; the retained measurement is 0/144 AST/exact for both continuation pairs, with signatures 2/144 versus 3/144; see the measured entry above.
 - [Task-signature diagnosis](docs/task-signature-wording-diagnostic.md) (PR #162) improves assisted original exact matching to 15/28, but novel exact scores stay 0/28; polite/Python reference AST matching reaches only 2/28. Failures persist with an explicit correct header, so header learning alone does not explain this blocker.
 - [ ] Validate native FP32/INT8 compatibility for any proposed architecture change; current multi-head/RoPE checkpoints are PyTorch-only
 
@@ -189,23 +202,29 @@ and post-merge CI do not resolve the wording robustness milestone above.
 These measurements use exposed synthetic tasks and one seed. They do not complete
 the broader quality and held-out evaluation milestones below.
 
-- [ ] Establish reproducible training/evaluation datasets
+- [x] Preserve versioned synthetic training/evaluation datasets and the frozen released-checkpoint suite; broader reviewed real-task coverage remains an active quality gate.
 - [x] Add an offline Python candidate syntax/unit-test evaluation harness (infrastructure only; see docs/code-quality-evaluation.md)
-- [ ] Add generation-quality evaluation metrics on actual model outputs and held-out tasks
+- [x] Add actual-output syntax/signature/functional/failure/latency evaluation with task and model hashes; the new released-checkpoint suite is fresh only for its frozen candidate, then becomes an exposed regression.
 - [ ] Compare FP32 and INT8 end-to-end generation quality
 - Narrow measurement completed in [PR #161's frozen staged replay](docs/native-staged-evaluation.md): original test exact matching 13/28 for both runtimes, novel forms 0/28 for both, with validation/output differences. Broader repository-task evaluation and native multi-head/RoPE compatibility remain open.
 - [ ] Validate correction-data retraining on held-out examples
-- [ ] Publish reproducible model-quality reports
+- [x] Publish narrow model-quality reports and raw evidence with limitations; broader quality improvement remains open.
 
 ### 6. Release readiness
 
-- [ ] Add end-user installation/update validation
-- [ ] Document supported Notepad++ and Windows versions
-- [ ] Add release smoke tests against packaged ZIP artifacts
-- [ ] Complete security/privacy documentation before public backend deployment
-- [ ] Prepare a stable-version readiness checklist
+- [x] Add actual fresh x64 portable-editor installation validation.
+- [ ] Verify existing-installation update/rollback on an interactive desktop.
+- [x] Document tested Notepad++ 8.9.8.1 x64 on windows-2022 and explicitly unverified versions; see [compatibility](docs/stable-readiness.md).
+- [x] Add release smoke tests against actual packaged ZIP artifacts and permanent checkpoint identity.
+- [x] Document [backend authentication/TLS](docs/backend-auth.md) and [correction-data privacy](docs/correction-data-privacy.md).
+- [ ] Verify deployment-specific proxy/log controls and enforce data retention before public backend collection.
+- [x] Prepare a [stable-version readiness checklist](docs/stable-readiness.md); release remains blocked on quality and Windows checks.
 
-## Guiding principles
+## Historical experiment follow-ups and guiding principles
+
+Unchecked entries in this section are historical hypotheses or broader follow-ups,
+not pending merges. Later experiments may address only part of each question.
+Use **Active priorities** above for the current execution order.
 
 NppAI prioritizes local inference, measurable correctness, reproducible benchmarks, explicit fallbacks, privacy-aware data handling, and technical claims backed by tests rather than feature labels alone.
 

@@ -1,5 +1,8 @@
 ## Unreleased
 
+- Freeze and execute a 40-task paired evaluation of the published factorial checkpoint: production profile 1/40, legacy greedy 0/40; six new operation families 0/24, additional factorial names 0/4, exposed bilingual regression 1/12. Require actual Docker controls, raw-source score audits, complete failure accounting and unchanged weights. Preserve the unmodified CI report in git; fresh probes become exposed after first readout. No model/decoder promotion.
+- Reconcile completed JSONL/package/report work in ROADMAP, document current published prereleases and tested compatibility, and add a stable checklist separating model-quality, interactive Windows Docker Desktop Apply/Undo, upgrades and deployment gates.
+
 - Publish experimental [model-factorial-v1](https://github.com/deser1/NppAI/releases/tag/model-factorial-v1): twelve of twelve configurations of one factorial development description, both reproductions and four Polish TRAIN probes pass Docker; new names remain two of four. Retain all 88 original hits in the actual production profile (96/96 training exact). Verify the extracted service and actual editor recording, then publish after 9/9 exact-main CI. Document downloads without a repository checkout, the exact recorded response and remaining Windows Docker Desktop/Apply/Undo/upgrade limits.
 
 
