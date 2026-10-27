@@ -68,7 +68,7 @@ jobs:
           Copy-Item "sandbox_validate.py" "$packageRoot\sandbox_validate.py"
           New-Item -ItemType Directory -Force "$packageRoot\docs", "$packageRoot\examples" | Out-Null
           Copy-Item "docs\validated-generation.md" "$packageRoot\docs\validated-generation.md"
-          foreach ($doc in @('notepad-setup-pl.md','model-format.md','automatic-plugin-mode.md','model-backends.md','release-readiness.md','fallible-planner-training.md')) {
+          foreach ($doc in @('notepad-setup-pl.md','model-format.md','automatic-plugin-mode.md','model-backends.md','release-readiness.md','stable-readiness.md','fallible-planner-training.md')) {
             Copy-Item "docs\$doc" "$packageRoot\docs\$doc"
           }
           Copy-Item "examples\python-validation-cases.json" "$packageRoot\examples\python-validation-cases.json"

@@ -36,7 +36,7 @@ version compatibility, broader model quality and deployment-specific review.
 Run `scripts/windows_validated_smoke.ps1` on the required interactive environment
 and retain actual evidence. This remains unverified until that run succeeds.
 
-The [released-model evaluation](released-model-generalization.md) freezes the
+The [released-model evaluation](https://github.com/deser1/NppAI/blob/main/docs/released-model-generalization.md) freezes the
 already published weights and reports real broader task results, separately
 from the older factorial training/development probes. Measurement is not a
 waiver of model-quality requirements. The suite becomes exposed after readout.
