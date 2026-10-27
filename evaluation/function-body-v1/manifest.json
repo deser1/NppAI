@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "source_sha256": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+  "files": {
+    "train.json": {
+      "sha256": "68326c7b272f9c1e3965792d1c3b75dfcbf07e6795d551c32fa007265a33c2a6",
+      "count": 144
+    },
+    "development.json": {
+      "sha256": "cd9f1d850e8ca2779cf3df08ff5c3c9de685b7de342460317b907b5c07ba2a8c",
+      "count": 24
+    }
+  },
+  "protocol": {
+    "seed": 83,
+    "updates": 1024,
+    "learning_rate": 0.0003,
+    "batch_size": 8,
+    "prompt_bytes": 256,
+    "original_replay": 2,
+    "factorial_replay": 2,
+    "intervention_examples": 4,
+    "completion_loss": "per-example average",
+    "clip_grad_norm": 1.0,
+    "optimizer": {
+      "name": "AdamW",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    },
+    "arms": [
+      "replay_control",
+      "diverse_bodies"
+    ]
+  },
+  "gate": {
+    "min_development_functional": 12,
+    "strict_improvement_over_source_and_control": true,
+    "retain_all_original_exact_hits": true,
+    "retain_all_source_factorial_functional_hits": true
+  },
+  "scope": "Authored same-family development transfer across jointly changed names/arguments/wording; correlated bilingual views; not independent evaluation. Never train on development or released-generalization-v1.",
+  "promotion": false
+}

@@ -1,0 +1,7898 @@
+[
+  {
+    "id": "train-absolute_gap-0-0-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_cedar(a, b). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-0-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_cedar(a, b). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-0-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_cedar(a, b). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-0-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_cedar(a, b). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-1-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_cedar(x, y). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-1-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_cedar(x, y). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-1-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_cedar(x, y). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-0-1-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_cedar",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_cedar(x, y). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_cedar(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_cedar",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-0-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_elm(a, b). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-0-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_elm(a, b). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-0-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_elm(a, b). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-0-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_elm(a, b). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-1-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_elm(x, y). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-1-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_elm(x, y). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-1-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_elm(x, y). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-1-1-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_elm",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_elm(x, y). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_elm(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_elm",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-0-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_oak(a, b). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-0-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_oak(a, b). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-0-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_oak(a, b). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-0-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "a",
+      "b"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_oak(a, b). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(a, b):\n    return abs(a - b)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-1-0",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_oak(x, y). Return the absolute difference of the two integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-1-1",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "en",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Implement work_absolute_gap_oak(x, y). Compute the nonnegative distance between the two numbers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-1-2",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_oak(x, y). Zwróć wartość bezwzględną różnicy dwóch liczb całkowitych.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-absolute_gap-2-1-3",
+    "family": "absolute_gap",
+    "split": "train",
+    "language": "pl",
+    "function": "work_absolute_gap_oak",
+    "arguments": [
+      "x",
+      "y"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_absolute_gap_oak(x, y). Oblicz nieujemną odległość między dwiema liczbami.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_absolute_gap_oak(x, y):\n    return abs(x - y)\n",
+    "cases": [
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_absolute_gap_oak",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-0-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_cedar(items). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-0-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_cedar(items). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-0-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_cedar(items). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-0-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_cedar(items). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-1-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_cedar(values). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-1-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_cedar(values). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-1-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_cedar(values). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-0-1-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_cedar(values). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_cedar(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_cedar",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-0-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_elm(items). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-0-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_elm(items). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-0-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_elm(items). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-0-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_elm(items). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-1-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_elm(values). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-1-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_elm(values). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-1-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_elm(values). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-1-1-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_elm(values). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_elm(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_elm",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-0-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_oak(items). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-0-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_oak(items). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-0-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_oak(items). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-0-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_oak(items). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(items):\n    return sum(value < 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-1-0",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_oak(values). Return the number of strictly negative integers in the list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-1-1",
+    "family": "count_negative",
+    "split": "train",
+    "language": "en",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_count_negative_oak(values). Count list entries smaller than zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-1-2",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_oak(values). Zwróć liczbę ściśle ujemnych liczb na liście.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-count_negative-2-1-3",
+    "family": "count_negative",
+    "split": "train",
+    "language": "pl",
+    "function": "work_count_negative_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_count_negative_oak(values). Policz elementy listy mniejsze od zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_count_negative_oak(values):\n    return sum(value < 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_count_negative_oak",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-0-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_cedar(items). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-0-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_cedar(items). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-0-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_cedar(items). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-0-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_cedar(items). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-1-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_cedar(values). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-1-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_cedar(values). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-1-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_cedar(values). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-0-1-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_cedar(values). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_cedar(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_cedar",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-0-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_elm(items). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-0-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_elm(items). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-0-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_elm(items). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-0-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_elm(items). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-1-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_elm(values). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-1-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_elm(values). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-1-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_elm(values). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-1-1-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_elm(values). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_elm(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_elm",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-0-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_oak(items). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-0-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_oak(items). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-0-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_oak(items). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-0-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_oak(items). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(items):\n    return sum(value * value for value in items)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-1-0",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_oak(values). Return the sum of the squares of all list integers.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-1-1",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "en",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_sum_squares_oak(values). Square each integer in the list, then return their sum.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-1-2",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_oak(values). Zwróć sumę kwadratów wszystkich liczb z listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-sum_squares-2-1-3",
+    "family": "sum_squares",
+    "split": "train",
+    "language": "pl",
+    "function": "work_sum_squares_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_sum_squares_oak(values). Podnieś elementy listy do kwadratu i zsumuj wyniki.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_sum_squares_oak(values):\n    return sum(value * value for value in values)\n",
+    "cases": [
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "work_sum_squares_oak",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-0-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_cedar(text). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-0-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_cedar(text). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-0-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_cedar(text). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-0-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_cedar(text). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-1-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_cedar(word). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-1-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_cedar(word). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-1-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_cedar(word). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-0-1-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_cedar",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_cedar(word). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_cedar(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_cedar",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-0-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_elm(text). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-0-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_elm(text). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-0-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_elm(text). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-0-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_elm(text). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-1-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_elm(word). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-1-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_elm(word). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-1-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_elm(word). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-1-1-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_elm",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_elm(word). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_elm(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_elm",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-0-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_oak(text). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-0-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_oak(text). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-0-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_oak(text). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-0-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "text"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_oak(text). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(text):\n    return text[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-1-0",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_oak(word). Return the string with its character order reversed.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-1-1",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "en",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Implement work_reverse_text_oak(word). Reverse all characters of the input string.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-1-2",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_oak(word). Zwróć tekst z odwróconą kolejnością znaków.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-reverse_text-2-1-3",
+    "family": "reverse_text",
+    "split": "train",
+    "language": "pl",
+    "function": "work_reverse_text_oak",
+    "arguments": [
+      "word"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_reverse_text_oak(word). Odwróć wszystkie znaki wejściowego napisu.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_reverse_text_oak(word):\n    return word[::-1]\n",
+    "cases": [
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "work_reverse_text_oak",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-0-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_cedar(items). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-0-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_cedar(items). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-0-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_cedar(items). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-0-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_cedar(items). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-1-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_cedar(values). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-1-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_cedar(values). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-1-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_cedar(values). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-0-1-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_cedar",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_cedar(values). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_cedar(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_cedar",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-0-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_elm(items). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-0-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_elm(items). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-0-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_elm(items). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-0-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_elm(items). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-1-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_elm(values). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-1-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_elm(values). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-1-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_elm(values). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-1-1-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_elm",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_elm(values). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_elm(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_elm",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-0-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_oak(items). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-0-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_oak(items). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-0-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_oak(items). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-0-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "items"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_oak(items). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(items):\n    return all(value > 0 for value in items)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-1-0",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_oak(values). Return whether every list integer is strictly positive. Empty list gives True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-1-1",
+    "family": "all_positive",
+    "split": "train",
+    "language": "en",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Implement work_all_positive_oak(values). Check that all entries exceed zero; return True for an empty list.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-1-2",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_oak(values). Sprawdź, czy wszystkie liczby listy są dodatnie. Pusta lista daje True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-all_positive-2-1-3",
+    "family": "all_positive",
+    "split": "train",
+    "language": "pl",
+    "function": "work_all_positive_oak",
+    "arguments": [
+      "values"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_all_positive_oak(values). Zwróć True, gdy każdy element jest większy od zera; także dla pustej listy.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_all_positive_oak(values):\n    return all(value > 0 for value in values)\n",
+    "cases": [
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "work_all_positive_oak",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-0-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_cedar(n). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-0-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_cedar(n). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-0-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_cedar(n). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-0-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_cedar(n). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-1-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_cedar(x). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-1-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_cedar(x). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-1-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_cedar(x). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-0-1-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_cedar",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_cedar(x). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_cedar(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_cedar",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-0-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_elm(n). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-0-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_elm(n). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-0-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_elm(n). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-0-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_elm(n). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-1-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_elm(x). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-1-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_elm(x). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-1-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_elm(x). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-1-1-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_elm",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_elm(x). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_elm(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_elm",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-0-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_oak(n). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-0-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_oak(n). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-0-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_oak(n). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-0-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "n"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_oak(n). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(n):\n    return max(0, n)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-1-0",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_oak(x). Return zero for a negative integer, otherwise return the integer unchanged.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-1-1",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "en",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Implement work_clamp_zero_oak(x). Clamp the integer at a lower bound of zero.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-1-2",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_oak(x). Zwróć zero dla liczby ujemnej, a pozostałe liczby bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "train-clamp_zero-2-1-3",
+    "family": "clamp_zero",
+    "split": "train",
+    "language": "pl",
+    "function": "work_clamp_zero_oak",
+    "arguments": [
+      "x"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję work_clamp_zero_oak(x). Ogranicz liczbę całkowitą od dołu do zera.",
+      "max_new_tokens": 256
+    },
+    "answer": "def work_clamp_zero_oak(x):\n    return max(0, x)\n",
+    "cases": [
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "work_clamp_zero_oak",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  }
+]

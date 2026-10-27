@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Freeze a fixed paired function-body training pilot: six authored families, 144 bilingual training records, 24 separately named/worded development rows, replay control, 1024 updates per arm and full original/factorial retention gates. Actual measurement pending; no production weights or decoder change.
+
 - Freeze and execute a 40-task paired evaluation of the published factorial checkpoint: production profile 1/40, legacy greedy 0/40; six new operation families 0/24, additional factorial names 0/4, exposed bilingual regression 1/12. Require actual Docker controls, raw-source score audits, complete failure accounting and unchanged weights. Preserve the unmodified CI report in git; fresh probes become exposed after first readout. No model/decoder promotion.
 - Reconcile completed JSONL/package/report work in ROADMAP, document current published prereleases and tested compatibility, and add a stable checklist separating model-quality, interactive Windows Docker Desktop Apply/Undo, upgrades and deployment gates.
 

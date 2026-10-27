@@ -33,3 +33,7 @@ train_nppai.py text eol=lf
 # Released-checkpoint protocol and task hashes must survive Windows checkout.
 evaluation/released-generalization-v1/** text eol=lf
 scripts/evaluate_released_model.py text eol=lf
+
+# Frozen body-training recipes and source hashes use canonical bytes.
+evaluation/function-body-v1/** text eol=lf
+scripts/function_body_training.py text eol=lf

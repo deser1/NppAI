@@ -9,6 +9,8 @@ negative results and are not a second list of promised model capabilities.
 The [stable checklist](docs/stable-readiness.md) records concrete evidence and blockers.
 
 - [x] Freeze a broader paired evaluation of the published checkpoint: 24 bilingual/name/argument operation views, four factorial-transfer views and 12 exposed bilingual regressions; preserve all failures and isolate code execution. See [protocol/results](docs/released-model-generalization.md).
+- [x] Freeze a paired body-training pilot with 144 bilingual training records, 24 development transfer records, replay control and per-case retention gates; see [protocol](docs/function-body-training.md).
+- [ ] Execute the fixed pilot and retain actual Docker results before any candidate promotion.
 - [ ] Improve complete function bodies and identifier/argument transfer on reviewed training/development data; retain earlier correct replies. Do not train on the released evaluation suite.
 - [ ] Freeze the next candidate before a new independent functional evaluation; report first-pass, repair, latency and failure categories.
 - [ ] Demonstrate functional staged-generation gains and retain direct/specification/plan/code hits before plugin routing.

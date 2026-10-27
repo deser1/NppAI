@@ -86,6 +86,9 @@ jobs:
     - name: Install backend test dependencies
       run: python -m pip install "fastapi>=0.115,<1" "pydantic>=2.7,<3" "numpy>=1.26,<3"
 
+    - name: Test function-body bank isolation and training gates
+      run: python -m unittest discover -s tests -p "test_function_body_training.py" -v
+
     - name: Audit released-model evaluation and retained raw evidence
       run: python -m unittest discover -s tests -p "test_released_model_evaluation.py" -v
 
