@@ -1,0 +1,171 @@
+{
+  "head_commit": "109140fccf2c3b80a1666f8b3038840d36e4aa9c",
+  "tested_merge_commit": "d796c664db4aee2d20ccfb934cf34af116f672a3",
+  "run_id": 40426278674,
+  "artifact_id": 12700421285,
+  "original_artifact_sha256": "5333634c10b3a4f265caac918ee259faca824acd37f24077baec0f45e3689c3a",
+  "archive_sha256": "4428aeb7b4e4af0be161d26607d936bd6dcfa6e79cc86b1c1ffe1a54a1fa770f",
+  "files": {
+    "report.json": "453e2f3540883fc45f7bfc48860b13da51ae6b2f10842bb20527e69b3c753a2f",
+    "training.json": "bb0637d38c7fd6a92b6a789fa3cdc8b93debab2e5cb50d9c0d07f9bc185f8c2b",
+    "schedule.json": "290ff9c4b6533508b835958e7987b12dd1a753505776cc37090fd56cedec30d1",
+    "replay_control/trace.json": "61d5daafcc7279327b944407d215a18231c26fec89a857918bfe52f2db93b293",
+    "diverse_bodies/trace.json": "4cdbc4b84dd48ae397ad5651d7106212a8d2af762c9614643891ad241ad48f6f"
+  },
+  "models": {
+    "replay_control": "915b7b594df3efcd32d0acba8591fe6147e86adb551593c42650f55b81518ed6",
+    "diverse_bodies": "0f2e884e02a8a5f786251c2c2d43777c672409803cd830269e71092b8e80d060"
+  },
+  "models_in_archive": false,
+  "summary": {
+    "source": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 10,
+        "signature": 10,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 24,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 6,
+        "signature": 6,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 22,
+        "functional_passed": 20,
+        "generation_errors": 0
+      }
+    },
+    "replay_control": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 7,
+        "signature": 7,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 24,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 3,
+        "signature": 3,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 20,
+        "exact": 20,
+        "functional_measured": 22,
+        "functional_passed": 20,
+        "generation_errors": 0
+      }
+    },
+    "diverse_bodies": {
+      "development": {
+        "total": 24,
+        "nonempty": 24,
+        "syntax": 4,
+        "signature": 4,
+        "value_return": 0,
+        "exact": 0,
+        "functional_measured": 24,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "training_probes": {
+        "total": 12,
+        "nonempty": 12,
+        "syntax": 12,
+        "signature": 12,
+        "value_return": 12,
+        "exact": 12,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "original": {
+        "total": 96,
+        "nonempty": 96,
+        "syntax": 96,
+        "signature": 96,
+        "value_return": 96,
+        "exact": 96,
+        "functional_measured": 0,
+        "functional_passed": 0,
+        "generation_errors": 0
+      },
+      "factorial": {
+        "total": 22,
+        "nonempty": 22,
+        "syntax": 22,
+        "signature": 22,
+        "value_return": 18,
+        "exact": 18,
+        "functional_measured": 22,
+        "functional_passed": 18,
+        "generation_errors": 0
+      }
+    }
+  },
+  "decision": {
+    "status": "rejected",
+    "reasons": [
+      "development functional minimum not reached",
+      "no strict functional improvement over source and replay control",
+      "lost prior factorial hit: name-policz_silnie-signature",
+      "lost prior factorial hit: name-policz_silnie-plain"
+    ],
+    "eligible_for_fresh_evaluation": false,
+    "promotion": false
+  }
+}

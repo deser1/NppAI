@@ -1,0 +1,1318 @@
+[
+  {
+    "id": "dev-absolute_gap-0-0",
+    "family": "absolute_gap",
+    "split": "development",
+    "language": "en",
+    "function": "check_absolute_gap_north",
+    "arguments": [
+      "left",
+      "right"
+    ],
+    "request": {
+      "prompt": "Implement check_absolute_gap_north(left, right). Return the magnitude of the subtraction, regardless of argument order.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_absolute_gap_north(left, right):\n    return abs(left - right)\n",
+    "cases": [
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "dev-absolute_gap-0-1",
+    "family": "absolute_gap",
+    "split": "development",
+    "language": "pl",
+    "function": "check_absolute_gap_north",
+    "arguments": [
+      "left",
+      "right"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_absolute_gap_north(left, right). Zwróć odległość liczb na osi, niezależnie od ich kolejności.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_absolute_gap_north(left, right):\n    return abs(left - right)\n",
+    "cases": [
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_absolute_gap_north",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "dev-absolute_gap-1-0",
+    "family": "absolute_gap",
+    "split": "development",
+    "language": "en",
+    "function": "check_absolute_gap_south",
+    "arguments": [
+      "lo",
+      "hi"
+    ],
+    "request": {
+      "prompt": "Implement check_absolute_gap_south(lo, hi). Return the magnitude of the subtraction, regardless of argument order.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_absolute_gap_south(lo, hi):\n    return abs(lo - hi)\n",
+    "cases": [
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "dev-absolute_gap-1-1",
+    "family": "absolute_gap",
+    "split": "development",
+    "language": "pl",
+    "function": "check_absolute_gap_south",
+    "arguments": [
+      "lo",
+      "hi"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_absolute_gap_south(lo, hi). Zwróć odległość liczb na osi, niezależnie od ich kolejności.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_absolute_gap_south(lo, hi):\n    return abs(lo - hi)\n",
+    "cases": [
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          0,
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          2,
+          7
+        ],
+        "kwargs": {},
+        "expected": 5
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          -3,
+          4
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_absolute_gap_south",
+        "args": [
+          8,
+          -2
+        ],
+        "kwargs": {},
+        "expected": 10
+      }
+    ]
+  },
+  {
+    "id": "dev-count_negative-0-0",
+    "family": "count_negative",
+    "split": "development",
+    "language": "en",
+    "function": "check_count_negative_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Implement check_count_negative_north(entries). Count how many list integers have a minus sign; zero does not count.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_count_negative_north(entries):\n    return sum(value < 0 for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "dev-count_negative-0-1",
+    "family": "count_negative",
+    "split": "development",
+    "language": "pl",
+    "function": "check_count_negative_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_count_negative_north(entries). Zlicz ujemne elementy listy; pomiń zero i liczby dodatnie.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_count_negative_north(entries):\n    return sum(value < 0 for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_north",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "dev-count_negative-1-0",
+    "family": "count_negative",
+    "split": "development",
+    "language": "en",
+    "function": "check_count_negative_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Implement check_count_negative_south(samples). Count how many list integers have a minus sign; zero does not count.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_count_negative_south(samples):\n    return sum(value < 0 for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "dev-count_negative-1-1",
+    "family": "count_negative",
+    "split": "development",
+    "language": "pl",
+    "function": "check_count_negative_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_count_negative_south(samples). Zlicz ujemne elementy listy; pomiń zero i liczby dodatnie.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_count_negative_south(samples):\n    return sum(value < 0 for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            -2,
+            0,
+            3,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            0,
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_count_negative_south",
+        "args": [
+          [
+            -1,
+            -1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      }
+    ]
+  },
+  {
+    "id": "dev-sum_squares-0-0",
+    "family": "sum_squares",
+    "split": "development",
+    "language": "en",
+    "function": "check_sum_squares_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Implement check_sum_squares_north(entries). Return the total obtained by multiplying every list number by itself.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_sum_squares_north(entries):\n    return sum(value * value for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "dev-sum_squares-0-1",
+    "family": "sum_squares",
+    "split": "development",
+    "language": "pl",
+    "function": "check_sum_squares_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_sum_squares_north(entries). Pomnóż każdą liczbę z listy przez nią samą i zwróć sumę.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_sum_squares_north(entries):\n    return sum(value * value for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_sum_squares_north",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "dev-sum_squares-1-0",
+    "family": "sum_squares",
+    "split": "development",
+    "language": "en",
+    "function": "check_sum_squares_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Implement check_sum_squares_south(samples). Return the total obtained by multiplying every list number by itself.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_sum_squares_south(samples):\n    return sum(value * value for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "dev-sum_squares-1-1",
+    "family": "sum_squares",
+    "split": "development",
+    "language": "pl",
+    "function": "check_sum_squares_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_sum_squares_south(samples). Pomnóż każdą liczbę z listy przez nią samą i zwróć sumę.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_sum_squares_south(samples):\n    return sum(value * value for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            2,
+            -3,
+            0
+          ]
+        ],
+        "kwargs": {},
+        "expected": 13
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            -1,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": 2
+      },
+      {
+        "function": "check_sum_squares_south",
+        "args": [
+          [
+            4
+          ]
+        ],
+        "kwargs": {},
+        "expected": 16
+      }
+    ]
+  },
+  {
+    "id": "dev-reverse_text-0-0",
+    "family": "reverse_text",
+    "split": "development",
+    "language": "en",
+    "function": "check_reverse_text_north",
+    "arguments": [
+      "message"
+    ],
+    "request": {
+      "prompt": "Implement check_reverse_text_north(message). Read the supplied text from its final character back to its first.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_reverse_text_north(message):\n    return message[::-1]\n",
+    "cases": [
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "dev-reverse_text-0-1",
+    "family": "reverse_text",
+    "split": "development",
+    "language": "pl",
+    "function": "check_reverse_text_north",
+    "arguments": [
+      "message"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_reverse_text_north(message). Zwróć znaki napisu od ostatniego do pierwszego.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_reverse_text_north(message):\n    return message[::-1]\n",
+    "cases": [
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "check_reverse_text_north",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "dev-reverse_text-1-0",
+    "family": "reverse_text",
+    "split": "development",
+    "language": "en",
+    "function": "check_reverse_text_south",
+    "arguments": [
+      "letters"
+    ],
+    "request": {
+      "prompt": "Implement check_reverse_text_south(letters). Read the supplied text from its final character back to its first.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_reverse_text_south(letters):\n    return letters[::-1]\n",
+    "cases": [
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "dev-reverse_text-1-1",
+    "family": "reverse_text",
+    "split": "development",
+    "language": "pl",
+    "function": "check_reverse_text_south",
+    "arguments": [
+      "letters"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_reverse_text_south(letters). Zwróć znaki napisu od ostatniego do pierwszego.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_reverse_text_south(letters):\n    return letters[::-1]\n",
+    "cases": [
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          ""
+        ],
+        "kwargs": {},
+        "expected": ""
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "abc"
+        ],
+        "kwargs": {},
+        "expected": "cba"
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "a b"
+        ],
+        "kwargs": {},
+        "expected": "b a"
+      },
+      {
+        "function": "check_reverse_text_south",
+        "args": [
+          "żółw"
+        ],
+        "kwargs": {},
+        "expected": "włóż"
+      }
+    ]
+  },
+  {
+    "id": "dev-all_positive-0-0",
+    "family": "all_positive",
+    "split": "development",
+    "language": "en",
+    "function": "check_all_positive_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Implement check_all_positive_north(entries). Return False if any list integer is zero or negative; otherwise True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_all_positive_north(entries):\n    return all(value > 0 for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "dev-all_positive-0-1",
+    "family": "all_positive",
+    "split": "development",
+    "language": "pl",
+    "function": "check_all_positive_north",
+    "arguments": [
+      "entries"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_all_positive_north(entries). Zwróć False, jeśli lista zawiera zero lub liczbę ujemną; inaczej True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_all_positive_north(entries):\n    return all(value > 0 for value in entries)\n",
+    "cases": [
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "check_all_positive_north",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "dev-all_positive-1-0",
+    "family": "all_positive",
+    "split": "development",
+    "language": "en",
+    "function": "check_all_positive_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Implement check_all_positive_south(samples). Return False if any list integer is zero or negative; otherwise True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_all_positive_south(samples):\n    return all(value > 0 for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "dev-all_positive-1-1",
+    "family": "all_positive",
+    "split": "development",
+    "language": "pl",
+    "function": "check_all_positive_south",
+    "arguments": [
+      "samples"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_all_positive_south(samples). Zwróć False, jeśli lista zawiera zero lub liczbę ujemną; inaczej True.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_all_positive_south(samples):\n    return all(value > 0 for value in samples)\n",
+    "cases": [
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          []
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            1,
+            2
+          ]
+        ],
+        "kwargs": {},
+        "expected": true
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            0,
+            1
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      },
+      {
+        "function": "check_all_positive_south",
+        "args": [
+          [
+            -2,
+            3
+          ]
+        ],
+        "kwargs": {},
+        "expected": false
+      }
+    ]
+  },
+  {
+    "id": "dev-clamp_zero-0-0",
+    "family": "clamp_zero",
+    "split": "development",
+    "language": "en",
+    "function": "check_clamp_zero_north",
+    "arguments": [
+      "number"
+    ],
+    "request": {
+      "prompt": "Implement check_clamp_zero_north(number). Replace integers below zero with zero and keep all others.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_clamp_zero_north(number):\n    return max(0, number)\n",
+    "cases": [
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "dev-clamp_zero-0-1",
+    "family": "clamp_zero",
+    "split": "development",
+    "language": "pl",
+    "function": "check_clamp_zero_north",
+    "arguments": [
+      "number"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_clamp_zero_north(number). Zastąp liczbę mniejszą od zera zerem; inne pozostaw bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_clamp_zero_north(number):\n    return max(0, number)\n",
+    "cases": [
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_clamp_zero_north",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "dev-clamp_zero-1-0",
+    "family": "clamp_zero",
+    "split": "development",
+    "language": "en",
+    "function": "check_clamp_zero_south",
+    "arguments": [
+      "amount"
+    ],
+    "request": {
+      "prompt": "Implement check_clamp_zero_south(amount). Replace integers below zero with zero and keep all others.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_clamp_zero_south(amount):\n    return max(0, amount)\n",
+    "cases": [
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "id": "dev-clamp_zero-1-1",
+    "family": "clamp_zero",
+    "split": "development",
+    "language": "pl",
+    "function": "check_clamp_zero_south",
+    "arguments": [
+      "amount"
+    ],
+    "request": {
+      "prompt": "Napisz funkcję check_clamp_zero_south(amount). Zastąp liczbę mniejszą od zera zerem; inne pozostaw bez zmian.",
+      "max_new_tokens": 256
+    },
+    "answer": "def check_clamp_zero_south(amount):\n    return max(0, amount)\n",
+    "cases": [
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          -4
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          0
+        ],
+        "kwargs": {},
+        "expected": 0
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          7
+        ],
+        "kwargs": {},
+        "expected": 7
+      },
+      {
+        "function": "check_clamp_zero_south",
+        "args": [
+          -1
+        ],
+        "kwargs": {},
+        "expected": 0
+      }
+    ]
+  }
+]
