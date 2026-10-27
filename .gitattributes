@@ -39,3 +39,10 @@ evaluation/function-body-v1/** text eol=lf
 scripts/function_body_training.py text eol=lf
 scripts/diagnose_body_transfer.py text eol=lf
 docs/evidence/function-body-v1/*.zip -text
+
+# Frozen neutral-name/position experiment, separate from historical pilot sources.
+evaluation/neutral-binding-v1.json text eol=lf
+scripts/neutral_binding_data.py text eol=lf
+scripts/neutral_binding_training.py text eol=lf
+scripts/check_dense_runtime_parity.py text eol=lf
+scripts/training_repro.py text eol=lf

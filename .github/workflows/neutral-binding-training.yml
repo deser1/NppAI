@@ -1,0 +1,50 @@
+name: Neutral binding and position training
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/neutral-binding-training.yml'
+      - 'evaluation/neutral-binding-v1.json'
+      - 'scripts/neutral_binding_data.py'
+      - 'scripts/neutral_binding_training.py'
+      - 'tests/test_neutral_binding.py'
+permissions:
+  contents: read
+jobs:
+  train-and-measure:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install fixed CPU training runtime
+        run: |
+          python -m pip install 'torch==2.14.1+cpu' --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install 'numpy==2.3.5' 'pydantic>=2.7,<3'
+      - run: python -m unittest discover -s tests -p test_neutral_binding.py -v
+      - name: Fetch the published initialization and isolated validator
+        run: |
+          curl -fL https://github.com/deser1/NppAI/releases/download/model-factorial-v1/NppAI-factorial.nppai -o source.nppai
+          echo 'f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229  source.nppai' | sha256sum -c -
+          docker pull python:3.12-slim
+          echo "NPPAI_VALIDATION_IMAGE=$(docker image inspect python:3.12-slim --format '{{.Id}}')" >> "$GITHUB_ENV"
+      - name: Fixed paired optimization, then freeze both candidates
+        run: python scripts/neutral_binding_training.py --phase train --source source.nppai --output measured
+      - name: Actual unchanged-runtime readout and isolated functional tests
+        run: python scripts/neutral_binding_training.py --phase measure --source source.nppai --output measured --image "$NPPAI_VALIDATION_IMAGE"
+      - name: Audit provenance, raw failures and per-case retention
+        run: python scripts/neutral_binding_training.py --phase audit --source source.nppai --output measured
+      - name: Require Docker cleanup
+        if: always()
+        run: test -z "$(docker ps -aq --filter name=nppai-validate-)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: neutral-binding-v1
+          path: measured/
+          retention-days: 90

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "source_sha256": "f8ef88dccbbd3280c21e5acd51c41c6744e6ba597aa63686f3f43fd96beac229",
+  "training_sha256": "3997e9943ad0c0fe09f2148bbfd44e90ae8902bdbbf767487871cf1a4107bada",
+  "development_sha256": "fb880748642978df1df3f75d6c392084ea4c3144e35764a93d6a9fa02602a23c",
+  "counts": {
+    "training": 144,
+    "development": 120,
+    "primary": 24
+  },
+  "protocol": {
+    "seed": 97,
+    "position_seed": 9701,
+    "updates": 1024,
+    "learning_rate": 0.0003,
+    "batch_size": 8,
+    "prompt_bytes": 256,
+    "original_replay": 2,
+    "factorial_replay": 2,
+    "intervention_examples": 4,
+    "completion_loss": "per-example average",
+    "clip_grad_norm": 1.0,
+    "optimizer": {
+      "name": "AdamW",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01
+    },
+    "arms": [
+      "fixed_position",
+      "position_jitter"
+    ],
+    "training_offsets": [
+      0,
+      8,
+      16
+    ],
+    "development_offsets": [
+      0,
+      8
+    ]
+  },
+  "gate": {
+    "min_development_functional": 12,
+    "primary": "name1-args1-shift0 and name1-args1-shift1",
+    "strict_improvement_over_source_and_control": true,
+    "retain_all_original_exact_hits": true,
+    "retain_all_source_factorial_functional_hits": true
+  },
+  "promotion": false,
+  "scope": "Predeclared correlated same-family development. Neutral names shared across operations; equal-length name/argument replacements crossed with leading whitespace. Longer fields are separate confounded diagnostics. No independent accuracy claim."
+}
