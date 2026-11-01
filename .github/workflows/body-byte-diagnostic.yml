@@ -30,7 +30,7 @@ jobs:
           gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-body_only --dir body-only
       - name: Compare gold-prefix body argument bytes and cached generation
         run: python scripts/diagnose_body_bytes.py --full-response full-response --body-only body-only --dataset evaluation/instruction-v3 --output body-bytes
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-body-byte-diagnostic

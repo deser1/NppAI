@@ -34,7 +34,7 @@ jobs:
           gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
       - name: Continue complete responses with unchanged original replay
         run: python scripts/body_argument_aliases.py --source source --initial initial --dataset evaluation/instruction-v3 --output body-arguments --policy ${{ matrix.policy }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-body-arguments-${{ matrix.policy }}

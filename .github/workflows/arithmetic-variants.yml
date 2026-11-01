@@ -26,7 +26,7 @@ jobs:
           gh run download 38906998886 --repo '${{ github.repository }}' --name operator-tensors-portable-cpu-v1-1 --dir raw/sqrt
       - name: Verify and package only frozen input bytes
         run: python -S scripts/arithmetic_variants.py --prepare raw --output frozen
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: frozen-operator-inputs
           path: frozen/
@@ -70,7 +70,7 @@ jobs:
             export MKL_CBWR=COMPATIBLE ATEN_CPU_CAPABILITY=default OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
           fi
           python scripts/arithmetic_variants.py --source source --dataset evaluation/instruction-v3 --inputs frozen --output measured --profile "$PROFILE"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: arithmetic-${{ matrix.profile }}-${{ matrix.replica }}
@@ -91,7 +91,7 @@ jobs:
           path: replicas
       - name: Compare operators, gradients and updated parameters
         run: python -S scripts/arithmetic_variants.py --compare replicas
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: arithmetic-comparison

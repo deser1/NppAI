@@ -39,7 +39,7 @@ jobs:
         run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
       - name: Train native and both64 twice for the fixed 1024 updates
         run: python scripts/portable_full_training.py --source source --dataset evaluation/instruction-v3 --output measured
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: portable-full-${{ matrix.replica }}
@@ -60,7 +60,7 @@ jobs:
           path: replicas
       - name: Verify actual repeat bytes and compare every step/checkpoint across CPU environments
         run: python -S scripts/portable_full_training.py --compare replicas
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: portable-full-comparison

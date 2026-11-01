@@ -37,7 +37,7 @@ jobs:
         run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
       - name: Train and measure autonomous complete outputs
         run: python scripts/resampled_name_training.py --source source --output measured --policy '${{ matrix.policy }}'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-name-training-${{ matrix.policy }}

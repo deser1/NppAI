@@ -46,7 +46,7 @@ jobs:
           --package NppAI-x64.zip --model NppAI-research-staged-mix.nppai
           --service-zip NppAI-service.zip --output released-demo
           --exercise-generation --record-gif
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-released-live-demo

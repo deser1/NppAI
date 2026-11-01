@@ -34,7 +34,7 @@ jobs:
         run: gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial-source
       - name: Continue fixed task and wording policy
         run: python scripts/run_wording_continuation.py train --source initial-source --dataset evaluation/instruction-v3 --output continuation-training --task ${{ matrix.task }} --policy ${{ matrix.policy }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-continuation-${{ matrix.policy }}-${{ matrix.task }}
@@ -72,7 +72,7 @@ jobs:
           path: continued-bodies
       - name: Verify continuation and evaluate six fixed wording forms
         run: python scripts/run_wording_continuation.py replay --source initial-source --dataset evaluation/instruction-v3 --headers continued-headers --bodies continued-bodies --output continuation-evaluation --policy ${{ matrix.policy }} --source-run ${{ github.run_id }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-continuation-evaluation-${{ matrix.policy }}

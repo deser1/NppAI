@@ -44,7 +44,7 @@ jobs:
             export MKL_CBWR=COMPATIBLE ATEN_CPU_CAPABILITY=default OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
           fi
           python scripts/first_step_ops.py --source source --dataset evaluation/instruction-v3 --output measured --profile "$PROFILE"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: first-step-${{ matrix.profile }}-${{ matrix.replica }}
@@ -53,7 +53,7 @@ jobs:
             measured/*/events.json
             measured/*/ignored-non-aten.json
           retention-days: 14
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: operator-tensors-${{ matrix.profile }}-${{ matrix.replica }}
@@ -74,7 +74,7 @@ jobs:
           path: replicas
       - name: Locate first observed operator differences and report CPU coverage
         run: python -S scripts/first_step_ops.py --compare replicas
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: first-step-comparison

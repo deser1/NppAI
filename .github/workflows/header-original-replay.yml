@@ -34,7 +34,7 @@ jobs:
           gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
       - name: Measure original retention and renamed headers before and after
         run: python scripts/header_original_replay.py --source source --initial initial --dataset evaluation/instruction-v3 --output header-replay --policy ${{ matrix.policy }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-header-replay-${{ matrix.policy }}

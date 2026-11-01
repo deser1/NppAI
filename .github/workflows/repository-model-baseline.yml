@@ -47,7 +47,7 @@ jobs:
           assert 0 <= report["validation_loss"] < float("inf")
           print(report)
           PY
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: nppai-repository-baseline
           path: model-baseline/
