@@ -25,13 +25,13 @@ jobs:
             revision: 2247b35ea1c47c727d7a06e51fa280e12a863ff6
     steps:
       - name: Checkout NppAI
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: nppai
           persist-credentials: false
 
       - name: Checkout pinned source fixture (no scripts executed)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ matrix.repository }}
           ref: ${{ matrix.revision }}

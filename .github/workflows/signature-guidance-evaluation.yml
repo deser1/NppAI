@@ -15,7 +15,7 @@ jobs:
       contents: read
       actions: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate explicit signature contract
         run: python -m unittest tests.test_signature_guidance
       - name: Install CPU reference runtime
