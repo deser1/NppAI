@@ -31,7 +31,7 @@ jobs:
         run: python -m unittest tests.test_attention_probe tests.test_staged_generation tests.test_prompt_robustness tests.test_identifier_headers tests.test_instruction_dataset
       - name: Train preselected architecture and task
         run: python scripts/run_attention_probe.py train --dataset evaluation/instruction-v3 --output probe-training --arm ${{ matrix.arm }} --task ${{ matrix.task }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: nppai-attention-${{ matrix.arm }}-${{ matrix.task }}
           path: probe-training/
@@ -66,7 +66,7 @@ jobs:
         run: python scripts/run_attention_probe.py replay --dataset evaluation/instruction-v3 --headers header-source --bodies body-source --output attention-evaluation --source-run ${{ github.run_id }}
       - name: Audit raw replay evidence and record wording smoke outcome
         run: python scripts/audit_wording_report.py --report attention-evaluation/attention-replay.json --dataset evaluation/instruction-v3 --output attention-evaluation/wording-audit.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-attention-evaluation-${{ matrix.arm }}

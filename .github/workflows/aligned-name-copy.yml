@@ -33,7 +33,7 @@ jobs:
         run: gh run download 38702282716 --repo '${{ github.repository }}' --name nppai-body-loss-full_response --dir source
       - name: Repeat control and compare objective on the same host
         run: python scripts/aligned_name_copy.py --source source --dataset evaluation/instruction-v3 --output measured
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-aligned-copy-paired

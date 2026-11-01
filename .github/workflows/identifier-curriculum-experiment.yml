@@ -42,7 +42,7 @@ jobs:
         run: python scripts/train_broader_instruction_experiment.py --dataset evaluation/instruction-v3 --output curriculum-experiment/code-stage --steps 3000 --identifier-weight 1 --training-names 512 --initial-model curriculum-experiment/echo-stage/NppAI-identifier-echo.nppai
       - name: Diagnose reloaded final checkpoint
         run: python scripts/diagnose_identifier_copy.py --model curriculum-experiment/code-stage/NppAI-broader-instruction.nppai --dataset evaluation/instruction-v3 --output curriculum-experiment/code-stage/identifier-diagnostics.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-curriculum-${{ matrix.arm }}

@@ -64,7 +64,7 @@ jobs:
       - name: Train the unchanged native/both64 recipes twice each
         if: steps.hardware.outputs.qualified == 'true'
         run: python scripts/portable_full_training.py --source source --dataset evaluation/instruction-v3 --output measured
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: vendor-full-${{ matrix.vendor == 'GenuineIntel' && 'intel' || 'amd' }}-${{ matrix.replica }}
@@ -92,7 +92,7 @@ jobs:
           else
             python -S scripts/vendor_pair_training.py --compare replicas
           fi
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: vendor-qualified-comparison

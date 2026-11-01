@@ -36,7 +36,7 @@ jobs:
           gh run download 38804571444 --repo '${{ github.repository }}' --name nppai-name-training-resampled --dir resampled
       - name: Measure conditional bytes and independent scaffolded decoding
         run: python scripts/diagnose_name_bytes.py --initial initial --fixed fixed --resampled resampled --dataset evaluation/instruction-v3 --output name-bytes
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-name-byte-diagnostic

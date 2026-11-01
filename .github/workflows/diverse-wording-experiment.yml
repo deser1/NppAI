@@ -41,7 +41,7 @@ jobs:
         shell: bash
         run: |
           python scripts/train_broader_instruction_experiment.py --dataset evaluation/instruction-v3 --output style-training --steps 10000 --identifier-weight 1 --training-names 512 --augment-prompts --augmentation-policy ${{ matrix.augmentation }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: nppai-diverse-${{ matrix.augmentation }}-${{ matrix.kind }}
           path: style-training/
@@ -76,7 +76,7 @@ jobs:
         run: python scripts/evaluate_staged_generation.py --headers header-source --bodies body-source --dataset evaluation/instruction-v3 --output style-evaluation --source-run ${{ github.run_id }} --source-steps 10000 --prompt-variants --novel-variants --source-augmentation-policy ${{ matrix.augmentation }}
       - name: Audit actual replay outputs and record wording smoke result
         run: python scripts/audit_wording_report.py --report style-evaluation/staged-report.json --dataset evaluation/instruction-v3 --output style-evaluation/wording-audit.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-diverse-evaluation-${{ matrix.augmentation }}

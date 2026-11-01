@@ -38,7 +38,7 @@ jobs:
         run: python scripts/stage_failure_diagnostic.py --archive first.zip --comparison second.zip --output measured
       - name: Reconstruct raw scores and intervention provenance
         run: python scripts/audit_stage_failure.py measured
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-stage-failure-diagnostic

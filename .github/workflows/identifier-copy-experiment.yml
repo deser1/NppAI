@@ -34,7 +34,7 @@ jobs:
         run: python scripts/train_broader_instruction_experiment.py --dataset evaluation/instruction-v3 --output identifier-experiment --steps 3000 --identifier-weight ${{ matrix.identifier_weight }}
       - name: Diagnose identifier bytes on reloaded checkpoint
         run: python scripts/diagnose_identifier_copy.py --model identifier-experiment/NppAI-broader-instruction.nppai --dataset evaluation/instruction-v3 --output identifier-experiment/identifier-diagnostics.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-identifier-v3-weight-${{ matrix.identifier_weight }}

@@ -44,7 +44,7 @@ jobs:
             export MKL_CBWR=COMPATIBLE ATEN_CPU_CAPABILITY=default OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
           fi
           python scripts/both64_trace.py --source source --dataset evaluation/instruction-v3 --output measured --profile "$PROFILE"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: both64-report-${{ matrix.profile }}-${{ matrix.replica }}
@@ -54,7 +54,7 @@ jobs:
             measured/*/saved.json
             measured/*/ignored-non-aten.json
           retention-days: 14
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: both64-tensors-${{ matrix.profile }}-${{ matrix.replica }}
@@ -75,7 +75,7 @@ jobs:
           path: replicas
       - name: Locate first observed operator differences and report CPU coverage
         run: python -S scripts/both64_trace.py --compare replicas
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: both64-comparison

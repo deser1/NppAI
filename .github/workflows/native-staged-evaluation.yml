@@ -50,7 +50,7 @@ jobs:
           --dataset evaluation/instruction-v3
           --engine build-native-staged/Release/StagedNativeRunner.exe
           --output native-staged-evaluation
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-native-staged-comparison

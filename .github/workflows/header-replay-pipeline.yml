@@ -32,7 +32,7 @@ jobs:
           gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
       - name: Audit frozen headers and compare complete staged outputs without training
         run: python scripts/diagnose_header_replay.py --no-replay no-replay --half-original half-original --body-pair body-pair --initial initial --dataset evaluation/instruction-v3 --output pipeline-diagnostic
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-header-replay-pipeline

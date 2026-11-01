@@ -32,7 +32,7 @@ jobs:
           gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial
       - name: Compare cached learned and prompt-derived headers with the same frozen body
         run: python scripts/evaluate_argument_assistance.py --fixed-arguments fixed-arguments --varied-arguments varied-arguments --body-pair body-pair --initial initial --dataset evaluation/instruction-v3 --output argument-assistance
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-argument-signature-assistance

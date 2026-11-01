@@ -23,7 +23,7 @@ jobs:
         run: python -m unittest tests.test_identifier_echo tests.test_instruction_dataset
       - name: Train bounded fixed-format copy task
         run: python scripts/train_identifier_echo.py --dataset evaluation/instruction-v3 --output echo-experiment --steps 3000
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: nppai-identifier-echo-sanity
