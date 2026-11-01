@@ -54,7 +54,7 @@ jobs:
           python -m pip install 'pydantic>=2.7,<3'
       - name: Test actual arithmetic and phase isolation
         run: python -m unittest discover -s tests -p 'test_arithmetic_variants.py' -v
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: frozen-operator-inputs
           path: frozen
@@ -85,7 +85,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12.15'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: arithmetic-*
           path: replicas

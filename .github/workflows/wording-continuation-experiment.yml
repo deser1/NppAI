@@ -62,11 +62,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download 38582420228 --repo '${{ github.repository }}' --name nppai-diverse-evaluation-four_forms --dir initial-source
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: nppai-continuation-${{ matrix.policy }}-headers
           path: continued-headers
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: nppai-continuation-${{ matrix.policy }}-bodies
           path: continued-bodies
